@@ -6,7 +6,7 @@ import { ChildProcess } from "child_process";
 import { createLogStreams } from "../../clients/utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
 import { Server_DockerCompose } from "./Server_DockerCompose";
-import { IMode } from "../../app/frontend/types";
+import { IMode } from "../types";
 
 // Process management types
 type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
@@ -378,7 +378,8 @@ export class ServerTaskManagerBase extends Server_DockerCompose {
   // WebSocket broadcast method - to be implemented by derived classes or parent
   webSocketBroadcastMessage(message: any): void {
     // Default implementation that can be overridden
-    const data = typeof message === "string" ? message : JSON.stringify(message);
+    const data =
+      typeof message === "string" ? message : JSON.stringify(message);
     this.clients.forEach((client) => {
       if (client.readyState === 1) {
         client.send(data);

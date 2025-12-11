@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Container fluid="true">
-  <Row>
-    <Col xs="12">
-      <Text class="">hello hello hello</Text>
-      <Text class="" />
-    </Col>
-  </Row>
-</Container>

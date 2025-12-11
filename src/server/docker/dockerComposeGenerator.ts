@@ -2,11 +2,50 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import path from "path";
+import yaml from "js-yaml";
 import { IBuiltConfig, IRunTime } from "../../Types";
+import { golangDockerFile } from "../runtimes/golang/golangDocker";
+import { nodeDockerFile } from "../runtimes/node/nodeDocker";
+import { pythonDockerFile } from "../runtimes/python/pythonDocker";
+import { webDockerFile } from "../runtimes/web/webDocker";
 import { writeComposeFile } from "./composeWriter";
-import { generateRuntimeDockerfiles } from "./runtimeDockerfileGenerator";
 import { generateServices } from "./serviceGenerator";
-// import { getStrategyForRuntime, getCategoryForRuntime } from "../strategies";
+
+const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
+
+const dockerfiles: Record<IRunTime, (runtime: IRunTime) => object> = {
+  node: nodeDockerFile,
+  web: webDockerFile,
+  golang: golangDockerFile,
+  python: pythonDockerFile,
+};
+
+async function generateRuntimeDockerfiles(
+  config: IBuiltConfig,
+  runtimes: IRunTime[],
+  composeDir: string,
+  log: (...args: any[]) => void,
+  error: (...args: any[]) => void
+) {
+  for (const runtime of runtimes) {
+    const runtimeDockerfilePath = path.join(
+      composeDir,
+      "allTests",
+      runtime,
+      `${runtime}.Dockerfile`
+    );
+
+    fs.mkdirSync(path.dirname(runtimeDockerfilePath), { recursive: true });
+
+    fs.writeFileSync(
+      runtimeDockerfilePath,
+      yaml.dump(dockerfiles[runtime](runtime), {
+        lineWidth: -1,
+        noRefs: true,
+      })
+    );
+  }
+}
 
 export async function setupDockerCompose(
   config: IBuiltConfig,
@@ -20,6 +59,7 @@ export async function setupDockerCompose(
     webSocketPort?: number;
   }
 ) {
+  console.log("mark6", config);
   const logger = options?.logger;
   // const dockerManPort = options?.dockerManPort;
   const webSocketPort = options?.webSocketPort;
@@ -33,10 +73,9 @@ export async function setupDockerCompose(
   }
 
   // Define runtimes once at the beginning
-  const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
 
   // Log strategy information for each runtime
-  log("Generating docker-compose with strategies:");
+  // log("Generating docker-compose with strategies:");
   // for (const runtime of runtimes) {
   //   const strategy = getStrategyForRuntime(runtime);
   //   const category = getCategoryForRuntime(runtime);
@@ -53,16 +92,21 @@ export async function setupDockerCompose(
   // First, ensure all necessary directories exist
   const composeDir = path.join(process.cwd(), "testeranto", "bundles");
 
+  console.log("mark7");
   try {
     // Setup directories
     // await setupDirectories(config, runtimes, composeDir, log, error);
 
+    console.log("mark10", testsName);
+
     fs.mkdirSync(composeDir, { recursive: true });
 
     // Generate runtime-specific Dockerfiles
-    await generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
+    // await generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
 
     // Generate services
+
+    console.log("mark5", testsName);
     const services = await generateServices(
       config,
       runtimes,
@@ -72,11 +116,8 @@ export async function setupDockerCompose(
     );
 
     // Write the compose file
+    console.log("mark9", testsName);
     await writeComposeFile(services, testsName, composeDir, error);
-
-    log(
-      "Docker-compose generation complete with strategy-aware configurations"
-    );
   } catch (err) {
     error(`Error in setupDockerCompose:`, err);
     throw err;

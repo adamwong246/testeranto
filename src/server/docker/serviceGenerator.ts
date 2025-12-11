@@ -3,9 +3,13 @@
 
 import { IBuiltConfig, IRunTime } from "../../Types";
 import chromiumService from "./chromiumService";
-const buildService = await import("./buildService");
+// const buildService = await import("./buildService");
 import aiderPoolService from "./aiderPoolService";
-import { getProcessPoolType } from "../utils";
+import { golangDockerFile } from "../runtimes/golang/golangDocker";
+import { nodeDockerFile } from "../runtimes/node/nodeDocker";
+import { pythonDockerFile } from "../runtimes/python/pythonDocker";
+import { webDockerFile } from "../runtimes/web/webDocker";
+import path from "path";
 
 export async function generateServices(
   config: IBuiltConfig,
@@ -14,6 +18,9 @@ export async function generateServices(
   log: (...args: any[]) => void,
   error: (...args: any[]) => void
 ): Promise<Record<string, any>> {
+  console.log("generateServices");
+  console.log("mark3 node", config);
+
   const services: any = {};
 
   // Add Chromium service for web tests using browserless/chrome
@@ -34,15 +41,28 @@ export async function generateServices(
 
   // Generate 3 services for each runtime: build, static analysis, and process pool
   for (const runtime of runtimes) {
+    if (runtime === "node") {
+      console.log("mark2 node", config);
+      services[`${runtime}-builder`] = nodeDockerFile(config);
+    } else if (runtime === "web") {
+      services[`${runtime}-builder`] = webDockerFile(config);
+    } else if (runtime === "golang") {
+      services[`${runtime}-builder`] = golangDockerFile(config);
+    } else if (runtime === "python") {
+      services[`${runtime}-builder`] = pythonDockerFile(config);
+    } else {
+      throw `unknown runtime ${runtime}`;
+    }
+
     // Check if the runtime has tests in the config
-    const hasTests =
-      config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
-    if (!hasTests) continue;
+    // const hasTests =
+    //   config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
+    // if (!hasTests) continue;
 
     // 1. Build Service
-    const buildServiceName = `${runtime}-build`;
+    // const buildServiceName = `${runtime}-build`;
     // const buildService = await import("./buildService");
-    const buildServiceConfig = buildService.default(runtime);
+    // const buildServiceConfig = buildService.default(runtime);
 
     // console.log("buildServiceConfig", runtime);
 
@@ -52,7 +72,7 @@ export async function generateServices(
     // }
     // buildServiceConfig.environment.COMPLETION_SIGNAL_PATH = `/workspace/testeranto/metafiles/${runtime}/build_complete`;
 
-    services[buildServiceName] = buildServiceConfig;
+    // services[buildServiceName] = buildServiceConfig;
 
     // // 2. Static Analysis Service
     // const analysisServiceName = `${runtime}-analysis`;
@@ -70,6 +90,8 @@ export async function generateServices(
     // );
     // services[processPoolServiceName] = processPoolServiceConfig;
   }
+
+  console.log("generateServices1", services);
 
   return services;
 }
@@ -194,7 +216,7 @@ export async function generateServices(
 //         echo "Running Node.js/Web static analysis..."
 //         # Check if there are any checks configured
 //         if [ -n "$(echo '${JSON.stringify(
-//           config.checks || {}
+//           config.check || {}
 //         )}' | grep -v '^[{}]*$')" ]; then
 //           echo "User-defined checks found, running analysis..."
 //           # Run analysis (simplified for now)

@@ -2,15 +2,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestconfig } from "./src/Types";
 import {
-  CHECKS_CONFIG,
+  createGolangLangConfig,
+  // CHECKS_CONFIG,
   createLangConfig,
-  SINGLE_PROD_BLOCK,
-  SINGLE_TEST_BLOCK,
+  // SINGLE_PROD_BLOCK,
+  // SINGLE_TEST_BLOCK,
 } from "./allTestsUtils";
-import { golangConfig } from "./golangConfig";
-import { pythonConfig } from "./pythonConfig";
-import { webConfig } from "./webConfig";
-import { nodeConfig } from "./nodeConfig";
+// import { golangConfig } from "./golangConfig";
+// import { pythonConfig } from "./pythonConfig";
+// import { webConfig } from "./webConfig";
+// import { nodeConfig } from "./nodeConfig";
 
 const config: ITestconfig = {
   featureIngestor: function (s: string): Promise<string> {
@@ -21,55 +22,36 @@ const config: ITestconfig = {
   chromiumPort: 4567,
   ports: ["3333", "3334"],
   src: "",
-  test: SINGLE_TEST_BLOCK,
-  prod: SINGLE_PROD_BLOCK,
-  checks: CHECKS_CONFIG, // Legacy - kept for backward compatibility
-  
-  // New runtime-native check configuration
-  check: {
-    node: "src/staticAnalysis/node.js",
-    python: "src/staticAnalysis/python.py",
-    golang: "src/staticAnalysis/go.go",
-    web: "src/staticAnalysis/web.js",
-    enabled: true,
-    failOnError: true,
-  },
-  
-  build: [golangConfig.options.build!],
 
-  processPool: {
-    maxConcurrent: 4,
-    timeoutMs: 30000,
-  },
+  // processPool: {
+  //   maxConcurrent: 4,
+  //   timeoutMs: 30000,
+  // },
 
-  chrome: {
-    sharedInstance: true,
-    maxContexts: 6,
-    memoryLimitMB: 512,
-  },
+  // chrome: {
+  //   sharedInstance: true,
+  //   maxContexts: 6,
+  //   memoryLimitMB: 512,
+  // },
 
   golang: createLangConfig(
-    golangConfig.flavor,
-    golangConfig.testFile,
-    golangConfig.options
+    "example/Calculator.golingvu.test.go",
+    "example/staticAnalysis/golang.ts"
   ),
 
   python: createLangConfig(
-    pythonConfig.flavor,
-    pythonConfig.testFile,
-    pythonConfig.options
+    "example/Calculator.pitono.test.py",
+    "example/staticAnalysis/python.py"
   ),
 
   web: createLangConfig(
-    webConfig.flavor,
-    webConfig.testFile,
-    webConfig.options
+    "example/Calculator.test.ts",
+    "example/staticAnalysis/web.ts"
   ),
 
   node: createLangConfig(
-    nodeConfig.flavor,
-    nodeConfig.testFile,
-    nodeConfig.options
+    "example/Calculator.test.ts",
+    "example/staticAnalysis/node.ts"
   ),
 };
 

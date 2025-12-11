@@ -2,9 +2,9 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { GolingvuBuild } from "./clients/golingvuBuild";
-import { PitonoBuild } from "./clients/pitonoBuild";
-import { AppHtml } from "./clients/utils/buildTemplates";
+// import { GolingvuBuild } from "./clients/golingvuBuild";
+// import { PitonoBuild } from "./clients/pitonoBuild";
+// import { AppHtml } from "./clients/utils/buildTemplates";
 import { setupFileSystem } from "./server/serverClasees/fileSystemSetup";
 import { setupKeypressHandling } from "./server/keypressHandler";
 import { Server } from "./server/serverClasees/Server";
@@ -79,33 +79,33 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   // Handle golang tests using GolingvuBuild
   // const golangTests = config.tests.filter((test) => test[1] === "golang");
   // const golangTests = config.golang.map((_, testName) => [
-  const hasGolangTests = Object.keys(config.golang).length > 0;
-  if (hasGolangTests) {
-    const golingvuBuild = new GolingvuBuild(config, testsName);
-    const golangEntryPoints = await golingvuBuild.build();
-    golingvuBuild.onBundleChange(() => {
-      Object.keys(golangEntryPoints).forEach((entryPoint) => {
-        if (pm) {
-          pm.addToQueue(entryPoint, "golang");
-        }
-      });
-    });
-  }
+  // const hasGolangTests = Object.keys(config.golang).length > 0;
+  // if (hasGolangTests) {
+  //   const golingvuBuild = new GolingvuBuild(config, testsName);
+  //   const golangEntryPoints = await golingvuBuild.build();
+  //   golingvuBuild.onBundleChange(() => {
+  //     Object.keys(golangEntryPoints).forEach((entryPoint) => {
+  //       if (pm) {
+  //         pm.addToQueue(entryPoint, "golang");
+  //       }
+  //     });
+  //   });
+  // }
 
-  // Handle pitono (Python) tests by generating their metafiles
-  // const pitonoTests = config.tests.filter((test) => test[1] === "python");
-  const hasPitonoTests = Object.keys(config.python).length > 0;
-  if (hasPitonoTests) {
-    const pitonoBuild = new PitonoBuild(config, testsName);
-    const pitonoEntryPoints = await pitonoBuild.build();
-    pitonoBuild.onBundleChange(() => {
-      Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
-        if (pm) {
-          pm.addToQueue(entryPoint, "python");
-        }
-      });
-    });
-  }
+  // // Handle pitono (Python) tests by generating their metafiles
+  // // const pitonoTests = config.tests.filter((test) => test[1] === "python");
+  // const hasPitonoTests = Object.keys(config.python).length > 0;
+  // if (hasPitonoTests) {
+  //   const pitonoBuild = new PitonoBuild(config, testsName);
+  //   const pitonoEntryPoints = await pitonoBuild.build();
+  //   pitonoBuild.onBundleChange(() => {
+  //     Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
+  //       if (pm) {
+  //         pm.addToQueue(entryPoint, "python");
+  //       }
+  //     });
+  //   });
+  // }
 
   // create the necessary folders for all tests
   [

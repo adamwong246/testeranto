@@ -178,21 +178,21 @@ export type IPluginFactory = (
   entrypoints?: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | "pure" | `golang` | `python`;
+export type IRunTime = `node` | `web` | `golang` | `python`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
-export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
-export type IFlavor = ["compiled" | "interpreted" | "VM" | "chrome", string];
-export type IStrategy =
-  | "combined-build-test-process-pools" // Interpreted languages: Node.js, Python, Ruby, PHP
-  | "separate-build-combined-test" // Compiled languages: Go, Rust
-  | "combined-service-shared-jvm" // VM languages: Java
-  | "combined-service-shared-chrome"; // Browser environment: Web
-export type IProd = [IDockerSteps, string][][];
-export type Itest = [IDockerSteps, string][][];
+// export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
+// export type IFlavor = ["compiled" | "interpreted" | "VM" | "chrome", string];
+// export type IStrategy =
+//   | "combined-build-test-process-pools" // Interpreted languages: Node.js, Python, Ruby, PHP
+//   | "separate-build-combined-test" // Compiled languages: Go, Rust
+//   | "combined-service-shared-jvm" // VM languages: Java
+//   | "combined-service-shared-chrome"; // Browser environment: Web
+// export type IProd = [IDockerSteps, string][][];
+// export type Itest = [IDockerSteps, string][][];
 
-export type IChecks = Record<string, [[IDockerSteps, string][], string]>;
+// export type IChecks = Record<string, [[IDockerSteps, string][], string]>;
 
 export type ITestconfig = {
   httpPort: number;
@@ -201,100 +201,100 @@ export type ITestconfig = {
   importPlugins: IPluginFactory[];
   ports: string[];
   src: string;
-  test: Itest;
-  prod: IProd;
-  checks: IChecks; // Legacy - kept for backward compatibility
+  // test: Itest;
+  // prod: IProd;
+  check: string;
 
   // New runtime-native check configuration
-  check?: {
-    // Runtime-specific entry points
-    node?: string; // e.g., "src/staticAnalysis/node.js"
-    python?: string; // e.g., "src/staticAnalysis/python.py"
-    golang?: string; // e.g., "src/staticAnalysis/go.go"
-    web?: string; // e.g., "src/staticAnalysis/web.js"
-    java?: string; // e.g., "src/staticAnalysis/Java.java"
+  // check?: {
+  //   // Runtime-specific entry points
+  //   node?: string; // e.g., "src/staticAnalysis/node.js"
+  //   python?: string; // e.g., "src/staticAnalysis/python.py"
+  //   golang?: string; // e.g., "src/staticAnalysis/go.go"
+  //   web?: string; // e.g., "src/staticAnalysis/web.js"
+  //   java?: string; // e.g., "src/staticAnalysis/Java.java"
 
-    // Common options
-    enabled?: boolean;
-    failOnError?: boolean;
-  };
+  //   // Common options
+  //   enabled?: boolean;
+  //   failOnError?: boolean;
+  // };
 
   // Strategy-specific configurations
-  build?: Itest; // Separate build steps for compiled languages
+  // build?: Itest; // Separate build steps for compiled languages
 
   // Unified monitoring configuration
-  monitoring?: {
-    websocketPort?: number;
-    apiPort?: number;
-    maxLogLines?: number;
-    updateInterval?: number;
-  };
+  // monitoring?: {
+  //   websocketPort?: number;
+  //   apiPort?: number;
+  //   maxLogLines?: number;
+  //   updateInterval?: number;
+  // };
 
-  processPool?: {
-    maxConcurrent: number;
-    timeoutMs: number;
-    monitoring?: {
-      captureStdout?: boolean;
-      captureStderr?: boolean;
-    };
-  };
+  // processPool?: {
+  //   maxConcurrent: number;
+  //   timeoutMs: number;
+  //   monitoring?: {
+  //     captureStdout?: boolean;
+  //     captureStderr?: boolean;
+  //   };
+  // };
 
-  chrome?: {
-    sharedInstance: boolean;
-    maxContexts: number;
-    memoryLimitMB: number;
-    monitoring?: {
-      captureConsole?: boolean;
-      captureNetwork?: boolean;
-      captureErrors?: boolean;
-      wsEndpoint?: string;
-    };
-  };
+  // chrome?: {
+  //   sharedInstance: boolean;
+  //   maxContexts: number;
+  //   memoryLimitMB: number;
+  //   monitoring?: {
+  //     captureConsole?: boolean;
+  //     captureNetwork?: boolean;
+  //     captureErrors?: boolean;
+  //     wsEndpoint?: string;
+  //   };
+  // };
 
-  // Docker monitoring configuration
-  docker?: {
-    monitoring?: {
-      method?: "logs" | "attach";
-      follow?: boolean;
-      tail?: number;
-    };
-  };
+  // // Docker monitoring configuration
+  // docker?: {
+  //   monitoring?: {
+  //     method?: "logs" | "attach";
+  //     follow?: boolean;
+  //     tail?: number;
+  //   };
+  // };
 
   golang: {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
-    flavor: IFlavor;
-    strategy: IStrategy;
-    test: Itest;
-    prod: IProd;
-    checks: IChecks; // Legacy - kept for backward compatibility
-    build?: Itest; // Separate build for Go
-    monitoring?: {
-      // Go-specific monitoring options
-      captureTestOutput?: boolean;
-      captureCoverage?: boolean;
-    };
+    // flavor: IFlavor;
+    // strategy: IStrategy;
+    // test: Itest;
+    // prod: IProd;
+    check: string;
+    // build?: Itest; // Separate build for Go
+    // monitoring?: {
+    //   // Go-specific monitoring options
+    //   captureTestOutput?: boolean;
+    //   captureCoverage?: boolean;
+    // };
   };
 
   python: {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
-    flavor: IFlavor;
-    strategy: IStrategy;
-    test: Itest;
-    prod: IProd;
-    checks: IChecks; // Legacy - kept for backward compatibility
-    processPool?: {
-      maxConcurrent: number;
-      timeoutMs: number;
-    };
-    monitoring?: {
-      // Python-specific monitoring options
-      capturePytestOutput?: boolean;
-      captureLogging?: boolean;
-    };
+    // flavor: IFlavor;
+    // strategy: IStrategy;
+    // test: Itest;
+    // prod: IProd;
+    check: string;
+    // processPool?: {
+    //   maxConcurrent: number;
+    //   timeoutMs: number;
+    // };
+    // monitoring?: {
+    //   // Python-specific monitoring options
+    //   capturePytestOutput?: boolean;
+    //   captureLogging?: boolean;
+    // };
   };
 
   node: {
@@ -302,20 +302,20 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
-    flavor: IFlavor;
-    strategy: IStrategy;
-    test: Itest;
-    prod: IProd;
-    checks: IChecks; // Legacy - kept for backward compatibility
-    processPool?: {
-      maxConcurrent: number;
-      timeoutMs: number;
-    };
-    monitoring?: {
-      // Node-specific monitoring options
-      captureConsole?: boolean;
-      captureUncaughtExceptions?: boolean;
-    };
+    // flavor: IFlavor;
+    // strategy: IStrategy;
+    // test: Itest;
+    // prod: IProd;
+    check: string;
+    // processPool?: {
+    //   maxConcurrent: number;
+    //   timeoutMs: number;
+    // };
+    // monitoring?: {
+    //   // Node-specific monitoring options
+    //   captureConsole?: boolean;
+    //   captureUncaughtExceptions?: boolean;
+    // };
   };
 
   web: {
@@ -323,28 +323,28 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
-    flavor: IFlavor;
-    strategy: IStrategy;
-    test: Itest;
-    prod: IProd;
-    checks: IChecks; // Legacy - kept for backward compatibility
-    chrome?: {
-      sharedInstance: boolean;
-      maxContexts: number;
-      memoryLimitMB: number;
-      monitoring?: {
-        captureConsole?: boolean;
-        captureNetwork?: boolean;
-        captureErrors?: boolean;
-        wsEndpoint?: string;
-      };
-    };
-    monitoring?: {
-      // Web-specific monitoring options
-      capturePageErrors?: boolean;
-      captureNetworkRequests?: boolean;
-      captureConsoleMessages?: boolean;
-    };
+    // flavor: IFlavor;
+    // strategy: IStrategy;
+    // test: Itest;
+    // prod: IProd;
+    check: string;
+    // chrome?: {
+    //   sharedInstance: boolean;
+    //   maxContexts: number;
+    //   memoryLimitMB: number;
+    //   monitoring?: {
+    //     captureConsole?: boolean;
+    //     captureNetwork?: boolean;
+    //     captureErrors?: boolean;
+    //     wsEndpoint?: string;
+    //   };
+    // };
+    // monitoring?: {
+    //   // Web-specific monitoring options
+    //   capturePageErrors?: boolean;
+    //   captureNetworkRequests?: boolean;
+    //   captureConsoleMessages?: boolean;
+    // };
   };
 };
 

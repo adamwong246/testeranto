@@ -4,8 +4,8 @@
 
 import fs from "fs";
 import { IBuiltConfig, ISummary } from "../../Types";
-import { IMode } from "../../app/frontend/types";
 import { ServerTaskManagerBase } from "./ServerTaskManagerBase";
+import { IMode } from "../types";
 
 export class ServerTaskManager extends ServerTaskManagerBase {
   currentBuildResolve: (() => void) | null = null;

@@ -1,4 +1,4 @@
-import { IRunTime } from "../../../Types";
+import { IBuiltConfig, IRunTime } from "../../../Types";
 import { baseNodeImage } from "../../nodeVersion";
 
 export const golangDockerCmd = `FROM ${baseNodeImage}
@@ -18,28 +18,30 @@ RUN npm uninstall esbuild @esbuild/darwin-arm64 @esbuild/darwin-x64 @esbuild/win
 RUN npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional
 `;
 
-export const golangDockerFile = (runtime: IRunTime) => {
+export const golangDockerFile = (config: IBuiltConfig) => {
   return {
     build: {
       context: "/Users/adam/Code/testeranto",
-      dockerfile: `testeranto/bundles/allTests/${runtime}/${runtime}.Dockerfile`,
-      tags: [`bundles-${runtime}-build:latest`],
-      args:
-        runtime === "node"
-          ? {
-              NODE_MJS_HASH: "cab84cac12fc3913ce45e7e53425b8bb",
-            }
-          : {},
+      dockerfile: `testeranto/bundles/allTests/golang.Dockerfile`,
+      tags: [`bundles-golang-build:latest`],
+      //   args:
+      //     runtime === "node"
+      //       ? {
+      //           NODE_MJS_HASH: "cab84cac12fc3913ce45e7e53425b8bb",
+      //         }
+      //       : {},
+      // },
     },
     volumes: [
       "/Users/adam/Code/testeranto:/workspace",
       "node_modules:/workspace/node_modules",
+      // config.check["golang"],
     ],
-    image: `bundles-${runtime}-build:latest`,
+    image: `bundles-golang-build:latest`,
     restart: "unless-stopped",
     environment: {
-      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/${runtime}`,
-      METAFILES_DIR: `/workspace/testeranto/metafiles/${runtime}`,
+      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/golang`,
+      METAFILES_DIR: `/workspace/testeranto/metafiles/golang`,
       // Don't serve files - Server_TCP will handle that
       ESBUILD_SERVE_PORT: "0", // Disable esbuild serve
       IN_DOCKER: "true", // Indicate we're running in Docker
@@ -48,7 +50,7 @@ export const golangDockerFile = (runtime: IRunTime) => {
     command: [
       "sh",
       "-c",
-      `echo 'Starting ${runtime} build in watch mode...'; 
+      `echo 'Starting golang build in watch mode...'; 
                 echo 'Installing dependencies in /workspace/node_modules...'; 
                 cd /workspace && \
                 # Remove any .npmrc files
@@ -69,15 +71,15 @@ export const golangDockerFile = (runtime: IRunTime) => {
                 npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
                 npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
                 echo 'Creating output directory...'; 
-                mkdir -p /workspace/testeranto/bundles/allTests/${runtime};
-                mkdir -p /workspace/testeranto/metafiles/${runtime};
+                mkdir -p /workspace/testeranto/bundles/allTests/golang;
+                mkdir -p /workspace/testeranto/metafiles/golang;
                 echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
                 
-                echo "Starting build process for ${runtime}..."
-                npx tsx dist/prebuild/server/builders/${runtime}.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                echo "Starting build process for golang..."
+                npx tsx dist/prebuild/server/builders/golang.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
                 
                 echo "Build complete. Creating completion signal..."
-                touch /workspace/testeranto/metafiles/${runtime}/build_complete
+                touch /workspace/testeranto/metafiles/golang/build_complete
                 
                 echo "Build service ready. Keeping container alive..."
                 while true; do
@@ -87,7 +89,7 @@ export const golangDockerFile = (runtime: IRunTime) => {
     healthcheck: {
       test: [
         "CMD-SHELL",
-        `[ -f /workspace/testeranto/metafiles/${runtime}/allTests.json ] && echo "healthy" || exit 1`,
+        `[ -f /workspace/testeranto/metafiles/golang/allTests.json ] && echo "healthy" || exit 1`,
       ],
       interval: "10s",
       timeout: "30s",
@@ -96,3 +98,39 @@ export const golangDockerFile = (runtime: IRunTime) => {
     },
   };
 };
+
+// export function setupDockerfileForBuildWeb(config: string): string {
+//   const webSpecificPackages = `\\
+//     chromium \\
+//     nss \\
+//     freetype \\
+//     freetype-dev \\
+//     harfbuzz \\
+//     ca-certificates \\
+//     ttf-freefont \\
+//     font-noto-emoji`;
+
+//   return `FROM ${baseNodeImage}
+// WORKDIR /workspace
+// RUN apk update && apk add --no-cache \\
+//     build-base \\
+//     python3 \\
+//     py3-pip \\
+//     cairo-dev \\
+//     pango-dev \\
+//     jpeg-dev \\
+//     giflib-dev \\
+//     librsvg-dev \\
+//     libxml2-utils${webSpecificPackages} && \\
+//     rm -rf /var/cache/apk/*
+// RUN npm install -g node-gyp
+// ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+// ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+// ${COMMON_PACKAGE_INSTALL}
+// COPY ${config} .
+// COPY dist/prebuild/server/builders/web.mjs ./web.mjs
+// # Default command that keeps the container alive
+// # The actual build command will be run by docker-compose
+// CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
+// `;
+// }

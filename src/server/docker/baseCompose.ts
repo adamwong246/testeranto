@@ -1,4 +1,4 @@
-export default (services, testsName) => {
+export default (services) => {
   return {
     version: "3.8",
     services,

@@ -1,88 +1,81 @@
 import {
-  node_default
-} from "../../../chunk-EH2APWUF.mjs";
-import {
-  runBuild
-} from "../../../chunk-IOVEJAE6.mjs";
-import "../../../chunk-SFBHYNUJ.mjs";
-import "../../../chunk-3X2YHN6Q.mjs";
+  esbuildConfigs_default,
+  featuresPlugin_default,
+  inputFilesPlugin_default,
+  rebuildPlugin_default
+} from "../../../chunk-SFBHYNUJ.mjs";
 
 // src/server/runtimes/node/node.ts
-import { spawn } from "child_process";
+import { fork } from "child_process";
+import esbuild from "esbuild";
+
+// src/server/runtimes/node/esbuild.ts
 import fs from "fs";
-import path from "path";
-async function runNodeTests() {
-  console.log("NODE BUILDER: Build complete, running tests...");
-  const bundlesDir = process.env.BUNDLES_DIR || "/workspace/testeranto/bundles/allTests/node";
-  console.log(`Looking for test files in: ${bundlesDir}`);
-  const testFiles = [];
-  function findTestFiles(dir) {
-    if (!fs.existsSync(dir)) {
-      console.log(`Directory does not exist: ${dir}`);
-      return;
-    }
-    const items = fs.readdirSync(dir);
-    for (const item of items) {
-      const fullPath = path.join(dir, item);
-      const stat = fs.statSync(fullPath);
-      if (stat.isDirectory()) {
-        findTestFiles(fullPath);
-      } else if (item.endsWith(".test.mjs")) {
-        testFiles.push(fullPath);
-      }
-    }
-  }
-  findTestFiles(bundlesDir);
-  console.log(`Found ${testFiles}`);
-  for (const testFile of testFiles) {
-    console.log(`Running test: ${testFile}`);
-    try {
-      const testName = path.basename(testFile, ".test.mjs");
-      const sourcePath = `src/tests/${testName}.test.ts`;
-      const testResources = JSON.stringify({
-        wsHost: "host.docker.internal",
-        wsPort: 3456,
-        ports: [3456],
-        name: "node-test",
-        fs: testFile.replace("bundles", "reports"),
-        environment: {
-          IN_DOCKER: "true",
-          RUNTIME: "node"
-        }
-      });
-      const child = spawn("node", [testFile, "3456", testResources], {
-        stdio: "inherit"
-      });
-      await new Promise((resolve, reject) => {
-        child.on("close", (code) => {
-          if (code === 0) {
-            console.log(`Test ${path.basename(testFile)} passed`);
-            resolve(null);
-          } else {
-            console.log(
-              `Test ${path.basename(testFile)} failed with code ${code}`
-            );
-            resolve(null);
-          }
-        });
-        child.on("error", reject);
-      });
-    } catch (error) {
-      console.error(`Error running test ${testFile}:`, error);
-    }
-  }
-  console.log("NODE BUILDER: All tests completed");
+var absoluteBundlesDir = (c) => {
+  return "./testeranto/bundles/allTests/node/";
+};
+var esbuild_default = (config, testName2) => {
+  console.log(fs.readFileSync("./example/Calculator.test.ts").toString());
+  const entrypoints = ["./example/Calculator.test.ts"];
+  const { inputFilesPluginFactory, register } = inputFilesPlugin_default(
+    "node",
+    testName2
+  );
+  return {
+    ...esbuildConfigs_default(config),
+    // splitting: false, // Disable splitting since each entry point is separate
+    outdir: absoluteBundlesDir(config),
+    outbase: ".",
+    // Preserve directory structure relative to outdir
+    metafile: true,
+    supported: {
+      "dynamic-import": true
+    },
+    define: {
+      "process.env.FLUENTFFMPEG_COV": "0",
+      ENV: `"node"`
+    },
+    absWorkingDir: process.cwd(),
+    platform: "node",
+    // external: ["react", ...config.node.externals],
+    packages: "external",
+    entryPoints: entrypoints,
+    plugins: [
+      featuresPlugin_default,
+      inputFilesPluginFactory,
+      rebuildPlugin_default("node"),
+      ...config.node.plugins.map((p) => p(register, entrypoints)) || []
+    ]
+  };
+};
+
+// src/server/runtimes/node/node.ts
+var testName = process.argv[2];
+async function startBundling(config, onMetafileChange) {
+  console.log(`NODE BUILDER is now bundling:  ${testName}`);
+  const n = esbuild_default(config, testName);
+  console.log(`NODE BUILDER conf:  `, n);
+  const bv = await esbuild.build(n);
+  console.log(`NODE BUILDER res:  `, bv);
+  fork("testeranto/bundles/allTests/node/example/Calculator.test.mjs");
+  onMetafileChange(bv);
+}
+async function startStaticAnalysis(esbuildResult) {
+  console.log(`NODE BUILDER is now performing static analysis upon: `);
+}
+async function startBddTests(esbuildResult) {
+  console.log(`NODE BUILDER is now running testeranto tests:`);
 }
 async function main() {
+  const config = (await import(`/workspace/${testName}`)).default;
+  console.log(config);
   try {
-    await runBuild(
-      node_default,
-      (config) => Object.keys(config.node.tests),
-      "NODE"
-    );
-    await runNodeTests();
+    await startBundling(config, (esbuildResult) => {
+      startStaticAnalysis(esbuildResult);
+      startBddTests(esbuildResult);
+    });
   } catch (error) {
-    console.error("NODE BUILDER: Error during build or test execution:", error);
+    console.error("NODE BUILDER: Error:", error);
     process.exit(1);
   }
 }

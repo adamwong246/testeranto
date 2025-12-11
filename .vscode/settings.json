@@ -16,9 +16,12 @@
     "Ibdd",
     "iinput",
     "mothership",
+    "mypy",
     "netcat",
     "noto",
     "Pitono",
+    "pylint",
+    "returncode",
     "Testconfig",
     "Testeranto",
     "Tiposkripto"

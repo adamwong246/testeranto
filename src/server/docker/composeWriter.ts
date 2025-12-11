@@ -10,25 +10,29 @@ export async function writeComposeFile(
   composeDir: string,
   error: (...args: any[]) => void
 ) {
+  console.log("mark8", services);
   const composeFilePath = path.join(
     composeDir,
     `${testsName}-docker-compose.yml`
   );
 
   // Ensure all test services have restart: "no" explicitly
-  for (const [serviceName, serviceConfig] of Object.entries(services)) {
-    if (serviceName.includes("-example-") || serviceName.includes("-test-")) {
-      // This is a test service
-      serviceConfig.restart = "no";
-      // Also ensure no health check
-      delete serviceConfig.healthcheck;
-    }
-  }
+  // for (const [serviceName, serviceConfig] of Object.entries(services)) {
+  //   console.log("mark1", serviceName);
+  //   // if (serviceName.includes("-example-") || serviceName.includes("-test-")) {
+  //   //   // This is a test service
+  //   //   serviceConfig.restart = "no";
+  //   //   // Also ensure no health check
+  //   //   delete serviceConfig.healthcheck;
+  //   // }
+  //   services[serviceName] = "";
+  // }
 
+  console.log("docker-compose writting to: ", services);
   try {
     fs.writeFileSync(
       composeFilePath,
-      yaml.dump(baseCompose(services, testsName), {
+      yaml.dump(baseCompose(services), {
         lineWidth: -1,
         noRefs: true,
       })

@@ -1,4 +1,4 @@
-import { IRunTime } from "../../../Types";
+import { IBuiltConfig, IRunTime } from "../../../Types";
 import { baseNodeImage } from "../../nodeVersion";
 
 export const nodeDockerCmd = `FROM ${baseNodeImage}
@@ -18,28 +18,27 @@ RUN npm uninstall esbuild @esbuild/darwin-arm64 @esbuild/darwin-x64 @esbuild/win
 RUN npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional
 `;
 
-export const nodeDockerFile = (runtime: IRunTime) => {
+export const nodeDockerFile = (config: IBuiltConfig) => {
+  console.log("nodeDockerFile", config);
   return {
     build: {
       context: "/Users/adam/Code/testeranto",
-      dockerfile: `testeranto/bundles/allTests/${runtime}/${runtime}.Dockerfile`,
-      tags: [`bundles-${runtime}-build:latest`],
-      args:
-        runtime === "node"
-          ? {
-              NODE_MJS_HASH: "cab84cac12fc3913ce45e7e53425b8bb",
-            }
-          : {},
+      dockerfile: `testeranto/bundles/allTests/node.Dockerfile`,
+      tags: [`bundles-node-build:latest`],
+      args: {
+        NODE_MJS_HASH: "cab84cac12fc3913ce45e7e563425b8bb",
+      },
     },
     volumes: [
       "/Users/adam/Code/testeranto:/workspace",
       "node_modules:/workspace/node_modules",
+      // config.check["node"],
     ],
-    image: `bundles-${runtime}-build:latest`,
+    image: `bundles-node-build:latest`,
     restart: "unless-stopped",
     environment: {
-      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/${runtime}`,
-      METAFILES_DIR: `/workspace/testeranto/metafiles/${runtime}`,
+      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/node`,
+      METAFILES_DIR: `/workspace/testeranto/metafiles/node`,
       // Don't serve files - Server_TCP will handle that
       //   ESBUILD_SERVE_PORT: "0", // Disable esbuild serve
       IN_DOCKER: "true", // Indicate we're running in Docker
@@ -48,7 +47,7 @@ export const nodeDockerFile = (runtime: IRunTime) => {
     command: [
       "sh",
       "-c",
-      `echo 'Starting ${runtime} build in watch mode...'; 
+      `echo 'Starting node build in watch mode...'; 
                 echo 'Installing dependencies in /workspace/node_modules...'; 
                 cd /workspace && \
                 # Remove any .npmrc files
@@ -69,25 +68,18 @@ export const nodeDockerFile = (runtime: IRunTime) => {
                 npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
                 npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
                 echo 'Creating output directory...'; 
-                mkdir -p /workspace/testeranto/bundles/allTests/${runtime};
-                mkdir -p /workspace/testeranto/metafiles/${runtime};
+                mkdir -p /workspace/testeranto/bundles/allTests/node;
+                mkdir -p /workspace/testeranto/metafiles/node;
                 echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
                 
-                echo "Starting build process for ${runtime}..."
-                npx tsx dist/prebuild/server/builders/${runtime}.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
-                
-                echo "Build complete. Creating completion signal..."
-                touch /workspace/testeranto/metafiles/${runtime}/build_complete
-                
-                echo "Build service ready. Keeping container alive..."
-                while true; do
-                  sleep 3600
-                done`,
+                echo "Starting build process for node..."
+                npx tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                `,
     ],
     healthcheck: {
       test: [
         "CMD-SHELL",
-        `[ -f /workspace/testeranto/metafiles/${runtime}/allTests.json ] && echo "healthy" || exit 1`,
+        `[ -f /workspace/testeranto/metafiles/node/allTests.json ] && echo "healthy" || exit 1`,
       ],
       interval: "10s",
       timeout: "30s",
