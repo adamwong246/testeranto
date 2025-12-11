@@ -10,31 +10,15 @@ import {
   generatePitonoMetafile,
   writePitonoMetafile,
 } from "../../clients/utils/pitonoMetafile";
-import { IBuiltConfig, IRunTime } from "../../Types";
+
+import { IBuiltConfig, IRunTime } from "../../lib";
+import { IMode } from "../types";
 import { getRunnables } from "../utils";
 import { BuildProcessManager } from "./BuildProcessManager";
 import { BuildProcessStarter } from "./BuildProcessStarter";
 import { ServerTestExecutor } from "./ServerTestExecutor";
 import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
 import { TypeCheckNotifier } from "./TypeCheckNotifier";
-
-// type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
-// type ProcessType = "process" | "promise";
-// type ProcessStatus = "running" | "exited" | "error" | "completed";
-// interface ProcessInfo {
-//   child?: ChildProcess;
-//   promise?: Promise<any>;
-//   status: ProcessStatus;
-//   exitCode?: number;
-//   error?: string;
-//   command: string;
-//   pid?: number;
-//   timestamp: string;
-//   type: ProcessType;
-//   category: ProcessCategory;
-//   testName?: string;
-//   platform: IRunTime;
-// }
 
 export class Server extends ServerTestExecutor {
   webMetafileWatcher: fs.FSWatcher;
@@ -46,7 +30,7 @@ export class Server extends ServerTestExecutor {
   testName: string;
   private composeDir: string;
 
-  constructor(configs: IBuiltConfig, testName: string, mode: string) {
+  constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
 
     configs.ports.forEach((port) => {

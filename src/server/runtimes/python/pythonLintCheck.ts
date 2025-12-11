@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import { spawn } from "child_process";
 
-export async function pythonTypeCheck(
+export async function pythonLintCheck(
   entrypoint: string,
   addableFiles: string[],
   projectName: string,
@@ -17,7 +18,7 @@ export async function pythonTypeCheck(
     fs.mkdirSync(reportDest, { recursive: true });
   }
 
-  const typeErrorsPath = `${reportDest}/type_errors.txt`;
+  const lintErrorsPath = `${reportDest}/lint_errors.txt`;
 
   // Ensure summary entry exists
   if (!summary[entrypoint]) {
@@ -31,15 +32,21 @@ export async function pythonTypeCheck(
   }
 
   try {
-    // Run mypy inside a Docker container to ensure consistent environment
+    // Run flake8 inside a Docker container to ensure consistent environment
+    // Use the same Python image as defined in allTests.ts
     const dockerImage = "python:3.11-alpine";
     const dockerCommand = [
-      "docker", "run", "--rm",
-      "-v", `${process.cwd()}:/workspace`,
-      "-w", "/workspace",
+      "docker",
+      "run",
+      "--rm",
+      "-v",
+      `${process.cwd()}:/workspace`,
+      "-w",
+      "/workspace",
       dockerImage,
-      "sh", "-c",
-      `pip install mypy > /dev/null 2>&1 && mypy "${entrypoint}"`
+      "sh",
+      "-c",
+      `pip install flake8 > /dev/null 2>&1 && flake8 "${entrypoint}" --max-line-length=88`,
     ];
 
     const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
@@ -60,20 +67,20 @@ export async function pythonTypeCheck(
       child.on("close", (code) => {
         const logOut = stdout + stderr;
         if (logOut.trim()) {
-          fs.writeFileSync(typeErrorsPath, logOut);
-          summary[entrypoint].typeErrors = logOut.split("\n").length;
+          fs.writeFileSync(lintErrorsPath, logOut);
+          summary[entrypoint].staticErrors = logOut.split("\n").length;
         } else {
-          if (fs.existsSync(typeErrorsPath)) {
-            fs.unlinkSync(typeErrorsPath);
+          if (fs.existsSync(lintErrorsPath)) {
+            fs.unlinkSync(lintErrorsPath);
           }
-          summary[entrypoint].typeErrors = 0;
+          summary[entrypoint].staticErrors = 0;
         }
         resolve();
       });
     });
   } catch (error: any) {
-    console.error(`Error running mypy in Docker on ${entrypoint}:`, error);
-    fs.writeFileSync(typeErrorsPath, `Error running mypy: ${error.message}`);
-    summary[entrypoint].typeErrors = -1;
+    console.error(`Error running flake8 in Docker on ${entrypoint}:`, error);
+    fs.writeFileSync(lintErrorsPath, `Error running flake8: ${error.message}`);
+    summary[entrypoint].staticErrors = -1;
   }
 }

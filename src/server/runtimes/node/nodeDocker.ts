@@ -1,4 +1,4 @@
-import { baseNodeImage } from "../nodeVersion";
+import { baseNodeImage } from "../../nodeVersion";
 
 export const nodeDocker = `FROM ${baseNodeImage}
 WORKDIR /workspace

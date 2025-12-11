@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
-import { IRunTime } from "../../Types";
 import ansiColors from "ansi-colors";
+import { IRunTime } from "../../lib";
 
 export class TestEnvironmentSetup {
   constructor(
@@ -42,9 +42,13 @@ export class TestEnvironmentSetup {
     let testResources = "";
 
     // Log the browser WebSocket endpoint for debugging
-    const browserWsEndpoint = this.browser ? this.browser.wsEndpoint() : 'no-browser';
-    console.log(`TestEnvironmentSetup: browser WebSocket endpoint for ${src}: ${browserWsEndpoint}`);
-    
+    const browserWsEndpoint = this.browser
+      ? this.browser.wsEndpoint()
+      : "no-browser";
+    console.log(
+      `TestEnvironmentSetup: browser WebSocket endpoint for ${src}: ${browserWsEndpoint}`
+    );
+
     if (testConfigResource.ports === 0) {
       testResources = JSON.stringify({
         name: src,

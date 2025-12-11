@@ -3,7 +3,7 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import { filesHash } from "../../clients/utils";
-import { IRunTime } from "../../Types";
+import { IRunTime } from "../../lib";
 
 export class MetafileManager {
   private changes: Record<string, string> = {};

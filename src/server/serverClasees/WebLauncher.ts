@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import ansiColors from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import { ConsoleMessage } from "puppeteer-core";
-import ansiColors from "ansi-colors";
 import { createLogStreams, statusMessagePretty } from "../../clients/utils";
-import { IFinalResults } from "../../lib";
-import { IRunTime } from "../../Types";
+import { IFinalResults, IRunTime } from "../../lib";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
 import { webEvaluator } from "../utils";
 
@@ -59,7 +58,9 @@ export class WebLauncher {
         const chromeHost = inDocker
           ? "chromium"
           : process.env.CHROME_HOST || "host.docker.internal";
-        const chromePort = process.env.CHROME_PORT || (this.chromiumPort ? this.chromiumPort.toString() : "4567");
+        const chromePort =
+          process.env.CHROME_PORT ||
+          (this.chromiumPort ? this.chromiumPort.toString() : "4567");
 
         console.log(
           `Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`
@@ -139,7 +140,9 @@ export class WebLauncher {
 
         // Use Server_TCP's HTTP server to serve web test files
         // Server_TCP runs on the host and serves files from /web/ path
-        const httpPort = Number(process.env.HTTP_PORT) || (this.httpPort ? this.httpPort : 3456);
+        const httpPort =
+          Number(process.env.HTTP_PORT) ||
+          (this.httpPort ? this.httpPort : 3456);
         // In Docker, we need to connect to the host machine
         // Use the service name if available, otherwise use host.docker.internal
         // When in Docker, we can use 'host.docker.internal' to reach the host
@@ -304,10 +307,10 @@ export class WebLauncher {
 
     // Ensure webPromise is defined
     if (!webPromise) {
-      console.error('WebLauncher: webPromise is undefined for', src);
+      console.error("WebLauncher: webPromise is undefined for", src);
       throw new Error(`webPromise is undefined for ${src}`);
     }
-    
+
     // Add to process manager
     this.addPromiseProcess(
       processId,

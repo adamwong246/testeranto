@@ -178,7 +178,6 @@ services:
       WS_HOST: host.docker.internal
       WS_PORT: '3456'
       IN_DOCKER: 'true'
-      PROCESS_POOL_TYPE: lightweight
       MAX_CONCURRENT_TESTS: '4'
       TEST_TIMEOUT_MS: '30000'
     networks:
@@ -198,7 +197,7 @@ services:
       - '-c'
       - |2-
 
-            echo "Starting node process pool (type: lightweight)..."
+            echo "Starting node process pool (type: undefined)..."
             
             # Wait for build and analysis to complete
             echo "Waiting for build and analysis services..."
@@ -213,7 +212,7 @@ services:
             mkdir -p /workspace/testeranto/metafiles/node
             
             # Start the appropriate process pool manager
-            case "lightweight" in
+            case "undefined" in
               "lightweight")
                 echo "Starting lightweight process pool for node..."
                 # For interpreted languages, we'll run tests directly
@@ -369,7 +368,6 @@ services:
       WS_HOST: host.docker.internal
       WS_PORT: '3456'
       IN_DOCKER: 'true'
-      PROCESS_POOL_TYPE: shared-chrome
       MAX_CONCURRENT_TESTS: '4'
       TEST_TIMEOUT_MS: '30000'
       CHROME_MAX_CONTEXTS: '6'
@@ -393,7 +391,7 @@ services:
       - '-c'
       - |2-
 
-            echo "Starting web process pool (type: shared-chrome)..."
+            echo "Starting web process pool (type: undefined)..."
             
             # Wait for build and analysis to complete
             echo "Waiting for build and analysis services..."
@@ -408,7 +406,7 @@ services:
             mkdir -p /workspace/testeranto/metafiles/web
             
             # Start the appropriate process pool manager
-            case "shared-chrome" in
+            case "undefined" in
               "lightweight")
                 echo "Starting lightweight process pool for web..."
                 # For interpreted languages, we'll run tests directly
@@ -751,7 +749,6 @@ services:
       WS_HOST: host.docker.internal
       WS_PORT: '3456'
       IN_DOCKER: 'true'
-      PROCESS_POOL_TYPE: lightweight
       MAX_CONCURRENT_TESTS: '4'
       TEST_TIMEOUT_MS: '30000'
     networks:
@@ -771,7 +768,7 @@ services:
       - '-c'
       - |2-
 
-            echo "Starting python process pool (type: lightweight)..."
+            echo "Starting python process pool (type: undefined)..."
             
             # Wait for build and analysis to complete
             echo "Waiting for build and analysis services..."
@@ -786,7 +783,7 @@ services:
             mkdir -p /workspace/testeranto/metafiles/python
             
             # Start the appropriate process pool manager
-            case "lightweight" in
+            case "undefined" in
               "lightweight")
                 echo "Starting lightweight process pool for python..."
                 # For interpreted languages, we'll run tests directly

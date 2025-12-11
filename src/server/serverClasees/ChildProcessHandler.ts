@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChildProcess } from "child_process";
 import { LogStreams } from "../../clients/utils";
-import { IRunTime } from "../../Types";
-import { statusMessagePretty } from "../../clients/utils";
+
 import ansiColors from "ansi-colors";
+import { IRunTime } from "../../lib";
 
 export class ChildProcessHandler {
   static async handleChildProcess(
@@ -14,29 +14,34 @@ export class ChildProcessHandler {
     runtime: IRunTime
   ): Promise<void> {
     // Check if child is a valid ChildProcess object
-    if (!child || typeof child.on !== 'function') {
-      console.error('ChildProcessHandler: child is not a valid ChildProcess object:', child);
+    if (!child || typeof child.on !== "function") {
+      console.error(
+        "ChildProcessHandler: child is not a valid ChildProcess object:",
+        child
+      );
       // Check if logs has writeExitCode method
-      if (logs && typeof logs.writeExitCode === 'function') {
-        logs.writeExitCode(-1, new Error('Invalid child process'));
+      if (logs && typeof logs.writeExitCode === "function") {
+        logs.writeExitCode(-1, new Error("Invalid child process"));
       } else {
-        console.error('ChildProcessHandler: logs.writeExitCode is not a function');
+        console.error(
+          "ChildProcessHandler: logs.writeExitCode is not a function"
+        );
       }
-      if (logs && typeof logs.closeAll === 'function') {
+      if (logs && typeof logs.closeAll === "function") {
         logs.closeAll();
       }
-      throw new Error(`Invalid child process for ${src || 'undefined source'}`);
+      throw new Error(`Invalid child process for ${src || "undefined source"}`);
     }
 
     return new Promise((resolve, reject) => {
       child.stdout?.on("data", (data) => {
-        if (logs.stdout && typeof logs.stdout.write === 'function') {
+        if (logs.stdout && typeof logs.stdout.write === "function") {
           logs.stdout.write(data);
         }
       });
 
       child.stderr?.on("data", (data) => {
-        if (logs.stderr && typeof logs.stderr.write === 'function') {
+        if (logs.stderr && typeof logs.stderr.write === "function") {
           logs.stderr.write(data);
         }
       });
@@ -44,20 +49,22 @@ export class ChildProcessHandler {
       child.on("close", (code) => {
         const exitCode = code === null ? -1 : code;
         if (exitCode < 0) {
-          if (logs && typeof logs.writeExitCode === 'function') {
+          if (logs && typeof logs.writeExitCode === "function") {
             logs.writeExitCode(
               exitCode,
               new Error("Process crashed or was terminated")
             );
           } else {
-            console.error('ChildProcessHandler: logs.writeExitCode is not a function');
+            console.error(
+              "ChildProcessHandler: logs.writeExitCode is not a function"
+            );
           }
         } else {
-          if (logs && typeof logs.writeExitCode === 'function') {
+          if (logs && typeof logs.writeExitCode === "function") {
             logs.writeExitCode(exitCode);
           }
         }
-        if (logs && typeof logs.closeAll === 'function') {
+        if (logs && typeof logs.closeAll === "function") {
           logs.closeAll();
         }
 

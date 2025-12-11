@@ -2,7 +2,7 @@
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
 import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
-import { IMode } from "../../app/frontend/types";
+import { IMode } from "../types";
 
 export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
   constructor(configs: any, name: string, mode: IMode) {

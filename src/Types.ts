@@ -1,0 +1,351 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Plugin } from "esbuild";
+
+import { ITTestResourceConfiguration } from "./lib/index.js";
+import { PM } from "./clients/index.js";
+import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
+
+import { BaseSuite } from "./lib/BaseSuite.js";
+import { IGivens, BaseGiven } from "./lib/BaseGiven.js";
+import { BaseThen } from "./lib/BaseThen.js";
+import { BaseWhen } from "./lib/BaseWhen.js";
+
+export type ISummary = Record<
+  string,
+  {
+    runTimeTests: number | "?" | undefined;
+    runTimeErrors: number | "?" | undefined;
+    typeErrors: number | "?" | undefined;
+    staticErrors: number | "?" | undefined;
+    prompt: string | "?" | undefined;
+    failingFeatures: object | undefined;
+  }
+> & {
+  nodeLogs?: string;
+  webLogs?: string;
+  pureLogs?: string;
+};
+
+export type SuiteSpecification<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
+> = {
+  [K in keyof O["suites"]]: (
+    name: string,
+    givens: IGivens<I>
+  ) => BaseSuite<I, O>;
+};
+
+// Simplified test result summary
+export type TestSummary = {
+  testName: string;
+  errors?: {
+    runtime?: number;
+    type?: number;
+    static?: number;
+  };
+  prompt?: string;
+  failedFeatures: string[];
+};
+
+// Core test lifecycle hooks
+export type TestLifecycle<Subject, State, Selection> = {
+  // Setup
+  beforeAll?: (input: any) => Promise<Subject>;
+  beforeEach?: (subject: Subject) => Promise<State>;
+
+  // Execution
+  executeStep?: (state: State) => Promise<State>;
+  verifyStep?: (state: State) => Promise<Selection>;
+
+  // Cleanup
+  afterEach?: (state: State) => Promise<void>;
+  afterAll?: (state: State) => Promise<void>;
+
+  // Assertions
+  assert?: (result: Selection) => void;
+};
+
+// BDD Test Structure
+export type TestDefinition<Subject, State, Selection> = {
+  // Test subject
+  subject: Subject;
+
+  // Test steps
+  given?: (input: any) => State;
+  when?: (state: State) => State | Promise<State>;
+  then?: (state: State) => Selection | Promise<Selection>;
+
+  // Configuration
+  resources?: ITTestResourceConfiguration;
+  pm?: typeof PM;
+};
+
+// Test Suite Organization
+export type TestSuite = {
+  name: string;
+  tests: TestDefinition<any, any, any>[];
+  features?: string[];
+};
+
+// Runtime Configuration
+export type RuntimeConfig = {
+  type: "node" | "web" | "pure" | "spawn";
+  ports?: number[];
+  plugins?: Plugin[];
+};
+
+// Project Configuration
+export type ProjectConfig = {
+  name: string;
+  sourceDir: string;
+  testSuites: TestSuite[];
+  runtime: RuntimeConfig;
+  minify?: boolean;
+  debug?: boolean;
+};
+
+export type GivenSpecification<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
+> = {
+  [K in keyof O["givens"]]: (
+    features: string[],
+    whens: BaseWhen<I>[],
+    thens: BaseThen<I>[],
+    ...xtrasB: O["givens"][K]
+  ) => BaseGiven<I>;
+};
+
+export type WhenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
+  [K in keyof O["whens"]]: (...xtrasC: O["whens"][K]) => BaseWhen<I>;
+};
+
+export type ThenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
+  [K in keyof O["thens"]]: (...xtrasD: O["thens"][K]) => BaseThen<I>;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// Base implementation types
+export type TestSuiteImplementation<O extends Ibdd_out_any> = {
+  [K in keyof O["suites"]]: string;
+};
+
+export type TestGivenImplementation<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
+> = {
+  [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+};
+
+export type TestWhenImplementation<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
+> = {
+  [K in keyof O["whens"]]: (
+    ...Iw: O["whens"][K]
+  ) => (
+    zel: I["iselection"],
+    tr: ITTestResourceConfiguration,
+    utils: PM
+  ) => Promise<I["when"]>;
+};
+
+export type TestThenImplementation<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
+> = {
+  [K in keyof O["thens"]]: (
+    ...It: O["thens"][K]
+  ) => (ssel: I["iselection"], utils: PM) => I["then"];
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+export type Modify<T, R> = Omit<T, keyof R> & R;
+
+// Individual output shape components
+export type TestSuiteShape = Record<string, any>;
+export type TestGivenShape = Record<string, any>;
+export type TestWhenShape = Record<string, any>;
+export type TestThenShape = Record<string, any>;
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+export type IPluginFactory = (
+  register?: (entrypoint: string, sources: string[]) => any,
+  entrypoints?: string[]
+) => Plugin;
+
+export type IRunTime = `node` | `web` | "pure" | `golang` | `python`;
+
+export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
+
+export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
+export type IFlavor = ["compiled" | "interpreted" | "VM" | "chrome", string];
+export type IStrategy =
+  | "combined-build-test-process-pools" // Interpreted languages: Node.js, Python, Ruby, PHP
+  | "separate-build-combined-test" // Compiled languages: Go, Rust
+  | "combined-service-shared-jvm" // VM languages: Java
+  | "combined-service-shared-chrome"; // Browser environment: Web
+export type IProd = [IDockerSteps, string][][];
+export type Itest = [IDockerSteps, string][][];
+
+export type IChecks = Record<string, [[IDockerSteps, string][], string]>;
+
+export type ITestconfig = {
+  httpPort: number;
+  chromiumPort: number;
+  featureIngestor: (s: string) => Promise<string>;
+  importPlugins: IPluginFactory[];
+  ports: string[];
+  src: string;
+  test: Itest;
+  prod: IProd;
+  checks: IChecks; // Legacy - kept for backward compatibility
+
+  // New runtime-native check configuration
+  check?: {
+    // Runtime-specific entry points
+    node?: string; // e.g., "src/staticAnalysis/node.js"
+    python?: string; // e.g., "src/staticAnalysis/python.py"
+    golang?: string; // e.g., "src/staticAnalysis/go.go"
+    web?: string; // e.g., "src/staticAnalysis/web.js"
+    java?: string; // e.g., "src/staticAnalysis/Java.java"
+
+    // Common options
+    enabled?: boolean;
+    failOnError?: boolean;
+  };
+
+  // Strategy-specific configurations
+  build?: Itest; // Separate build steps for compiled languages
+
+  // Unified monitoring configuration
+  monitoring?: {
+    websocketPort?: number;
+    apiPort?: number;
+    maxLogLines?: number;
+    updateInterval?: number;
+  };
+
+  processPool?: {
+    maxConcurrent: number;
+    timeoutMs: number;
+    monitoring?: {
+      captureStdout?: boolean;
+      captureStderr?: boolean;
+    };
+  };
+
+  chrome?: {
+    sharedInstance: boolean;
+    maxContexts: number;
+    memoryLimitMB: number;
+    monitoring?: {
+      captureConsole?: boolean;
+      captureNetwork?: boolean;
+      captureErrors?: boolean;
+      wsEndpoint?: string;
+    };
+  };
+
+  // Docker monitoring configuration
+  docker?: {
+    monitoring?: {
+      method?: "logs" | "attach";
+      follow?: boolean;
+      tail?: number;
+    };
+  };
+
+  golang: {
+    plugins: any[];
+    tests: Record<string, { ports: number }>;
+    loaders: Record<string, string>;
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks; // Legacy - kept for backward compatibility
+    build?: Itest; // Separate build for Go
+    monitoring?: {
+      // Go-specific monitoring options
+      captureTestOutput?: boolean;
+      captureCoverage?: boolean;
+    };
+  };
+
+  python: {
+    plugins: any[];
+    tests: Record<string, { ports: number }>;
+    loaders: Record<string, string>;
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks; // Legacy - kept for backward compatibility
+    processPool?: {
+      maxConcurrent: number;
+      timeoutMs: number;
+    };
+    monitoring?: {
+      // Python-specific monitoring options
+      capturePytestOutput?: boolean;
+      captureLogging?: boolean;
+    };
+  };
+
+  node: {
+    plugins: any[];
+    tests: Record<string, { ports: number }>;
+    loaders: Record<string, string>;
+    externals: string[];
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks; // Legacy - kept for backward compatibility
+    processPool?: {
+      maxConcurrent: number;
+      timeoutMs: number;
+    };
+    monitoring?: {
+      // Node-specific monitoring options
+      captureConsole?: boolean;
+      captureUncaughtExceptions?: boolean;
+    };
+  };
+
+  web: {
+    plugins: any[];
+    tests: Record<string, { ports: number }>;
+    loaders: Record<string, string>;
+    externals: string[];
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks; // Legacy - kept for backward compatibility
+    chrome?: {
+      sharedInstance: boolean;
+      maxContexts: number;
+      memoryLimitMB: number;
+      monitoring?: {
+        captureConsole?: boolean;
+        captureNetwork?: boolean;
+        captureErrors?: boolean;
+        wsEndpoint?: string;
+      };
+    };
+    monitoring?: {
+      // Web-specific monitoring options
+      capturePageErrors?: boolean;
+      captureNetworkRequests?: boolean;
+      captureConsoleMessages?: boolean;
+    };
+  };
+};
+
+export type IBuiltConfig = { buildDir: string } & ITestconfig;

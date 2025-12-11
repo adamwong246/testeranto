@@ -3,14 +3,10 @@ import http from "http";
 import fs from "fs";
 import path from "path";
 
-import {
-  CONTENT_TYPES,
-} from "./Server_TCP_constants";
-import {
-  getContentType,
-} from "./Server_TCP_utils";
+import { CONTENT_TYPES } from "./Server_TCP_constants";
+import { getContentType } from "./Server_TCP_utils";
 import { Server_TCP_Core } from "./Server_TCP_Core";
-import { IMode } from "../../app/frontend/types";
+import { IMode } from "../types";
 
 export class Server_TCP_Http extends Server_TCP_Core {
   constructor(configs: any, name: string, mode: IMode) {
@@ -25,12 +21,11 @@ export class Server_TCP_Http extends Server_TCP_Core {
     }
   ): void {
     console.log(req.method, req.url);
-    
+
     // Always serve static files from the project directory
     this.serveStaticFile(req, res);
     return;
   }
-
 
   private serveStaticFile(
     req: http.IncomingMessage,
@@ -46,24 +41,26 @@ export class Server_TCP_Http extends Server_TCP_Core {
 
     // Remove query parameters
     const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
-    
+
     // Prevent directory traversal attacks
     const decodedPath = decodeURIComponent(urlPath);
     // Remove leading slash to make it relative
-    const relativePath = decodedPath.startsWith('/') ? decodedPath.slice(1) : decodedPath;
+    const relativePath = decodedPath.startsWith("/")
+      ? decodedPath.slice(1)
+      : decodedPath;
     const normalizedPath = path.normalize(relativePath);
-    
+
     // Check for any remaining '..' components
-    if (normalizedPath.includes('..')) {
+    if (normalizedPath.includes("..")) {
       res.writeHead(403);
       res.end("Forbidden: Directory traversal not allowed");
       return;
     }
-    
+
     // Start from the project root (current working directory)
     const projectRoot = process.cwd();
     const filePath = path.join(projectRoot, normalizedPath);
-    
+
     // Ensure the file is within the project root
     if (!filePath.startsWith(path.resolve(projectRoot))) {
       res.writeHead(403);
@@ -74,7 +71,7 @@ export class Server_TCP_Http extends Server_TCP_Core {
     // Check if it's a directory
     fs.stat(filePath, (err, stats) => {
       if (err) {
-        if (err.code === 'ENOENT') {
+        if (err.code === "ENOENT") {
           res.writeHead(404);
           res.end(`File not found: ${urlPath}`);
           return;
@@ -94,19 +91,27 @@ export class Server_TCP_Http extends Server_TCP_Core {
             return;
           }
           // Generate directory listing
-          const items = files.map(file => {
-            try {
-              const stat = fs.statSync(path.join(filePath, file));
-              const isDir = stat.isDirectory();
-              const slash = isDir ? '/' : '';
-              return `<li><a href="${path.join(urlPath, file)}${slash}">${file}${slash}</a></li>`;
-            } catch {
-              // If we can't stat the file, still show it as a link without slash
-              return `<li><a href="${path.join(urlPath, file)}">${file}</a></li>`;
-            }
-          }).join('');
-          
-          res.writeHead(200, { 'Content-Type': 'text/html' });
+          const items = files
+            .map((file) => {
+              try {
+                const stat = fs.statSync(path.join(filePath, file));
+                const isDir = stat.isDirectory();
+                const slash = isDir ? "/" : "";
+                return `<li><a href="${path.join(
+                  urlPath,
+                  file
+                )}${slash}">${file}${slash}</a></li>`;
+              } catch {
+                // If we can't stat the file, still show it as a link without slash
+                return `<li><a href="${path.join(
+                  urlPath,
+                  file
+                )}">${file}</a></li>`;
+              }
+            })
+            .join("");
+
+          res.writeHead(200, { "Content-Type": "text/html" });
           res.end(`
             <!DOCTYPE html>
             <html>
@@ -133,10 +138,10 @@ export class Server_TCP_Http extends Server_TCP_Core {
     }
   ): void {
     const contentType = getContentType(filePath) || CONTENT_TYPES.OCTET_STREAM;
-    
+
     fs.readFile(filePath, (err, data) => {
       if (err) {
-        if (err.code === 'ENOENT') {
+        if (err.code === "ENOENT") {
           res.writeHead(404);
           res.end(`File not found: ${filePath}`);
         } else {
@@ -145,8 +150,8 @@ export class Server_TCP_Http extends Server_TCP_Core {
         }
         return;
       }
-      
-      res.writeHead(200, { 'Content-Type': contentType });
+
+      res.writeHead(200, { "Content-Type": contentType });
       res.end(data);
     });
   }

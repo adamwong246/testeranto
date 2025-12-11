@@ -3,12 +3,9 @@
 
 import { IBuiltConfig, IRunTime } from "../../Types";
 import chromiumService from "./chromiumService";
-import {
-  getProcessPoolType,
-  RUNTIME_STRATEGIES,
-  RuntimeName,
-} from "../strategies";
+import { RUNTIME_STRATEGIES, RuntimeName } from "../strategies";
 import aiderPoolService from "./aiderPoolService";
+import { getProcessPoolType } from "../utils";
 
 export async function generateServices(
   config: IBuiltConfig,

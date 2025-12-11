@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChildProcess, spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import { createLogStreams, LogStreams } from "../../clients/utils";
+import { IRunTime } from "../../lib";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
-import { processGoTestOutput } from "../golang/processGoTestOutput";
-import { IRunTime } from "../../Types";
-import { ChildProcessHandler } from "./ChildProcessHandler";
+import { processGoTestOutput } from "../runtimes/golang/processGoTestOutput";
 
 export class GolangLauncher {
   constructor(
@@ -45,7 +46,7 @@ export class GolangLauncher {
   async launchGolang(src: string, dest: string): Promise<void> {
     const { default: ansiC } = await import("ansi-colors");
     console.log(ansiC.green(ansiC.inverse(`goland < ${src}`)));
-    
+
     // Use httpPort with fallback to 3456
     const portToUse = this.httpPort || 3456;
     console.log(`GolangLauncher: Using httpPort ${portToUse}`);
@@ -125,10 +126,10 @@ export class GolangLauncher {
 
     // Ensure golangPromise is defined
     if (!golangPromise) {
-      console.error('GolangLauncher: golangPromise is undefined for', src);
+      console.error("GolangLauncher: golangPromise is undefined for", src);
       throw new Error(`golangPromise is undefined for ${src}`);
     }
-    
+
     this.addPromiseProcess(
       processId,
       golangPromise,

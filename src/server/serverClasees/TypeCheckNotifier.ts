@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ansiColors from "ansi-colors";
 
 export class TypeCheckNotifier {
@@ -12,7 +13,9 @@ export class TypeCheckNotifier {
       console.log(ansiColors.green(ansiColors.inverse(`tsc > ${src}`)));
     } else {
       console.log(
-        ansiColors.red(ansiColors.inverse(`tsc > ${src} failed ${failures} times`))
+        ansiColors.red(
+          ansiColors.inverse(`tsc > ${src} failed ${failures} times`)
+        )
       );
     }
 

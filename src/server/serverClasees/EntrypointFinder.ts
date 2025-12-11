@@ -1,11 +1,8 @@
-import { IBuiltConfig, IRunTime } from "../../Types";
+import { IBuiltConfig, IRunTime } from "../../lib";
 import { getRunnables } from "../utils";
 
 export class EntrypointFinder {
-  constructor(
-    private configs: IBuiltConfig,
-    private projectName: string
-  ) {}
+  constructor(private configs: IBuiltConfig, private projectName: string) {}
 
   findTestNameByEntrypoint(
     entrypoint: string,

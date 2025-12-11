@@ -1,8 +1,8 @@
-import { IBuiltConfig } from "../../Types";
-import { BuildProcessManager } from "./BuildProcessManager";
+import { IBuiltConfig } from "../../lib";
+import { getRunnables } from "../utils";
 import nodeEsbuildConfiger from "./../../esbuildConfigs/node";
 import webEsbuildConfiger from "./../../esbuildConfigs/web";
-import { getRunnables } from "../utils";
+import { BuildProcessManager } from "./BuildProcessManager";
 
 export class BuildProcessStarter {
   constructor(

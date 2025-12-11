@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
-import { IBuiltConfig, IRunTime } from "../../Types";
-import { nodeDocker } from "../node/nodeDocker";
-import { golangDocker } from "../golang/golangDocker";
-import { pythonDocker } from "../python/pythonDocker";
+import { IBuiltConfig, IRunTime } from "../../lib";
+import { golangDocker } from "../runtimes/golang/golangDocker";
+import { nodeDocker } from "../runtimes/node/nodeDocker";
+import { pythonDocker } from "../runtimes/python/pythonDocker";
 import { getStrategyForRuntime } from "../strategies";
 
 export async function setupDirectories(

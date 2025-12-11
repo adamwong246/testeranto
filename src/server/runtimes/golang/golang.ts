@@ -1,6 +1,6 @@
 import path from "path";
-import { IBuiltConfig } from "../../lib";
-import { GolingvuBuild } from "../../clients/golingvuBuild";
+import { IBuiltConfig } from "../../../lib";
+import { GolingvuBuild } from "../../../clients/golingvuBuild";
 
 async function runGolangBuild() {
   try {

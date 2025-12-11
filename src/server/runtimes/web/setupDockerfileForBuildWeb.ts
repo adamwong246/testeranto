@@ -1,5 +1,5 @@
-import { COMMON_PACKAGE_INSTALL } from "../constants/COMMON_PACKAGE_INSTALL";
-import { baseNodeImage } from "../nodeVersion";
+import { COMMON_PACKAGE_INSTALL } from "../../constants/COMMON_PACKAGE_INSTALL";
+import { baseNodeImage } from "../../nodeVersion";
 
 export function setupDockerfileForBuildWeb(config: string): string {
   const webSpecificPackages = `\\

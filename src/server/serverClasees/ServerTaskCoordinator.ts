@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { default as ansiC } from "ansi-colors";
-import { IBuiltConfig, IRunTime } from "../../Types";
 import { getRunnables } from "../utils";
 import { ServerTaskManager } from "./ServerTaskManager";
-import { IMode } from "../../app/frontend/types";
+import { IRunTime, IBuiltConfig } from "../../lib";
+import { IMode } from "../types";
 
 export class ServerTaskCoordinator extends ServerTaskManager {
   private queue: Array<{

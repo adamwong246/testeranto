@@ -11,8 +11,8 @@ import {
   ScreenshotOptions,
 } from "puppeteer-core";
 import { PassThrough } from "stream";
-import { IMode } from "../../app/frontend/types";
 import { IBuiltConfig, ITLog } from "../../lib";
+import { IMode } from "../types";
 
 const fileStreams3: fs.WriteStream[] = [];
 type IFPaths = string[];

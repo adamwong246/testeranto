@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { generateStreamId } from "./Server_TCP_utils";
 import { Server_TCP_FileService } from "./Server_TCP_FileService";
-import { IMode } from "../../app/frontend/types";
+import { IMode } from "../types";
 
 export class Server_TCP_Commands extends Server_TCP_FileService {
   constructor(configs: any, name: string, mode: IMode) {

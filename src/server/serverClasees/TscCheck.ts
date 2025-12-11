@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
-import { tscPather } from "../utils";
-import { tscCheck as tscCheckFunction } from "../node+web/tscCheck";
-import { IRunTime } from "../../Types";
+import { IRunTime } from "../../lib";
+import { tscPather as tscCheckFunction } from "../utils";
 
 export class TscCheck {
   constructor(

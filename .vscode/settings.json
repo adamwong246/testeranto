@@ -2,6 +2,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "cSpell.words": [
+    "builtfile",
     "configer",
     "Extenstions",
     "flua",

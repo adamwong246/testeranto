@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ChildProcess, spawn } from "child_process";
-import fs from "fs";
 import { createLogStreams, LogStreams } from "../../clients/utils";
+import { IRunTime } from "../../lib";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
-import { IRunTime } from "../../Types";
 
 export class PythonLauncher {
   constructor(
@@ -28,6 +29,7 @@ export class PythonLauncher {
     private bddTestIsNowDone: (src: string, failures: number) => void,
     private addPromiseProcess: (
       processId: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       promise: Promise<any>,
       command: string,
       category: "aider" | "bdd-test" | "build-time" | "other",
@@ -41,7 +43,7 @@ export class PythonLauncher {
 
   async launchPython(src: string, dest: string) {
     console.log(`python < ${src}`);
-    
+
     // Use httpPort with fallback to 3456
     const portToUse = this.httpPort || 3456;
     console.log(`PythonLauncher: Using httpPort ${portToUse}`);
@@ -55,8 +57,10 @@ export class PythonLauncher {
           await this.setupTestEnvironment(src, "python");
 
         const logs = createLogStreams(reportDest, "python");
-        if (!logs || typeof logs.writeExitCode !== 'function') {
-          console.error('PythonLauncher: logs object is invalid or missing writeExitCode method');
+        if (!logs || typeof logs.writeExitCode !== "function") {
+          console.error(
+            "PythonLauncher: logs object is invalid or missing writeExitCode method"
+          );
           throw new Error(`Failed to create logs for ${src}`);
         }
 
@@ -137,10 +141,10 @@ export class PythonLauncher {
 
     // Ensure pythonPromise is defined
     if (!pythonPromise) {
-      console.error('PythonLauncher: pythonPromise is undefined for', src);
+      console.error("PythonLauncher: pythonPromise is undefined for", src);
       throw new Error(`pythonPromise is undefined for ${src}`);
     }
-    
+
     this.addPromiseProcess(
       processId,
       pythonPromise,

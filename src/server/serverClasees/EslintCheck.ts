@@ -1,6 +1,8 @@
-import { IRunTime } from "../../Types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import fs from "fs";
-import { lintCheck } from "../node+web/lintCheck";
+import { IRunTime } from "../../lib";
+import { lintCheck } from "../runtimes/node+web/lintCheck";
 import { lintPather } from "../utils";
 
 export class EslintCheck {
