@@ -61,23 +61,23 @@ export class Server_DockerCompose extends Server_TCP_Commands {
     });
 
     // Check if compose file was created
-    if (!fs.existsSync(this.composeFile)) {
-      console.error(
-        `Docker-compose file not found after generation: ${this.composeFile}`
-      );
-      // Try to list the directory to see what's there
-      const dir = path.dirname(this.composeFile);
-      if (fs.existsSync(dir)) {
-        console.error(`Contents of ${dir}:`);
-        try {
-          const files = fs.readdirSync(dir);
-          console.error(files);
-        } catch (e) {
-          console.error(`Error reading directory: ${e}`);
-        }
-      }
-      return;
-    }
+    // if (!fs.existsSync(this.composeFile)) {
+    //   console.error(
+    //     `Docker-compose file not found after generation: ${this.composeFile}`
+    //   );
+    //   // Try to list the directory to see what's there
+    //   const dir = path.dirname(this.composeFile);
+    //   if (fs.existsSync(dir)) {
+    //     console.error(`Contents of ${dir}:`);
+    //     try {
+    //       const files = fs.readdirSync(dir);
+    //       console.error(files);
+    //     } catch (e) {
+    //       console.error(`Error reading directory: ${e}`);
+    //     }
+    //   }
+    //   return;
+    // }
 
     await this.startServices();
   }
@@ -120,7 +120,11 @@ export class Server_DockerCompose extends Server_TCP_Commands {
         console.log(`Service status after startup:`, psResult2.out);
       }
     } catch (error) {
-      console.error(`Error starting docker-compose services:`, error);
+      console.error(
+        `Error starting docker-compose services:`,
+        error,
+        this.composeFile
+      );
       console.error(`Full error:`, error);
     }
   }

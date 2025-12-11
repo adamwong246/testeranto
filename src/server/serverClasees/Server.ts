@@ -87,17 +87,17 @@ export class Server extends ServerTestExecutor {
       await this.buildProcessStarter.startBuildProcesses();
 
       // Generate Python metafile if there are Python tests
-      const pythonTests = this.configTests().filter(
-        (test) => test[1] === "python"
-      );
-      if (pythonTests.length > 0) {
-        const entryPoints = pythonTests.map((test) => test[0]);
-        const metafile = await generatePitonoMetafile(
-          this.projectName,
-          entryPoints
-        );
-        writePitonoMetafile(this.projectName, metafile);
-      }
+      // const pythonTests = this.configTests().filter(
+      //   (test) => test[1] === "python"
+      // );
+      // if (pythonTests.length > 0) {
+      //   const entryPoints = pythonTests.map((test) => test[0]);
+      //   const metafile = await generatePitonoMetafile(
+      //     this.projectName,
+      //     entryPoints
+      //   );
+      //   writePitonoMetafile(this.projectName, metafile);
+      // }
 
       // this.onBuildDone();
     } catch (error) {

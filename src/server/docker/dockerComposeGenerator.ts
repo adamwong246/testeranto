@@ -6,7 +6,7 @@ import { setupDirectories } from "./directorySetup";
 import { generateRuntimeDockerfiles } from "./runtimeDockerfileGenerator";
 import { generateServices } from "./serviceGenerator";
 import { writeComposeFile } from "./composeWriter";
-import { getStrategyForRuntime, getCategoryForRuntime } from "../strategies";
+// import { getStrategyForRuntime, getCategoryForRuntime } from "../strategies";
 
 export async function setupDockerCompose(
   config: IBuiltConfig,
@@ -21,7 +21,7 @@ export async function setupDockerCompose(
   }
 ) {
   const logger = options?.logger;
-  const dockerManPort = options?.dockerManPort;
+  // const dockerManPort = options?.dockerManPort;
   const webSocketPort = options?.webSocketPort;
   const log = logger?.log || console.log;
   const error = logger?.error || console.error;
@@ -37,43 +37,44 @@ export async function setupDockerCompose(
 
   // Log strategy information for each runtime
   log("Generating docker-compose with strategies:");
-  for (const runtime of runtimes) {
-    const strategy = getStrategyForRuntime(runtime);
-    const category = getCategoryForRuntime(runtime);
-    log(`  ${runtime}: ${category} -> ${strategy}`);
-    
-    // Log whether tests run in build container or separate containers
-    if (strategy === "separate-build-combined-test") {
-      log(`    -> Separate test containers for compiled language`);
-    } else {
-      log(`    -> Tests run within build container`);
-    }
-  }
+  // for (const runtime of runtimes) {
+  //   const strategy = getStrategyForRuntime(runtime);
+  //   const category = getCategoryForRuntime(runtime);
+  //   log(`  ${runtime}: ${category} -> ${strategy}`);
+
+  //   // Log whether tests run in build container or separate containers
+  //   if (strategy === "separate-build-combined-test") {
+  //     log(`    -> Separate test containers for compiled language`);
+  //   } else {
+  //     log(`    -> Tests run within build container`);
+  //   }
+  // }
 
   // First, ensure all necessary directories exist
   const composeDir = path.join(process.cwd(), "testeranto", "bundles");
-  
+
   try {
     // Setup directories
     await setupDirectories(config, runtimes, composeDir, log, error);
-    
+
     // Generate runtime-specific Dockerfiles
     await generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
-    
+
     // Generate services
     const services = await generateServices(
-      config, 
-      runtimes, 
-      webSocketPort, 
-      log, 
+      config,
+      runtimes,
+      webSocketPort,
+      log,
       error
     );
-    
+
     // Write the compose file
     await writeComposeFile(services, testsName, composeDir, error);
-    
-    log("Docker-compose generation complete with strategy-aware configurations");
-    
+
+    log(
+      "Docker-compose generation complete with strategy-aware configurations"
+    );
   } catch (err) {
     error(`Error in setupDockerCompose:`, err);
     throw err;
