@@ -18,9 +18,6 @@ export async function generateServices(
   log: (...args: any[]) => void,
   error: (...args: any[]) => void
 ): Promise<Record<string, any>> {
-  console.log("generateServices");
-  console.log("mark3 node", config);
-
   const services: any = {};
 
   // Add Chromium service for web tests using browserless/chrome
@@ -42,7 +39,6 @@ export async function generateServices(
   // Generate 3 services for each runtime: build, static analysis, and process pool
   for (const runtime of runtimes) {
     if (runtime === "node") {
-      console.log("mark2 node", config);
       services[`${runtime}-builder`] = nodeDockerFile(config);
     } else if (runtime === "web") {
       services[`${runtime}-builder`] = webDockerFile(config);
@@ -90,8 +86,6 @@ export async function generateServices(
     // );
     // services[processPoolServiceName] = processPoolServiceConfig;
   }
-
-  console.log("generateServices1", services);
 
   return services;
 }

@@ -47,7 +47,6 @@ export class Server_DockerCompose extends Server_TCP_Commands {
       "../docker/dockerComposeGenerator"
     );
 
-    console.log("mark4", this.projectName);
     // Wait for docker-compose file to be generated
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {

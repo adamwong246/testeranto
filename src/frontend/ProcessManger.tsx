@@ -44,7 +44,7 @@ export const ProcessManger = () => {
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [filterLevel, setFilterLevel] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const logEndRef = useRef<HTMLDivElement>(null);
@@ -52,10 +52,10 @@ export const ProcessManger = () => {
   // Connect to WebSocket
   useEffect(() => {
     const connectWebSocket = () => {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const protocol = 'wss'; //window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const host = window.location.host;
       const wsUrl = `${protocol}//${host}/ws`;
-      
+
       const websocket = new WebSocket(wsUrl);
       wsRef.current = websocket;
 
@@ -114,7 +114,7 @@ export const ProcessManger = () => {
   // Handle WebSocket messages
   const handleWebSocketMessage = (data: any) => {
     console.log('Received WebSocket message:', data);
-    
+
     if (data.type === 'processes') {
       let processList: any[] = [];
       // The server sends data.data with processes array and other fields
@@ -132,7 +132,7 @@ export const ProcessManger = () => {
       };
       processList = [systemProcess, ...processList];
       setProcesses(processList);
-      
+
       // Extract logs from each process
       const newLogs: Record<string, LogEntry[]> = {};
       processList.forEach((process: any) => {
@@ -141,7 +141,7 @@ export const ProcessManger = () => {
         }
       });
       setLogs(prev => ({ ...prev, ...newLogs }));
-      
+
       if (autoRefresh && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         const processIds = processList.map((p: any) => p.processId);
         processIds.forEach((processId: string) => {
@@ -234,11 +234,11 @@ export const ProcessManger = () => {
 
   const selectedProcess = processes.find(p => p.processId === selectedProcessId);
   const selectedLogs = selectedProcessId ? logs[selectedProcessId] || [] : [];
-  
+
   // Filter logs based on level and search term
   const filteredLogs = selectedLogs.filter(log => {
     const matchesLevel = filterLevel === 'all' || log.level.toLowerCase() === filterLevel.toLowerCase();
-    const matchesSearch = searchTerm === '' || 
+    const matchesSearch = searchTerm === '' ||
       log.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (log.source && log.source.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesLevel && matchesSearch;
@@ -296,8 +296,8 @@ export const ProcessManger = () => {
                               <div className="ms-2 me-auto">
                                 <div className="fw-bold">{process.command}</div>
                                 <small className="text-muted">
-                                  ID: {process.processId} | 
-                                  PID: {process.pid || 'N/A'} | 
+                                  ID: {process.processId} |
+                                  PID: {process.pid || 'N/A'} |
                                   Started: {formatTime(process.timestamp)}
                                   {process.status && ` | Status: ${process.status}`}
                                 </small>

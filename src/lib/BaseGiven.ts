@@ -6,9 +6,9 @@
 import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 
 import { ITestArtifactory, ITLog, ITTestResourceConfiguration } from ".";
-import { IPM } from "./types.js";
-import { afterEachProxy, beforeEachProxy } from "./pmProxy.js";
-import { BaseSuite } from "./BaseSuite";
+// import { IPM } from "./types.js";
+// import { afterEachProxy, beforeEachProxy } from "./pmProxy.js";
+// import { BaseSuite } from "./BaseSuite";
 
 /**
  * Represents a collection of Given conditions keyed by their names.
@@ -89,20 +89,20 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     testResourceConfiguration,
     artifactory: ITestArtifactory,
     givenCB: I["given"],
-    initialValues: any,
-    pm: IPM
-  ): Promise<I["istore"]>;
+    initialValues: any
+  ): // pm: IPM
+  Promise<I["istore"]>;
 
   async afterEach(
     store: I["istore"],
     key: string,
-    artifactory: ITestArtifactory,
-    pm: IPM
+    artifactory: ITestArtifactory
+    // pm: IPM
   ): Promise<I["istore"]> {
     return store;
   }
 
-  abstract uberCatcher(e);
+  // abstract uberCatcher(e);
 
   async give(
     subject: I["isubject"],
@@ -111,7 +111,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     tester: (t: Awaited<I["then"]> | undefined) => boolean,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    pm: IPM,
+    // pm: IPM,
     suiteNdx: number
   ) {
     this.key = key;
@@ -123,23 +123,23 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value);
 
-    this.uberCatcher((e) => {
-      console.error(e.toString());
-      this.error = e.error;
-      tLog(e.stack);
-    });
+    // this.uberCatcher((e) => {
+    //   console.error(e.toString());
+    //   this.error = e.error;
+    //   tLog(e.stack);
+    // });
 
     try {
       // Ensure addArtifact is properly bound to 'this'
       const addArtifact = this.addArtifact.bind(this);
-      const proxiedPm = beforeEachProxy(pm, suiteNdx.toString(), addArtifact);
+      // const proxiedPm = beforeEachProxy(pm, suiteNdx.toString(), addArtifact);
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
         givenArtifactory,
         this.givenCB,
-        this.initialValues,
-        proxiedPm
+        this.initialValues
+        // proxiedPm
       );
       this.status = true;
     } catch (e) {
@@ -225,7 +225,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
             this.store,
             testResourceConfiguration,
             tLog,
-            pm,
+            // pm,
             `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
           );
           // If the test doesn't throw, it passed
@@ -246,14 +246,14 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     } finally {
       try {
         const addArtifact = this.addArtifact.bind(this);
-        const proxiedPm = afterEachProxy(
-          pm,
-          suiteNdx.toString(),
-          key,
-          addArtifact
-        );
+        // const proxiedPm = afterEachProxy(
+        //   pm,
+        //   suiteNdx.toString(),
+        //   key,
+        //   addArtifact
+        // );
         // (proxiedPm as any).currentStep = this;
-        await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
+        await this.afterEach(this.store, this.key);
       } catch (e) {
         this.failed = true;
         this.fails++; // Increment fail count

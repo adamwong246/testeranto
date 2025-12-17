@@ -59,7 +59,6 @@ export async function setupDockerCompose(
     webSocketPort?: number;
   }
 ) {
-  console.log("mark6", config);
   const logger = options?.logger;
   // const dockerManPort = options?.dockerManPort;
   const webSocketPort = options?.webSocketPort;
@@ -92,21 +91,11 @@ export async function setupDockerCompose(
   // First, ensure all necessary directories exist
   const composeDir = path.join(process.cwd(), "testeranto", "bundles");
 
-  console.log("mark7");
   try {
     // Setup directories
-    // await setupDirectories(config, runtimes, composeDir, log, error);
-
-    console.log("mark10", testsName);
 
     fs.mkdirSync(composeDir, { recursive: true });
 
-    // Generate runtime-specific Dockerfiles
-    // await generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
-
-    // Generate services
-
-    console.log("mark5", testsName);
     const services = await generateServices(
       config,
       runtimes,
@@ -115,8 +104,6 @@ export async function setupDockerCompose(
       error
     );
 
-    // Write the compose file
-    console.log("mark9", testsName);
     await writeComposeFile(services, testsName, composeDir, error);
   } catch (err) {
     error(`Error in setupDockerCompose:`, err);

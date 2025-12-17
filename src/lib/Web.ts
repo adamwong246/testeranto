@@ -24,7 +24,8 @@ export class WebTiposkripto<
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
-    testAdapter: Partial<ITestAdapter<I>>
+    testAdapter: Partial<ITestAdapter<I>>,
+    webSocketPort: string
   ) {
     super(
       input,
@@ -32,17 +33,21 @@ export class WebTiposkripto<
       testImplementation,
       testResourceRequirement,
       testAdapter,
-      () => {
-        // no-op
-      }
+      "3456"
     );
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
     // Parse the test resource configuration
-    console.log('WebTiposkripto.receiveTestResourceConfig: raw input:', partialTestResource);
+    console.log(
+      "WebTiposkripto.receiveTestResourceConfig: raw input:",
+      partialTestResource
+    );
     const config = JSON.parse(partialTestResource);
-    console.log('WebTiposkripto.receiveTestResourceConfig: parsed config:', config);
+    console.log(
+      "WebTiposkripto.receiveTestResourceConfig: parsed config:",
+      config
+    );
 
     // In a browser environment, we don't need to parse command line arguments
     // The WebSocket URL should be determined by PM_Web itself
@@ -63,25 +68,27 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testAdapter
+      testAdapter,
+      // new URLSearchParams(window.location.search).get("WS_PORT")
+      "3456"
     );
 
     // In a browser environment, the test resource config is passed as a URL query parameter
     // Extract it from the current URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const encodedConfig = urlParams.get('config');
-    const testResourceConfig = encodedConfig ? decodeURIComponent(encodedConfig) : "{}";
-    
-    console.log('Web test: parsed config from URL:', testResourceConfig);
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const encodedConfig = urlParams.get('config');
+    // const testResourceConfig = encodedConfig ? decodeURIComponent(encodedConfig) : "{}";
 
-    const results = await t.receiveTestResourceConfig(testResourceConfig);
+    // console.log('Web test: parsed config from URL:', testResourceConfig);
 
-    // In a browser, we can't exit the process, so we need to signal completion differently
-    // Dispatch a custom event to notify the test runner
-    const event = new CustomEvent("test-complete", { detail: results });
-    window.dispatchEvent(event);
+    // const results = await t.receiveTestResourceConfig(testResourceConfig);
 
-    console.log("Web test completed:", results);
+    // // In a browser, we can't exit the process, so we need to signal completion differently
+    // // Dispatch a custom event to notify the test runner
+    // const event = new CustomEvent("test-complete", { detail: results });
+    // window.dispatchEvent(event);
+
+    // console.log("Web test completed:", results);
 
     // Return the Tiposkripto instance
     return t;

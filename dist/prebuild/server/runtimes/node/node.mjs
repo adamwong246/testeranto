@@ -10,12 +10,10 @@ import { fork } from "child_process";
 import esbuild from "esbuild";
 
 // src/server/runtimes/node/esbuild.ts
-import fs from "fs";
 var absoluteBundlesDir = (c) => {
   return "./testeranto/bundles/allTests/node/";
 };
 var esbuild_default = (config, testName2) => {
-  console.log(fs.readFileSync("./example/Calculator.test.ts").toString());
   const entrypoints = ["./example/Calculator.test.ts"];
   const { inputFilesPluginFactory, register } = inputFilesPlugin_default(
     "node",
@@ -54,10 +52,10 @@ var testName = process.argv[2];
 async function startBundling(config, onMetafileChange) {
   console.log(`NODE BUILDER is now bundling:  ${testName}`);
   const n = esbuild_default(config, testName);
-  console.log(`NODE BUILDER conf:  `, n);
   const bv = await esbuild.build(n);
-  console.log(`NODE BUILDER res:  `, bv);
-  fork("testeranto/bundles/allTests/node/example/Calculator.test.mjs");
+  fork(`testeranto/bundles/allTests/node/example/Calculator.test.mjs`, [
+    config.httpPort.toString()
+  ]);
   onMetafileChange(bv);
 }
 async function startStaticAnalysis(esbuildResult) {
@@ -68,7 +66,6 @@ async function startBddTests(esbuildResult) {
 }
 async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
-  console.log(config);
   try {
     await startBundling(config, (esbuildResult) => {
       startStaticAnalysis(esbuildResult);

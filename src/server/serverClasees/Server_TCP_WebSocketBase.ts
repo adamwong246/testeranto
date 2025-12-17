@@ -6,6 +6,7 @@ import {
   WEBSOCKET_MESSAGE_TYPES,
   ERROR_MESSAGES,
   OTHER_CONSTANTS,
+  SERVER_CONSTANTS,
 } from "./Server_TCP_constants";
 import {
   serializeProcessInfo,
@@ -113,12 +114,50 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
   runningProcesses: any;
 
   constructor(configs: any, name: string, mode: IMode) {
-    // Ensure configs has httpPort
+    console.log(`[WebSocket] Creating Server_TCP_WebSocketBase with configs:`, {
+      httpPort: configs.httpPort,
+      name,
+      mode,
+    });
+
+    // Ensure configs has httpPort, using environment variable WS_PORT or HTTP_PORT as fallback
+    const httpPort =
+      configs.httpPort ||
+      Number(process.env.WS_PORT) ||
+      Number(process.env.HTTP_PORT) ||
+      3000;
     const updatedConfigs = {
       ...configs,
-      httpPort: configs.httpPort || 3000,
+      httpPort,
     };
+    console.log(
+      `[WebSocket] Server_TCP_WebSocketBase constructor: using httpPort=${httpPort}`
+    );
     super(updatedConfigs, name, mode);
+
+    console.log(`[WebSocket] After super() call`);
+    console.log(`[WebSocket] wss exists: ${!!this.wss}`);
+    console.log(`[WebSocket] httpServer exists: ${!!this.httpServer}`);
+
+    // Log WebSocket server details
+    if (this.wss) {
+      console.log(`[WebSocket] WebSocket server address:`, this.wss.address());
+      console.log(
+        `[WebSocket] WebSocket server event names:`,
+        this.wss.eventNames()
+      );
+    }
+
+    // Log HTTP server details
+    if (this.httpServer) {
+      const address = this.httpServer.address();
+      console.log(`[WebSocket] HTTP server address:`, address);
+      if (address && typeof address === "object") {
+        console.log(
+          `[WebSocket] HTTP server listening on port ${address.port}`
+        );
+      }
+    }
 
     // Ensure Maps exist (they may be initialized by parent)
     if (!this.processLogs) {
@@ -143,32 +182,63 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
     // Ensure logSubscriptions exists
     (this as any).logSubscriptions = new Map();
 
+    console.log(`[WebSocket] Setting up WebSocket handlers`);
     this.setupWebSocketHandlers();
+    console.log(`[WebSocket] Server_TCP_WebSocketBase constructor completed`);
   }
 
   protected setupWebSocketHandlers(): void {
+    console.log(`[WebSocket] Setting up WebSocket handlers on server`);
+    if (!this.wss) {
+      console.error(
+        `[WebSocket] ERROR: WebSocket server (wss) is not initialized!`
+      );
+      return;
+    }
+    const address = this.httpServer.address();
+    const host = SERVER_CONSTANTS.HOST;
+    let port = 3456;
+    if (address && typeof address === "object") {
+      port = address.port;
+    }
+    console.log(
+      `[WebSocket] WebSocket server is available on ws://${host}:${port}/ws, attaching connection handler`
+    );
+
     this.wss.on("connection", (ws, req) => {
+      console.log(
+        `[WebSocket] Client connected from: ${req.socket.remoteAddress}, URL: ${req.url}`
+      );
       this.clients.add(ws);
-      console.log("Client connected from:", req.socket.remoteAddress, req.url);
+      console.log(`[WebSocket] Total clients: ${this.clients.size}`);
 
       ws.on("message", (data) => {
+        console.log(
+          `[WebSocket] Received message from client: ${data
+            .toString()
+            .substring(0, 100)}...`
+        );
         try {
           this.handleWebSocketMessage(data, ws);
         } catch (error) {
-          console.error("Error handling WebSocket message:", error);
+          console.error("[WebSocket] Error handling WebSocket message:", error);
         }
       });
 
       ws.on("close", () => {
+        console.log(`[WebSocket] Client disconnected`);
         this.clients.delete(ws);
-        console.log("Client disconnected");
+        console.log(`[WebSocket] Total clients: ${this.clients.size}`);
       });
 
       ws.on("error", (error) => {
-        console.error("WebSocket error:", error);
+        console.error(`[WebSocket] WebSocket error:`, error);
         this.clients.delete(ws);
+        console.log(`[WebSocket] Total clients: ${this.clients.size}`);
       });
     });
+
+    console.log(`[WebSocket] WebSocket handlers setup complete`);
   }
 
   protected handleWebSocketMessage(data: any, ws: WebSocket): void {

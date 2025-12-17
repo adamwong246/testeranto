@@ -18,14 +18,16 @@ async function startBundling(
   console.log(`NODE BUILDER is now bundling:  ${testName}`);
   const n = nodeConfiger(config, testName);
   // n.externals = [];
-  console.log(`NODE BUILDER conf:  `, n);
+  // console.log(`NODE BUILDER conf:  `, n);
 
   const bv = await esbuild.build(n);
   // bv.watch();
 
-  console.log(`NODE BUILDER res:  `, bv);
+  // console.log(`NODE BUILDER res:  `, bv);
 
-  fork("testeranto/bundles/allTests/node/example/Calculator.test.mjs");
+  fork(`testeranto/bundles/allTests/node/example/Calculator.test.mjs`, [
+    config.httpPort.toString(),
+  ]);
 
   // console.log(bv);
   onMetafileChange(bv);
@@ -57,8 +59,6 @@ async function startBddTests(esbuildResult: esbuild.BuildResult) {
 
 async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
-
-  console.log(config);
 
   try {
     await startBundling(config, (esbuildResult: esbuild.BuildResult) => {

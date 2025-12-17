@@ -1,11 +1,11 @@
 import {
   defaultTestResourceRequirement
-} from "../chunk-GD6O3ZZC.mjs";
+} from "../chunk-HZJFVSS2.mjs";
 
 // src/Tiposkripto.ts
 var tpskrt;
 if (true) {
-  tpskrt = await import("../Node-LLN5AWR3.mjs");
+  tpskrt = await import("../Node-DUT2OMTL.mjs");
 } else if (false) {
   tpskrt = await null;
 } else {

@@ -19,7 +19,6 @@ RUN npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts -
 `;
 
 export const nodeDockerFile = (config: IBuiltConfig) => {
-  console.log("nodeDockerFile", config);
   return {
     build: {
       context: "/Users/adam/Code/testeranto",
@@ -73,7 +72,7 @@ export const nodeDockerFile = (config: IBuiltConfig) => {
                 echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
                 
                 echo "Starting build process for node..."
-                npx tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                TEST_NAME=allTests WS_PORT=${config.httpPort} npx tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
                 `,
     ],
     healthcheck: {

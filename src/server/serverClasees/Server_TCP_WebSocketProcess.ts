@@ -6,29 +6,47 @@ import { IMode } from "../types";
 
 export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
   constructor(configs: any, name: string, mode: IMode) {
+    console.log(`[WebSocketProcess] Creating Server_TCP_WebSocketProcess`);
     super(configs, name, mode);
+    console.log(`[WebSocketProcess] Super constructor completed`);
+
+    // Log WebSocket server status
+    console.log(`[WebSocketProcess] wss exists: ${!!this.wss}`);
+    console.log(`[WebSocketProcess] httpServer exists: ${!!this.httpServer}`);
+    if (this.wss) {
+      console.log(`[WebSocketProcess] WebSocket server event listeners:`, this.wss.eventNames());
+    }
 
     // Override runningProcesses.set to capture logs for new processes
+    console.log(`[WebSocketProcess] Overriding runningProcesses.set`);
     this.overrideRunningProcessesSet();
 
     // Attach log capture to existing processes (after parent may have added some)
     setTimeout(() => {
+      console.log(`[WebSocketProcess] Attaching log capture to existing processes`);
       this.attachLogCaptureToExistingProcesses();
     }, 100);
 
     // Override launch methods to capture errors
+    console.log(`[WebSocketProcess] Overriding launch methods`);
     this.overrideLaunchMethods();
+    
+    console.log(`[WebSocketProcess] Constructor completed`);
   }
 
   protected handleWebSocketMessageTypes(
     wsm: WebSocketMessage,
     ws: WebSocket
   ): void {
+    console.log(`[WebSocketProcess] Handling WebSocket message type: ${wsm.type}`);
+    console.log(`[WebSocketProcess] Message data:`, JSON.stringify(wsm.data).substring(0, 200));
+    
     // First, let the base class handle its message types
     super.handleWebSocketMessageTypes(wsm, ws);
 
     // Then handle process-specific message types
     if (wsm.type === "getProcesses") {
+      console.log(`[WebSocketProcess] Handling getProcesses request`);
       // Handle monitoring request for processes
       ws.send(
         JSON.stringify({
@@ -37,9 +55,11 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
           timestamp: new Date().toISOString(),
         })
       );
+      console.log(`[WebSocketProcess] Sent processes data`);
     } else if (wsm.type === "getLogs") {
       // Handle monitoring request for logs
       const processId = wsm.data?.processId;
+      console.log(`[WebSocketProcess] Handling getLogs request for process: ${processId}`);
       if (processId) {
         ws.send(
           JSON.stringify({
@@ -49,10 +69,12 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
             timestamp: new Date().toISOString(),
           })
         );
+        console.log(`[WebSocketProcess] Sent logs for process ${processId}`);
       }
     } else if (wsm.type === "subscribeToLogs") {
       // Handle subscription to log updates
       const processId = wsm.data?.processId;
+      console.log(`[WebSocketProcess] Handling subscribeToLogs for process: ${processId}`);
       if (processId) {
         // Store subscription info
         if (!(this as any).logSubscriptions) {
@@ -71,9 +93,87 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
             timestamp: new Date().toISOString(),
           })
         );
+        console.log(`[WebSocketProcess] Subscribed to logs for process ${processId}`);
       }
+    } else if (wsm.type === "greeting") {
+      // Handle test greeting - test is ready to be scheduled
+      const testName = wsm.data?.testName;
+      const runtime = wsm.data?.runtime;
+      const testId = wsm.data?.testId;
+      
+      console.log(`[WebSocketProcess] Received greeting from test: ${testName} (${runtime}), testId: ${testId}`);
+      console.log(`[WebSocketProcess] Full greeting data:`, wsm.data);
+      
+      // Store WebSocket connection for this test
+      if (!(this as any).testConnections) {
+        (this as any).testConnections = new Map();
+      }
+      (this as any).testConnections.set(testId, ws);
+      console.log(`[WebSocketProcess] Stored WebSocket connection for test ${testId}. Total connections: ${(this as any).testConnections.size}`);
+      
+      // Add test to scheduling queue
+      // We need to access the ServerTaskCoordinator's queue
+      // Since this class likely has access to it through inheritance or composition
+      // For now, let's assume we can call a method to add to queue
+      console.log(`[WebSocketProcess] Looking for addTestToSchedulingQueue method...`);
+      if ((this as any).addTestToSchedulingQueue) {
+        console.log(`[WebSocketProcess] Found addTestToSchedulingQueue, calling for test ${testId}`);
+        (this as any).addTestToSchedulingQueue(testId, testName, runtime, ws);
+      } else {
+        console.warn("[WebSocketProcess] No addTestToSchedulingQueue method found directly");
+        // Try to find it in the prototype chain
+        let found = false;
+        let obj = this;
+        while (obj && !found) {
+          const methods = Object.getOwnPropertyNames(obj).filter(
+            prop => typeof (obj as any)[prop] === 'function'
+          );
+          for (const method of methods) {
+            if (method === 'addTestToSchedulingQueue') {
+              console.log(`[WebSocketProcess] Found ${method} in prototype chain`);
+              (this as any)[method](testId, testName, runtime, ws);
+              found = true;
+              break;
+            }
+          }
+          obj = Object.getPrototypeOf(obj);
+        }
+        if (!found) {
+          console.error("[WebSocketProcess] Could not find addTestToSchedulingQueue anywhere");
+          // Send an immediate test resource to prevent hanging
+          const immediateTestResource = {
+            testId,
+            testName,
+            runtime,
+            allocatedAt: new Date().toISOString(),
+            ports: [3000],
+          };
+          const message = {
+            type: "testResource",
+            data: immediateTestResource,
+            timestamp: new Date().toISOString(),
+          };
+          console.log(`[WebSocketProcess] Sending immediate test resource to prevent hanging:`, message);
+          ws.send(JSON.stringify(message));
+        }
+      }
+      
+      // Acknowledge greeting
+      const ackMessage = {
+        type: "greetingAck",
+        testId,
+        timestamp: new Date().toISOString(),
+      };
+      console.log(`[WebSocketProcess] Sending greeting acknowledgment for test ${testId}:`, ackMessage);
+      try {
+        ws.send(JSON.stringify(ackMessage));
+        console.log(`[WebSocketProcess] Greeting acknowledgment sent successfully for test ${testId}`);
+      } catch (error) {
+        console.error(`[WebSocketProcess] Failed to send greeting acknowledgment for test ${testId}:`, error);
+      }
+    } else {
+      console.log(`[WebSocketProcess] Unhandled WebSocket message type: ${wsm.type}`);
     }
-    // Note: Unhandled message types are already logged in the base class
   }
 
   private getProcessSummary(): { processes: any[] } {

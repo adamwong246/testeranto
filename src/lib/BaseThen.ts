@@ -7,7 +7,7 @@ import type { Ibdd_in_any } from "../CoreTypes";
 
 import { ITLog, ITTestResourceConfiguration } from ".";
 import { IPM } from "./types.js";
-import { butThenProxy } from "./pmProxy.js";
+// import { butThenProxy } from "./pmProxy.js";
 
 export abstract class BaseThen<I extends Ibdd_in_any> {
   public name: string;
@@ -64,7 +64,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
   ): Promise<I["then"] | undefined> {
     // Ensure addArtifact is properly bound to 'this'
     const addArtifact = this.addArtifact.bind(this);
-    const proxiedPm = butThenProxy(pm, filepath, addArtifact);
+    // const proxiedPm = butThenProxy(pm, filepath, addArtifact);
 
     try {
       const x = await this.butThen(
@@ -72,7 +72,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
         async (s: I["iselection"]) => {
           try {
             if (typeof this.thenCB === "function") {
-              const result = await this.thenCB(s, proxiedPm);
+              const result = await this.thenCB(s);
               return result;
             } else {
               return this.thenCB;
@@ -84,8 +84,8 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
             throw e;
           }
         },
-        testResourceConfiguration,
-        proxiedPm
+        testResourceConfiguration
+        // proxiedPm
       );
       this.status = true;
       return x;

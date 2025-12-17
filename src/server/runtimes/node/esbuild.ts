@@ -19,7 +19,6 @@ export default (
 ): BuildOptions => {
   // const entrypoints: string[] = [];
 
-  console.log(fs.readFileSync("./example/Calculator.test.ts").toString());
   const entrypoints = ["./example/Calculator.test.ts"]; //Object.keys(config.node.tests);
 
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
@@ -27,7 +26,6 @@ export default (
     testName
   );
 
-  // console.log("esbuilt!", config.node);
   return {
     ...baseEsBuildConfig(config),
 

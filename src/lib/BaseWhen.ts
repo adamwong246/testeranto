@@ -7,7 +7,7 @@ import type { Ibdd_in_any } from "../CoreTypes";
 
 import { ITLog } from ".";
 import { IPM } from "./types.js";
-import { andWhenProxy } from "./pmProxy.js";
+// import { andWhenProxy } from "./pmProxy.js";
 
 export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;
@@ -61,14 +61,14 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   ) {
     try {
       // Ensure addArtifact is properly bound to 'this'
-      const addArtifact = this.addArtifact.bind(this);
-      const proxiedPm = andWhenProxy(pm, filepath, addArtifact);
+      // const addArtifact = this.addArtifact.bind(this);
+      // const proxiedPm = andWhenProxy(pm, filepath, addArtifact);
 
       const result = await this.andWhen(
         store,
         this.whenCB,
-        testResourceConfiguration,
-        proxiedPm
+        testResourceConfiguration
+        // proxiedPm
       );
       this.status = true;
       return result;

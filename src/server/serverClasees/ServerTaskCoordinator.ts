@@ -16,8 +16,105 @@ export class ServerTaskCoordinator extends ServerTaskManager {
   }> = [];
   private processingQueue: boolean = false;
 
+  private testSchedulingQueue: Array<{
+    testId: string;
+    testName: string;
+    runtime: IRunTime;
+    ws: any;
+    timestamp: Date;
+  }> = [];
+  private processingSchedulingQueue: boolean = false;
+
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
+  }
+
+  // Method to add test to scheduling queue (called from WebSocket handler)
+  addTestToSchedulingQueue(testId: string, testName: string, runtime: IRunTime, ws: any): void {
+    console.log(`[SCHEDULING] addTestToSchedulingQueue called for test ${testId} (${testName})`);
+    // Check if test is already in queue
+    const alreadyInQueue = this.testSchedulingQueue.some(item => item.testId === testId);
+    if (!alreadyInQueue) {
+      this.testSchedulingQueue.push({
+        testId,
+        testName,
+        runtime,
+        ws,
+        timestamp: new Date()
+      });
+      console.log(`[SCHEDULING] Added test ${testName} (${testId}) to scheduling queue. Queue length: ${this.testSchedulingQueue.length}`);
+      // Try to process the scheduling queue
+      this.processSchedulingQueue();
+    } else {
+      console.log(`[SCHEDULING] Test ${testName} (${testId}) is already in scheduling queue`);
+    }
+  }
+
+  // Process the scheduling queue to allocate test resources
+  private async processSchedulingQueue(): Promise<void> {
+    console.log(`[SCHEDULING] processSchedulingQueue called. Queue length: ${this.testSchedulingQueue.length}, processing: ${this.processingSchedulingQueue}`);
+    if (this.processingSchedulingQueue || this.testSchedulingQueue.length === 0) {
+      console.log(`[SCHEDULING] Skipping processing: processing=${this.processingSchedulingQueue}, empty=${this.testSchedulingQueue.length === 0}`);
+      return;
+    }
+
+    this.processingSchedulingQueue = true;
+    console.log(`[SCHEDULING] Started processing scheduling queue`);
+
+    try {
+      while (this.testSchedulingQueue.length > 0) {
+        const item = this.testSchedulingQueue.shift();
+        if (!item) continue;
+
+        const { testId, testName, runtime, ws } = item;
+
+        console.log(`[SCHEDULING] Processing test ${testName} (${testId}) from scheduling queue`);
+
+        // Allocate test resources
+        // For now, we'll create a simple test resource configuration
+        // In a real implementation, this would come from a resource pool
+        const allocatedPorts = this.allocatePorts(1, testName);
+        console.log(`[SCHEDULING] Allocated ports for test ${testId}:`, allocatedPorts);
+        
+        const testResource = {
+          testId,
+          testName,
+          runtime,
+          allocatedAt: new Date().toISOString(),
+          // Add actual resource configuration here
+          ports: allocatedPorts || [3000],
+          // Other resources...
+        };
+
+        console.log(`[SCHEDULING] Prepared test resource for test ${testId}:`, testResource);
+
+        // Send test resource to the test via WebSocket
+        if (ws.readyState === ws.OPEN) {
+          const message = {
+            type: "testResource",
+            data: testResource,
+            timestamp: new Date().toISOString(),
+          };
+          console.log(`[SCHEDULING] Sending test resource to test ${testId}:`, message);
+          ws.send(JSON.stringify(message));
+          console.log(`[SCHEDULING] Sent test resource to test ${testName} (${testId})`);
+        } else {
+          console.warn(`[SCHEDULING] WebSocket for test ${testName} (${testId}) is not open (readyState: ${ws.readyState}), cannot send resource`);
+          // Put back in queue or handle error
+          console.log(`[SCHEDULING] Putting test ${testId} back to the front of the queue`);
+          this.testSchedulingQueue.unshift(item);
+        }
+      }
+    } finally {
+      this.processingSchedulingQueue = false;
+      console.log(`[SCHEDULING] Finished processing scheduling queue. Remaining items: ${this.testSchedulingQueue.length}`);
+    }
+  }
+
+  // Override to ensure we have access to the method from WebSocket handler
+  // We'll add a getter to access addTestToSchedulingQueue
+  getSchedulingQueueMethod() {
+    return this.addTestToSchedulingQueue.bind(this);
   }
 
   // addToQueue(src: string, runtime: IRunTime, addableFiles?: string[]) {

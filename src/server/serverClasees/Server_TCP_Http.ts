@@ -11,7 +11,30 @@ import { IMode } from "../types";
 export class Server_TCP_Http extends Server_TCP_Core {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
+    console.log(`[HTTP] Server_TCP_Http constructor called`);
+    console.log(`[HTTP] httpServer exists: ${!!this.httpServer}`);
+    if (this.httpServer) {
+      const address = this.httpServer.address();
+      console.log(`[HTTP] HTTP server address:`, address);
+      
+      // Listen for server listening event
+      this.httpServer.on('listening', () => {
+        const addr = this.httpServer.address();
+        console.log(`[HTTP] HTTP server is now listening on port ${addr.port}`);
+      });
+      
+      // Listen for errors
+      this.httpServer.on('error', (error) => {
+        console.error(`[HTTP] HTTP server error:`, error);
+      });
+      
+      // Listen for close
+      this.httpServer.on('close', () => {
+        console.log(`[HTTP] HTTP server closed`);
+      });
+    }
     this.httpServer.on("request", this.handleHttpRequest.bind(this));
+    console.log(`[HTTP] HTTP request handler attached`);
   }
 
   protected handleHttpRequest(
@@ -20,8 +43,6 @@ export class Server_TCP_Http extends Server_TCP_Core {
       req: http.IncomingMessage;
     }
   ): void {
-    console.log(req.method, req.url);
-
     // Always serve static files from the project directory
     this.serveStaticFile(req, res);
     return;
