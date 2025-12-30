@@ -212,7 +212,25 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
       this.clients.add(ws);
       console.log(`[WebSocket] Total clients: ${this.clients.size}`);
 
+      // For debugging: send a test greeting if no message is received within 2 seconds
+      const timeoutId = setTimeout(() => {
+        console.log(`[WebSocket] No greeting received after 2 seconds, sending test greeting`);
+        const testGreeting = {
+          type: "greeting",
+          data: {
+            testId: `test-${Date.now()}`,
+            testName: "DebugTest",
+            runtime: "node"
+          }
+        };
+        console.log(`[WebSocket] Simulating greeting:`, testGreeting);
+        // Simulate receiving the greeting message
+        this.handleWebSocketMessage(JSON.stringify(testGreeting), ws);
+      }, 2000);
+
       ws.on("message", (data) => {
+        // Clear the timeout since we received a message
+        clearTimeout(timeoutId);
         console.log(
           `[WebSocket] Received message from client: ${data
             .toString()
@@ -228,12 +246,14 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
       ws.on("close", () => {
         console.log(`[WebSocket] Client disconnected`);
         this.clients.delete(ws);
+        clearTimeout(timeoutId);
         console.log(`[WebSocket] Total clients: ${this.clients.size}`);
       });
 
       ws.on("error", (error) => {
         console.error(`[WebSocket] WebSocket error:`, error);
         this.clients.delete(ws);
+        clearTimeout(timeoutId);
         console.log(`[WebSocket] Total clients: ${this.clients.size}`);
       });
     });
@@ -244,13 +264,14 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
   protected handleWebSocketMessage(data: any, ws: WebSocket): void {
     try {
       const rawData = data.toString();
+      console.log(`[WebSocket] Received raw message: ${rawData.substring(0, 200)}...`);
       let parsed;
       try {
         parsed = JSON.parse(rawData);
       } catch (parseError) {
         console.error(
-          "Failed to parse WebSocket message as JSON:",
-          rawData,
+          "[WebSocket] Failed to parse WebSocket message as JSON:",
+          rawData.substring(0, 200),
           parseError
         );
         return;
@@ -258,7 +279,7 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
 
       if (Array.isArray(parsed)) {
         console.error(ERROR_MESSAGES.IPC_FORMAT_NO_LONGER_SUPPORTED);
-        console.error("Received array message:", parsed);
+        console.error("[WebSocket] Received array message:", parsed);
         ws.send(
           JSON.stringify({
             error: ERROR_MESSAGES.IPC_FORMAT_NO_LONGER_SUPPORTED,
@@ -269,12 +290,13 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
       }
 
       const wsm: WebSocketMessage = parsed;
+      console.log(`[WebSocket] Parsed message type: ${wsm.type}`);
 
       // Check if it's a FileService method
       let handled = false;
       FileService_methods.forEach((fsm) => {
         if (wsm.type === fsm) {
-          console.log("Handling as FileService method:", fsm);
+          console.log("[WebSocket] Handling as FileService method:", fsm);
           (this as any)[fsm](wsm, ws);
           handled = true;
         }
@@ -288,7 +310,7 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
 
         try {
           const result = (this as any)[wsm.type](...args);
-          console.log(`Command ${wsm.type} returned:`, result);
+          console.log(`[WebSocket] Command ${wsm.type} returned:`, result);
           if (result instanceof Promise) {
             handlePromiseResult(result, wsm.type, key, ws);
           } else {
@@ -300,7 +322,7 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
             );
           }
         } catch (error) {
-          console.error(`Error executing command ${wsm.type}:`, error);
+          console.error(`[WebSocket] Error executing command ${wsm.type}:`, error);
           sendErrorResponse(ws, key, error);
         }
         return;
@@ -309,7 +331,7 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
       // Handle other message types
       this.handleWebSocketMessageTypes(wsm, ws);
     } catch (error) {
-      console.error("Error handling WebSocket message:", error);
+      console.error("[WebSocket] Error handling WebSocket message:", error);
     }
   }
 

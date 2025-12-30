@@ -16,7 +16,6 @@ export class PitonoBuild {
   }
 
   async build() {
-    // Filter python tests
     const pythonTests: [string, string, object, object[]][] = Object.keys(
       this.config.golang.tests
     ).map((testName) => [
@@ -28,17 +27,14 @@ export class PitonoBuild {
     const hasPythonTests = pythonTests.length > 0;
 
     if (hasPythonTests) {
-      // Get the entry points
       const pythonEntryPoints = pythonTests.map((test) => test[0]);
 
-      // Generate and write metafile
       const metafile = await generatePitonoMetafile(
         this.testName,
         pythonEntryPoints
       );
       writePitonoMetafile(this.testName, metafile);
 
-      // Start watching for changes
       this.watcher = new PitonoWatcher(this.testName, pythonEntryPoints);
       await this.watcher.start();
 

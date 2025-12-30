@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// import { PassThrough } from "stream";
 import { NonEmptyObject } from "type-fest";
+import WebSocket from "ws";
 import type {
   Ibdd_in_any,
   Ibdd_out_any,
@@ -20,17 +20,11 @@ import {
   IFinalResults,
   ITestArtifactory,
   ITestJob,
-  // ITLog,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./index.js";
-// import { IPM } from "./types.js";
-// import { PM_Node } from "../clients/node.js";
 
 type IExtenstions = Record<string, unknown>;
-
-import WebSocket from "ws";
-// import { PM } from "../clients";
 
 export default class Tiposkripto<
   I extends Ibdd_in_any = Ibdd_in_any,
@@ -38,10 +32,9 @@ export default class Tiposkripto<
   M = unknown
 > {
   private messageCallbacks: Map<string, (data: any) => void> = new Map();
-  // private totalTests: number;
-
   protected ws: WebSocket | null = null;
 
+  totalTests: number = 0;
   artifacts: Promise<unknown>[] = [];
   assertThis: (t: I["then"]) => any;
   givenOverides: Record<keyof IExtenstions, any>;
@@ -64,13 +57,11 @@ export default class Tiposkripto<
     },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testAdapter: Partial<ITestAdapter<I>> = {},
-    // uberCatcher: string,
     port: string,
     host: string
   ) {
     const fullAdapter = DefaultAdapter<I>(testAdapter);
 
-    // Create classy implementations
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {
         a[key] = (somestring: string, givens: IGivens<I>) => {
@@ -206,7 +197,6 @@ export default class Tiposkripto<
       {}
     );
 
-    // Set up the overrides
     this.suitesOverrides = classySuites;
     this.givenOverides = classyGivens;
     this.whenOverides = classyWhens;
@@ -214,7 +204,6 @@ export default class Tiposkripto<
     this.testResourceRequirement = testResourceRequirement;
     this.testSpecification = testSpecification;
 
-    // Generate specs
     this.specs = testSpecification(
       this.Suites(),
       this.Given(),
@@ -228,24 +217,21 @@ export default class Tiposkripto<
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
       console.log("mark2");
       const suiteRunner =
-        (suite: BaseSuite<I, O>) => async (): Promise<BaseSuite<I, O>> => {
+        (suite: BaseSuite<I, O>) => async (testResourceConfiguration?: ITTestResourceConfiguration): Promise<BaseSuite<I, O>> => {
           try {
             console.log("mark3");
+            console.log("Test resource configuration:", testResourceConfiguration);
+            // Pass the test resource configuration to suite.run
             const x = await suite.run(
-              input
-              // puppetMaster.testResourceConfiguration,
-              // (fPath: string, value: string | Buffer | PassThrough) =>
-              //   puppetMaster.testArtiFactoryfileWriter(
-              //     tLog,
-              //     (p: Promise<void>) => {
-              //       this.artifacts.push(p);
-              //     }
-              //   )(
-              //     puppetMaster.testResourceConfiguration.fs + "/" + fPath,
-              //     value
-              //   ),
-              // tLog,
-              // puppetMaster
+              input,
+              testResourceConfiguration || {
+                name: suite.name,
+                fs: process.cwd(),
+                ports: [],
+                timeout: 30000,
+                retries: 3,
+                environment: {}
+              }
             );
             console.log("mark3.5", x);
             return x;
@@ -259,7 +245,9 @@ export default class Tiposkripto<
       const runner = suiteRunner(suite);
 
       console.log("mark5", runner);
-      return {
+      // Capture totalTests in a closure
+      const totalTests = this.totalTests;
+      const testJob = {
         test: suite,
 
         toObj: () => {
@@ -268,47 +256,46 @@ export default class Tiposkripto<
 
         runner,
 
-        receiveTestResourceConfig: async function (): Promise<IFinalResults> {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          // const tLog = async (...l: string[]) => {
-          //   //
-          // };
-
-          console.log("mark7");
+        receiveTestResourceConfig: async (
+          testResourceConfiguration: ITTestResourceConfiguration
+        ): Promise<IFinalResults> => {
+          console.log("mark7 - receiveTestResourceConfig called with:", testResourceConfiguration);
 
           try {
-            const suiteDone: BaseSuite<I, O> = await runner();
+            // Run the suite with the test resource configuration
+            const suiteDone: BaseSuite<I, O> = await runner(testResourceConfiguration);
             const fails = suiteDone.fails;
 
-            console.log("mark6", this.toObj());
+            console.log("mark6", testJob.toObj());
 
-            await this.writeFileSync(
-              `tests.json`,
-              JSON.stringify(this.toObj(), null, 2),
-              "test"
-            );
+            // Write test results
+            // Note: this.writeFileSync doesn't exist in this context
+            // We need to handle this differently
+            // For now, just log
+            console.log(`Would write tests.json with:`, JSON.stringify(testJob.toObj(), null, 2));
 
             return {
               failed: fails > 0,
               fails,
-              artifacts: this.artifacts || [],
+              artifacts: [], // this.artifacts is not accessible here
               features: suiteDone.features(),
-              tests: 0, // Keep existing field
-              runTimeTests: this.totalTests, // Add the total number of tests
+              tests: 0,
+              runTimeTests: totalTests,
             };
           } catch (e) {
             console.error(e.stack);
             return {
               failed: true,
               fails: -1,
-              artifacts: this.artifacts || [],
+              artifacts: [],
               features: [],
-              tests: 0, // Keep existing field
-              runTimeTests: -1, // Set to -1 on hard error
+              tests: 0,
+              runTimeTests: -1,
             };
           }
         },
       };
+      return testJob;
     });
 
     this.connectWebSocket(port, host);
@@ -364,6 +351,19 @@ export default class Tiposkripto<
           `[Tiposkripto] ✅ WebSocket connected successfully to ${url}`
         );
         console.log(`[Tiposkripto] Ready to send and receive messages`);
+        
+        // Send greeting message to server
+        const greetingMessage = {
+          type: "greeting",
+          data: {
+            testId: `test-${Date.now()}`,
+            testName: "TiposkriptoTest",
+            runtime: "node"
+          }
+        };
+        console.log(`[Tiposkripto] Sending greeting to server:`, greetingMessage);
+        this.ws.send(JSON.stringify(greetingMessage));
+        
         resolve();
       });
 
@@ -400,7 +400,54 @@ export default class Tiposkripto<
           console.log(
             `[Tiposkripto] Parsed message type: ${message.type || "unknown"}`
           );
-          if (message.key && this.messageCallbacks.has(message.key)) {
+          
+          // Handle testResource messages
+          if (message.type === "testResource") {
+            console.log(`[Tiposkripto] Received testResource message`);
+            console.log(`[Tiposkripto] Test resource data:`, JSON.stringify(message.data, null, 2));
+            
+            // Call receiveTestResourceConfig with the test resource configuration
+            if (this.testJobs && this.testJobs.length > 0) {
+              // The test resource configuration is in message.data.testResourceConfiguration
+              const testResourceConfig = message.data.testResourceConfiguration;
+              console.log(`[Tiposkripto] Calling receiveTestResourceConfig with:`, testResourceConfig);
+              
+              // Call receiveTestResourceConfig on the first test job
+              // The test job's receiveTestResourceConfig expects an ITTestResourceConfiguration object
+              this.testJobs[0].receiveTestResourceConfig(testResourceConfig)
+                .then((result) => {
+                  console.log(`[Tiposkripto] Test execution result:`, result);
+                  
+                  // Send the result back to the server
+                  if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    const resultMessage = {
+                      type: "testResult",
+                      data: result,
+                      timestamp: new Date().toISOString(),
+                    };
+                    this.ws.send(JSON.stringify(resultMessage));
+                    console.log(`[Tiposkripto] Sent test result to server`);
+                  }
+                })
+                .catch((error) => {
+                  console.error(`[Tiposkripto] Error executing test:`, error);
+                  
+                  // Send error back to server
+                  if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    const errorMessage = {
+                      type: "testError",
+                      data: { error: error.message },
+                      timestamp: new Date().toISOString(),
+                    };
+                    this.ws.send(JSON.stringify(errorMessage));
+                  }
+                });
+            } else {
+              console.error(`[Tiposkripto] No test jobs available`);
+            }
+          }
+          // Handle command responses
+          else if (message.key && this.messageCallbacks.has(message.key)) {
             const callback = this.messageCallbacks.get(message.key);
             if (callback) {
               callback(message.payload);
@@ -471,35 +518,18 @@ export default class Tiposkripto<
     }
   }
 
-  async receiveTestResourceConfig(partialTestResource: string): Promise<any> {
+  async receiveTestResourceConfig(testResourceConfig: ITTestResourceConfiguration): Promise<any> {
     console.log("Tiposkripto.receiveTestResourceConfig - starting");
+    console.log("Test resource configuration:", testResourceConfig);
 
-    // Parse the test resource configuration
-    const testResource = JSON.parse(partialTestResource);
-    console.log("Parsed test resource:", testResource);
-
-    // Create a minimal puppetMaster object since PM is dead
-    // The test job's receiveTestResourceConfig expects a puppetMaster with certain properties
-    // const puppetMaster = {
-    //   testResourceConfiguration: testResource,
-    //   writeFileSync: async (
-    //     filepath: string,
-    //     contents: string
-    //   ): Promise<boolean> => {
-    //     // For now, just log
-    //     console.log(`Would write to ${filepath}: ${contents.length} bytes`);
-    //     return true;
-    //   },
-    //   // Add other required properties with dummy implementations
-    //   testArtiFactoryfileWriter: () => {
-    //     return () => {
-    //       // Do nothing
-    //     };
-    //   },
-    // } as any;
-
-    // Call the test job's receiveTestResourceConfig with the puppetMaster
-    return await this.testJobs[0].receiveTestResourceConfig();
+    // Call the test job's receiveTestResourceConfig with the test resource configuration
+    if (this.testJobs && this.testJobs.length > 0) {
+      // Pass the test resource configuration object directly
+      return await this.testJobs[0].receiveTestResourceConfig(testResourceConfig);
+    } else {
+      console.error("No test jobs available");
+      throw new Error("No test jobs available");
+    }
   }
 
   Specs() {

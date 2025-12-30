@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import fs from "fs";
+import path from "path";
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
-import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
 import { IMode } from "../types";
+import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
+import { ITTestResourceConfiguration } from "../../../lib/index";
 
 export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
   constructor(configs: any, name: string, mode: IMode) {
@@ -14,7 +17,10 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     console.log(`[WebSocketProcess] wss exists: ${!!this.wss}`);
     console.log(`[WebSocketProcess] httpServer exists: ${!!this.httpServer}`);
     if (this.wss) {
-      console.log(`[WebSocketProcess] WebSocket server event listeners:`, this.wss.eventNames());
+      console.log(
+        `[WebSocketProcess] WebSocket server event listeners:`,
+        this.wss.eventNames()
+      );
     }
 
     // Override runningProcesses.set to capture logs for new processes
@@ -23,14 +29,16 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
     // Attach log capture to existing processes (after parent may have added some)
     setTimeout(() => {
-      console.log(`[WebSocketProcess] Attaching log capture to existing processes`);
+      console.log(
+        `[WebSocketProcess] Attaching log capture to existing processes`
+      );
       this.attachLogCaptureToExistingProcesses();
     }, 100);
 
     // Override launch methods to capture errors
     console.log(`[WebSocketProcess] Overriding launch methods`);
     this.overrideLaunchMethods();
-    
+
     console.log(`[WebSocketProcess] Constructor completed`);
   }
 
@@ -38,9 +46,14 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     wsm: WebSocketMessage,
     ws: WebSocket
   ): void {
-    console.log(`[WebSocketProcess] Handling WebSocket message type: ${wsm.type}`);
-    console.log(`[WebSocketProcess] Message data:`, JSON.stringify(wsm.data).substring(0, 200));
-    
+    console.log(
+      `[WebSocketProcess] Handling WebSocket message type: ${wsm.type}`
+    );
+    console.log(
+      `[WebSocketProcess] Message data:`,
+      JSON.stringify(wsm.data).substring(0, 200)
+    );
+
     // First, let the base class handle its message types
     super.handleWebSocketMessageTypes(wsm, ws);
 
@@ -59,7 +72,9 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     } else if (wsm.type === "getLogs") {
       // Handle monitoring request for logs
       const processId = wsm.data?.processId;
-      console.log(`[WebSocketProcess] Handling getLogs request for process: ${processId}`);
+      console.log(
+        `[WebSocketProcess] Handling getLogs request for process: ${processId}`
+      );
       if (processId) {
         ws.send(
           JSON.stringify({
@@ -74,7 +89,9 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     } else if (wsm.type === "subscribeToLogs") {
       // Handle subscription to log updates
       const processId = wsm.data?.processId;
-      console.log(`[WebSocketProcess] Handling subscribeToLogs for process: ${processId}`);
+      console.log(
+        `[WebSocketProcess] Handling subscribeToLogs for process: ${processId}`
+      );
       if (processId) {
         // Store subscription info
         if (!(this as any).logSubscriptions) {
@@ -93,86 +110,75 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
             timestamp: new Date().toISOString(),
           })
         );
-        console.log(`[WebSocketProcess] Subscribed to logs for process ${processId}`);
+        console.log(
+          `[WebSocketProcess] Subscribed to logs for process ${processId}`
+        );
       }
     } else if (wsm.type === "greeting") {
       // Handle test greeting - test is ready to be scheduled
       const testName = wsm.data?.testName;
       const runtime = wsm.data?.runtime;
       const testId = wsm.data?.testId;
-      
-      console.log(`[WebSocketProcess] Received greeting from test: ${testName} (${runtime}), testId: ${testId}`);
-      console.log(`[WebSocketProcess] Full greeting data:`, wsm.data);
-      
+
+      console.log(
+        `[WebSocketProcess] Received greeting from test: ${testName} (${runtime}), testId: ${testId}`
+      );
+      console.log(`[WebSocketProcess] Full greeting data:`, JSON.stringify(wsm.data, null, 2));
+
       // Store WebSocket connection for this test
       if (!(this as any).testConnections) {
         (this as any).testConnections = new Map();
       }
       (this as any).testConnections.set(testId, ws);
-      console.log(`[WebSocketProcess] Stored WebSocket connection for test ${testId}. Total connections: ${(this as any).testConnections.size}`);
-      
+      console.log(
+        `[WebSocketProcess] Stored WebSocket connection for test ${testId}. Total connections: ${
+          (this as any).testConnections.size
+        }`
+      );
+
       // Add test to scheduling queue
-      // We need to access the ServerTaskCoordinator's queue
-      // Since this class likely has access to it through inheritance or composition
-      // For now, let's assume we can call a method to add to queue
-      console.log(`[WebSocketProcess] Looking for addTestToSchedulingQueue method...`);
-      if ((this as any).addTestToSchedulingQueue) {
-        console.log(`[WebSocketProcess] Found addTestToSchedulingQueue, calling for test ${testId}`);
-        (this as any).addTestToSchedulingQueue(testId, testName, runtime, ws);
-      } else {
-        console.warn("[WebSocketProcess] No addTestToSchedulingQueue method found directly");
-        // Try to find it in the prototype chain
-        let found = false;
-        let obj = this;
-        while (obj && !found) {
-          const methods = Object.getOwnPropertyNames(obj).filter(
-            prop => typeof (obj as any)[prop] === 'function'
-          );
-          for (const method of methods) {
-            if (method === 'addTestToSchedulingQueue') {
-              console.log(`[WebSocketProcess] Found ${method} in prototype chain`);
-              (this as any)[method](testId, testName, runtime, ws);
-              found = true;
-              break;
-            }
-          }
-          obj = Object.getPrototypeOf(obj);
-        }
-        if (!found) {
-          console.error("[WebSocketProcess] Could not find addTestToSchedulingQueue anywhere");
-          // Send an immediate test resource to prevent hanging
-          const immediateTestResource = {
-            testId,
-            testName,
-            runtime,
-            allocatedAt: new Date().toISOString(),
-            ports: [3000],
-          };
-          const message = {
-            type: "testResource",
-            data: immediateTestResource,
-            timestamp: new Date().toISOString(),
-          };
-          console.log(`[WebSocketProcess] Sending immediate test resource to prevent hanging:`, message);
-          ws.send(JSON.stringify(message));
-        }
-      }
-      
+      console.log(`[WebSocketProcess] Calling scheduleTestForExecution...`);
+      this.scheduleTestForExecution(testId, testName, runtime, ws);
+
       // Acknowledge greeting
       const ackMessage = {
         type: "greetingAck",
         testId,
         timestamp: new Date().toISOString(),
       };
-      console.log(`[WebSocketProcess] Sending greeting acknowledgment for test ${testId}:`, ackMessage);
+      console.log(
+        `[WebSocketProcess] Sending greeting acknowledgment for test ${testId}:`,
+        ackMessage
+      );
       try {
         ws.send(JSON.stringify(ackMessage));
-        console.log(`[WebSocketProcess] Greeting acknowledgment sent successfully for test ${testId}`);
+        console.log(
+          `[WebSocketProcess] Greeting acknowledgment sent successfully for test ${testId}`
+        );
       } catch (error) {
-        console.error(`[WebSocketProcess] Failed to send greeting acknowledgment for test ${testId}:`, error);
+        console.error(
+          `[WebSocketProcess] Failed to send greeting acknowledgment for test ${testId}:`,
+          error
+        );
       }
+    } else if (wsm.type === "testResult") {
+      // Handle test result from client
+      console.log(`[WebSocketProcess] Received testResult message`);
+      console.log(`[WebSocketProcess] Test result data:`, JSON.stringify(wsm.data, null, 2));
+      
+      // Write test results to tests.json
+      this.handleTestResult(wsm.data, ws);
+    } else if (wsm.type === "testError") {
+      // Handle test error from client
+      console.log(`[WebSocketProcess] Received testError message`);
+      console.log(`[WebSocketProcess] Test error data:`, JSON.stringify(wsm.data, null, 2));
+      
+      // Write error to tests.json or error log
+      this.handleTestError(wsm.data, ws);
     } else {
-      console.log(`[WebSocketProcess] Unhandled WebSocket message type: ${wsm.type}`);
+      console.log(
+        `[WebSocketProcess] Unhandled WebSocket message type: ${wsm.type}`
+      );
     }
   }
 
@@ -347,6 +353,143 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
     // Broadcast to subscribed clients
     this.broadcastLogs(processId, logEntry);
+  }
+
+  // Schedule test for execution - to be overridden by subclasses
+  protected scheduleTestForExecution(
+    testId: string,
+    testName: string,
+    runtime: any,
+    ws: WebSocket
+  ): void {
+    console.log(
+      `[WebSocketProcess] Default scheduleTestForExecution called for test ${testId}`
+    );
+    // Default implementation: send immediate test resource
+    const testResourceConfiguration: ITTestResourceConfiguration = {
+      name: testName,
+      fs: process.cwd(),
+      ports: [3000],
+      timeout: 30000,
+      retries: 3,
+      environment: {},
+    };
+    // Add browserWSEndpoint for web runtime
+    if (runtime === 'web') {
+      testResourceConfiguration.browserWSEndpoint = process.env.BROWSER_WS_ENDPOINT || '';
+    }
+    
+    const message = {
+      type: "testResource",
+      data: {
+        testId,
+        testName,
+        runtime,
+        allocatedAt: new Date().toISOString(),
+        testResourceConfiguration,
+      },
+      timestamp: new Date().toISOString(),
+    };
+    console.log(`[WebSocketProcess] Sending immediate test resource:`, message);
+    ws.send(JSON.stringify(message));
+  }
+
+  // Handle test result from client
+  private handleTestResult(testResultData: any, ws: WebSocket): void {
+    try {
+      console.log(`[WebSocketProcess] Handling test result`);
+      
+      // Extract test information from the result
+      const testName = testResultData.testName || 'unknown-test';
+      const runtime = testResultData.runtime || 'node';
+      const testId = testResultData.testId || `test-${Date.now()}`;
+      
+      // Determine the report directory
+      // The test result should include information about where to write the file
+      // For now, we'll use a default location
+      const reportDest = `testeranto/reports/${this.projectName || 'default'}/${testName}/${runtime}`;
+      
+      // Ensure the directory exists
+      if (!fs.existsSync(reportDest)) {
+        fs.mkdirSync(reportDest, { recursive: true });
+      }
+      
+      // Write tests.json file
+      const testsJsonPath = path.join(reportDest, 'tests.json');
+      const testsJsonContent = JSON.stringify(testResultData, null, 2);
+      fs.writeFileSync(testsJsonPath, testsJsonContent);
+      
+      console.log(`[WebSocketProcess] Wrote test results to ${testsJsonPath}`);
+      
+      // Send acknowledgment back to client
+      const ackMessage = {
+        type: "testResultAck",
+        testId,
+        timestamp: new Date().toISOString(),
+        message: "Test results saved successfully"
+      };
+      ws.send(JSON.stringify(ackMessage));
+      console.log(`[WebSocketProcess] Sent test result acknowledgment for test ${testId}`);
+      
+    } catch (error) {
+      console.error(`[WebSocketProcess] Error handling test result:`, error);
+      
+      // Send error response to client
+      const errorMessage = {
+        type: "testResultError",
+        timestamp: new Date().toISOString(),
+        error: error.message
+      };
+      ws.send(JSON.stringify(errorMessage));
+    }
+  }
+
+  // Handle test error from client
+  private handleTestError(testErrorData: any, ws: WebSocket): void {
+    try {
+      console.log(`[WebSocketProcess] Handling test error`);
+      
+      // Extract test information from the error
+      const testName = testErrorData.testName || 'unknown-test';
+      const runtime = testErrorData.runtime || 'node';
+      const testId = testErrorData.testId || `test-${Date.now()}`;
+      
+      // Determine the report directory
+      const reportDest = `testeranto/reports/${this.projectName || 'default'}/${testName}/${runtime}`;
+      
+      // Ensure the directory exists
+      if (!fs.existsSync(reportDest)) {
+        fs.mkdirSync(reportDest, { recursive: true });
+      }
+      
+      // Write error.json file
+      const errorJsonPath = path.join(reportDest, 'error.json');
+      const errorJsonContent = JSON.stringify(testErrorData, null, 2);
+      fs.writeFileSync(errorJsonPath, errorJsonContent);
+      
+      console.log(`[WebSocketProcess] Wrote test error to ${errorJsonPath}`);
+      
+      // Send acknowledgment back to client
+      const ackMessage = {
+        type: "testErrorAck",
+        testId,
+        timestamp: new Date().toISOString(),
+        message: "Test error saved successfully"
+      };
+      ws.send(JSON.stringify(ackMessage));
+      console.log(`[WebSocketProcess] Sent test error acknowledgment for test ${testId}`);
+      
+    } catch (error) {
+      console.error(`[WebSocketProcess] Error handling test error:`, error);
+      
+      // Send error response to client
+      const errorMessage = {
+        type: "testErrorError",
+        timestamp: new Date().toISOString(),
+        error: error.message
+      };
+      ws.send(JSON.stringify(errorMessage));
+    }
   }
 
   // Helper method to serialize process info

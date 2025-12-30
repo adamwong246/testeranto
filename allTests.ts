@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestconfig } from "./src/Types";
 import {
-  createGolangLangConfig,
+  // createGolangLangConfig,
   // CHECKS_CONFIG,
   createLangConfig,
   // SINGLE_PROD_BLOCK,

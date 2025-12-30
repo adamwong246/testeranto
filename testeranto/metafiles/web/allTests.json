@@ -1,0 +1,795 @@
+{
+  "errors": [],
+  "warnings": [
+    {
+      "id": "direct-eval",
+      "location": {
+        "column": 21,
+        "file": "example/Calculator.ts",
+        "length": 4,
+        "line": 17,
+        "lineText": "      const result = eval(this.display);",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": null,
+          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+        }
+      ],
+      "pluginName": "",
+      "text": "Using direct eval with a bundler is not recommended and may cause problems"
+    },
+    {
+      "id": "import-is-undefined",
+      "location": {
+        "column": 9,
+        "file": "src/lib/Web.ts",
+        "length": 6,
+        "line": 6,
+        "lineText": "import { PM_Web } from \"../clients/web.js\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Import \"PM_Web\" will always be undefined because the file \"src/clients/web.ts\" has no exports"
+    }
+  ],
+  "metafile": {
+    "inputs": {
+      "node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js": {
+        "bytes": 30,
+        "imports": [],
+        "format": "esm"
+      },
+      "node_modules/@jspm/core/nodelibs/browser/process.js": {
+        "bytes": 7163,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/esbuild-plugin-polyfill-node/polyfills/process.js": {
+        "bytes": 36,
+        "imports": [
+          {
+            "path": "node_modules/@jspm/core/nodelibs/browser/process.js",
+            "kind": "import-statement",
+            "original": "process"
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js": {
+        "bytes": 67411,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@jspm/core/nodelibs/browser/buffer.js": {
+        "bytes": 358,
+        "imports": [
+          {
+            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js",
+            "kind": "import-statement",
+            "original": "./chunk-DtuTasat.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js": {
+        "bytes": 33,
+        "imports": [
+          {
+            "path": "node_modules/@jspm/core/nodelibs/browser/buffer.js",
+            "kind": "import-statement",
+            "original": "buffer"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/index.ts": {
+        "bytes": 3939,
+        "imports": [
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/clients/web.ts": {
+        "bytes": 11704,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseGiven.ts": {
+        "bytes": 8399,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.ts": {
+        "bytes": 6321,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseThen.ts": {
+        "bytes": 3092,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseWhen.ts": {
+        "bytes": 2516,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/ws/browser.js": {
+        "bytes": 176,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "src/lib/Tiposkripto.ts": {
+        "bytes": 17265,
+        "imports": [
+          {
+            "path": "type-fest",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseGiven.ts",
+            "kind": "import-statement",
+            "original": "./BaseGiven"
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "./BaseSuite"
+          },
+          {
+            "path": "src/lib/BaseThen.ts",
+            "kind": "import-statement",
+            "original": "./BaseThen.js"
+          },
+          {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "./BaseWhen.js"
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "node_modules/ws/browser.js",
+            "kind": "import-statement",
+            "original": "ws"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/Web.ts": {
+        "bytes": 3232,
+        "imports": [
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "src/clients/web.ts",
+            "kind": "import-statement",
+            "original": "../clients/web.js"
+          },
+          {
+            "path": "../CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/Tiposkripto.ts",
+            "kind": "import-statement",
+            "original": "./Tiposkripto.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/Tiposkripto.ts": {
+        "bytes": 1402,
+        "imports": [
+          {
+            "path": "./CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/Web.ts",
+            "kind": "dynamic-import",
+            "original": "./lib/Web"
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.ts": {
+        "bytes": 2565,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.test.adapter.ts": {
+        "bytes": 1362,
+        "imports": [
+          {
+            "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/chai/index.js": {
+        "bytes": 142562,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.test.implementation.ts": {
+        "bytes": 1463,
+        "imports": [
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "example/Calculator.ts",
+            "kind": "import-statement",
+            "original": "./Calculator"
+          },
+          {
+            "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/chai/index.js",
+            "kind": "import-statement",
+            "original": "chai"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.test.specification.ts": {
+        "bytes": 6850,
+        "imports": [
+          {
+            "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.test.ts": {
+        "bytes": 459,
+        "imports": [
+          {
+            "path": "src/Tiposkripto.ts",
+            "kind": "import-statement",
+            "original": "../src/Tiposkripto"
+          },
+          {
+            "path": "example/Calculator.ts",
+            "kind": "import-statement",
+            "original": "./Calculator"
+          },
+          {
+            "path": "example/Calculator.test.adapter.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.adapter"
+          },
+          {
+            "path": "example/Calculator.test.implementation.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.implementation"
+          },
+          {
+            "path": "example/Calculator.test.specification.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.specification"
+          },
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/web/allTests/example/Calculator.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/allTests/chunk-4DUKMHWI.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/allTests/Web-5KY4TWXI.mjs",
+            "kind": "dynamic-import"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "example/Calculator.test.ts",
+        "inputs": {
+          "example/Calculator.test.ts": {
+            "bytesInOutput": 194
+          },
+          "src/Tiposkripto.ts": {
+            "bytesInOutput": 504
+          },
+          "example/Calculator.ts": {
+            "bytesInOutput": 2083
+          },
+          "example/Calculator.test.adapter.ts": {
+            "bytesInOutput": 748
+          },
+          "example/Calculator.test.implementation.ts": {
+            "bytesInOutput": 1003
+          },
+          "node_modules/chai/index.js": {
+            "bytesInOutput": 133894
+          },
+          "example/Calculator.test.specification.ts": {
+            "bytesInOutput": 7211
+          }
+        },
+        "bytes": 153580
+      },
+      "testeranto/bundles/web/allTests/Web-5KY4TWXI.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/allTests/chunk-4DUKMHWI.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "WebTiposkripto",
+          "default"
+        ],
+        "entryPoint": "src/lib/Web.ts",
+        "inputs": {
+          "node_modules/ws/browser.js": {
+            "bytesInOutput": 339
+          },
+          "src/lib/Web.ts": {
+            "bytesInOutput": 1375
+          },
+          "src/clients/web.ts": {
+            "bytesInOutput": 47
+          },
+          "src/lib/Tiposkripto.ts": {
+            "bytesInOutput": 11846
+          },
+          "src/lib/BaseGiven.ts": {
+            "bytesInOutput": 2810
+          },
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 3052
+          },
+          "src/lib/BaseThen.ts": {
+            "bytesInOutput": 1419
+          },
+          "src/lib/BaseWhen.ts": {
+            "bytesInOutput": 1078
+          }
+        },
+        "bytes": 22447
+      },
+      "testeranto/bundles/web/allTests/chunk-4DUKMHWI.mjs": {
+        "imports": [],
+        "exports": [
+          "Buffer",
+          "DefaultAdapter",
+          "__commonJS",
+          "__toESM",
+          "defaultTestResourceRequirement",
+          "init_buffer",
+          "init_dirname",
+          "init_process",
+          "process_exports"
+        ],
+        "inputs": {
+          "node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js": {
+            "bytesInOutput": 108
+          },
+          "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js": {
+            "bytesInOutput": 60044
+          },
+          "node_modules/@jspm/core/nodelibs/browser/buffer.js": {
+            "bytesInOutput": 493
+          },
+          "node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js": {
+            "bytesInOutput": 124
+          },
+          "node_modules/@jspm/core/nodelibs/browser/process.js": {
+            "bytesInOutput": 9699
+          },
+          "node_modules/esbuild-plugin-polyfill-node/polyfills/process.js": {
+            "bytesInOutput": 127
+          },
+          "src/lib/index.ts": {
+            "bytesInOutput": 689
+          }
+        },
+        "bytes": 73633
+      }
+    }
+  }
+}

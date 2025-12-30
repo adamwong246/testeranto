@@ -1,0 +1,47 @@
+/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (13,3): Type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: IPM) => Pro...' is not assignable to type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: IPM) => Pro...'. Two different types with this name exist, but they are unrelated.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (41,3): Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+/Users/adam/Code/testeranto/src/clients/index.ts (5,10): Module '"../lib"' has no exported member 'ITLog'.
+/Users/adam/Code/testeranto/src/CoreTypes.ts (6,10): Module '"./lib/types"' has no exported member 'IPM'.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (8,28): Module '"."' has no exported member 'ITLog'.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (63,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (118,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (149,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (236,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (256,20): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (259,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (72,26): Property 'name' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (158,32): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (168,34): Expected 7 arguments, but got 5.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (179,29): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (185,19): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (186,31): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (202,12): Expected 2 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/BaseThen.ts (8,10): Module '"."' has no exported member 'ITLog'.
+/Users/adam/Code/testeranto/src/lib/BaseThen.ts (9,10): Module '"./types.js"' has no exported member 'IPM'.
+/Users/adam/Code/testeranto/src/lib/BaseThen.ts (70,28): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/BaseThen.ts (75,41): Expected 2 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/BaseWhen.ts (8,10): Module '"."' has no exported member 'ITLog'.
+/Users/adam/Code/testeranto/src/lib/BaseWhen.ts (9,10): Module '"./types.js"' has no exported member 'IPM'.
+/Users/adam/Code/testeranto/src/lib/BaseWhen.ts (67,33): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/index.ts (39,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (47,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/Node.ts (37,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (83,34): Expected 2 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (97,29): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (141,34): Expected 5 arguments, but got 4.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (156,50): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (177,40): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (198,40): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (219,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (225,10): Property 'totalTests' does not exist on type 'Tiposkripto<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (234,35): Expected 2 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/Web.ts (6,24): File '/Users/adam/Code/testeranto/src/clients/web.ts' is not a module.
+/Users/adam/Code/testeranto/src/lib/Web.ts (30,5): Expected 7 arguments, but got 6.
+/Users/adam/Code/testeranto/src/lib/Web.ts (54,61): Expected 0 arguments, but got 1.

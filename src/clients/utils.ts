@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import ansiC from "ansi-colors";
 import path from "path";
 import fs from "fs";
@@ -51,11 +52,13 @@ export function runtimeLogs(
         debug: fs.createWriteStream(`${safeDest}/debug.log`),
         exit: fs.createWriteStream(`${safeDest}/exit.log`),
       };
-    } else if (runtime === "pure") {
-      return {
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else if (runtime === "python") {
+    }
+    // else if (runtime === "pure") {
+    //   return {
+    //     exit: fs.createWriteStream(`${safeDest}/exit.log`),
+    //   };
+    // }
+    else if (runtime === "python") {
       return {
         stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),

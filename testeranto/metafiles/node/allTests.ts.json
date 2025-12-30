@@ -110,10 +110,15 @@
         "format": "esm"
       },
       "src/lib/Tiposkripto.ts": {
-        "bytes": 17257,
+        "bytes": 19348,
         "imports": [
           {
             "path": "type-fest",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "ws",
             "kind": "import-statement",
             "external": true
           },
@@ -141,27 +146,22 @@
             "path": "src/lib/index.ts",
             "kind": "import-statement",
             "original": "./index.js"
-          },
-          {
-            "path": "ws",
-            "kind": "import-statement",
-            "external": true
           }
         ],
         "format": "esm"
       },
       "src/lib/Node.ts": {
-        "bytes": 1510,
+        "bytes": 1056,
         "imports": [
-          {
-            "path": "src/lib/index.ts",
-            "kind": "import-statement",
-            "original": "./index.js"
-          },
           {
             "path": "../CoreTypes.js",
             "kind": "import-statement",
             "external": true
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
           },
           {
             "path": "src/lib/Tiposkripto.ts",
@@ -305,7 +305,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/node/Node-DUT2OMTL.mjs",
+            "path": "testeranto/bundles/allTests/node/Node-4SCXI73H.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -340,7 +340,7 @@
         },
         "bytes": 11827
       },
-      "testeranto/bundles/allTests/node/Node-DUT2OMTL.mjs": {
+      "testeranto/bundles/allTests/node/Node-4SCXI73H.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/node/chunk-HZJFVSS2.mjs",
@@ -357,6 +357,9 @@
         ],
         "entryPoint": "src/lib/Node.ts",
         "inputs": {
+          "src/lib/Tiposkripto.ts": {
+            "bytesInOutput": 13750
+          },
           "src/lib/BaseGiven.ts": {
             "bytesInOutput": 2763
           },
@@ -369,14 +372,11 @@
           "src/lib/BaseWhen.ts": {
             "bytesInOutput": 1031
           },
-          "src/lib/Tiposkripto.ts": {
-            "bytesInOutput": 11740
-          },
           "src/lib/Node.ts": {
-            "bytesInOutput": 948
+            "bytesInOutput": 583
           }
         },
-        "bytes": 21133
+        "bytes": 22805
       },
       "testeranto/bundles/allTests/node/chunk-HZJFVSS2.mjs": {
         "imports": [],

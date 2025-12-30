@@ -5,7 +5,7 @@ import {
 // src/Tiposkripto.ts
 var tpskrt;
 if (true) {
-  tpskrt = await import("../Node-DUT2OMTL.mjs");
+  tpskrt = await import("../Node-4SCXI73H.mjs");
 } else if (false) {
   tpskrt = await null;
 } else {
