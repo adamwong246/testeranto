@@ -1,6 +1,6 @@
 import esbuild from "esbuild";
 import path from "path";
-import { IBuiltConfig } from "../../lib";
+import { IBuiltConfig } from "../../Types";
 
 export interface BuildOptions {
   config: IBuiltConfig;

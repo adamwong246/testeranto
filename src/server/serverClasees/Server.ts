@@ -2,23 +2,24 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import fs from "fs";
 import { default as ansiC } from "ansi-colors";
-import fs, { watch } from "fs";
+// import fs, { watch } from "fs";
 import path from "path";
-import { pollForFile } from "../../clients/utils";
-import {
-  generatePitonoMetafile,
-  writePitonoMetafile,
-} from "../../clients/utils/pitonoMetafile";
-
-import { IBuiltConfig, IRunTime } from "../../lib";
+// import { pollForFile } from "../../clients/utils";
+// import {
+//   generatePitonoMetafile,
+//   writePitonoMetafile,
+// } from "../../clients/utils/pitonoMetafile";
+// import { IBuiltConfig, IRunTime } from "../../lib";
 import { IMode } from "../types";
 import { getRunnables } from "../utils";
 // import { BuildProcessManager } from "./BuildProcessManager";
 // import { BuildProcessStarter } from "./BuildProcessStarter";
 // import { ServerTestExecutor } from "./ServerTestExecutor";
-import { TestEnvironmentSetup } from "./utils/TestEnvironmentSetup";
+import { IBuiltConfig } from "../../Types";
 import { ServerTaskCoordinator } from "./ServerTaskCoordinator";
+import { TestEnvironmentSetup } from "./utils/TestEnvironmentSetup";
 // import { TypeCheckNotifier } from "./TypeCheckNotifier";
 
 export class Server extends ServerTaskCoordinator {
@@ -121,7 +122,7 @@ export class Server extends ServerTaskCoordinator {
     // In Docker, we don't launch Chrome directly - we connect to browserless/chrome service
     // So we don't need to initialize this.browser here
     // It will be created per test in WebLauncher
-    this.browser = null;
+    // this.browser = null;
 
     // const runnables = getRunnables(this.configs, this.projectName);
     // const {

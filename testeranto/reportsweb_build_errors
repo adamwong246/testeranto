@@ -1,0 +1,41 @@
+{
+  "errors": [
+    {
+      "id": "",
+      "location": {
+        "column": 11,
+        "file": "src/Tiposkripto.ts",
+        "length": 5,
+        "line": 18,
+        "lineText": "  tpskrt = await import(\"./lib/Web\");",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Top-level await is not available in the configured target environment (\"es2020\" + 1 override)"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "direct-eval",
+      "location": {
+        "column": 21,
+        "file": "example/Calculator.ts",
+        "length": 4,
+        "line": 17,
+        "lineText": "      const result = eval(this.display);",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": null,
+          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+        }
+      ],
+      "pluginName": "",
+      "text": "Using direct eval with a bundler is not recommended and may cause problems"
+    }
+  ]
+}

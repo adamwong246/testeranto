@@ -1,4 +1,5 @@
-import { IBuiltConfig, IRunTime } from "../../../Types";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { IBuiltConfig } from "../../../Types";
 import { baseNodeImage } from "../../nodeVersion";
 
 export const golangDockerCmd = `FROM ${baseNodeImage}
@@ -98,39 +99,3 @@ export const golangDockerFile = (config: IBuiltConfig) => {
     },
   };
 };
-
-// export function setupDockerfileForBuildWeb(config: string): string {
-//   const webSpecificPackages = `\\
-//     chromium \\
-//     nss \\
-//     freetype \\
-//     freetype-dev \\
-//     harfbuzz \\
-//     ca-certificates \\
-//     ttf-freefont \\
-//     font-noto-emoji`;
-
-//   return `FROM ${baseNodeImage}
-// WORKDIR /workspace
-// RUN apk update && apk add --no-cache \\
-//     build-base \\
-//     python3 \\
-//     py3-pip \\
-//     cairo-dev \\
-//     pango-dev \\
-//     jpeg-dev \\
-//     giflib-dev \\
-//     librsvg-dev \\
-//     libxml2-utils${webSpecificPackages} && \\
-//     rm -rf /var/cache/apk/*
-// RUN npm install -g node-gyp
-// ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-// ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-// ${COMMON_PACKAGE_INSTALL}
-// COPY ${config} .
-// COPY dist/prebuild/server/builders/web.mjs ./web.mjs
-// # Default command that keeps the container alive
-// # The actual build command will be run by docker-compose
-// CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
-// `;
-// }

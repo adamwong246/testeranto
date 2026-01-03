@@ -3,11 +3,14 @@ import fs from "fs";
 import path from "path";
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
+import { ITTestResourceConfiguration } from "../../lib";
 import { IMode } from "../types";
 import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
-import { ITTestResourceConfiguration } from "../../../lib/index";
 
 export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
+  private testInfoMap: Map<string, { testName: string; runtime: string }> =
+    new Map();
+
   constructor(configs: any, name: string, mode: IMode) {
     console.log(`[WebSocketProcess] Creating Server_TCP_WebSocketProcess`);
     super(configs, name, mode);
@@ -123,7 +126,10 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
       console.log(
         `[WebSocketProcess] Received greeting from test: ${testName} (${runtime}), testId: ${testId}`
       );
-      console.log(`[WebSocketProcess] Full greeting data:`, JSON.stringify(wsm.data, null, 2));
+      console.log(
+        `[WebSocketProcess] Full greeting data:`,
+        JSON.stringify(wsm.data, null, 2)
+      );
 
       // Store WebSocket connection for this test
       if (!(this as any).testConnections) {
@@ -164,15 +170,21 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     } else if (wsm.type === "testResult") {
       // Handle test result from client
       console.log(`[WebSocketProcess] Received testResult message`);
-      console.log(`[WebSocketProcess] Test result data:`, JSON.stringify(wsm.data, null, 2));
-      
+      console.log(
+        `[WebSocketProcess] Test result data:`,
+        JSON.stringify(wsm.data, null, 2)
+      );
+
       // Write test results to tests.json
       this.handleTestResult(wsm.data, ws);
     } else if (wsm.type === "testError") {
       // Handle test error from client
       console.log(`[WebSocketProcess] Received testError message`);
-      console.log(`[WebSocketProcess] Test error data:`, JSON.stringify(wsm.data, null, 2));
-      
+      console.log(
+        `[WebSocketProcess] Test error data:`,
+        JSON.stringify(wsm.data, null, 2)
+      );
+
       // Write error to tests.json or error log
       this.handleTestError(wsm.data, ws);
     } else {
@@ -365,6 +377,14 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     console.log(
       `[WebSocketProcess] Default scheduleTestForExecution called for test ${testId}`
     );
+
+    // Store test information for later use in result handling
+    this.testInfoMap.set(testId, { testName, runtime });
+    console.log(`[WebSocketProcess] Stored test info for ${testId}:`, {
+      testName,
+      runtime,
+    });
+
     // Default implementation: send immediate test resource
     const testResourceConfiguration: ITTestResourceConfiguration = {
       name: testName,
@@ -375,10 +395,11 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
       environment: {},
     };
     // Add browserWSEndpoint for web runtime
-    if (runtime === 'web') {
-      testResourceConfiguration.browserWSEndpoint = process.env.BROWSER_WS_ENDPOINT || '';
+    if (runtime === "web") {
+      testResourceConfiguration.browserWSEndpoint =
+        process.env.BROWSER_WS_ENDPOINT || "";
     }
-    
+
     const message = {
       type: "testResource",
       data: {
@@ -398,98 +419,202 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
   private handleTestResult(testResultData: any, ws: WebSocket): void {
     try {
       console.log(`[WebSocketProcess] Handling test result`);
-      
-      // Extract test information from the result
-      const testName = testResultData.testName || 'unknown-test';
-      const runtime = testResultData.runtime || 'node';
-      const testId = testResultData.testId || `test-${Date.now()}`;
-      
-      // Determine the report directory
-      // The test result should include information about where to write the file
-      // For now, we'll use a default location
-      const reportDest = `testeranto/reports/${this.projectName || 'default'}/${testName}/${runtime}`;
-      
-      // Ensure the directory exists
-      if (!fs.existsSync(reportDest)) {
-        fs.mkdirSync(reportDest, { recursive: true });
+
+      // Find testId by looking up which test is associated with this WebSocket connection
+      let testId: string | undefined;
+
+      // Always find testId from testConnections map
+      if ((this as any).testConnections) {
+        for (const [id, connection] of (
+          this as any
+        ).testConnections.entries()) {
+          if (connection === ws) {
+            testId = id;
+            break;
+          }
+        }
       }
-      
-      // Write tests.json file
-      const testsJsonPath = path.join(reportDest, 'tests.json');
-      const testsJsonContent = JSON.stringify(testResultData, null, 2);
-      fs.writeFileSync(testsJsonPath, testsJsonContent);
-      
-      console.log(`[WebSocketProcess] Wrote test results to ${testsJsonPath}`);
-      
-      // Send acknowledgment back to client
-      const ackMessage = {
-        type: "testResultAck",
+
+      if (!testId) {
+        throw new Error(
+          "Could not find testId associated with WebSocket connection. The test must send a greeting before sending results."
+        );
+      }
+
+      // Retrieve stored test information
+      const testInfo = this.testInfoMap.get(testId);
+      if (!testInfo) {
+        throw new Error(
+          `No stored test info found for testId: ${testId}. The test must send a greeting before sending results.`
+        );
+      }
+
+      const { testName, runtime } = testInfo;
+      console.log(
+        `[WebSocketProcess] Retrieved stored test info for ${testId}:`,
+        { testName, runtime }
+      );
+
+      this.handleTestResultWithInfo(
         testId,
-        timestamp: new Date().toISOString(),
-        message: "Test results saved successfully"
-      };
-      ws.send(JSON.stringify(ackMessage));
-      console.log(`[WebSocketProcess] Sent test result acknowledgment for test ${testId}`);
-      
+        testName,
+        runtime,
+        testResultData,
+        ws
+      );
     } catch (error) {
       console.error(`[WebSocketProcess] Error handling test result:`, error);
-      
+
       // Send error response to client
       const errorMessage = {
         type: "testResultError",
         timestamp: new Date().toISOString(),
-        error: error.message
+        error: error.message,
       };
       ws.send(JSON.stringify(errorMessage));
     }
+  }
+
+  private handleTestResultWithInfo(
+    testId: string,
+    testName: string,
+    runtime: string,
+    testResultData: any,
+    ws: WebSocket
+  ): void {
+    // Determine the report directory
+    const reportDest = `testeranto/reports/${
+      this.projectName || "default"
+    }/${testName}/${runtime}`;
+
+    // Ensure the directory exists
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    // Write tests.json file
+    const testsJsonPath = path.join(reportDest, "tests.json");
+    const testsJsonContent = JSON.stringify(testResultData, null, 2);
+    fs.writeFileSync(testsJsonPath, testsJsonContent);
+
+    console.log(`[WebSocketProcess] Wrote test results to ${testsJsonPath}`);
+
+    // Clean up stored test info
+    this.testInfoMap.delete(testId);
+    console.log(`[WebSocketProcess] Removed stored test info for ${testId}`);
+
+    // Send acknowledgment back to client
+    const ackMessage = {
+      type: "testResultAck",
+      testId,
+      timestamp: new Date().toISOString(),
+      message: "Test results saved successfully",
+    };
+    ws.send(JSON.stringify(ackMessage));
+    console.log(
+      `[WebSocketProcess] Sent test result acknowledgment for test ${testId}`
+    );
   }
 
   // Handle test error from client
   private handleTestError(testErrorData: any, ws: WebSocket): void {
     try {
       console.log(`[WebSocketProcess] Handling test error`);
-      
-      // Extract test information from the error
-      const testName = testErrorData.testName || 'unknown-test';
-      const runtime = testErrorData.runtime || 'node';
-      const testId = testErrorData.testId || `test-${Date.now()}`;
-      
-      // Determine the report directory
-      const reportDest = `testeranto/reports/${this.projectName || 'default'}/${testName}/${runtime}`;
-      
-      // Ensure the directory exists
-      if (!fs.existsSync(reportDest)) {
-        fs.mkdirSync(reportDest, { recursive: true });
+
+      // Find testId by looking up which test is associated with this WebSocket connection
+      let testId: string | undefined;
+
+      // Always find testId from testConnections map
+      if ((this as any).testConnections) {
+        for (const [id, connection] of (
+          this as any
+        ).testConnections.entries()) {
+          if (connection === ws) {
+            testId = id;
+            break;
+          }
+        }
       }
-      
-      // Write error.json file
-      const errorJsonPath = path.join(reportDest, 'error.json');
-      const errorJsonContent = JSON.stringify(testErrorData, null, 2);
-      fs.writeFileSync(errorJsonPath, errorJsonContent);
-      
-      console.log(`[WebSocketProcess] Wrote test error to ${errorJsonPath}`);
-      
-      // Send acknowledgment back to client
-      const ackMessage = {
-        type: "testErrorAck",
+
+      if (!testId) {
+        throw new Error(
+          "Could not find testId associated with WebSocket connection. The test must send a greeting before sending errors."
+        );
+      }
+
+      // Retrieve stored test information
+      const testInfo = this.testInfoMap.get(testId);
+      if (!testInfo) {
+        throw new Error(
+          `No stored test info found for testId: ${testId}. The test must send a greeting before sending errors.`
+        );
+      }
+
+      const { testName, runtime } = testInfo;
+      console.log(
+        `[WebSocketProcess] Retrieved stored test info for ${testId}:`,
+        { testName, runtime }
+      );
+
+      this.handleTestErrorWithInfo(
         testId,
-        timestamp: new Date().toISOString(),
-        message: "Test error saved successfully"
-      };
-      ws.send(JSON.stringify(ackMessage));
-      console.log(`[WebSocketProcess] Sent test error acknowledgment for test ${testId}`);
-      
+        testName,
+        runtime,
+        testErrorData,
+        ws
+      );
     } catch (error) {
       console.error(`[WebSocketProcess] Error handling test error:`, error);
-      
+
       // Send error response to client
       const errorMessage = {
         type: "testErrorError",
         timestamp: new Date().toISOString(),
-        error: error.message
+        error: error.message,
       };
       ws.send(JSON.stringify(errorMessage));
     }
+  }
+
+  private handleTestErrorWithInfo(
+    testId: string,
+    testName: string,
+    runtime: string,
+    testErrorData: any,
+    ws: WebSocket
+  ): void {
+    // Determine the report directory
+    const reportDest = `testeranto/reports/${
+      this.projectName || "default"
+    }/${testName}/${runtime}`;
+
+    // Ensure the directory exists
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    // Write error.json file
+    const errorJsonPath = path.join(reportDest, "error.json");
+    const errorJsonContent = JSON.stringify(testErrorData, null, 2);
+    fs.writeFileSync(errorJsonPath, errorJsonContent);
+
+    console.log(`[WebSocketProcess] Wrote test error to ${errorJsonPath}`);
+
+    // Clean up stored test info
+    this.testInfoMap.delete(testId);
+    console.log(`[WebSocketProcess] Removed stored test info for ${testId}`);
+
+    // Send acknowledgment back to client
+    const ackMessage = {
+      type: "testErrorAck",
+      testId,
+      timestamp: new Date().toISOString(),
+      message: "Test error saved successfully",
+    };
+    ws.send(JSON.stringify(ackMessage));
+    console.log(
+      `[WebSocketProcess] Sent test error acknowledgment for test ${testId}`
+    );
   }
 
   // Helper method to serialize process info

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   defaultTestResourceRequirement,
+  ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./index.js";
-import { PM_Web } from "../clients/web.js";
+
 import {
   ITestSpecification,
   ITestImplementation,
@@ -37,21 +39,17 @@ export class WebTiposkripto<
     );
   }
 
-  async receiveTestResourceConfig(partialTestResource: string) {
-    // Parse the test resource configuration
-    console.log(
-      "WebTiposkripto.receiveTestResourceConfig: raw input:",
-      partialTestResource
-    );
-    const config = JSON.parse(partialTestResource);
+  async receiveTestResourceConfig(
+    testResourceConfiguration: Partial<ITTestResourceConfiguration>
+  ) {
+    const config = JSON.parse(testResourceConfiguration);
     console.log(
       "WebTiposkripto.receiveTestResourceConfig: parsed config:",
       config
     );
 
-    // In a browser environment, we don't need to parse command line arguments
-    // The WebSocket URL should be determined by PM_Web itself
-    return await this.testJobs[0].receiveTestResourceConfig(new PM_Web(config));
+    // this is broken
+    // return await this.testJobs[0].receiveTestResourceConfig(new PM_Web(config));
   }
 }
 

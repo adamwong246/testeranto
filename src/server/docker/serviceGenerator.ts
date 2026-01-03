@@ -2,14 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { IBuiltConfig, IRunTime } from "../../Types";
-import chromiumService from "./chromiumService";
-// const buildService = await import("./buildService");
-import aiderPoolService from "./aiderPoolService";
 import { golangDockerFile } from "../runtimes/golang/golangDocker";
-import { nodeDockerFile } from "../runtimes/node/nodeDocker";
+import { nodeDockerComposeFile } from "../runtimes/node/nodeDockerCompose";
 import { pythonDockerFile } from "../runtimes/python/pythonDocker";
-import { webDockerFile } from "../runtimes/web/webDocker";
-import path from "path";
+import { webDockerCompose } from "../runtimes/web/dockerCompose";
+
+import aiderPoolService from "./aiderPoolService";
+// import chromiumService from "./chromiumService";
 
 export async function generateServices(
   config: IBuiltConfig,
@@ -21,8 +20,8 @@ export async function generateServices(
   const services: any = {};
 
   // Add Chromium service for web tests using browserless/chrome
-  const chromiumPort = config.chromiumPort || config.httpPort + 1;
-  services["chromium"] = chromiumService(config.httpPort, chromiumPort);
+  // const chromiumPort = config.chromiumPort || config.httpPort + 1;
+  // services["chromium"] = chromiumService(config.httpPort, chromiumPort);
 
   // Add Aider Pool service
   services["aider-pool"] = {
@@ -36,12 +35,11 @@ export async function generateServices(
     services[serviceName].networks = ["default"];
   }
 
-  // Generate 3 services for each runtime: build, static analysis, and process pool
   for (const runtime of runtimes) {
     if (runtime === "node") {
-      services[`${runtime}-builder`] = nodeDockerFile(config);
+      services[`${runtime}-builder`] = nodeDockerComposeFile(config);
     } else if (runtime === "web") {
-      services[`${runtime}-builder`] = webDockerFile(config);
+      services[`${runtime}-builder`] = webDockerCompose(config);
     } else if (runtime === "golang") {
       services[`${runtime}-builder`] = golangDockerFile(config);
     } else if (runtime === "python") {

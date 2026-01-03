@@ -1,32 +1,5 @@
 version: '3.8'
 services:
-  chromium:
-    image: browserless/chrome:latest
-    container_name: chromium
-    restart: unless-stopped
-    ports:
-      - '4567:4567'
-      - '9222:9222'
-    shm_size: 2g
-    environment:
-      CONNECTION_TIMEOUT: '60000'
-      MAX_CONCURRENT_SESSIONS: '10'
-      ENABLE_CORS: 'true'
-      REMOTE_DEBUGGING_PORT: '9222'
-      REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      PORT: '4567'
-    healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - http://localhost:4567/health
-      interval: 10s
-      timeout: 10s
-      retries: 30
-      start_period: 120s
-    networks:
-      - default
   aider-pool:
     image: paulgauthier/aider-full:latest
     restart: unless-stopped
@@ -73,23 +46,12 @@ services:
       - sh
       - '-c'
       - |-
-        echo 'Starting node build in watch mode...'; 
-                        echo 'Installing dependencies in /workspace/node_modules...'; 
-                        cd /workspace &&                 # Remove any .npmrc files
-                        rm -f .npmrc .npmrc.* || true &&                 # Clear npm cache and authentication
-                        npm cache clean --force &&                 # Clear any npm authentication
-                        npm config delete _auth 2>/dev/null || true &&                 npm config delete _authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_auth 2>/dev/null || true &&                 npm config delete always-auth 2>/dev/null || true &&                 npm config delete registry 2>/dev/null || true &&                 npm config set registry https://registry.npmjs.org/ &&                 npm config set always-auth false &&                 npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts --no-optional || echo "npm install may have warnings";
-                        echo 'Ensuring esbuild and esbuild-sass-plugin are installed for Linux platform...';
-                        npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
-                        npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
-                        echo 'Creating output directory...'; 
-                        mkdir -p /workspace/testeranto/bundles/allTests/node;
-                        mkdir -p /workspace/testeranto/metafiles/node;
-                        echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
-                        
-                        echo "Starting build process for node..."
-                        TEST_NAME=allTests WS_PORT=3456 npx tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
-                        
+        echo 'Starting node build in watch mode...';
+                echo 'Installing dependencies in /workspace/node_modules...';
+                cd /workspace && 
+                echo "Starting build process for node..."
+                TEST_NAME=allTests WS_PORT=3456 yarn  tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+              
     healthcheck:
       test:
         - CMD-SHELL
@@ -108,50 +70,19 @@ services:
       - /Users/adam/Code/testeranto:/workspace
       - node_modules:/workspace/node_modules
     image: bundles-web-build:latest
-    restart: unless-stopped
+    restart: 'no'
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/web
       METAFILES_DIR: /workspace/testeranto/metafiles/web
       ESBUILD_SERVE_PORT: '0'
       IN_DOCKER: 'true'
+      CHROMIUM_PATH: /usr/bin/chromium-browser
     extra_hosts:
       - host.docker.internal:host-gateway
     command:
       - sh
       - '-c'
-      - |-
-        echo 'Starting web build in watch mode...'; 
-                        echo 'Installing dependencies in /workspace/node_modules...'; 
-                        cd /workspace &&                 # Remove any .npmrc files
-                        rm -f .npmrc .npmrc.* || true &&                 # Clear npm cache and authentication
-                        npm cache clean --force &&                 # Clear any npm authentication
-                        npm config delete _auth 2>/dev/null || true &&                 npm config delete _authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_auth 2>/dev/null || true &&                 npm config delete always-auth 2>/dev/null || true &&                 npm config delete registry 2>/dev/null || true &&                 npm config set registry https://registry.npmjs.org/ &&                 npm config set always-auth false &&                 npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts --no-optional || echo "npm install may have warnings";
-                        echo 'Ensuring esbuild and esbuild-sass-plugin are installed for Linux platform...';
-                        npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
-                        npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
-                        echo 'Creating output directory...'; 
-                        mkdir -p /workspace/testeranto/bundles/allTests/web;
-                        mkdir -p /workspace/testeranto/metafiles/web;
-                        echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
-                        
-                        echo "Starting build process for web..."
-                        npx tsx dist/prebuild/server/builders/web.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
-                        
-                        echo "Build complete. Creating completion signal..."
-                        touch /workspace/testeranto/metafiles/web/build_complete
-                        
-                        echo "Build service ready. Keeping container alive..."
-                        while true; do
-                          sleep 3600
-                        done
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - '[ -f /workspace/testeranto/metafiles/web/allTests.json ] && echo "healthy" || exit 1'
-      interval: 10s
-      timeout: 30s
-      retries: 10
-      start_period: 60s
+      - TEST_NAME=allTests WS_PORT=3456 node dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo 'Build process exited with code $?, but keeping container alive for health checks'
   golang-builder:
     build:
       context: /Users/adam/Code/testeranto

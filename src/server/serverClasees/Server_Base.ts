@@ -11,7 +11,7 @@ import {
   ScreenshotOptions,
 } from "puppeteer-core";
 import { PassThrough } from "stream";
-import { IBuiltConfig, ITLog } from "../../lib";
+import { IBuiltConfig } from "../../Types";
 import { IMode } from "../types";
 
 const fileStreams3: fs.WriteStream[] = [];
@@ -233,8 +233,7 @@ export abstract class Server_Base {
     return (fPath, value: string | Buffer | PassThrough) => {
       callback(
         new Promise<void>((res, rej) => {
-          tLog("testArtiFactory =>", fPath);
-
+          // tLog("testArtiFactory =>", fPath);
           const cleanPath = path.resolve(fPath);
           fPaths.push(cleanPath.replace(process.cwd(), ``));
 

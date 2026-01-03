@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { BuildOptions } from "esbuild";
-import { ITestconfig } from "../../../lib/index.js";
 import featuresPlugin from "../../../esbuildConfigs/featuresPlugin.js";
 import baseEsBuildConfig from "../../../esbuildConfigs/index.js";
 import inputFilesPlugin from "../../../esbuildConfigs/inputFilesPlugin.js";
 import rebuildPlugin from "../../../esbuildConfigs/rebuildPlugin.js";
-import fs from "fs";
+import { ITestconfig } from "../../../Types.js";
 
 const absoluteBundlesDir = (c: ITestconfig): string => {
   return "./testeranto/bundles/allTests/node/";
@@ -42,6 +42,9 @@ export default (
       "process.env.FLUENTFFMPEG_COV": "0",
       ENV: `"node"`,
     },
+
+    bundle: true,
+    format: "esm",
 
     absWorkingDir: process.cwd(),
     platform: "node",

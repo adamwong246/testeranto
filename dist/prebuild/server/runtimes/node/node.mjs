@@ -33,6 +33,8 @@ var esbuild_default = (config, testName2) => {
       "process.env.FLUENTFFMPEG_COV": "0",
       ENV: `"node"`
     },
+    bundle: true,
+    format: "esm",
     absWorkingDir: process.cwd(),
     platform: "node",
     // external: ["react", ...config.node.externals],

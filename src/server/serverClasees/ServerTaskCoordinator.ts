@@ -233,6 +233,14 @@ export class ServerTaskCoordinator extends ServerTaskManager {
     console.log(
       `[ServerTaskCoordinator] scheduleTestForExecution called for test ${testId}`
     );
+    // Store test information for later use in result handling
+    // First, ensure testInfoMap exists (it's in the parent class)
+    if (!(this as any).testInfoMap) {
+      (this as any).testInfoMap = new Map();
+    }
+    (this as any).testInfoMap.set(testId, { testName, runtime });
+    console.log(`[ServerTaskCoordinator] Stored test info for ${testId}:`, { testName, runtime });
+    
     this.addTestToSchedulingQueue(testId, testName, runtime, ws);
   }
 

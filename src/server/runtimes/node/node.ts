@@ -1,12 +1,8 @@
-import { spawn, fork } from "child_process";
-// import fs from "fs";
-// import path from "path";
-// import nodeEsbuildConfig from "../../../esbuildConfigs/node.js";
-// import { runBuild } from "../common.js";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { fork } from "child_process";
 import esbuild from "esbuild";
-import nodeConfiger from "./esbuild";
 import { IBuiltConfig } from "../../../Types";
+import nodeConfiger from "./esbuild";
 
 const testName = process.argv[2];
 

@@ -47,7 +47,7 @@ export abstract class PM {
   abstract disposeBrowserContext(contextId: string): Promise<void>;
   abstract getBrowserContexts(): Promise<string[]>;
   abstract newPageInContext(contextId: string): Promise<string>;
-  
+
   // Resource management
   abstract getBrowserMemoryUsage(): Promise<{
     usedJSHeapSize: number;

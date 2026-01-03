@@ -117,8 +117,8 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     this.key = key;
     this.fails = 0; // Initialize fail count for this given
 
-    tLog(`\n ${this.key}`);
-    tLog(`\n Given: ${this.key}`);
+    // tLog(`\n ${this.key}`);
+    // tLog(`\n Given: ${this.key}`);
 
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value);

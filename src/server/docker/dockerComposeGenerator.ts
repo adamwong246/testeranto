@@ -5,20 +5,69 @@ import path from "path";
 import yaml from "js-yaml";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { golangDockerFile } from "../runtimes/golang/golangDocker";
-import { nodeDockerFile } from "../runtimes/node/nodeDocker";
+import nodeDockerFile from "../runtimes/node/dockerfile";
 import { pythonDockerFile } from "../runtimes/python/pythonDocker";
-import { webDockerFile } from "../runtimes/web/webDocker";
+import webDockerFile from "../runtimes/web/dockerfile";
 import { writeComposeFile } from "./composeWriter";
 import { generateServices } from "./serviceGenerator";
 
 const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
 
-const dockerfiles: Record<IRunTime, (runtime: IRunTime) => object> = {
-  node: nodeDockerFile,
-  web: webDockerFile,
-  golang: golangDockerFile,
-  python: pythonDockerFile,
-};
+// // Keep this for service generation in serviceGenerator.ts
+// const dockerfiles: Record<IRunTime, (config: IBuiltConfig) => object> = {
+//   node: nodeDockerFile,
+//   web: webDockerFile,
+//   golang: golangDockerFile,
+//   python: pythonDockerFile,
+// };
+
+// Function to generate actual Dockerfile content for each runtime
+function generateDockerfileContent(
+  runtime: IRunTime,
+  config: IBuiltConfig
+): string {
+  switch (runtime) {
+    case "node":
+      return nodeDockerFile;
+
+    case "web":
+      return webDockerFile;
+
+    case "golang":
+      return `FROM golang:1.21-alpine
+WORKDIR /workspace
+COPY . .
+RUN mkdir -p /workspace/testeranto/bundles/allTests/golang
+RUN mkdir -p /workspace/testeranto/metafiles/golang
+EXPOSE 3456
+ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/golang
+ENV METAFILES_DIR=/workspace/testeranto/metafiles/golang
+ENV IN_DOCKER=true
+CMD ["sh", "-c", "echo 'Go build container ready'; \\
+                    mkdir -p /workspace/testeranto/bundles/allTests/golang; \\
+                    mkdir -p /workspace/testeranto/metafiles/golang; \\
+                    tail -f /dev/null"]`;
+
+    case "python":
+      return `FROM python:3.11-alpine
+WORKDIR /workspace
+COPY . .
+RUN pip install --no-cache-dir pytest
+RUN mkdir -p /workspace/testeranto/bundles/allTests/python
+RUN mkdir -p /workspace/testeranto/metafiles/python
+EXPOSE 3456
+ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/python
+ENV METAFILES_DIR=/workspace/testeranto/metafiles/python
+ENV IN_DOCKER=true
+CMD ["sh", "-c", "echo 'Python build container ready'; \\
+                    mkdir -p /workspace/testeranto/bundles/allTests/python; \\
+                    mkdir -p /workspace/testeranto/metafiles/python; \\
+                    tail -f /dev/null"]`;
+
+    default:
+      throw "unknown runtime";
+  }
+}
 
 async function generateRuntimeDockerfiles(
   config: IBuiltConfig,
@@ -27,6 +76,7 @@ async function generateRuntimeDockerfiles(
   log: (...args: any[]) => void,
   error: (...args: any[]) => void
 ) {
+  log(`Generating Dockerfiles for runtimes: ${runtimes.join(", ")}`);
   for (const runtime of runtimes) {
     const runtimeDockerfilePath = path.join(
       composeDir,
@@ -35,15 +85,20 @@ async function generateRuntimeDockerfiles(
       `${runtime}.Dockerfile`
     );
 
+    log(
+      `Creating directory for ${runtime} Dockerfile: ${path.dirname(
+        runtimeDockerfilePath
+      )}`
+    );
     fs.mkdirSync(path.dirname(runtimeDockerfilePath), { recursive: true });
 
-    fs.writeFileSync(
-      runtimeDockerfilePath,
-      yaml.dump(dockerfiles[runtime](runtime), {
-        lineWidth: -1,
-        noRefs: true,
-      })
-    );
+    log(`Generating ${runtime} Dockerfile at: ${runtimeDockerfilePath}`);
+
+    // Generate actual Dockerfile content
+    const dockerfileContent = generateDockerfileContent(runtime, config);
+
+    fs.writeFileSync(runtimeDockerfilePath, dockerfileContent);
+    log(`Generated ${runtime} Dockerfile successfully`);
   }
 }
 
@@ -71,30 +126,15 @@ export async function setupDockerCompose(
     log(`WARNING: testsName was empty, using default: ${testsName}`);
   }
 
-  // Define runtimes once at the beginning
-
-  // Log strategy information for each runtime
-  // log("Generating docker-compose with strategies:");
-  // for (const runtime of runtimes) {
-  //   const strategy = getStrategyForRuntime(runtime);
-  //   const category = getCategoryForRuntime(runtime);
-  //   log(`  ${runtime}: ${category} -> ${strategy}`);
-
-  //   // Log whether tests run in build container or separate containers
-  //   if (strategy === "separate-build-combined-test") {
-  //     log(`    -> Separate test containers for compiled language`);
-  //   } else {
-  //     log(`    -> Tests run within build container`);
-  //   }
-  // }
-
   // First, ensure all necessary directories exist
   const composeDir = path.join(process.cwd(), "testeranto", "bundles");
 
   try {
     // Setup directories
-
     fs.mkdirSync(composeDir, { recursive: true });
+
+    // Generate Dockerfiles for each runtime
+    await generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
 
     const services = await generateServices(
       config,
