@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import net from "net";
-import { ITTestResourceConfiguration } from "../../lib";
+import { ITTestResourceConfiguration } from "../../tiposkripto";
 import { PM_Node_Sidecar } from "../nodeSidecar";
-import Testeranto from "../../lib/Node";
+import Testeranto from "../../tiposkripto/Node";
 import {
   Ibdd_in_any,
   Ibdd_out,

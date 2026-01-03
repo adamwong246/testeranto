@@ -1,6 +1,6 @@
 import { BuildOptions } from "esbuild";
 
-import { ITestconfig } from "../lib";
+import { ITestconfig } from "../tiposkripto";
 
 export default (config: ITestconfig): BuildOptions => {
   return {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import ansiColors from "ansi-colors";
-import { IRunTime } from "../../../lib";
+import { IRunTime } from "../../../tiposkripto";
 
 export class TestEnvironmentSetup {
   constructor(

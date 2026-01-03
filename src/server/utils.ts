@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
-import { IRunnables } from "../lib";
+import { IRunnables } from "../tiposkripto";
 import { IRunTime, ITestconfig } from "../Types";
 // import { RuntimeName, RUNTIME_STRATEGIES } from "./strategies";
 

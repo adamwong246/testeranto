@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "esbuild";
 
-import { ITTestResourceConfiguration } from "./lib/index.js";
+import { ITTestResourceConfiguration } from "./tiposkripto/index.js";
 import { PM } from "./clients/index.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
 
-import { BaseSuite } from "./lib/BaseSuite.js";
-import { IGivens, BaseGiven } from "./lib/BaseGiven.js";
-import { BaseThen } from "./lib/BaseThen.js";
-import { BaseWhen } from "./lib/BaseWhen.js";
+import { BaseSuite } from "./tiposkripto/BaseSuite.js";
+import { IGivens, BaseGiven } from "./tiposkripto/BaseGiven.js";
+import { BaseThen } from "./tiposkripto/BaseThen.js";
+import { BaseWhen } from "./tiposkripto/BaseWhen.js";
 
 export type ISummary = Record<
   string,
@@ -182,7 +182,7 @@ export type IRunTime = `node` | `web` | `golang` | `python`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
-// export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
+export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
 // export type IFlavor = ["compiled" | "interpreted" | "VM" | "chrome", string];
 // export type IStrategy =
 //   | "combined-build-test-process-pools" // Interpreted languages: Node.js, Python, Ruby, PHP

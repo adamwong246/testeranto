@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import { IRunTime } from "../lib";
+import { IRunTime } from "../tiposkripto";
 
 export default (r: IRunTime) => {
   return {

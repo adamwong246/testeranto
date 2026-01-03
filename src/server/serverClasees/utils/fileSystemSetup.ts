@@ -4,7 +4,7 @@ import {
   ProcessMangerHtml,
   // ReportHtml,
 } from "../../../clients/utils/buildTemplates";
-import { IBuiltConfig } from "../../../lib";
+import { IBuiltConfig } from "../../../tiposkripto";
 
 export function setupFileSystem(config: IBuiltConfig, testsName: string) {
   // fs.writeFileSync(`${process.cwd()}/testeranto/Report.html`, ReportHtml());

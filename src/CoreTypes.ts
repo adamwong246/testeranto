@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ITTestResourceConfiguration } from "./lib";
+import { ITTestResourceConfiguration } from "./tiposkripto";
 
-import { BaseSuite } from "./lib/BaseSuite";
+import { BaseSuite } from "./tiposkripto/BaseSuite";
 
-import { IPM } from "./lib/types";
+import { IPM } from "./tiposkripto/types";
 import {
   GivenSpecification,
   WhenSpecification,

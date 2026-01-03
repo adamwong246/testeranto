@@ -1,39 +1,31 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { IDockerSteps, Itest } from "./src/Types";
+import { IDockerSteps } from "./src/Types";
 
-// Base steps for different categories
-export const NODE_BASE_STEPS: [IDockerSteps, string][] = [
-  ["RUN", "apk add --update make g++ linux-headers python3 libxml2-utils"],
-  ["WORKDIR", "/workspace"],
-  ["COPY", "package*.json ./ "],
-  ["RUN", "npm install --legacy-peer-deps"],
-  ["COPY", "./src ./src"],
-];
-
-export const PYTHON_BASE_STEPS: [IDockerSteps, string][] = [
-  ["WORKDIR", "/workspace"],
-  ["COPY", "requirements.txt ./ "],
-  ["RUN", "pip install -r requirements.txt"],
-  // Install Python linting tools and websockets for WebSocket communication
-  ["RUN", "pip install pylint mypy flake8 websockets>=12.0"],
-  ["COPY", "./src ./src"],
-];
-
-export const GOLANG_BASE_STEPS: [IDockerSteps, string][] = [
-  ["WORKDIR", "/workspace"],
-  ["COPY", "go.mod go.sum ./ "],
-  ["RUN", "go mod download"],
-  ["COPY", "./src ./src"],
-];
-
-export const WEB_BASE_STEPS: [IDockerSteps, string][] = [
-  ["RUN", "apk add --update make g++ linux-headers python3 libxml2-utils"],
-  ["WORKDIR", "/workspace"],
-  ["COPY", "package*.json ./ "],
-  ["RUN", "npm install --legacy-peer-deps"],
-  ["COPY", "./src ./src"],
-];
+export const createLangConfig = (
+  testFile: string,
+  check: string,
+  options?: {
+    plugins?: any[];
+    loaders?: Record<string, string>;
+    externals?: string[];
+    testBlocks?: [IDockerSteps, string][][];
+    prodBlocks?: [IDockerSteps, string][][];
+    check: string;
+  }
+) => {
+  return {
+    plugins: options?.plugins || [],
+    loaders: options?.loaders || {},
+    tests: { [testFile]: { ports: 0 } },
+    externals: options?.externals || [],
+    test: options?.testBlocks,
+    prod: options?.prodBlocks,
+    check: check,
+    // build: options?.build,
+    // processPool: options?.processPool,
+    // chrome: options?.chrome,
+    // monitoring: options?.monitoring || {}, // Include monitoring config
+  };
+};
 
 // // Static analysis that uses a metafile to analyze only relevant files
 // // The metafile path is expected to be in $METAFILE_PATH environment variable
@@ -233,31 +225,3 @@ export const WEB_BASE_STEPS: [IDockerSteps, string][] = [
 // export const createGolangLangConfig(test, check) => {
 //   return
 // };
-
-export const createLangConfig = (
-  // flavor: ["compiled" | "interpreted" | "VM" | "chrome", string],
-  testFile: string,
-  check: string,
-  options?: {
-    plugins?: any[];
-    loaders?: Record<string, string>;
-    externals?: string[];
-    testBlocks?: [IDockerSteps, string][][];
-    prodBlocks?: [IDockerSteps, string][][];
-    check: string;
-  }
-) => {
-  return {
-    plugins: options?.plugins || [],
-    loaders: options?.loaders || {},
-    tests: { [testFile]: { ports: 0 } },
-    externals: options?.externals || [],
-    test: options?.testBlocks,
-    prod: options?.prodBlocks,
-    check: check,
-    // build: options?.build,
-    // processPool: options?.processPool,
-    // chrome: options?.chrome,
-    // monitoring: options?.monitoring || {}, // Include monitoring config
-  };
-};

@@ -1,8 +1,8 @@
 import net from "net";
 
-import { ITTestResourceConfiguration } from "../../lib";
+import { ITTestResourceConfiguration } from "../../tiposkripto";
 import { PM_Web_Sidecar } from "../webSidecar";
-import Tiposkripto from "../../lib/Node";
+import Tiposkripto from "../../tiposkripto/Node";
 import {
   Ibdd_out,
   ITestSpecification,

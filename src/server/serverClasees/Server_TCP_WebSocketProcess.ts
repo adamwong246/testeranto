@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
-import { ITTestResourceConfiguration } from "../../lib";
+import { ITTestResourceConfiguration } from "../../tiposkripto";
 import { IMode } from "../types";
 import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
 

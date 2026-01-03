@@ -13,6 +13,14 @@ cycleDetector.rules['import/no-cycle'] = "error";
 const eslintConfig = tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended,
+  {
+    rules: {
+      'no-unused-vars': "warn",
+      'import/no-dynamic-require': 'warn',
+      'import/no-nodejs-modules': 'warn',
+      'no-explicit-any': 'warn'
+    }
+  },
   // flatConfigs.recommended,
   // {
   //   files: ['**/*.{,js,mjs,cjs,ts,tsx,mts}'],

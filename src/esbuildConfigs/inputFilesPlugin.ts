@@ -1,6 +1,6 @@
 import fs from "fs";
 import type { Plugin } from "esbuild";
-import { IRunTime } from "../lib";
+import { IRunTime } from "../tiposkripto";
 
 const otherInputs: Record<string, Set<string>> = {};
 

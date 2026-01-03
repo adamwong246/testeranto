@@ -1,17 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestconfig } from "./src/Types";
-import {
-  // createGolangLangConfig,
-  // CHECKS_CONFIG,
-  createLangConfig,
-  // SINGLE_PROD_BLOCK,
-  // SINGLE_TEST_BLOCK,
-} from "./allTestsUtils";
-// import { golangConfig } from "./golangConfig";
-// import { pythonConfig } from "./pythonConfig";
-// import { webConfig } from "./webConfig";
-// import { nodeConfig } from "./nodeConfig";
+import { createLangConfig } from "./allTestsUtils";
 
 const config: ITestconfig = {
   featureIngestor: function (s: string): Promise<string> {

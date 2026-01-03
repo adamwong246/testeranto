@@ -2,7 +2,7 @@
 import { Page } from "puppeteer-core";
 import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
 
-import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { ITLog, ITTestResourceConfiguration } from "../tiposkripto";
 
 export abstract class PM {
   server: any;
