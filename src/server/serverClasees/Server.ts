@@ -4,31 +4,13 @@
 
 import fs from "fs";
 import { default as ansiC } from "ansi-colors";
-// import fs, { watch } from "fs";
 import path from "path";
-// import { pollForFile } from "../../clients/utils";
-// import {
-//   generatePitonoMetafile,
-//   writePitonoMetafile,
-// } from "../../clients/utils/pitonoMetafile";
-// import { IBuiltConfig, IRunTime } from "../../lib";
 import { IMode } from "../types";
-import { getRunnables } from "../utils";
-// import { BuildProcessManager } from "./BuildProcessManager";
-// import { BuildProcessStarter } from "./BuildProcessStarter";
-// import { ServerTestExecutor } from "./ServerTestExecutor";
 import { IBuiltConfig } from "../../Types";
 import { ServerTaskCoordinator } from "./ServerTaskCoordinator";
 import { TestEnvironmentSetup } from "./utils/TestEnvironmentSetup";
-// import { TypeCheckNotifier } from "./TypeCheckNotifier";
 
 export class Server extends ServerTaskCoordinator {
-  // webMetafileWatcher: fs.FSWatcher;
-  // nodeMetafileWatcher: fs.FSWatcher;
-  // importMetafileWatcher: fs.FSWatcher;
-  // pitonoMetafileWatcher: fs.FSWatcher;
-  // golangMetafileWatcher: fs.FSWatcher;
-
   testName: string;
   private composeDir: string;
 

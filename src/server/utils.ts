@@ -1,23 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
 import { IRunnables } from "../tiposkripto";
 import { IRunTime, ITestconfig } from "../Types";
-// import { RuntimeName, RUNTIME_STRATEGIES } from "./strategies";
-
-// export function getProcessPoolType(
-//   runtime: string
-// ): "lightweight" | "binary" | "shared-jvm" | "shared-chrome" {
-//   const runtimeName = runtime as RuntimeName;
-//   if (RUNTIME_STRATEGIES[runtimeName]) {
-//     return RUNTIME_STRATEGIES[runtimeName].processPoolType;
-//   }
-//   return "lightweight"; // Default fallback
-//   // const runtimeName = runtime as RuntimeName;
-//   // if (RUNTIME_STRATEGIES[runtimeName]) {
-//   //   return RUNTIME_STRATEGIES[runtimeName].sharedInstance;
-//   // }
-//   // return false;
-// }
 
 export const webEvaluator = (d, webArgz) => {
   return `

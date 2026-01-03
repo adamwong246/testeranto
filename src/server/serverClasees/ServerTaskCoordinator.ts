@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { default as ansiC } from "ansi-colors";
 import { WebSocket } from "ws";
 import { getRunnables } from "../utils";
 import { ServerTaskManager } from "./ServerTaskManager";
 import { IMode } from "../types";
 import { IRunTime, IBuiltConfig } from "../../Types";
-import { ITTestResourceConfiguration } from "../../../lib/index";
+import { ITTestResourceConfiguration } from "../../tiposkripto";
 
 export class ServerTaskCoordinator extends ServerTaskManager {
   private queue: Array<{
@@ -153,7 +149,9 @@ export class ServerTaskCoordinator extends ServerTaskManager {
         );
 
         // Send test resource to the test via WebSocket
-        console.log(`[SCHEDULING] Checking WebSocket readyState for test ${testId}: ${ws.readyState}`);
+        console.log(
+          `[SCHEDULING] Checking WebSocket readyState for test ${testId}: ${ws.readyState}`
+        );
         if (ws.readyState === WebSocket.OPEN) {
           // Prepare the test resource configuration according to ITTestResourceConfiguration
           const testResourceConfig: ITTestResourceConfiguration = {
@@ -165,10 +163,14 @@ export class ServerTaskCoordinator extends ServerTaskManager {
             environment: testResourceConfiguration.environment,
           };
           // Add browserWSEndpoint for web runtime
-          if (runtime === 'web' && testResourceConfiguration.browserWSEndpoint) {
-            testResourceConfig.browserWSEndpoint = testResourceConfiguration.browserWSEndpoint;
+          if (
+            runtime === "web" &&
+            testResourceConfiguration.browserWSEndpoint
+          ) {
+            testResourceConfig.browserWSEndpoint =
+              testResourceConfiguration.browserWSEndpoint;
           }
-          
+
           const message = {
             type: "testResource",
             data: {
@@ -239,8 +241,11 @@ export class ServerTaskCoordinator extends ServerTaskManager {
       (this as any).testInfoMap = new Map();
     }
     (this as any).testInfoMap.set(testId, { testName, runtime });
-    console.log(`[ServerTaskCoordinator] Stored test info for ${testId}:`, { testName, runtime });
-    
+    console.log(`[ServerTaskCoordinator] Stored test info for ${testId}:`, {
+      testName,
+      runtime,
+    });
+
     this.addTestToSchedulingQueue(testId, testName, runtime, ws);
   }
 

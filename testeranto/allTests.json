@@ -16,7 +16,7 @@
       }
     },
     "externals": [],
-    "check": "example/staticAnalysis/golang.ts"
+    "check": "example/staticAnalysis/golang.go"
   },
   "python": {
     "plugins": [],

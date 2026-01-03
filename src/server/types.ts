@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { IRunTime } from "../tiposkripto";
+import { IRunTime } from "../Types";
 
 export type IMode = "once" | "dev";
 
