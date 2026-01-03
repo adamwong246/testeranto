@@ -1,27 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import path from "path";
-import yaml from "js-yaml";
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { golangDockerFile } from "../runtimes/golang/golangDocker";
-import nodeDockerFile from "../runtimes/node/dockerfile";
-import { pythonDockerFile } from "../runtimes/python/pythonDocker";
-import webDockerFile from "../runtimes/web/dockerfile";
+import { golangDockerFile } from "../runtimes/golang/docker";
+import { nodeDockerFile } from "../runtimes/node/docker";
+import { pythonDockerFile } from "../runtimes/python/docker";
+import { webDockerFile } from "../runtimes/web/docker";
 import { writeComposeFile } from "./composeWriter";
 import { generateServices } from "./serviceGenerator";
 
 const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
 
-// // Keep this for service generation in serviceGenerator.ts
-// const dockerfiles: Record<IRunTime, (config: IBuiltConfig) => object> = {
-//   node: nodeDockerFile,
-//   web: webDockerFile,
-//   golang: golangDockerFile,
-//   python: pythonDockerFile,
-// };
-
-// Function to generate actual Dockerfile content for each runtime
 function generateDockerfileContent(
   runtime: IRunTime,
   config: IBuiltConfig
@@ -34,36 +22,9 @@ function generateDockerfileContent(
       return webDockerFile;
 
     case "golang":
-      return `FROM golang:1.21-alpine
-WORKDIR /workspace
-COPY . .
-RUN mkdir -p /workspace/testeranto/bundles/allTests/golang
-RUN mkdir -p /workspace/testeranto/metafiles/golang
-EXPOSE 3456
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/golang
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/golang
-ENV IN_DOCKER=true
-CMD ["sh", "-c", "echo 'Go build container ready'; \\
-                    mkdir -p /workspace/testeranto/bundles/allTests/golang; \\
-                    mkdir -p /workspace/testeranto/metafiles/golang; \\
-                    tail -f /dev/null"]`;
-
+      return golangDockerFile;
     case "python":
-      return `FROM python:3.11-alpine
-WORKDIR /workspace
-COPY . .
-RUN pip install --no-cache-dir pytest
-RUN mkdir -p /workspace/testeranto/bundles/allTests/python
-RUN mkdir -p /workspace/testeranto/metafiles/python
-EXPOSE 3456
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/python
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/python
-ENV IN_DOCKER=true
-CMD ["sh", "-c", "echo 'Python build container ready'; \\
-                    mkdir -p /workspace/testeranto/bundles/allTests/python; \\
-                    mkdir -p /workspace/testeranto/metafiles/python; \\
-                    tail -f /dev/null"]`;
-
+      return pythonDockerFile;
     default:
       throw "unknown runtime";
   }

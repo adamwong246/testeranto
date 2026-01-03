@@ -2,10 +2,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { golangDockerFile } from "../runtimes/golang/golangDocker";
-import { nodeDockerComposeFile } from "../runtimes/node/nodeDockerCompose";
-import { pythonDockerFile } from "../runtimes/python/pythonDocker";
-import { webDockerCompose } from "../runtimes/web/dockerCompose";
+import {
+  golangDockerComposeFile,
+  golangDockerFile,
+} from "../runtimes/golang/docker";
+import { nodeDockerComposeFile } from "../runtimes/node/docker";
+import {
+  pythonDockerComposeFile,
+  pythonDockerFile,
+} from "../runtimes/python/docker";
+import { webDockerCompose } from "../runtimes/web/docker";
 
 import aiderPoolService from "./aiderPoolService";
 // import chromiumService from "./chromiumService";
@@ -41,9 +47,9 @@ export async function generateServices(
     } else if (runtime === "web") {
       services[`${runtime}-builder`] = webDockerCompose(config);
     } else if (runtime === "golang") {
-      services[`${runtime}-builder`] = golangDockerFile(config);
+      services[`${runtime}-builder`] = golangDockerComposeFile(config);
     } else if (runtime === "python") {
-      services[`${runtime}-builder`] = pythonDockerFile(config);
+      services[`${runtime}-builder`] = pythonDockerComposeFile(config);
     } else {
       throw `unknown runtime ${runtime}`;
     }

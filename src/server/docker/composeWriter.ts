@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";

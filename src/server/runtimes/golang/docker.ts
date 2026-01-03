@@ -1,7 +1,6 @@
-import { IBuiltConfig, IRunTime } from "../../../Types";
-import { baseNodeImage } from "../../nodeVersion";
+import { IBuiltConfig } from "../../../Types";
 
-export const pythonDockerCmd = `FROM ${baseNodeImage}
+export const golangDockerFile = `FROM golang:1.21-alpine
 WORKDIR /workspace
 # Install libxml2-utils for xmllint and netcat-openbsd for network checks
 RUN apk add --update --no-cache libxml2-utils netcat-openbsd
@@ -18,12 +17,12 @@ RUN npm uninstall esbuild @esbuild/darwin-arm64 @esbuild/darwin-x64 @esbuild/win
 RUN npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional
 `;
 
-export const pythonDockerFile = (config: IBuiltConfig) => {
+export const golangDockerComposeFile = (config: IBuiltConfig) => {
   return {
     build: {
       context: "/Users/adam/Code/testeranto",
-      dockerfile: `testeranto/bundles/allTests/python.Dockerfile`,
-      tags: [`bundles-python-build:latest`],
+      dockerfile: `testeranto/bundles/allTests/golang.Dockerfile`,
+      tags: [`bundles-golang-build:latest`],
       //   args:
       //     runtime === "node"
       //       ? {
@@ -35,13 +34,13 @@ export const pythonDockerFile = (config: IBuiltConfig) => {
     volumes: [
       "/Users/adam/Code/testeranto:/workspace",
       "node_modules:/workspace/node_modules",
-      // config.check["python"],
+      // config.check["golang"],
     ],
-    image: `bundles-python-build:latest`,
+    image: `bundles-golang-build:latest`,
     restart: "unless-stopped",
     environment: {
-      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/python`,
-      METAFILES_DIR: `/workspace/testeranto/metafiles/python`,
+      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/golang`,
+      METAFILES_DIR: `/workspace/testeranto/metafiles/golang`,
       // Don't serve files - Server_TCP will handle that
       ESBUILD_SERVE_PORT: "0", // Disable esbuild serve
       IN_DOCKER: "true", // Indicate we're running in Docker
@@ -50,7 +49,7 @@ export const pythonDockerFile = (config: IBuiltConfig) => {
     command: [
       "sh",
       "-c",
-      `echo 'Starting python build in watch mode...'; 
+      `echo 'Starting golang build in watch mode...'; 
                 echo 'Installing dependencies in /workspace/node_modules...'; 
                 cd /workspace && \
                 # Remove any .npmrc files
@@ -71,15 +70,15 @@ export const pythonDockerFile = (config: IBuiltConfig) => {
                 npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
                 npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
                 echo 'Creating output directory...'; 
-                mkdir -p /workspace/testeranto/bundles/allTests/python;
-                mkdir -p /workspace/testeranto/metafiles/python;
+                mkdir -p /workspace/testeranto/bundles/allTests/golang;
+                mkdir -p /workspace/testeranto/metafiles/golang;
                 echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
                 
-                echo "Starting build process for python..."
-                npx tsx dist/prebuild/server/builders/python.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                echo "Starting build process for golang..."
+                npx tsx dist/prebuild/server/builders/golang.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
                 
                 echo "Build complete. Creating completion signal..."
-                touch /workspace/testeranto/metafiles/python/build_complete
+                touch /workspace/testeranto/metafiles/golang/build_complete
                 
                 echo "Build service ready. Keeping container alive..."
                 while true; do
@@ -89,7 +88,7 @@ export const pythonDockerFile = (config: IBuiltConfig) => {
     healthcheck: {
       test: [
         "CMD-SHELL",
-        `[ -f /workspace/testeranto/metafiles/python/allTests.json ] && echo "healthy" || exit 1`,
+        `[ -f /workspace/testeranto/metafiles/golang/allTests.json ] && echo "healthy" || exit 1`,
       ],
       interval: "10s",
       timeout: "30s",
