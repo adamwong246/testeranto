@@ -337,7 +337,7 @@ var PitonoWatcher = class {
   }
 };
 
-// src/clients/pitonoBuild.ts
+// src/pitono/pitonoBuild.ts
 var PitonoBuild = class {
   constructor(config, testName) {
     this.watcher = null;

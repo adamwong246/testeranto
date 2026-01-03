@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { PitonoBuild } from "../../../clients/pitonoBuild";
 import { IBuiltConfig } from "../../../Types";
+import { PitonoBuild } from "../../../pitono/pitonoBuild";
 
 async function runPythonBuild() {
   try {
