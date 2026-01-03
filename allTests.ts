@@ -24,7 +24,7 @@ const config: ITestconfig = {
 
   golang: createLangConfig(
     "example/Calculator.golingvu.test.go",
-    "example/staticAnalysis/golang.ts"
+    "example/staticAnalysis/golang.go"
   ),
 
   python: createLangConfig(
