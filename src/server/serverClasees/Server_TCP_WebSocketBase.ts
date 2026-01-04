@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
 
@@ -61,28 +60,8 @@ export abstract class FileService {
   abstract tests_send(...x);
   abstract tests_receive(...x);
 
-  // - returns a report for test 'Some_Test' in project 'core'. Each key maps to it's place in the filesystem
-  //   - tests.json
-  //   - stdout.log
-  //   - stderr.log
-  //   - exit.log
-  //   - message.txt
-  //   - prompt.txt
-  //   - other/
-  //     - all other reports/logs....
-  //   - source/
-  //     - a tree of the source files from the tests metafile...
   abstract report_send(...x);
   abstract report_receive(...x);
-
-  // Git integration
-  // getFileStatus(path: string): Promise<FileStatus>;
-  // getChanges(): Promise<FileChange[]>;
-  // commitChanges(message: string, description?: string): Promise<void>;
-  // pushChanges(): Promise<void>;
-  // pullChanges(): Promise<void>;
-  // getCurrentBranch(): Promise<string>;
-  // getRemoteStatus(): Promise<RemoteStatus>;
 }
 
 export interface FileEntry {
@@ -214,14 +193,16 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
 
       // For debugging: send a test greeting if no message is received within 2 seconds
       const timeoutId = setTimeout(() => {
-        console.log(`[WebSocket] No greeting received after 2 seconds, sending test greeting`);
+        console.log(
+          `[WebSocket] No greeting received after 2 seconds, sending test greeting`
+        );
         const testGreeting = {
           type: "greeting",
           data: {
             testId: `test-${Date.now()}`,
             testName: "DebugTest",
-            runtime: "node"
-          }
+            runtime: "node",
+          },
         };
         console.log(`[WebSocket] Simulating greeting:`, testGreeting);
         // Simulate receiving the greeting message
@@ -264,7 +245,9 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
   protected handleWebSocketMessage(data: any, ws: WebSocket): void {
     try {
       const rawData = data.toString();
-      console.log(`[WebSocket] Received raw message: ${rawData.substring(0, 200)}...`);
+      console.log(
+        `[WebSocket] Received raw message: ${rawData.substring(0, 200)}...`
+      );
       let parsed;
       try {
         parsed = JSON.parse(rawData);
@@ -322,7 +305,10 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
             );
           }
         } catch (error) {
-          console.error(`[WebSocket] Error executing command ${wsm.type}:`, error);
+          console.error(
+            `[WebSocket] Error executing command ${wsm.type}:`,
+            error
+          );
           sendErrorResponse(ws, key, error);
         }
         return;

@@ -1,12 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-// Do not add logging to this file as it is used by the pure runtime.
-
-import { ITTestResourceConfiguration, ITestArtifactory } from ".";
+import { ITestResourceConfiguration, ITestArtifactory } from ".";
 import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 import { IGivens } from "./BaseGiven";
-// import { beforeAllProxy, afterAllProxy } from "./pmProxy";
-// import { IPM } from "./types";
 
 /**
  * Represents a collection of test suites keyed by their names.
@@ -25,7 +19,7 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   name: string;
   givens: IGivens<I>;
   store: I["istore"];
-  testResourceConfiguration: ITTestResourceConfiguration;
+  testResourceConfiguration: ITestResourceConfiguration;
   index: number;
   failed: boolean;
   fails: number;
@@ -116,7 +110,7 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   setup(
     s: I["iinput"],
     artifactory: ITestArtifactory,
-    tr: ITTestResourceConfiguration
+    tr: ITestResourceConfiguration
     // pm: IPM
   ): Promise<I["isubject"]> {
     console.log("mark9");
@@ -134,26 +128,10 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
 
   async run(
     input: I["iinput"],
-    testResourceConfiguration: ITTestResourceConfiguration
-    // artifactory: (fPath: string, value: unknown) => void
-    // tLog: (...string) => void,
-    // pm: IPM
+    testResourceConfiguration: ITestResourceConfiguration
   ): Promise<BaseSuite<I, O>> {
-    console.log("mark10");
     this.testResourceConfiguration = testResourceConfiguration;
-    // tLog("test resources: ", JSON.stringify(testResourceConfiguration));
-
-    // const suiteArtifactory = (fPath: string, value: unknown) =>
-    //   artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
-
-    // console.log("\nSuite:", this.index, this.name);
-    // tLog("\nSuite:", this.index, this.name);
     const sNdx = this.index;
-    // Ensure addArtifact is properly bound to 'this'
-    // const addArtifact = this.addArtifact.bind(this);
-    // const proxiedPm = beforeAllProxy(pm, sNdx.toString(), addArtifact);
-
-    console.log("mark8");
 
     const subject = await this.setup(
       input,
@@ -170,9 +148,6 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
           gKey,
           testResourceConfiguration,
           this.assertThat,
-          // suiteArtifactory,
-          // tLog,
-          // pm,
           sNdx
         );
         // Add the number of failures from this given to the suite's total
@@ -197,8 +172,7 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
 
     try {
       // Ensure addArtifact is properly bound to 'this'
-      // const addArtifact = this.addArtifact.bind(this);
-      // const afterAllPm = afterAllProxy(pm, sNdx.toString(), addArtifact);
+
       this.afterAll(this.store);
     } catch (e) {
       console.error(JSON.stringify(e));

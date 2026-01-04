@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
 import { generateStreamId } from "./utils/Server_TCP_utils";
@@ -11,7 +9,6 @@ export class Server_TCP_Commands extends Server_TCP_FileService {
     super(configs, name, mode);
   }
 
-  // Command handlers for PM_Node
   async writeFileSync(
     filepath: string,
     contents: string,

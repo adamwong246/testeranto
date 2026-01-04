@@ -1,22 +1,19 @@
 import { Ibdd_in_any, ITestAdapter, Ibdd_out_any } from "../CoreTypes";
 import { IGivens } from "./BaseGiven";
-
 import { BaseSuite } from "./BaseSuite";
 
 export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
   beforeAll: async (
     input: T["iinput"],
-    testResource: ITTestResourceConfiguration
-    // pm: IPM
+    testResource: ITestResourceConfiguration
   ) => {
     return input as unknown as T["isubject"];
   },
   beforeEach: async function (
     subject: T["isubject"],
     initializer: (c?: any) => T["given"],
-    testResource: ITTestResourceConfiguration,
+    testResource: ITestResourceConfiguration,
     initialValues: any
-    // pm: IPM
   ): Promise<T["istore"]> {
     return subject as unknown as T["istore"];
   },
@@ -25,16 +22,14 @@ export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
   butThen: async (
     store: T["istore"],
     thenCb: T["then"],
-    testResource: ITTestResourceConfiguration
-    // pm: IPM
+    testResource: ITestResourceConfiguration
   ) => {
     return thenCb(store);
   },
   andWhen: async (
     store: T["istore"],
     whenCB: T["when"],
-    testResource: ITTestResourceConfiguration
-    // pm: IPM
+    testResource: ITestResourceConfiguration
   ) => {
     return whenCB(store);
   },
@@ -51,14 +46,11 @@ export const DefaultAdapter = <T extends Ibdd_in_any>(
   } as ITestAdapter<T>;
 };
 
-export type ITTestResourceConfiguration = {
+export type ITestResourceConfiguration = {
   name: string;
   fs: string;
   ports: number[];
-  browserWSEndpoint?: string;
-  timeout?: number;
-  retries?: number;
-  environment?: Record<string, string>;
+  files: string[];
 };
 
 export type ITTestResourceRequirement = {
@@ -71,35 +63,21 @@ export type ITTestResourceRequest = {
   ports: number;
 };
 
-// export type ITLog = (...string) => void;
-
-// export type ILogWriter = {
-//   createWriteStream: (line: string) => any | any;
-//   writeFileSync: (fp: string, contents: string) => any;
-//   mkdirSync: () => any;
-//   testArtiFactoryfileWriter: (
-//     tLog: ITLog,
-//     n: (promise: Promise<any>) => void
-//   ) => (fPath: string, value: unknown) => void;
-// };
-
-// export type ITestArtificer = (key: string, data: any) => void;
-
 type ITest = {
   toObj(): object;
   name: string;
   givens: IGivens<Ibdd_in_any>;
-  testResourceConfiguration: ITTestResourceConfiguration;
+  testResourceConfiguration: ITestResourceConfiguration;
 };
 
 export type ITestJob = {
   toObj(): object;
   test: ITest;
   runner: (
-    x: ITTestResourceConfiguration
+    x: ITestResourceConfiguration
   ) => Promise<BaseSuite<Ibdd_in_any, Ibdd_out_any>>;
   testResourceRequirement: ITTestResourceRequirement;
-  receiveTestResourceConfig: () => IFinalResults;
+  receiveTestResourceConfig: (x) => IFinalResults;
 };
 
 export type ITestResults = Promise<{ test: ITest }>[];
@@ -110,17 +88,9 @@ export const defaultTestResourceRequirement: ITTestResourceRequest = {
 
 export type ITestArtifactory = (key: string, value: unknown) => unknown;
 
-// export type { ITestconfig, IBuiltConfig, IRunTime, ITestTypes };
-
 export type IRunnables = {
-  // golangEntryPointSidecars: Record<string, string>;
-  // nodeEntryPointSidecars: Record<string, string>;
-  // pureEntryPointSidecars: Record<string, string>;
-  // pythonEntryPointSidecars: Record<string, string>;
-  // webEntryPointSidecars: Record<string, string>;
   golangEntryPoints: Record<string, string>;
   nodeEntryPoints: Record<string, string>;
-  // pureEntryPoints: Record<string, string>;
   pythonEntryPoints: Record<string, string>;
   webEntryPoints: Record<string, string>;
 };
@@ -132,5 +102,4 @@ export type IFinalResults = {
   artifacts: Promise<unknown>[];
   tests: number;
   runTimeTests: number;
-  // logPromise: Promise<unknown>;
 };

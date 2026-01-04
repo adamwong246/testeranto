@@ -1,17 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-// Do not add logging to this file as it is used by the pure runtime.
-
+import { ITestResourceConfiguration } from ".";
 import type { Ibdd_in_any } from "../CoreTypes";
-
-import { ITLog, ITTestResourceConfiguration } from ".";
-import { IPM } from "./types.js";
-// import { butThenProxy } from "./pmProxy.js";
 
 export abstract class BaseThen<I extends Ibdd_in_any> {
   public name: string;
-  thenCB: (storeState: I["iselection"], pm: IPM) => Promise<I["then"]>;
+  thenCB: (
+    storeState: I["iselection"]
+    // pm: IPM
+  ) => Promise<I["then"]>;
   error: boolean;
   artifacts: string[] = [];
   status: boolean | undefined;
@@ -51,15 +46,15 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
   abstract butThen(
     store: I["istore"],
     thenCB: (s: I["iselection"]) => Promise<I["isubject"]>,
-    testResourceConfiguration: ITTestResourceConfiguration,
-    pm: IPM
-  ): Promise<I["iselection"]>;
+    testResourceConfiguration: ITestResourceConfiguration
+  ): // pm: IPM
+  Promise<I["iselection"]>;
 
   async test(
     store: I["istore"],
     testResourceConfiguration,
-    tLog: ITLog,
-    pm: IPM,
+    // tLog: ITLog,
+    // pm: IPM,
     filepath: string
   ): Promise<I["then"] | undefined> {
     // Ensure addArtifact is properly bound to 'this'

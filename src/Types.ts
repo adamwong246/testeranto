@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "esbuild";
-
-import { ITTestResourceConfiguration } from "./tiposkripto/index.js";
-import { PM } from "./clients/index.js";
+import { ITestResourceConfiguration } from "./tiposkripto/index.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
-
 import { BaseSuite } from "./tiposkripto/BaseSuite.js";
 import { IGivens, BaseGiven } from "./tiposkripto/BaseGiven.js";
 import { BaseThen } from "./tiposkripto/BaseThen.js";
@@ -67,43 +63,43 @@ export type TestLifecycle<Subject, State, Selection> = {
 };
 
 // BDD Test Structure
-export type TestDefinition<Subject, State, Selection> = {
-  // Test subject
-  subject: Subject;
+// export type TestDefinition<Subject, State, Selection> = {
+//   // Test subject
+//   subject: Subject;
 
-  // Test steps
-  given?: (input: any) => State;
-  when?: (state: State) => State | Promise<State>;
-  then?: (state: State) => Selection | Promise<Selection>;
+//   // Test steps
+//   given?: (input: any) => State;
+//   when?: (state: State) => State | Promise<State>;
+//   then?: (state: State) => Selection | Promise<Selection>;
 
-  // Configuration
-  resources?: ITTestResourceConfiguration;
-  pm?: typeof PM;
-};
+//   // Configuration
+//   resources?: ITestResourceConfiguration;
+//   pm?: typeof PM;
+// };
 
 // Test Suite Organization
-export type TestSuite = {
-  name: string;
-  tests: TestDefinition<any, any, any>[];
-  features?: string[];
-};
+// export type TestSuite = {
+//   name: string;
+//   tests: TestDefinition<any, any, any>[];
+//   features?: string[];
+// };
 
 // Runtime Configuration
-export type RuntimeConfig = {
-  type: "node" | "web" | "pure" | "spawn";
-  ports?: number[];
-  plugins?: Plugin[];
-};
+// export type RuntimeConfig = {
+//   type: "node" | "web" | "pure" | "spawn";
+//   ports?: number[];
+//   plugins?: Plugin[];
+// };
 
-// Project Configuration
-export type ProjectConfig = {
-  name: string;
-  sourceDir: string;
-  testSuites: TestSuite[];
-  runtime: RuntimeConfig;
-  minify?: boolean;
-  debug?: boolean;
-};
+// // Project Configuration
+// export type ProjectConfig = {
+//   name: string;
+//   sourceDir: string;
+//   testSuites: TestSuite[];
+//   runtime: RuntimeConfig;
+//   minify?: boolean;
+//   debug?: boolean;
+// };
 
 export type GivenSpecification<
   I extends Ibdd_in_any,
@@ -147,8 +143,7 @@ export type TestWhenImplementation<
     ...Iw: O["whens"][K]
   ) => (
     zel: I["iselection"],
-    tr: ITTestResourceConfiguration,
-    utils: PM
+    tr: ITestResourceConfiguration
   ) => Promise<I["when"]>;
 };
 
@@ -158,20 +153,15 @@ export type TestThenImplementation<
 > = {
   [K in keyof O["thens"]]: (
     ...It: O["thens"][K]
-  ) => (ssel: I["iselection"], utils: PM) => I["then"];
+  ) => (ssel: I["iselection"]) => I["then"];
 };
-
-//////////////////////////////////////////////////////////////////////////////////////////////
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
-// Individual output shape components
 export type TestSuiteShape = Record<string, any>;
 export type TestGivenShape = Record<string, any>;
 export type TestWhenShape = Record<string, any>;
 export type TestThenShape = Record<string, any>;
-
-//////////////////////////////////////////////////////////////////////////////////////////////
 
 export type IPluginFactory = (
   register?: (entrypoint: string, sources: string[]) => any,
@@ -183,16 +173,6 @@ export type IRunTime = `node` | `web` | `golang` | `python`;
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
 export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
-// export type IFlavor = ["compiled" | "interpreted" | "VM" | "chrome", string];
-// export type IStrategy =
-//   | "combined-build-test-process-pools" // Interpreted languages: Node.js, Python, Ruby, PHP
-//   | "separate-build-combined-test" // Compiled languages: Go, Rust
-//   | "combined-service-shared-jvm" // VM languages: Java
-//   | "combined-service-shared-chrome"; // Browser environment: Web
-// export type IProd = [IDockerSteps, string][][];
-// export type Itest = [IDockerSteps, string][][];
-
-// export type IChecks = Record<string, [[IDockerSteps, string][], string]>;
 
 export type ITestconfig = {
   httpPort: number;
@@ -201,64 +181,7 @@ export type ITestconfig = {
   importPlugins: IPluginFactory[];
   ports: string[];
   src: string;
-  // test: Itest;
-  // prod: IProd;
   check: string;
-
-  // New runtime-native check configuration
-  // check?: {
-  //   // Runtime-specific entry points
-  //   node?: string; // e.g., "src/staticAnalysis/node.js"
-  //   python?: string; // e.g., "src/staticAnalysis/python.py"
-  //   golang?: string; // e.g., "src/staticAnalysis/go.go"
-  //   web?: string; // e.g., "src/staticAnalysis/web.js"
-  //   java?: string; // e.g., "src/staticAnalysis/Java.java"
-
-  //   // Common options
-  //   enabled?: boolean;
-  //   failOnError?: boolean;
-  // };
-
-  // Strategy-specific configurations
-  // build?: Itest; // Separate build steps for compiled languages
-
-  // Unified monitoring configuration
-  // monitoring?: {
-  //   websocketPort?: number;
-  //   apiPort?: number;
-  //   maxLogLines?: number;
-  //   updateInterval?: number;
-  // };
-
-  // processPool?: {
-  //   maxConcurrent: number;
-  //   timeoutMs: number;
-  //   monitoring?: {
-  //     captureStdout?: boolean;
-  //     captureStderr?: boolean;
-  //   };
-  // };
-
-  // chrome?: {
-  //   sharedInstance: boolean;
-  //   maxContexts: number;
-  //   memoryLimitMB: number;
-  //   monitoring?: {
-  //     captureConsole?: boolean;
-  //     captureNetwork?: boolean;
-  //     captureErrors?: boolean;
-  //     wsEndpoint?: string;
-  //   };
-  // };
-
-  // // Docker monitoring configuration
-  // docker?: {
-  //   monitoring?: {
-  //     method?: "logs" | "attach";
-  //     follow?: boolean;
-  //     tail?: number;
-  //   };
-  // };
 
   golang: {
     plugins: any[];

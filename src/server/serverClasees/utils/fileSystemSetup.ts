@@ -2,13 +2,10 @@ import fs from "fs";
 import {
   IndexHtml,
   ProcessMangerHtml,
-  // ReportHtml,
 } from "../../../clients/utils/buildTemplates";
-import { IBuiltConfig } from "../../../tiposkripto";
+import { IBuiltConfig } from "../../../Types";
 
 export function setupFileSystem(config: IBuiltConfig, testsName: string) {
-  // fs.writeFileSync(`${process.cwd()}/testeranto/Report.html`, ReportHtml());
-
   fs.writeFileSync(
     `${process.cwd()}/testeranto/ProcessManger.html`,
     ProcessMangerHtml()

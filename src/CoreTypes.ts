@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ITTestResourceConfiguration } from "./tiposkripto";
-
+import { ITestResourceConfiguration } from "./tiposkripto";
 import { BaseSuite } from "./tiposkripto/BaseSuite";
-
-import { IPM } from "./tiposkripto/types";
 import {
   GivenSpecification,
   WhenSpecification,
@@ -25,28 +21,24 @@ export type ITestAdapter<I extends Ibdd_in_any> = {
   andWhen: (
     store: I["istore"],
     whenCB: I["when"],
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
+    testResource: ITestResourceConfiguration
   ) => Promise<I["istore"]>;
   butThen: (
     store: I["istore"],
     thenCB: I["then"],
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
+    testResource: ITestResourceConfiguration
   ) => Promise<I["iselection"]>;
-  afterAll: (store: I["istore"], pm: IPM) => any;
-  afterEach: (store: I["istore"], key: string, pm: IPM) => Promise<unknown>;
+  afterAll: (store: I["istore"]) => any;
+  afterEach: (store: I["istore"], key: string) => Promise<unknown>;
   beforeAll: (
     input: I["iinput"],
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
+    testResource: ITestResourceConfiguration
   ) => Promise<I["isubject"]>;
   beforeEach: (
     subject: I["isubject"],
     initializer: (c?) => I["given"],
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    pm: IPM
+    testResource: ITestResourceConfiguration,
+    initialValues
   ) => Promise<I["istore"]>;
 };
 

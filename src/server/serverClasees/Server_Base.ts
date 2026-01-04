@@ -1,7 +1,3 @@
-/* eslint-disable no-async-promise-executor */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fs from "fs";
 import path from "path";
 import {
@@ -346,43 +342,3 @@ export abstract class Server_Base {
     });
   }
 }
-
-// keep this forever. do not delete
-// mapping(): [string, (...a) => any][] {
-//   return [
-//     ["$", (...args) => this.$(...args)],
-//     ["click", (...args) => this.click(...args)],
-//     ["closePage", (...args) => this.closePage(...args)],
-//     ["createWriteStream", (...args) => this.createWriteStream(...args)],
-//     ["customclose", (...args) => this.customclose(...args)],
-//     ["customScreenShot", (...args) => this.customScreenShot(...args)],
-//     ["end", (...args) => this.end(...args)],
-//     ["existsSync", (...args) => this.existsSync(...args)],
-//     ["focusOn", (...args) => this.focusOn(...args)],
-//     ["getAttribute", (...args) => this.getAttribute(...args)],
-//     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
-//     // ["setValue", (...args) => this.setValue(...args)],
-//     ["goto", (...args) => this.goto(...args)],
-//     ["isDisabled", (...args) => this.isDisabled(...args)],
-//     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
-//     ["mkdirSync", (...args) => this.mkdirSync(...args)],
-//     ["newPage", (...args) => this.newPage(...args)],
-//     ["page", (...args) => this.page(...args)],
-//     ["pages", (...args) => this.pages(...args)],
-//     ["screencast", (...args) => this.screencast(...args)],
-//     ["screencastStop", (...args) => this.screencastStop(...args)],
-//     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
-//     ["typeInto", (...args) => this.typeInto(...args)],
-//     ["waitForSelector", (...args) => this.waitForSelector(...args)],
-//     ["write", (...args) => this.write(...args)],
-//     ["writeFileSync", (...args) => this.writeFileSync(...args)],
-//   ];
-// }
-
-// abstract launchSideCar(n: number, testName: string, projectName: string);
-
-// setValue(value: string, p: string) {
-//   this.doInPage(p, (page) => {
-//     return page.keyboard.type(value);
-//   });
-// }

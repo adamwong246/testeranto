@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import http from "http";
 import fs from "fs";
 import path from "path";
-
 import { CONTENT_TYPES } from "./Server_TCP_constants";
 import { getContentType } from "./utils/Server_TCP_utils";
 import { Server_TCP_Core } from "./Server_TCP_Core";
@@ -16,20 +14,20 @@ export class Server_TCP_Http extends Server_TCP_Core {
     if (this.httpServer) {
       const address = this.httpServer.address();
       console.log(`[HTTP] HTTP server address:`, address);
-      
+
       // Listen for server listening event
-      this.httpServer.on('listening', () => {
+      this.httpServer.on("listening", () => {
         const addr = this.httpServer.address();
         console.log(`[HTTP] HTTP server is now listening on port ${addr.port}`);
       });
-      
+
       // Listen for errors
-      this.httpServer.on('error', (error) => {
+      this.httpServer.on("error", (error) => {
         console.error(`[HTTP] HTTP server error:`, error);
       });
-      
+
       // Listen for close
-      this.httpServer.on('close', () => {
+      this.httpServer.on("close", () => {
         console.log(`[HTTP] HTTP server closed`);
       });
     }

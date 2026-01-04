@@ -4,7 +4,7 @@ import { getRunnables } from "../utils";
 import { ServerTaskManager } from "./ServerTaskManager";
 import { IMode } from "../types";
 import { IRunTime, IBuiltConfig } from "../../Types";
-import { ITTestResourceConfiguration } from "../../tiposkripto";
+import { ITestResourceConfiguration } from "../../tiposkripto";
 
 export class ServerTaskCoordinator extends ServerTaskManager {
   private queue: Array<{
@@ -143,18 +143,8 @@ export class ServerTaskCoordinator extends ServerTaskManager {
           shouldExecute: true,
         };
 
-        console.log(
-          `[SCHEDULING] Prepared test resource for test ${testId}:`,
-          testResource
-        );
-
-        // Send test resource to the test via WebSocket
-        console.log(
-          `[SCHEDULING] Checking WebSocket readyState for test ${testId}: ${ws.readyState}`
-        );
         if (ws.readyState === WebSocket.OPEN) {
-          // Prepare the test resource configuration according to ITTestResourceConfiguration
-          const testResourceConfig: ITTestResourceConfiguration = {
+          const testResourceConfig: ITestResourceConfiguration = {
             name: testName,
             fs: process.cwd(),
             ports: testResourceConfiguration.ports,
@@ -182,15 +172,10 @@ export class ServerTaskCoordinator extends ServerTaskManager {
             },
             timestamp: new Date().toISOString(),
           };
-          console.log(
-            `[SCHEDULING] Sending test resource to test ${testId}:`,
-            JSON.stringify(message, null, 2)
-          );
+
           try {
             ws.send(JSON.stringify(message));
-            console.log(
-              `[SCHEDULING] Sent test resource to test ${testName} (${testId})`
-            );
+
             // Do NOT add to the main processing queue - the client will handle execution
           } catch (error) {
             console.error(`[SCHEDULING] Error sending test resource:`, error);
@@ -213,9 +198,6 @@ export class ServerTaskCoordinator extends ServerTaskManager {
       }
     } finally {
       this.processingSchedulingQueue = false;
-      console.log(
-        `[SCHEDULING] Finished processing scheduling queue. Remaining items: ${this.testSchedulingQueue.length}`
-      );
     }
   }
 

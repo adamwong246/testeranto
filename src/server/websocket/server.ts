@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import WebSocket from "ws";
 import { BrowserContextManager } from "./browserContextManager.js";
 

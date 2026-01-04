@@ -17,6 +17,8 @@
     "hola",
     "Ibdd",
     "iinput",
+    "iselection",
+    "isubject",
     "mothership",
     "mypy",
     "netcat",
@@ -24,6 +26,7 @@
     "Pitono",
     "pylint",
     "returncode",
+    "somestring",
     "Testconfig",
     "Testeranto",
     "Tiposkripto"

@@ -6,46 +6,6 @@ import subprocess
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
 
-# First, ensure websockets is installed in the current environment
-try:
-    import websockets
-    print("websockets is already installed")
-except ImportError:
-    print("Installing websockets...")
-    try:
-        # Try to install websockets using pip
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "websockets>=12.0"])
-        print("Successfully installed websockets")
-        # Reload the module
-        import importlib
-        if 'websockets' in sys.modules:
-            importlib.reload(sys.modules['websockets'])
-    except Exception as e:
-        print(f"Failed to install websockets: {e}")
-        print("Please install websockets manually: pip install websockets>=12.0")
-        sys.exit(1)
-
-# Import Calculator from the current directory
-from Calculator import Calculator
-
-# Check for websockets before importing pitono
-try:
-    import websockets
-except ImportError:
-    print("ERROR: websockets is not installed in the virtual environment")
-    print("Please install it with: pip install websockets>=12.0")
-    print("Or activate the correct virtual environment")
-    sys.exit(1)
-
-# Import pitono components
-try:
-    from src.pitono.Pitono import Pitono, set_default_instance, main
-    from src.pitono.simple_adapter import SimpleTestAdapter
-except ImportError as e:
-    print(f"Could not import pitono: {e}")
-    print("Make sure to run from the project root and install pitono")
-    raise
-
 # Try to import specification and implementation
 # These might be in a subdirectory
 specification = None
@@ -135,7 +95,7 @@ implementation = SimpleImplementation()
 # Create the test instance
 # Make sure all required parameters are passed
 test_instance = Pitono(
-    input_val=Calculator,  # The subject to test
+    input_val=Calculator,
     test_specification=specification,
     test_implementation=implementation,
     test_adapter=SimpleTestAdapter(),
@@ -170,3 +130,44 @@ if __name__ == "__main__":
         # Let's just print a message
         print("To run properly, this script needs to be called with:")
         print("  <partialTestResource> <WebSocket_port>", " ".join(sys.argv))
+
+
+# # First, ensure websockets is installed in the current environment
+# try:
+#     import websockets
+#     print("websockets is already installed")
+# except ImportError:
+#     print("Installing websockets...")
+#     try:
+#         # Try to install websockets using pip
+#         subprocess.check_call([sys.executable, "-m", "pip", "install", "websockets>=12.0"])
+#         print("Successfully installed websockets")
+#         # Reload the module
+#         import importlib
+#         if 'websockets' in sys.modules:
+#             importlib.reload(sys.modules['websockets'])
+#     except Exception as e:
+#         print(f"Failed to install websockets: {e}")
+#         print("Please install websockets manually: pip install websockets>=12.0")
+#         sys.exit(1)
+
+# # Import Calculator from the current directory
+# from Calculator import Calculator
+
+# # Check for websockets before importing pitono
+# try:
+#     import websockets
+# except ImportError:
+#     print("ERROR: websockets is not installed in the virtual environment")
+#     print("Please install it with: pip install websockets>=12.0")
+#     print("Or activate the correct virtual environment")
+#     sys.exit(1)
+
+# # Import pitono components
+# try:
+#     from src.pitono.Pitono import Pitono, set_default_instance, main
+#     from src.pitono.simple_adapter import SimpleTestAdapter
+# except ImportError as e:
+#     print(f"Could not import pitono: {e}")
+#     print("Make sure to run from the project root and install pitono")
+#     raise

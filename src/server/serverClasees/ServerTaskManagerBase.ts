@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { ChildProcess } from "child_process";
 import { createLogStreams } from "../../clients/utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../../Types";

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   defaultTestResourceRequirement,
-  ITTestResourceConfiguration,
+  ITestResourceConfiguration,
   ITTestResourceRequest,
 } from "./index.js";
 
@@ -40,7 +38,7 @@ export class WebTiposkripto<
   }
 
   async receiveTestResourceConfig(
-    testResourceConfiguration: Partial<ITTestResourceConfiguration>
+    testResourceConfiguration: Partial<ITestResourceConfiguration>
   ) {
     const config = JSON.parse(testResourceConfiguration);
     console.log(

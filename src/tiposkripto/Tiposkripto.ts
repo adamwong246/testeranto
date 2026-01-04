@@ -7,6 +7,7 @@ import {
 } from "../CoreTypes";
 import { ITTestResourceRequest, defaultTestResourceRequirement } from ".";
 import type BaseTiposkripto from "./BaseTiposkripto.js";
+import { Analyzer } from "./Analyzer";
 
 let tpskrt;
 
@@ -25,7 +26,8 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
   testAdapter: Partial<ITestAdapter<I>>,
-  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+  analyzer: Analyzer
 ): Promise<BaseTiposkripto<I, O, M>> => {
   return (
     (await tpskrt.default) as unknown as <
@@ -37,13 +39,15 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testSpecification: ITestSpecification<II, OO>,
       testImplementation: ITestImplementation<II, OO, MM>,
       testResourceRequirement: ITTestResourceRequest,
-      testAdapter: Partial<ITestAdapter<II>>
+      testAdapter: Partial<ITestAdapter<II>>,
+      analyzer: Analyzer
     ) => Promise<BaseTiposkripto<II, OO, MM>>
   )<I, O, M>(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testAdapter
+    testAdapter,
+    analyzer
   );
 };

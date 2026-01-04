@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fs from "fs";
 import { IBuiltConfig, ISummary } from "../../Types";
 import { ServerTaskManagerBase } from "./ServerTaskManagerBase";
@@ -66,29 +62,6 @@ export class ServerTaskManager extends ServerTaskManagerBase {
       });
     }
   };
-
-  // deprecated
-  // typeCheckIsRunning(src: string) {
-  //   this.updateSummaryEntry(src, { typeErrors: "?" });
-  // }
-
-  // typeCheckIsNowDone(src: string, failures: number) {
-  //   this.updateSummaryEntry(src, { typeErrors: failures });
-  // }
-
-  // lintIsRunning(src: string) {
-  //   this.updateSummaryEntry(src, { staticErrors: "?" });
-  // }
-
-  // lintIsNowDone(src: string, failures: number) {
-  //   this.updateSummaryEntry(src, { staticErrors: failures });
-  // }
-
-  // bddTestIsNowDone(src: string, failures: number) {
-  //   this.updateSummaryEntry(src, { runTimeErrors: failures });
-  //   this.writeBigBoard();
-  //   this.checkForShutdown();
-  // }
 
   async stop() {
     Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import ansiColors from "ansi-colors";
-import { IRunTime } from "../../../tiposkripto";
+import { IRunTime } from "../../../Types";
 
 export class TestEnvironmentSetup {
   constructor(
@@ -21,9 +20,6 @@ export class TestEnvironmentSetup {
     portsToUse: string[];
     testResources: string;
   }> {
-    // Note: bddTestIsRunning should be called by the caller
-    // this.bddTestIsRunning(src);
-
     const reportDest = `testeranto/reports/${this.projectName}/${src
       .split(".")
       .slice(0, -1)

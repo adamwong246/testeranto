@@ -17,9 +17,10 @@ import {
   IFinalResults,
   ITestArtifactory,
   ITestJob,
-  ITTestResourceConfiguration,
+  ITestResourceConfiguration,
   ITTestResourceRequest,
 } from "./index.js";
+import { Analyzer } from "./Analyzer";
 
 type IExtenstions = Record<string, unknown>;
 
@@ -34,14 +35,14 @@ export default class BaseTiposkripto<
   totalTests: number = 0;
   artifacts: Promise<unknown>[] = [];
   assertThis: (t: I["then"]) => any;
-  givenOverides: Record<keyof IExtenstions, any>;
+  givenOverrides: Record<keyof IExtenstions, any>;
   specs: any;
   suitesOverrides: Record<keyof IExtenstions, any>;
   testJobs: ITestJob[];
   testResourceRequirement: ITTestResourceRequest;
   testSpecification: ITestSpecification<I, O>;
-  thenOverides: Record<keyof IExtenstions, any>;
-  whenOverides: Record<keyof IExtenstions, any>;
+  thenOverrides: Record<keyof IExtenstions, any>;
+  whenOverrides: Record<keyof IExtenstions, any>;
 
   constructor(
     input: I["iinput"],
@@ -54,8 +55,7 @@ export default class BaseTiposkripto<
     },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testAdapter: Partial<ITestAdapter<I>> = {},
-    port: string,
-    host: string
+    analyzer: Analyzer
   ) {
     const fullAdapter = DefaultAdapter<I>(testAdapter);
 
@@ -78,8 +78,7 @@ export default class BaseTiposkripto<
             async setup(
               s: I["iinput"],
               artifactory: ITestArtifactory,
-              tr: ITTestResourceConfiguration
-              // pm: IPM
+              tr: ITestResourceConfiguration
             ): Promise<I["isubject"]> {
               return (
                 fullAdapter.beforeAll?.(s, tr) ??
@@ -96,55 +95,32 @@ export default class BaseTiposkripto<
     const classyGivens = Object.entries(testImplementation.givens).reduce(
       (a, [key, g]) => {
         a[key] = (
-          // name: string,
           features: string[],
           whens: BaseWhen<I>[],
           thens: BaseThen<I>[],
           gcb: I["given"],
           initialValues: any
         ) => {
-          // Debug the parameters being passed - check if features contains when-like objects
-          // console.log(`[Tiposkripto] Creating Given ${key} with:`);
-          // console.log(`  name: ${name}`);
-          // console.log(`  features:`, features);
-          // console.log(`  whens:`, whens);
-          // console.log(`  thens:`, thens);
-
+          // WTF
           // Ensure parameters are arrays and create copies to avoid reference issues
           const safeFeatures = Array.isArray(features) ? [...features] : [];
           const safeWhens = Array.isArray(whens) ? [...whens] : [];
           const safeThens = Array.isArray(thens) ? [...thens] : [];
 
           return new (class extends BaseGiven<I> {
-            // uberCatcher = uberCatcher;
-
-            async givenThat(
-              subject,
-              testResource,
-              // artifactory,
-              initializer,
-              initialValues
-              // pm
-            ) {
+            async givenThat(subject, testResource, initializer, initialValues) {
               return fullAdapter.beforeEach(
                 subject,
                 initializer,
                 testResource,
                 initialValues
-                // pm
               );
             }
 
-            afterEach(
-              store: I["istore"],
-              key: string
-              // artifactory
-              // pm
-            ): Promise<unknown> {
+            afterEach(store: I["istore"], key: string): Promise<unknown> {
               return Promise.resolve(fullAdapter.afterEach(store, key));
             }
           })(
-            // name,
             safeFeatures,
             safeWhens,
             safeThens,
@@ -165,7 +141,6 @@ export default class BaseTiposkripto<
               return await fullAdapter.andWhen(store, whenCB, testResource);
             }
           })(`${key}: ${payload && payload.toString()}`, whEn(...payload));
-          // console.log(`[Tiposkripto] Created When ${key}:`, whenInstance.name);
           return whenInstance;
         };
         return a;
@@ -181,12 +156,11 @@ export default class BaseTiposkripto<
               store: any,
               thenCB,
               testResource: any
-              // pm: IPM
             ): Promise<I["iselection"]> {
               return await fullAdapter.butThen(store, thenCB, testResource);
             }
           })(`${key}: ${args && args.toString()}`, thEn(...args));
-          // console.log(`[Tiposkripto] Created Then ${key}:`, thenInstance.name);
+
           return thenInstance;
         };
         return a;
@@ -210,21 +184,13 @@ export default class BaseTiposkripto<
 
     this.totalTests = this.calculateTotalTests();
 
-    console.log("mark1");
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
-      console.log("mark2");
       const suiteRunner =
         (suite: BaseSuite<I, O>) =>
         async (
-          testResourceConfiguration?: ITTestResourceConfiguration
+          testResourceConfiguration?: ITestResourceConfiguration
         ): Promise<BaseSuite<I, O>> => {
           try {
-            console.log("mark3");
-            console.log(
-              "Test resource configuration:",
-              testResourceConfiguration
-            );
-            // Pass the test resource configuration to suite.run
             const x = await suite.run(
               input,
               testResourceConfiguration || {
@@ -236,7 +202,7 @@ export default class BaseTiposkripto<
                 environment: {},
               }
             );
-            console.log("mark3.5", x);
+
             return x;
           } catch (e) {
             console.error(e.stack);
@@ -244,11 +210,8 @@ export default class BaseTiposkripto<
           }
         };
 
-      console.log("mark4");
       const runner = suiteRunner(suite);
 
-      console.log("mark5", runner);
-      // Capture totalTests in a closure
       const totalTests = this.totalTests;
       const testJob = {
         test: suite,
@@ -260,13 +223,8 @@ export default class BaseTiposkripto<
         runner,
 
         receiveTestResourceConfig: async (
-          testResourceConfiguration: ITTestResourceConfiguration
+          testResourceConfiguration: ITestResourceConfiguration
         ): Promise<IFinalResults> => {
-          console.log(
-            "mark7 - receiveTestResourceConfig called with:",
-            testResourceConfiguration
-          );
-
           try {
             // Run the suite with the test resource configuration
             const suiteDone: BaseSuite<I, O> = await runner(
@@ -274,12 +232,6 @@ export default class BaseTiposkripto<
             );
             const fails = suiteDone.fails;
 
-            console.log("mark6", testJob.toObj());
-
-            // Write test results
-            // Note: this.writeFileSync doesn't exist in this context
-            // We need to handle this differently
-            // For now, just log
             console.log(
               `Would write tests.json with:`,
               JSON.stringify(testJob.toObj(), null, 2)
@@ -309,26 +261,15 @@ export default class BaseTiposkripto<
       return testJob;
     });
 
-    this.connectWebSocket(port, host);
+    this.connectWebSocket("3456", "localhost");
+
+    analyzer.analyze(Object.keys(this.testSpecification.files()));
   }
 
-  // WebSocket methods
   protected async connectWebSocket(port: string, host?: string): Promise<void> {
     const wsHost = host || process.env.WS_HOST || "localhost";
-    // const useTLS = process.env.WS_PROTOCOL === "ws" || false;
     const protocol = "ws";
     const url = `${protocol}://${wsHost}:${port}`;
-
-    console.log(`[Tiposkripto] === WebSocket Connection Attempt ===`);
-    console.log(`[Tiposkripto] Target URL: ${url}`);
-    console.log(
-      `[Tiposkripto] Protocol: ${protocol}, Host: ${wsHost}, Port: ${port}`
-    );
-    console.log(`[Tiposkripto] Current time: ${new Date().toISOString()}`);
-    console.log(`[Tiposkripto] Process ID: ${process.pid}`);
-
-    // First, let's check if we can even create a connection
-    console.log(`[Tiposkripto] Creating WebSocket instance...`);
 
     return new Promise((resolve, reject) => {
       let timeoutFired = false;
@@ -336,19 +277,6 @@ export default class BaseTiposkripto<
         timeoutFired = true;
         console.log(
           `[Tiposkripto] ❌ WebSocket connection timeout after 10 seconds to ${url}`
-        );
-        console.log(`[Tiposkripto] This usually means:`);
-        console.log(
-          `[Tiposkripto]   1. No WebSocket server is running on port ${port}`
-        );
-        console.log(
-          `[Tiposkripto]   2. The server is not accepting connections`
-        );
-        console.log(
-          `[Tiposkripto]   3. There's a firewall blocking the connection`
-        );
-        console.log(
-          `[Tiposkripto] Please ensure a WebSocket server is running on port ${port}`
         );
         reject(new Error(`WebSocket connection timeout to ${url}`));
       }, 10000);
@@ -358,10 +286,6 @@ export default class BaseTiposkripto<
       this.ws.on("open", () => {
         if (timeoutFired) return;
         clearTimeout(timeout);
-        console.log(
-          `[Tiposkripto] ✅ WebSocket connected successfully to ${url}`
-        );
-        console.log(`[Tiposkripto] Ready to send and receive messages`);
 
         // Send greeting message to server
         const greetingMessage = {
@@ -372,10 +296,6 @@ export default class BaseTiposkripto<
             runtime: "node",
           },
         };
-        console.log(
-          `[Tiposkripto] Sending greeting to server:`,
-          greetingMessage
-        );
         this.ws.send(JSON.stringify(greetingMessage));
 
         resolve();
@@ -385,60 +305,21 @@ export default class BaseTiposkripto<
         if (timeoutFired) return;
         clearTimeout(timeout);
         console.error(`[Tiposkripto] ❌ WebSocket connection error to ${url}:`);
-        console.error(`[Tiposkripto] Error name: ${error.name}`);
-        console.error(`[Tiposkripto] Error message: ${error.message}`);
-        console.error(`[Tiposkripto] Error stack: ${error.stack}`);
-        console.log(
-          `[Tiposkripto] This usually means the WebSocket server is not running`
-        );
-        console.log(
-          `[Tiposkripto] Check if something is listening on port ${port}`
-        );
+
         reject(error);
       });
 
       this.ws.on("message", (data) => {
         const dataStr = data.toString();
-        console.log(
-          `[Tiposkripto] 📨 Received WebSocket message (${dataStr.length} chars)`
-        );
-        if (dataStr.length > 500) {
-          console.log(
-            `[Tiposkripto] Message preview: ${dataStr.substring(0, 500)}...`
-          );
-        } else {
-          console.log(`[Tiposkripto] Message: ${dataStr}`);
-        }
         try {
           const message = JSON.parse(dataStr);
-          console.log(
-            `[Tiposkripto] Parsed message type: ${message.type || "unknown"}`
-          );
 
-          // Handle testResource messages
           if (message.type === "testResource") {
-            console.log(`[Tiposkripto] Received testResource message`);
-            console.log(
-              `[Tiposkripto] Test resource data:`,
-              JSON.stringify(message.data, null, 2)
-            );
-
-            // Call receiveTestResourceConfig with the test resource configuration
             if (this.testJobs && this.testJobs.length > 0) {
-              // The test resource configuration is in message.data.testResourceConfiguration
               const testResourceConfig = message.data.testResourceConfiguration;
-              console.log(
-                `[Tiposkripto] Calling receiveTestResourceConfig with:`,
-                testResourceConfig
-              );
-
-              // Call receiveTestResourceConfig on the first test job
-              // The test job's receiveTestResourceConfig expects an ITTestResourceConfiguration object
               this.testJobs[0]
                 .receiveTestResourceConfig(testResourceConfig)
                 .then((result) => {
-                  console.log(`[Tiposkripto] Test execution result:`, result);
-
                   // Send the result back to the server
                   if (this.ws && this.ws.readyState === WebSocket.OPEN) {
                     const resultMessage = {
@@ -504,7 +385,6 @@ export default class BaseTiposkripto<
         resolve(payload);
       });
 
-      // Set timeout
       const timeoutId = setTimeout(() => {
         this.messageCallbacks.delete(key);
         reject(
@@ -512,7 +392,6 @@ export default class BaseTiposkripto<
         );
       }, 10000);
 
-      // Send message
       const message = {
         type: command,
         data: args.length > 0 ? args : undefined,
@@ -540,19 +419,14 @@ export default class BaseTiposkripto<
   }
 
   async receiveTestResourceConfig(
-    testResourceConfig: ITTestResourceConfiguration
+    testResourceConfig: ITestResourceConfiguration
   ): Promise<any> {
-    console.log("Tiposkripto.receiveTestResourceConfig - starting");
-    console.log("Test resource configuration:", testResourceConfig);
-
-    // Call the test job's receiveTestResourceConfig with the test resource configuration
     if (this.testJobs && this.testJobs.length > 0) {
       // Pass the test resource configuration object directly
       return await this.testJobs[0].receiveTestResourceConfig(
         testResourceConfig
       );
     } else {
-      console.error("No test jobs available");
       throw new Error("No test jobs available");
     }
   }
@@ -574,21 +448,21 @@ export default class BaseTiposkripto<
       gcb: I["given"]
     ) => BaseGiven<I>
   > {
-    return this.givenOverides;
+    return this.givenOverrides;
   }
 
   When(): Record<
     keyof IExtenstions,
     (arg0: I["istore"], ...arg1: any) => BaseWhen<I>
   > {
-    return this.whenOverides;
+    return this.whenOverrides;
   }
 
   Then(): Record<
     keyof IExtenstions,
     (selection: I["iselection"], expectation: any) => BaseThen<I>
   > {
-    return this.thenOverides;
+    return this.thenOverrides;
   }
 
   // Add a method to access test jobs which can be used by receiveTestResourceConfig

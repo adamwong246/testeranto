@@ -1,24 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
-import { ITTestResourceConfiguration } from "../../tiposkripto";
 import { IMode } from "../types";
 import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
+import { ITestResourceConfiguration } from "../../tiposkripto";
 
 export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
   private testInfoMap: Map<string, { testName: string; runtime: string }> =
     new Map();
 
   constructor(configs: any, name: string, mode: IMode) {
-    console.log(`[WebSocketProcess] Creating Server_TCP_WebSocketProcess`);
     super(configs, name, mode);
-    console.log(`[WebSocketProcess] Super constructor completed`);
-
-    // Log WebSocket server status
-    console.log(`[WebSocketProcess] wss exists: ${!!this.wss}`);
-    console.log(`[WebSocketProcess] httpServer exists: ${!!this.httpServer}`);
     if (this.wss) {
       console.log(
         `[WebSocketProcess] WebSocket server event listeners:`,
@@ -27,7 +20,7 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     }
 
     // Override runningProcesses.set to capture logs for new processes
-    console.log(`[WebSocketProcess] Overriding runningProcesses.set`);
+
     this.overrideRunningProcessesSet();
 
     // Attach log capture to existing processes (after parent may have added some)
@@ -75,9 +68,7 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     } else if (wsm.type === "getLogs") {
       // Handle monitoring request for logs
       const processId = wsm.data?.processId;
-      console.log(
-        `[WebSocketProcess] Handling getLogs request for process: ${processId}`
-      );
+
       if (processId) {
         ws.send(
           JSON.stringify({
@@ -87,14 +78,11 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
             timestamp: new Date().toISOString(),
           })
         );
-        console.log(`[WebSocketProcess] Sent logs for process ${processId}`);
       }
     } else if (wsm.type === "subscribeToLogs") {
       // Handle subscription to log updates
       const processId = wsm.data?.processId;
-      console.log(
-        `[WebSocketProcess] Handling subscribeToLogs for process: ${processId}`
-      );
+
       if (processId) {
         // Store subscription info
         if (!(this as any).logSubscriptions) {
@@ -113,9 +101,6 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
             timestamp: new Date().toISOString(),
           })
         );
-        console.log(
-          `[WebSocketProcess] Subscribed to logs for process ${processId}`
-        );
       }
     } else if (wsm.type === "greeting") {
       // Handle test greeting - test is ready to be scheduled
@@ -123,27 +108,12 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
       const runtime = wsm.data?.runtime;
       const testId = wsm.data?.testId;
 
-      console.log(
-        `[WebSocketProcess] Received greeting from test: ${testName} (${runtime}), testId: ${testId}`
-      );
-      console.log(
-        `[WebSocketProcess] Full greeting data:`,
-        JSON.stringify(wsm.data, null, 2)
-      );
-
       // Store WebSocket connection for this test
       if (!(this as any).testConnections) {
         (this as any).testConnections = new Map();
       }
       (this as any).testConnections.set(testId, ws);
-      console.log(
-        `[WebSocketProcess] Stored WebSocket connection for test ${testId}. Total connections: ${
-          (this as any).testConnections.size
-        }`
-      );
 
-      // Add test to scheduling queue
-      console.log(`[WebSocketProcess] Calling scheduleTestForExecution...`);
       this.scheduleTestForExecution(testId, testName, runtime, ws);
 
       // Acknowledge greeting
@@ -152,15 +122,9 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
         testId,
         timestamp: new Date().toISOString(),
       };
-      console.log(
-        `[WebSocketProcess] Sending greeting acknowledgment for test ${testId}:`,
-        ackMessage
-      );
+
       try {
         ws.send(JSON.stringify(ackMessage));
-        console.log(
-          `[WebSocketProcess] Greeting acknowledgment sent successfully for test ${testId}`
-        );
       } catch (error) {
         console.error(
           `[WebSocketProcess] Failed to send greeting acknowledgment for test ${testId}:`,
@@ -168,22 +132,10 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
         );
       }
     } else if (wsm.type === "testResult") {
-      // Handle test result from client
-      console.log(`[WebSocketProcess] Received testResult message`);
-      console.log(
-        `[WebSocketProcess] Test result data:`,
-        JSON.stringify(wsm.data, null, 2)
-      );
-
       // Write test results to tests.json
       this.handleTestResult(wsm.data, ws);
     } else if (wsm.type === "testError") {
       // Handle test error from client
-      console.log(`[WebSocketProcess] Received testError message`);
-      console.log(
-        `[WebSocketProcess] Test error data:`,
-        JSON.stringify(wsm.data, null, 2)
-      );
 
       // Write error to tests.json or error log
       this.handleTestError(wsm.data, ws);
@@ -252,17 +204,12 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
   // Override runningProcesses.set to capture logs for new processes
   private overrideRunningProcessesSet(): void {
-    console.log(
-      "Attempting to override runningProcesses.set",
-      this.runningProcesses
-    );
     if (!(this.runningProcesses instanceof Map)) {
       console.warn("runningProcesses is not a Map, cannot override set");
       return;
     }
     const originalSet = this.runningProcesses.set.bind(this.runningProcesses);
     this.runningProcesses.set = (key: string, value: any) => {
-      console.log(`runningProcesses.set called for ${key}`);
       const result = originalSet(key, value);
       this.attachLogCapture(key, value);
       return result;
@@ -271,10 +218,6 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
   // Attach log capture to a single process
   private attachLogCapture(processId: string, childProcess: any): void {
-    console.log(
-      `Attaching log capture to process ${processId}`,
-      childProcess ? "has childProcess" : "no childProcess"
-    );
     if (!childProcess) {
       console.warn(`No childProcess for ${processId}`);
       return;
@@ -282,7 +225,6 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
     // Capture stdout
     if (childProcess.stdout && typeof childProcess.stdout.on === "function") {
-      console.log(`Process ${processId} has stdout`);
       childProcess.stdout.on("data", (data: Buffer) => {
         const message = data.toString().trim();
         if (message) {
@@ -295,7 +237,6 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
     // Capture stderr
     if (childProcess.stderr && typeof childProcess.stderr.on === "function") {
-      console.log(`Process ${processId} has stderr`);
       childProcess.stderr.on("data", (data: Buffer) => {
         const message = data.toString().trim();
         if (message) {
@@ -356,8 +297,6 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
       source: source || "process",
     };
 
-    console.log(`[LOG] ${processId} ${level}: ${message} (${source})`);
-
     // Add to processLogs
     const logs = this.processLogs.get(processId) || [];
     logs.push(logEntry);
@@ -374,19 +313,11 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     runtime: any,
     ws: WebSocket
   ): void {
-    console.log(
-      `[WebSocketProcess] Default scheduleTestForExecution called for test ${testId}`
-    );
-
     // Store test information for later use in result handling
     this.testInfoMap.set(testId, { testName, runtime });
-    console.log(`[WebSocketProcess] Stored test info for ${testId}:`, {
-      testName,
-      runtime,
-    });
 
     // Default implementation: send immediate test resource
-    const testResourceConfiguration: ITTestResourceConfiguration = {
+    const testResourceConfiguration: ITestResourceConfiguration = {
       name: testName,
       fs: process.cwd(),
       ports: [3000],
@@ -411,15 +342,12 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
       },
       timestamp: new Date().toISOString(),
     };
-    console.log(`[WebSocketProcess] Sending immediate test resource:`, message);
     ws.send(JSON.stringify(message));
   }
 
   // Handle test result from client
   private handleTestResult(testResultData: any, ws: WebSocket): void {
     try {
-      console.log(`[WebSocketProcess] Handling test result`);
-
       // Find testId by looking up which test is associated with this WebSocket connection
       let testId: string | undefined;
 
@@ -501,9 +429,7 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
     // Clean up stored test info
     this.testInfoMap.delete(testId);
-    console.log(`[WebSocketProcess] Removed stored test info for ${testId}`);
 
-    // Send acknowledgment back to client
     const ackMessage = {
       type: "testResultAck",
       testId,
@@ -511,16 +437,11 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
       message: "Test results saved successfully",
     };
     ws.send(JSON.stringify(ackMessage));
-    console.log(
-      `[WebSocketProcess] Sent test result acknowledgment for test ${testId}`
-    );
   }
 
   // Handle test error from client
   private handleTestError(testErrorData: any, ws: WebSocket): void {
     try {
-      console.log(`[WebSocketProcess] Handling test error`);
-
       // Find testId by looking up which test is associated with this WebSocket connection
       let testId: string | undefined;
 
@@ -598,11 +519,8 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     const errorJsonContent = JSON.stringify(testErrorData, null, 2);
     fs.writeFileSync(errorJsonPath, errorJsonContent);
 
-    console.log(`[WebSocketProcess] Wrote test error to ${errorJsonPath}`);
-
     // Clean up stored test info
     this.testInfoMap.delete(testId);
-    console.log(`[WebSocketProcess] Removed stored test info for ${testId}`);
 
     // Send acknowledgment back to client
     const ackMessage = {
