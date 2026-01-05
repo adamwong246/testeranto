@@ -60,18 +60,10 @@ async function startBundling(config, onMetafileChange) {
   ]);
   onMetafileChange(bv);
 }
-async function startStaticAnalysis(esbuildResult) {
-  console.log(`NODE BUILDER is now performing static analysis upon: `);
-}
-async function startBddTests(esbuildResult) {
-  console.log(`NODE BUILDER is now running testeranto tests:`);
-}
 async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
   try {
     await startBundling(config, (esbuildResult) => {
-      startStaticAnalysis(esbuildResult);
-      startBddTests(esbuildResult);
     });
   } catch (error) {
     console.error("NODE BUILDER: Error:", error);

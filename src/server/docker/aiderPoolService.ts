@@ -42,7 +42,7 @@ export default {
   networks: ["default"],
   volumes: [
     `${process.cwd()}:/workspace`,
-    "node_modules:/workspace/node_modules",
+    // "node_modules:/workspace/node_modules",
     "/var/run/docker.sock:/var/run/docker.sock",
     // Mount the aider config file so aider can read it directly if needed
     `${process.cwd()}/.aider.conf.yml:/workspace/.aider.conf.yml:ro`,

@@ -99,7 +99,7 @@ export function handlePromiseResult(
 ): void {
   promise
     .then((resolvedResult) => {
-      console.log(`Command ${type} resolved:`, resolvedResult);
+      console.log(`[WebSocket] -> ${type} response (key: ${key})`);
       ws.send(
         JSON.stringify({
           key: key,
@@ -108,7 +108,7 @@ export function handlePromiseResult(
       );
     })
     .catch((error) => {
-      console.error(`Error executing command ${type}:`, error);
+      console.error(`[WebSocket] ${type} error (key: ${key}):`, error);
       ws.send(
         JSON.stringify({
           key: key,
@@ -123,6 +123,7 @@ export function handlePromiseResult(
  * Send error response via WebSocket
  */
 export function sendErrorResponse(ws: any, key: string, error: any): void {
+  console.error(`[WebSocket] sending error response (key: ${key}):`, error);
   ws.send(
     JSON.stringify({
       key: key,

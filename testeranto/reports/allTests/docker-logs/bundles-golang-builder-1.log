@@ -1,0 +1,249 @@
+=== Docker Logs for service: bundles-golang-builder-1 ===
+Started at: 2026-01-05T22:50:05.501Z
+Project: allTests
+==================================================
+
+[2026-01-05T22:50:06.297Z] [ERROR] time="2026-01-05T14:50:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:06.704Z] [ERROR] time="2026-01-05T14:50:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:07.694Z] [ERROR] time="2026-01-05T14:50:07-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:07-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:09.652Z] [ERROR] time="2026-01-05T14:50:09-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:09-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:11.680Z] [ERROR] time="2026-01-05T14:50:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:13.684Z] [ERROR] time="2026-01-05T14:50:13-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:13-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:15.651Z] [ERROR] time="2026-01-05T14:50:15-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:15-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:17.688Z] [ERROR] time="2026-01-05T14:50:17-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:17-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:19.673Z] [ERROR] time="2026-01-05T14:50:19-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:19-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:21.703Z] [ERROR] time="2026-01-05T14:50:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:22.432Z] [ERROR] time="2026-01-05T14:50:22-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:22-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:23.759Z] [ERROR] time="2026-01-05T14:50:23-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:23-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:25.671Z] [ERROR] time="2026-01-05T14:50:25-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:25-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:27.640Z] [ERROR] time="2026-01-05T14:50:27-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:27-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:29.674Z] [ERROR] time="2026-01-05T14:50:29-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:29-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:31.701Z] [ERROR] time="2026-01-05T14:50:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:33.658Z] [ERROR] time="2026-01-05T14:50:33-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:33-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:35.677Z] [ERROR] time="2026-01-05T14:50:35-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:35-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:41.050Z] [ERROR] time="2026-01-05T14:50:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:46.043Z] [ERROR] time="2026-01-05T14:50:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:51.038Z] [ERROR] time="2026-01-05T14:50:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:50:56.052Z] [ERROR] time="2026-01-05T14:50:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:01.063Z] [ERROR] time="2026-01-05T14:51:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:06.067Z] [ERROR] time="2026-01-05T14:51:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:11.061Z] [ERROR] time="2026-01-05T14:51:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:16.053Z] [ERROR] time="2026-01-05T14:51:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:21.052Z] [ERROR] time="2026-01-05T14:51:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:26.050Z] [ERROR] time="2026-01-05T14:51:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:31.074Z] [ERROR] time="2026-01-05T14:51:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:36.073Z] [ERROR] time="2026-01-05T14:51:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:41.058Z] [ERROR] time="2026-01-05T14:51:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:46.064Z] [ERROR] time="2026-01-05T14:51:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:51.064Z] [ERROR] time="2026-01-05T14:51:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:51:56.064Z] [ERROR] time="2026-01-05T14:51:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:01.069Z] [ERROR] time="2026-01-05T14:52:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:06.110Z] [ERROR] time="2026-01-05T14:52:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:11.055Z] [ERROR] time="2026-01-05T14:52:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:16.068Z] [ERROR] time="2026-01-05T14:52:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:21.066Z] [ERROR] time="2026-01-05T14:52:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:26.060Z] [ERROR] time="2026-01-05T14:52:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:31.135Z] [ERROR] time="2026-01-05T14:52:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:36.074Z] [ERROR] time="2026-01-05T14:52:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:41.077Z] [ERROR] time="2026-01-05T14:52:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:46.092Z] [ERROR] time="2026-01-05T14:52:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:51.136Z] [ERROR] time="2026-01-05T14:52:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:52:56.080Z] [ERROR] time="2026-01-05T14:52:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:01.106Z] [ERROR] time="2026-01-05T14:53:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:06.085Z] [ERROR] time="2026-01-05T14:53:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:11.132Z] [ERROR] time="2026-01-05T14:53:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:16.077Z] [ERROR] time="2026-01-05T14:53:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:21.083Z] [ERROR] time="2026-01-05T14:53:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:26.071Z] [ERROR] time="2026-01-05T14:53:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:31.099Z] [ERROR] time="2026-01-05T14:53:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:36.085Z] [ERROR] time="2026-01-05T14:53:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:41.078Z] [ERROR] time="2026-01-05T14:53:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:46.100Z] [ERROR] time="2026-01-05T14:53:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:51.098Z] [ERROR] time="2026-01-05T14:53:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:53:56.109Z] [ERROR] time="2026-01-05T14:53:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:54:01.101Z] [ERROR] time="2026-01-05T14:54:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:54:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:54:06.101Z] [ERROR] time="2026-01-05T14:54:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:54:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+
+[2026-01-05T22:54:11.106Z] [ERROR] time="2026-01-05T14:54:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:54:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-golang-builder-1
+

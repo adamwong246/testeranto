@@ -424,12 +424,30 @@ export default class BaseTiposkripto<
     testResourceConfig: ITestResourceConfiguration
   ): Promise<any> {
     if (this.testJobs && this.testJobs.length > 0) {
-      this.analyzer.analyze(testResourceConfig.files);
+      // Run static analysis
+      const analysisResult = this.analyzer.analyze(testResourceConfig.files);
+      const analysis = analysisResult instanceof Promise ? await analysisResult : analysisResult;
+      
+      // Create a simple file path for the analysis results
+      // Use a fixed location in the current directory
+      const analysisDir = process.cwd();
+      const analysisFileName = `analysis-${Date.now()}.json`;
+      const analysisFilePath = `${analysisDir}/${analysisFileName}`;
+      
+      // Send to server via writeFileSync command
+      // The server expects: filepath, contents, testName
+      const testName = this.testJobs[0]?.test?.name || 'Test';
+      const analysisString = JSON.stringify(analysis, null, 2);
+      
+      try {
+        await this.sendCommand("writeFileSync", analysisFilePath, analysisString, testName);
+        console.log(`[Tiposkripto] Analysis results sent to server`);
+      } catch (error) {
+        console.error(`[Tiposkripto] Error sending analysis:`, error.message);
+      }
 
-      // Pass the test resource configuration object directly
-      return await this.testJobs[0].receiveTestResourceConfig(
-        testResourceConfig
-      );
+      // Continue with the test
+      return this.testJobs[0].receiveTestResourceConfig(testResourceConfig);
     } else {
       throw new Error("No test jobs available");
     }

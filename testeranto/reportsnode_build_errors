@@ -2,40 +2,52 @@
   "errors": [
     {
       "id": "",
-      "location": {
-        "column": 7,
-        "file": "example/Calculator.test.ts",
-        "length": 11,
-        "line": 1,
-        "lineText": "import Tiposkripto from \"../src/Tiposkripto\";",
-        "namespace": "",
-        "suggestion": ""
-      },
+      "location": null,
       "notes": [],
       "pluginName": "",
-      "text": "No matching export in \"src/Tiposkripto.ts\" for import \"default\""
+      "text": "Could not resolve \"./example/Calculator.test.ts\""
     }
   ],
   "warnings": [
     {
-      "id": "direct-eval",
+      "id": "package.json",
       "location": {
-        "column": 21,
-        "file": "example/Calculator.ts",
-        "length": 4,
-        "line": 17,
-        "lineText": "      const result = eval(this.display);",
+        "column": 6,
+        "file": "package.json",
+        "length": 7,
+        "line": 86,
+        "lineText": "      \"types\": \"./src/CoreTypes.d.ts\"",
         "namespace": "",
         "suggestion": ""
       },
       "notes": [
         {
-          "location": null,
-          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+          "location": {
+            "column": 6,
+            "file": "package.json",
+            "length": 8,
+            "line": 84,
+            "lineText": "      \"import\": \"./src/CoreTypes.ts\",",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The \"import\" condition comes earlier and will be used for all \"import\" statements:"
+        },
+        {
+          "location": {
+            "column": 6,
+            "file": "package.json",
+            "length": 9,
+            "line": 85,
+            "lineText": "      \"require\": \"./src/CoreTypes.ts\",",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The \"require\" condition comes earlier and will be used for all \"require\" calls:"
         }
       ],
       "pluginName": "",
-      "text": "Using direct eval with a bundler is not recommended and may cause problems"
+      "text": "The condition \"types\" here will never be used as it comes after both \"import\" and \"require\""
     }
   ]
 }

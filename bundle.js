@@ -15,8 +15,8 @@ await esbuild.build({
     'src/esbuildConfigs/eslint-formatter-testeranto.ts',
     "src/server/runtimes/node/node.ts",
     "src/server/runtimes/web/web.ts",
-    "src/server/runtimes/golang/golang.ts",
-    "src/server/runtimes/python/python.ts",
+    // "src/server/runtimes/golang/golang.ts",
+    // "src/server/runtimes/python/python.ts",
     'src/testeranto.ts',
 
     'src/testeranto.ts',

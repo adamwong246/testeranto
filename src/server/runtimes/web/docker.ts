@@ -10,7 +10,7 @@ export const webDockerCompose = (config: IBuiltConfig) => {
     },
     volumes: [
       `${process.cwd()}:/workspace`,
-      "node_modules:/workspace/node_modules",
+      // "node_modules:/workspace/node_modules",
     ],
     image: `bundles-web-build:latest`,
     restart: "no",
@@ -25,14 +25,14 @@ export const webDockerCompose = (config: IBuiltConfig) => {
     command: [
       "sh",
       "-c",
-      "TEST_NAME=allTests WS_PORT=3456 node dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo 'Build process exited with code $?, but keeping container alive for health checks'",
+      "TEST_NAME=allTests WS_PORT=3456 yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo 'Build process exited with code $?, but keeping container alive for health checks'",
     ],
   };
 };
 
 export const webDockerFile = `
 
-FROM node:20-alpine
+FROM node:20.19.4-alpine
 WORKDIR /workspace
 
 EXPOSE 3456
@@ -40,24 +40,13 @@ ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/web
 ENV METAFILES_DIR=/workspace/testeranto/metafiles/web
 ENV IN_DOCKER=true
 
-# Install necessary packages for Chromium using apk (Alpine package manager)
-RUN apk update && apk add --no-cache \
-    chromium \
-    chromium-chromedriver \
-    nss \
-    freetype \
-    freetype-dev \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    font-noto-emoji \
-    && rm -rf /var/cache/apk/*
+COPY ./src ./src
 
-# Set Chromium path for Puppeteer
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-ENV CHROMIUM_PATH=/usr/bin/chromium-browser
+# Install system dependencies
+RUN apk add --no-cache python3 make g++ libxml2-utils
 
-
+# Install dependencies
+RUN yarn install
 
 `;
 

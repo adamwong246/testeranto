@@ -1,5 +1,5 @@
 export abstract class Analyzer {
   constructor() {}
 
-  abstract analyze(listOfFiles: string[]): void;
+  abstract analyze(listOfFiles: string[]): any;
 }

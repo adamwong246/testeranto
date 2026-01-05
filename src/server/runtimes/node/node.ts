@@ -44,22 +44,22 @@ async function startBundling(
 }
 
 // run using user defined static analysis when the metafile changes
-async function startStaticAnalysis(esbuildResult: esbuild.BuildResult) {
-  console.log(`NODE BUILDER is now performing static analysis upon: `);
-}
+// async function startStaticAnalysis(esbuildResult: esbuild.BuildResult) {
+//   console.log(`NODE BUILDER is now performing static analysis upon: `);
+// }
 
-// run testeranto tests when the metafile changes
-async function startBddTests(esbuildResult: esbuild.BuildResult) {
-  console.log(`NODE BUILDER is now running testeranto tests:`);
-}
+// // run testeranto tests when the metafile changes
+// async function startBddTests(esbuildResult: esbuild.BuildResult) {
+//   console.log(`NODE BUILDER is now running testeranto tests:`);
+// }
 
 async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
 
   try {
     await startBundling(config, (esbuildResult: esbuild.BuildResult) => {
-      startStaticAnalysis(esbuildResult);
-      startBddTests(esbuildResult);
+      // startStaticAnalysis(esbuildResult);
+      // startBddTests(esbuildResult);
     });
   } catch (error) {
     console.error("NODE BUILDER: Error:", error);

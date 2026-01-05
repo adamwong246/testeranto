@@ -1,0 +1,249 @@
+=== Docker Logs for service: bundles-node-builder-1 ===
+Started at: 2026-01-05T22:50:05.501Z
+Project: allTests
+==================================================
+
+[2026-01-05T22:50:06.412Z] [ERROR] time="2026-01-05T14:50:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:06.802Z] [ERROR] time="2026-01-05T14:50:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:07.773Z] [ERROR] time="2026-01-05T14:50:07-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:07-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:09.718Z] [ERROR] time="2026-01-05T14:50:09-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:09-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:11.768Z] [ERROR] time="2026-01-05T14:50:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:13.743Z] [ERROR] time="2026-01-05T14:50:13-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:13-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:15.709Z] [ERROR] time="2026-01-05T14:50:15-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:15-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:17.770Z] [ERROR] time="2026-01-05T14:50:17-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:17-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:19.741Z] [ERROR] time="2026-01-05T14:50:19-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:19-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:21.771Z] [ERROR] time="2026-01-05T14:50:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:22.523Z] [ERROR] time="2026-01-05T14:50:22-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:22-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:23.856Z] [ERROR] time="2026-01-05T14:50:23-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:23-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:25.731Z] [ERROR] time="2026-01-05T14:50:25-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:25-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:27.699Z] [ERROR] time="2026-01-05T14:50:27-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:27-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:29.734Z] [ERROR] time="2026-01-05T14:50:29-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:29-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:31.772Z] [ERROR] time="2026-01-05T14:50:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:33.717Z] [ERROR] time="2026-01-05T14:50:33-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:33-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:35.738Z] [ERROR] time="2026-01-05T14:50:35-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:35-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:41.111Z] [ERROR] time="2026-01-05T14:50:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:46.106Z] [ERROR] time="2026-01-05T14:50:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:51.103Z] [ERROR] time="2026-01-05T14:50:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:50:56.112Z] [ERROR] time="2026-01-05T14:50:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:50:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:01.123Z] [ERROR] time="2026-01-05T14:51:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:06.133Z] [ERROR] time="2026-01-05T14:51:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:11.121Z] [ERROR] time="2026-01-05T14:51:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:16.117Z] [ERROR] time="2026-01-05T14:51:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:21.117Z] [ERROR] time="2026-01-05T14:51:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:26.115Z] [ERROR] time="2026-01-05T14:51:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:31.218Z] [ERROR] time="2026-01-05T14:51:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:36.136Z] [ERROR] time="2026-01-05T14:51:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:41.122Z] [ERROR] time="2026-01-05T14:51:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:46.126Z] [ERROR] time="2026-01-05T14:51:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:51.134Z] [ERROR] time="2026-01-05T14:51:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:51:56.126Z] [ERROR] time="2026-01-05T14:51:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:51:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:01.131Z] [ERROR] time="2026-01-05T14:52:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:06.322Z] [ERROR] time="2026-01-05T14:52:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:11.125Z] [ERROR] time="2026-01-05T14:52:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:16.129Z] [ERROR] time="2026-01-05T14:52:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:21.124Z] [ERROR] time="2026-01-05T14:52:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:26.121Z] [ERROR] time="2026-01-05T14:52:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:31.206Z] [ERROR] time="2026-01-05T14:52:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:36.134Z] [ERROR] time="2026-01-05T14:52:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:41.137Z] [ERROR] time="2026-01-05T14:52:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:46.156Z] [ERROR] time="2026-01-05T14:52:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:51.217Z] [ERROR] time="2026-01-05T14:52:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:52:56.140Z] [ERROR] time="2026-01-05T14:52:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:52:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:01.211Z] [ERROR] time="2026-01-05T14:53:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:06.167Z] [ERROR] time="2026-01-05T14:53:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:11.205Z] [ERROR] time="2026-01-05T14:53:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:16.141Z] [ERROR] time="2026-01-05T14:53:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:21.142Z] [ERROR] time="2026-01-05T14:53:21-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:21-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:26.131Z] [ERROR] time="2026-01-05T14:53:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:31.170Z] [ERROR] time="2026-01-05T14:53:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:36.149Z] [ERROR] time="2026-01-05T14:53:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:41.139Z] [ERROR] time="2026-01-05T14:53:41-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:41-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:46.159Z] [ERROR] time="2026-01-05T14:53:46-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:46-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:51.157Z] [ERROR] time="2026-01-05T14:53:51-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:51-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:53:56.169Z] [ERROR] time="2026-01-05T14:53:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:53:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:54:01.162Z] [ERROR] time="2026-01-05T14:54:01-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:54:01-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:54:06.160Z] [ERROR] time="2026-01-05T14:54:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:54:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+
+[2026-01-05T22:54:11.181Z] [ERROR] time="2026-01-05T14:54:11-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:54:11-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+no such service: bundles-node-builder-1
+

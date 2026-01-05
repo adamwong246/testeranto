@@ -1,0 +1,202 @@
+=== Docker Compose Build Logs ===
+Started at: 2026-01-05T22:49:49.381Z
+Project: allTests
+Compose file: /Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml
+==================================================
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.29kB done
+#1 DONE 0.0s
+
+#2 [golang-builder internal] load build definition from golang.Dockerfile
+#2 transferring dockerfile: 88B done
+#2 DONE 0.0s
+
+#3 [python-builder internal] load build definition from python.Dockerfile
+#3 transferring dockerfile: 123B done
+#3 DONE 0.0s
+
+#4 [web-builder internal] load build definition from web.Dockerfile
+#4 transferring dockerfile: 379B done
+#4 DONE 0.0s
+
+#5 [node-builder internal] load build definition from node.Dockerfile
+#5 transferring dockerfile: 309B done
+#5 DONE 0.0s
+
+#6 [auth] library/node:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#7 [auth] library/golang:pull token for registry-1.docker.io
+#7 DONE 0.0s
+
+#8 [auth] library/python:pull token for registry-1.docker.io
+#8 DONE 0.0s
+
+#9 [web-builder internal] load metadata for docker.io/library/node:20.19.4-alpine
+#9 ...
+
+#10 [golang-builder internal] load metadata for docker.io/library/golang:1.21-alpine
+#10 DONE 0.8s
+
+#11 [python-builder internal] load .dockerignore
+#11 transferring context: 2B done
+#11 DONE 0.0s
+
+#9 [node-builder internal] load metadata for docker.io/library/node:20.19.4-alpine
+#9 DONE 0.8s
+
+#12 [golang-builder 1/2] FROM docker.io/library/golang:1.21-alpine@sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+#12 DONE 0.0s
+
+#13 [node-builder 1/5] FROM docker.io/library/node:20.19.4-alpine@sha256:df02558528d3d3d0d621f112e232611aecfee7cbc654f6b375765f72bb262799
+#13 DONE 0.0s
+
+#14 [golang-builder 2/2] WORKDIR /workspace
+#14 CACHED
+
+#15 [golang-builder] exporting to image
+#15 exporting layers done
+#15 writing image sha256:78be2497cbff502cdafb7ed814dad538a0ac8e9baf6c4647e7e72bd1de8f83e3 done
+#15 naming to docker.io/library/bundles-golang-build:latest done
+#15 DONE 0.0s
+
+#16 [python-builder internal] load metadata for docker.io/library/python:3.11-alpine
+#16 DONE 0.8s
+
+#17 [python-builder 1/3] FROM docker.io/library/python:3.11-alpine@sha256:c825a02ff096b3dc3d362015f9e9f6527f66b73e11f9ad2db1f0da4e09ba7030
+#17 DONE 0.0s
+
+#18 [python-builder 2/3] WORKDIR /workspace
+#18 CACHED
+
+#19 [python-builder 3/3] RUN echo "Python environment ready"
+#19 CACHED
+
+#20 [web-builder internal] load build context
+#20 ...
+
+#21 [python-builder] exporting to image
+#21 exporting layers done
+#21 writing image sha256:159b28cb9320c9d48b4697f0dd8d673922778757970f5313f25880ab39e31550 done
+#21 naming to docker.io/library/bundles-python-build:latest done
+#21 DONE 0.0s
+
+#20 [web-builder internal] load build context
+#20 transferring context: 11.97MB 0.3s done
+#20 DONE 0.3s
+
+#22 [golang-builder] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#23 [python-builder] resolving provenance for metadata file
+#23 DONE 0.0s
+
+#24 [node-builder 2/5] WORKDIR /workspace
+#24 CACHED
+
+#25 [node-builder internal] load build context
+#25 ...
+
+#26 [web-builder 3/5] COPY ./src ./src
+#26 DONE 0.2s
+
+#25 [node-builder internal] load build context
+#25 transferring context: 14.74kB 0.5s done
+#25 DONE 0.5s
+
+#27 [node-builder 7/8] RUN apk add --no-cache python3 make g++ libxml2-utils
+#27 CACHED
+
+#28 [node-builder 6/8] RUN ls -al
+#28 CACHED
+
+#29 [node-builder 4/8] COPY ./package.json ./package.json
+#29 CACHED
+
+#30 [node-builder 3/8] COPY ./tsconfig*.json ./
+#30 CACHED
+
+#31 [node-builder 5/8] COPY ./.yarnrc.yml ./
+#31 CACHED
+
+#32 [node-builder 8/8] RUN yarn install
+#32 CACHED
+
+#33 [node-builder] exporting to image
+#33 exporting layers done
+#33 writing image sha256:60f2f2a33b273985cb051c1bab2792759d960749bbb613942a9b281203f2e0b8 done
+#33 naming to docker.io/library/bundles-node-build:latest done
+#33 DONE 0.0s
+
+#34 [node-builder] resolving provenance for metadata file
+#34 DONE 0.0s
+
+#35 [web-builder 4/5] RUN apk add --no-cache python3 make g++ libxml2-utils
+#35 0.145 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/APKINDEX.tar.gz
+#35 0.499 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/community/aarch64/APKINDEX.tar.gz
+#35 1.094 (1/31) Installing libstdc++-dev (14.2.0-r6)
+#35 1.354 (2/31) Installing jansson (2.14.1-r0)
+#35 1.375 (3/31) Installing zstd-libs (1.5.7-r0)
+#35 1.416 (4/31) Installing binutils (2.44-r3)
+#35 1.633 (5/31) Installing libgomp (14.2.0-r6)
+#35 1.660 (6/31) Installing libatomic (14.2.0-r6)
+#35 1.686 (7/31) Installing gmp (6.3.0-r3)
+#35 1.721 (8/31) Installing isl26 (0.26-r1)
+#35 1.790 (9/31) Installing mpfr4 (4.2.1_p1-r0)
+#35 1.827 (10/31) Installing mpc1 (1.3.1-r1)
+#35 1.847 (11/31) Installing gcc (14.2.0-r6)
+#35 4.775 (12/31) Installing musl-dev (1.2.5-r10)
+#35 4.951 (13/31) Installing g++ (14.2.0-r6)
+#35 5.877 (14/31) Installing xz-libs (5.8.1-r0)
+#35 5.903 (15/31) Installing libxml2 (2.13.9-r0)
+#35 5.958 (16/31) Installing libxml2-utils (2.13.9-r0)
+#35 5.982 (17/31) Installing make (4.4.1-r3)
+#35 6.015 (18/31) Installing libbz2 (1.0.8-r6)
+#35 6.039 (19/31) Installing libexpat (2.7.3-r0)
+#35 6.064 (20/31) Installing libffi (3.4.8-r0)
+#35 6.088 (21/31) Installing gdbm (1.24-r0)
+#35 6.118 (22/31) Installing mpdecimal (4.0.1-r0)
+#35 6.146 (23/31) Installing ncurses-terminfo-base (6.5_p20250503-r0)
+#35 6.173 (24/31) Installing libncursesw (6.5_p20250503-r0)
+#35 6.205 (25/31) Installing libpanelw (6.5_p20250503-r0)
+#35 6.224 (26/31) Installing readline (8.2.13-r1)
+#35 6.259 (27/31) Installing sqlite-libs (3.49.2-r1)
+#35 6.327 (28/31) Installing python3 (3.12.12-r0)
+#35 6.862 (29/31) Installing python3-pycache-pyc0 (3.12.12-r0)
+#35 7.156 (30/31) Installing pyc (3.12.12-r0)
+#35 7.156 (31/31) Installing python3-pyc (3.12.12-r0)
+#35 7.156 Executing busybox-1.37.0-r18.trigger
+#35 7.165 OK: 262 MiB in 49 packages
+#35 DONE 7.5s
+
+#36 [web-builder 5/5] RUN yarn install
+#36 5.598 yarn install v1.22.22
+#36 5.619 info No lockfile found.
+#36 5.622 [1/4] Resolving packages...
+#36 5.626 [2/4] Fetching packages...
+#36 5.627 [3/4] Linking dependencies...
+#36 5.631 [4/4] Building fresh packages...
+#36 5.641 success Saved lockfile.
+#36 5.648 Done in 0.06s.
+#36 DONE 5.7s
+
+#37 [web-builder] exporting to image
+#37 exporting layers
+#37 exporting layers 0.9s done
+#37 writing image sha256:39071cea6707375b134456d2a8dfa2c7fa8c921ee2d2693bfa714cff0fa45419 done
+#37 naming to docker.io/library/bundles-web-build:latest done
+#37 DONE 0.9s
+
+#38 [web-builder] resolving provenance for metadata file
+#38 DONE 0.0s
+
+[STDERR] time="2026-01-05T14:49:49-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+time="2026-01-05T14:49:49-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ bundles-node-build:latest  Built
+ bundles-python-build:latest  Built
+ bundles-web-build:latest  Built
+ bundles-golang-build:latest  Built
+
+
+Build process completed successfully

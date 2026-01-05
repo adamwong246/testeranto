@@ -13,20 +13,8 @@ export class Server_WS_Process extends Server_WS {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
 
-    // Override runningProcesses.set to capture logs for new processes
-
-    this.overrideRunningProcessesSet();
-
-    // Attach log capture to existing processes (after parent may have added some)
-    setTimeout(() => {
-      console.log(
-        `[WebSocketProcess] Attaching log capture to existing processes`
-      );
-      this.attachLogCaptureToExistingProcesses();
-    }, 100);
-
-    // Override launch methods to capture errors
-    this.overrideLaunchMethods();
+    // No child processes to manage - each client is a test
+    console.log(`[WebSocketProcess] Server initialized for WebSocket tests only`);
   }
 
   protected handleWebSocketMessageTypes(
@@ -138,163 +126,38 @@ export class Server_WS_Process extends Server_WS {
   }
 
   private getProcessSummary(): { processes: any[] } {
-    const processes = Array.from(this.allProcesses.entries()).map(
-      ([id, procInfo]) =>
-        this.serializeProcessInfo(id, procInfo, this.processLogs.get(id) || [])
-    );
+    // Return WebSocket connections as "processes"
+    const processes = Array.from(this.clients).map((client, index) => {
+      return {
+        processId: `test-${index}`,
+        command: 'Test via WebSocket',
+        status: 'connected',
+        timestamp: new Date().toISOString(),
+      };
+    });
     return { processes };
   }
 
   private getProcessLogs(processId: string): any[] {
-    return this.processLogs.get(processId) || [];
+    // No child process logs - return empty array
+    return [];
   }
 
   // Method to broadcast logs to subscribed clients
   public broadcastLogs(processId: string, logEntry: any): void {
-    if (!(this as any).logSubscriptions) {
-      (this as any).logSubscriptions = new Map();
-    }
-    const subscriptions = (this as any).logSubscriptions.get(processId);
-    if (subscriptions) {
-      const message = JSON.stringify({
-        type: "logs",
-        processId,
-        logs: [logEntry],
-        timestamp: new Date().toISOString(),
-      });
-      subscriptions.forEach((client: WebSocket) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(message);
-        }
-      });
-    }
-    // Also broadcast to a general log channel for all clients
-    const generalMessage = JSON.stringify({
+    // Broadcast to all clients interested in this process
+    const message = JSON.stringify({
       type: "logs",
-      processId: "system",
+      processId,
       logs: [logEntry],
       timestamp: new Date().toISOString(),
     });
+    
     this.clients.forEach((client: WebSocket) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(generalMessage);
+        client.send(message);
       }
     });
-  }
-
-  // Attach log capture to existing processes
-  private attachLogCaptureToExistingProcesses(): void {
-    if (!this.runningProcesses || !(this.runningProcesses instanceof Map)) {
-      console.warn("runningProcesses is not available or not a Map");
-      return;
-    }
-    for (const [processId, proc] of this.runningProcesses.entries()) {
-      this.attachLogCapture(processId, proc);
-    }
-  }
-
-  // Override runningProcesses.set to capture logs for new processes
-  private overrideRunningProcessesSet(): void {
-    if (!(this.runningProcesses instanceof Map)) {
-      console.warn("runningProcesses is not a Map, cannot override set");
-      return;
-    }
-    const originalSet = this.runningProcesses.set.bind(this.runningProcesses);
-    this.runningProcesses.set = (key: string, value: any) => {
-      const result = originalSet(key, value);
-      this.attachLogCapture(key, value);
-      return result;
-    };
-  }
-
-  // Attach log capture to a single process
-  private attachLogCapture(processId: string, childProcess: any): void {
-    if (!childProcess) {
-      console.warn(`No childProcess for ${processId}`);
-      return;
-    }
-
-    // Capture stdout
-    if (childProcess.stdout && typeof childProcess.stdout.on === "function") {
-      childProcess.stdout.on("data", (data: Buffer) => {
-        const message = data.toString().trim();
-        if (message) {
-          this.addProcessLog(processId, "info", message, "stdout");
-        }
-      });
-    } else {
-      console.warn(`Child process ${processId} has no stdout or stdout.on`);
-    }
-
-    // Capture stderr
-    if (childProcess.stderr && typeof childProcess.stderr.on === "function") {
-      childProcess.stderr.on("data", (data: Buffer) => {
-        const message = data.toString().trim();
-        if (message) {
-          this.addProcessLog(processId, "error", message, "stderr");
-        }
-      });
-    } else {
-      console.warn(`Child process ${processId} has no stderr or stderr.on`);
-    }
-  }
-
-  // Override launch methods to capture errors
-  private overrideLaunchMethods(): void {
-    const methods = ["launchNode", "launchWeb", "launchPython", "launchGolang"];
-    methods.forEach((methodName) => {
-      if (
-        (this as any)[methodName] &&
-        typeof (this as any)[methodName] === "function"
-      ) {
-        const originalMethod = (this as any)[methodName];
-        (this as any)[methodName] = async (...args: any[]) => {
-          try {
-            const result = await originalMethod.apply(this, args);
-            return result;
-          } catch (error: any) {
-            // Generate a processId for this failed launch
-            const processId = `failed_${methodName}_${Date.now()}`;
-            this.addProcessLog(
-              processId,
-              "error",
-              `Failed to launch via ${methodName}: ${error?.message || error}`,
-              "launch"
-            );
-            throw error;
-          }
-        };
-      }
-    });
-  }
-
-  // Call this method when a process outputs data
-  public addProcessLog(
-    processId: string,
-    level: string,
-    message: string,
-    source?: string
-  ): void {
-    // Ensure processLogs exists (inherited from parent)
-    if (!this.processLogs) {
-      console.error("processLogs not initialized");
-      return;
-    }
-
-    const logEntry = {
-      timestamp: new Date().toISOString(),
-      level,
-      message,
-      source: source || "process",
-    };
-
-    // Add to processLogs
-    const logs = this.processLogs.get(processId) || [];
-    logs.push(logEntry);
-    this.processLogs.set(processId, logs);
-
-    // Broadcast to subscribed clients
-    this.broadcastLogs(processId, logEntry);
   }
 
   // Schedule test for execution - to be overridden by subclasses

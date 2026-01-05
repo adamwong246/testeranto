@@ -1,41 +1,41 @@
-export class Queue<I> {
-  items: I[];
+// export class Queue<I> {
+//   items: I[];
 
-  constructor() {
-    this.items = [];
-  }
+//   constructor() {
+//     this.items = [];
+//   }
 
-  enqueue(element) {
-    this.items.push(element);
-  }
+//   enqueue(element) {
+//     this.items.push(element);
+//   }
 
-  dequeue() {
-    if (this.isEmpty()) {
-      return "Queue is empty";
-    }
-    return this.items.shift();
-  }
+//   dequeue() {
+//     if (this.isEmpty()) {
+//       return "Queue is empty";
+//     }
+//     return this.items.shift();
+//   }
 
-  peek() {
-    if (this.isEmpty()) {
-      return "Queue is empty";
-    }
-    return this.items[0];
-  }
+//   peek() {
+//     if (this.isEmpty()) {
+//       return "Queue is empty";
+//     }
+//     return this.items[0];
+//   }
 
-  isEmpty() {
-    return this.items.length === 0;
-  }
+//   isEmpty() {
+//     return this.items.length === 0;
+//   }
 
-  size() {
-    return this.items.length;
-  }
+//   size() {
+//     return this.items.length;
+//   }
 
-  clear() {
-    this.items = [];
-  }
+//   clear() {
+//     this.items = [];
+//   }
 
-  print() {
-    console.log(this.items.join(" -> "));
-  }
-}
+//   print() {
+//     console.log(this.items.join(" -> "));
+//   }
+// }
