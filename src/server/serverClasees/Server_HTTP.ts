@@ -2,11 +2,11 @@ import fs from "fs";
 import http from "http";
 import path from "path";
 import { IMode } from "../types";
-import { CONTENT_TYPES } from "./Server_TCP_constants";
-import { Server_TCP_Core } from "./Server_TCP_Core";
+import { CONTENT_TYPES } from "./utils/Server_TCP_constants";
+import { Server_TCP } from "./Server_TCP";
 import { getContentType } from "./utils/Server_TCP_utils";
 
-export class Server_TCP_Http extends Server_TCP_Core {
+export class Server_HTTP extends Server_TCP {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
     if (this.httpServer) {

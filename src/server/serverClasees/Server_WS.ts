@@ -6,8 +6,8 @@ import {
   OTHER_CONSTANTS,
   SERVER_CONSTANTS,
   WEBSOCKET_MESSAGE_TYPES,
-} from "./Server_TCP_constants";
-import { Server_TCP_Http } from "./Server_TCP_Http";
+} from "./utils/Server_TCP_constants";
+import { Server_HTTP } from "./Server_HTTP";
 import {
   handlePromiseResult,
   prepareCommandArgs,
@@ -15,25 +15,14 @@ import {
   serializeProcessInfo,
 } from "./utils/Server_TCP_utils";
 
-export class Server_TCP_WebSocketBase extends Server_TCP_Http {
+export class Server_WS extends Server_HTTP {
   processLogs: any;
   clients: any;
   allProcesses: any;
   runningProcesses: any;
 
   constructor(configs: any, name: string, mode: IMode) {
-    // Ensure configs has httpPort, using environment variable WS_PORT or HTTP_PORT as fallback
-    const httpPort =
-      configs.httpPort ||
-      Number(process.env.WS_PORT) ||
-      Number(process.env.HTTP_PORT) ||
-      3000;
-    const updatedConfigs = {
-      ...configs,
-      httpPort,
-    };
-
-    super(updatedConfigs, name, mode);
+    super(configs, name, mode);
 
     // Ensure Maps exist (they may be initialized by parent)
     if (!this.processLogs) {
@@ -290,73 +279,3 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
     }
   }
 }
-
-// export const FileService_methods = [
-//   "writeFile_send",
-//   "writeFile_receive",
-//   "readFile_receive",
-//   "readFile_send",
-//   "createDirectory_receive",
-//   "createDirectory_send",
-//   "deleteFile_receive",
-//   "deleteFile_send",
-//   "files_send",
-//   "files_receive",
-//   "projects_send",
-//   "projects_receive",
-//   "tests_send",
-//   "tests_receive",
-//   "report_send",
-//   "report_receive",
-// ];
-
-// export abstract class FileService {
-//   abstract writeFile_send(...x);
-//   abstract writeFile_receive(...x);
-
-//   abstract readFile_receive(...x);
-//   abstract readFile_send(...x);
-
-//   abstract createDirectory_receive(...x);
-//   abstract createDirectory_send(...x);
-
-//   abstract deleteFile_receive(...x);
-//   abstract deleteFile_send(...x);
-
-//   // returns a tree of filenames from the root of the project, disregarding any that match the ignore patterns
-//   abstract files_send(...x);
-//   abstract files_receive(...x);
-
-//   // return the list of all projects via `testeranto/projects.json`
-//   abstract projects_send(...x);
-//   abstract projects_receive(...x);
-
-//   // returns a list of tests for a project
-//   abstract tests_send(...x);
-//   abstract tests_receive(...x);
-
-//   abstract report_send(...x);
-//   abstract report_receive(...x);
-// }
-
-// export interface FileEntry {
-//   name: string;
-//   path: string;
-//   type: "file" | "directory";
-//   size?: number;
-//   modified?: Date;
-// }
-
-// export interface FileStatus {
-//   status: "unchanged" | "modified" | "added" | "deleted" | "conflicted";
-// }
-
-// export interface FileChange extends FileStatus {
-//   path: string;
-//   diff?: string;
-// }
-
-// export interface RemoteStatus {
-//   ahead: number;
-//   behind: number;
-// }

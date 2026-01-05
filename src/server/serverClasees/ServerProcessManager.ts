@@ -4,7 +4,6 @@ import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
 import { IMode } from "../types";
 import { Server_DockerCompose } from "./Server_DockerCompose";
 
-// Process management types
 type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
 type ProcessType = "process" | "promise";
 type ProcessStatus = "running" | "exited" | "error" | "completed";
@@ -24,7 +23,7 @@ interface ProcessInfo {
   platform: IRunTime;
 }
 
-export class ServerTaskManagerBase extends Server_DockerCompose {
+export class ServerProcessManager extends Server_DockerCompose {
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   launchers: Record<string, () => void>;
   clients: Set<any> = new Set();

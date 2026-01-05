@@ -1,7 +1,7 @@
 /**
  * Constants for Server_TCP configuration
  */
-
+// Import path module for use in constants
 import path from "path";
 
 // Network constants

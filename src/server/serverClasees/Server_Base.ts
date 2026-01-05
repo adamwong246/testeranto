@@ -6,7 +6,6 @@ import {
   ScreenRecorder,
   ScreenshotOptions,
 } from "puppeteer-core";
-import { PassThrough } from "stream";
 import { IBuiltConfig } from "../../Types";
 import { IMode } from "../types";
 

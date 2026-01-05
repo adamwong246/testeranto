@@ -2,13 +2,13 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { setupFileSystem } from "./server/serverClasees/utils/fileSystemSetup";
 import { setupKeypressHandling } from "./server/keypressHandler";
 import { Server } from "./server/serverClasees/Server";
 import { getRunnables } from "./server/utils";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
 import { makeHtmlTestFiles } from "./makeHtmlTestFiles";
 import { makeHtmlReportFile } from "./makeHtmlReportFile";
+import { ProcessMangerHtml, IndexHtml } from "./clients/utils/buildTemplates";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -135,3 +135,23 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     }
   });
 });
+
+function setupFileSystem(config: IBuiltConfig, testsName: string) {
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/ProcessManger.html`,
+    ProcessMangerHtml()
+  );
+
+  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, IndexHtml());
+
+  // Create reports directory
+  if (!fs.existsSync(`testeranto/reports/${testsName}`)) {
+    fs.mkdirSync(`testeranto/reports/${testsName}`, { recursive: true });
+  }
+
+  // Write config to reports
+  fs.writeFileSync(
+    `testeranto/reports/${testsName}/config.json`,
+    JSON.stringify(config, null, 2)
+  );
+}

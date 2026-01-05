@@ -10,9 +10,9 @@ import fs from "fs";
 import path from "path";
 import { IBuiltConfig } from "../../Types";
 import { DockerComposeOptions, IMode } from "../types";
-import { Server_TCP_Commands } from "./Server_TCP_Commands";
+import { Server_WS_Process } from "./Server_WS_Process";
 
-export class Server_DockerCompose extends Server_TCP_Commands {
+export class Server_DockerCompose extends Server_WS_Process {
   private cwd: string;
   private config: string;
   private composeDir: string;

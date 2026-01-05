@@ -501,7 +501,7 @@ src/server/serverClasees/Server_TCP_Commands.ts(79,3): error TS2416: Property 'e
   Type '(uid: string) => boolean' is not assignable to type '(uid: number) => Promise<boolean>'.
     Types of parameters 'uid' and 'uid' are incompatible.
       Type 'number' is not assignable to type 'string'.
-src/server/serverClasees/Server_TCP_Core.ts(35,17): error TS2339: Property 'clients' does not exist on type 'Server_TCP_Core'.
+src/server/serverClasees/Server_TCP.ts(35,17): error TS2339: Property 'clients' does not exist on type 'Server_TCP'.
 src/server/serverClasees/Server_TCP_WebSocket.ts(27,12): error TS2339: Property 'clients' does not exist on type 'Server_TCP_WebSocket'.
 src/server/serverClasees/Server_TCP_WebSocket.ts(39,14): error TS2339: Property 'clients' does not exist on type 'Server_TCP_WebSocket'.
 src/server/serverClasees/Server_TCP_WebSocket.ts(45,14): error TS2339: Property 'clients' does not exist on type 'Server_TCP_WebSocket'.

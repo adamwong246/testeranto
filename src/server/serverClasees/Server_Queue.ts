@@ -4,10 +4,10 @@ import { IBuiltConfig, IRunTime } from "../../Types";
 import { ITestResourceConfiguration } from "../../tiposkripto";
 import { IMode } from "../types";
 import { getRunnables } from "../utils";
-import { ServerTaskManager } from "./ServerTaskManager";
+import { ServerWriter } from "./ServerWriter";
 
-export class ServerTaskCoordinator extends ServerTaskManager {
-  private queue: Array<{
+export class Server_Queue extends ServerWriter {
+  queue: Array<{
     testName: string;
     runtime: IRunTime;
     addableFiles?: string[];

@@ -3,10 +3,9 @@ import { default as ansiC } from "ansi-colors";
 import path from "path";
 import { IMode } from "../types";
 import { IBuiltConfig } from "../../Types";
-import { ServerTaskCoordinator } from "./ServerTaskCoordinator";
-import { TestEnvironmentSetup } from "./utils/TestEnvironmentSetup";
+import { Server_Queue } from "./Server_Queue";
 
-export class Server extends ServerTaskCoordinator {
+export class Server extends Server_Queue {
   testName: string;
   private composeDir: string;
 
@@ -36,12 +35,12 @@ export class Server extends ServerTaskCoordinator {
     // Initialize TestEnvironmentSetup
     // Note: ports, browser, and queue will be set later
     // We'll need to update them when they're available
-    this.testEnvironmentSetup = new TestEnvironmentSetup(
-      this.ports,
-      this.projectName,
-      this.browser,
-      this.queue
-    );
+    // this.testEnvironmentSetup = new TestEnvironmentSetup(
+    //   this.ports,
+    //   this.projectName,
+    //   this.browser,
+    //   this.queue
+    // );
   }
 
   async start() {

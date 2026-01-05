@@ -4,9 +4,9 @@ import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
 import { ITestResourceConfiguration } from "../../tiposkripto";
 import { IMode } from "../types";
-import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
+import { Server_WS } from "./Server_WS";
 
-export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
+export class Server_WS_Process extends Server_WS {
   private testInfoMap: Map<string, { testName: string; runtime: string }> =
     new Map();
 

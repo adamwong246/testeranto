@@ -2,9 +2,9 @@ import http from "http";
 import { WebSocket, WebSocketServer } from "ws";
 import { IMode } from "../types";
 import { Server_Base } from "./Server_Base";
-import { SERVER_CONSTANTS } from "./Server_TCP_constants";
+import { SERVER_CONSTANTS } from "./utils/Server_TCP_constants";
 
-export class Server_TCP_Core extends Server_Base {
+export class Server_TCP extends Server_Base {
   protected wss: WebSocketServer;
   protected httpServer: http.Server;
 
@@ -21,12 +21,12 @@ export class Server_TCP_Core extends Server_Base {
       Number(process.env.WS_PORT) ||
       3456;
     console.log(
-      `[Server_TCP_Core] Starting HTTP server on port ${httpPort}, host ${SERVER_CONSTANTS.HOST}`
+      `[Server_TCP] Starting HTTP server on port ${httpPort}, host ${SERVER_CONSTANTS.HOST}`
     );
     this.httpServer.listen(httpPort, SERVER_CONSTANTS.HOST, () => {
       const addr = this.httpServer.address();
       console.log(
-        `[Server_TCP_Core] HTTP server running on http://localhost:${httpPort}`
+        `[Server_TCP] HTTP server running on http://localhost:${httpPort}`
       );
     });
   }
