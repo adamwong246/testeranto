@@ -225,54 +225,54 @@ export abstract class Server_Base {
     });
   }
 
-  testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
-    return (fPath, value: string | Buffer | PassThrough) => {
-      callback(
-        new Promise<void>((res, rej) => {
-          // tLog("testArtiFactory =>", fPath);
-          const cleanPath = path.resolve(fPath);
-          fPaths.push(cleanPath.replace(process.cwd(), ``));
+  // testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
+  //   return (fPath, value: string | Buffer | PassThrough) => {
+  //     callback(
+  //       new Promise<void>((res, rej) => {
+  //         // tLog("testArtiFactory =>", fPath);
+  //         const cleanPath = path.resolve(fPath);
+  //         fPaths.push(cleanPath.replace(process.cwd(), ``));
 
-          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
+  //         const targetDir = cleanPath.split("/").slice(0, -1).join("/");
 
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
-            if (error) {
-              // TODO
-            }
+  //         fs.mkdir(targetDir, { recursive: true }, async (error) => {
+  //           if (error) {
+  //             // TODO
+  //           }
 
-            fs.writeFileSync(
-              path.resolve(
-                targetDir.split("/").slice(0, -1).join("/"),
-                "manifest"
-              ),
-              fPaths.join(`\n`),
-              {
-                encoding: "utf-8",
-              }
-            );
+  //           fs.writeFileSync(
+  //             path.resolve(
+  //               targetDir.split("/").slice(0, -1).join("/"),
+  //               "manifest"
+  //             ),
+  //             fPaths.join(`\n`),
+  //             {
+  //               encoding: "utf-8",
+  //             }
+  //           );
 
-            if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
-              res();
-            } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
-                encoding: "utf-8",
-              });
-              res();
-            } else {
-              const pipeStream: PassThrough = value;
-              const myFile = fs.createWriteStream(fPath);
-              pipeStream.pipe(myFile);
-              pipeStream.on("close", () => {
-                myFile.close();
-                res();
-              });
-            }
-          });
-        })
-      );
-    };
-  }
+  //           if (Buffer.isBuffer(value)) {
+  //             fs.writeFileSync(fPath, value, "binary");
+  //             res();
+  //           } else if (`string` === typeof value) {
+  //             fs.writeFileSync(fPath, value.toString(), {
+  //               encoding: "utf-8",
+  //             });
+  //             res();
+  //           } else {
+  //             const pipeStream: PassThrough = value;
+  //             const myFile = fs.createWriteStream(fPath);
+  //             pipeStream.pipe(myFile);
+  //             pipeStream.on("close", () => {
+  //               myFile.close();
+  //               res();
+  //             });
+  //           }
+  //         });
+  //       })
+  //     );
+  //   };
+  // }
 
   async write(uid: number, contents: string): Promise<boolean> {
     return new Promise<boolean>((res) => {

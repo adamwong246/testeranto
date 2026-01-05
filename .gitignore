@@ -7,3 +7,5 @@ example/vendor/
 vendor/
 
 !testeranto/bundles/golang/Calculator.golingvu.test.go
+
+dist

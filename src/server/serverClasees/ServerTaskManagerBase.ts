@@ -1,8 +1,8 @@
 import { ChildProcess } from "child_process";
 import { createLogStreams } from "../../clients/utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
-import { Server_DockerCompose } from "./Server_DockerCompose";
 import { IMode } from "../types";
+import { Server_DockerCompose } from "./Server_DockerCompose";
 
 // Process management types
 type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";

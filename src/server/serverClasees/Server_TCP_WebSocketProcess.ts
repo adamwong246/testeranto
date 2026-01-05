@@ -2,9 +2,9 @@ import fs from "fs";
 import path from "path";
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
+import { ITestResourceConfiguration } from "../../tiposkripto";
 import { IMode } from "../types";
 import { Server_TCP_WebSocketBase } from "./Server_TCP_WebSocketBase";
-import { ITestResourceConfiguration } from "../../tiposkripto";
 
 export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
   private testInfoMap: Map<string, { testName: string; runtime: string }> =
@@ -12,12 +12,6 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
 
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
-    if (this.wss) {
-      console.log(
-        `[WebSocketProcess] WebSocket server event listeners:`,
-        this.wss.eventNames()
-      );
-    }
 
     // Override runningProcesses.set to capture logs for new processes
 
@@ -32,10 +26,7 @@ export class Server_TCP_WebSocketProcess extends Server_TCP_WebSocketBase {
     }, 100);
 
     // Override launch methods to capture errors
-    console.log(`[WebSocketProcess] Overriding launch methods`);
     this.overrideLaunchMethods();
-
-    console.log(`[WebSocketProcess] Constructor completed`);
   }
 
   protected handleWebSocketMessageTypes(

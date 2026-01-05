@@ -1,80 +1,10 @@
 import path from "path";
 import { IRunnables } from "../tiposkripto";
-import { IRunTime, ITestconfig } from "../Types";
-
-export const webEvaluator = (d, webArgz) => {
-  return `
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`;
-};
-
-export const tscPather = (
-  entryPoint: string,
-  platform: IRunTime,
-  projectName: string
-) => {
-  return path.join(
-    "testeranto",
-    "reports",
-    projectName,
-    entryPoint.split(".").slice(0, -1).join("."),
-    platform,
-    `type_errors.txt`
-  );
-};
-
-export const lintPather = (
-  entryPoint: string,
-  platform: IRunTime,
-  projectName: string
-) => {
-  return path.join(
-    "testeranto",
-    "reports",
-    projectName,
-    entryPoint.split(".").slice(0, -1).join("."),
-    platform,
-    `lint_errors.txt`
-  );
-};
-
-export const promptPather = (
-  entryPoint: string,
-  platform: IRunTime,
-  projectName: string
-) => {
-  const e = entryPoint.split(".").slice(0, -1).join(".");
-  return path.join(
-    "testeranto",
-    "reports",
-    projectName,
-    e,
-    platform,
-    `prompt.txt`
-  );
-};
+import { ITestconfig } from "../Types";
 
 export const getRunnables = (
   config: ITestconfig,
   projectName: string
-  // payload = {
-  //   nodeEntryPoints: {},
-  //   nodeEntryPointSidecars: {},
-  //   webEntryPoints: {},
-  //   webEntryPointSidecars: {},
-  //   pureEntryPoints: {},
-  //   pureEntryPointSidecars: {},
-  //   golangEntryPoints: {},
-  //   golangEntryPointSidecars: {},
-  //   pythonEntryPoints: {},
-  //   pythonEntryPointSidecars: {},
-  // }
 ): IRunnables => {
   // Ensure all properties are properly initialized
   return {

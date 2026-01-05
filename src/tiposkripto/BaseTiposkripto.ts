@@ -44,6 +44,8 @@ export default class BaseTiposkripto<
   thenOverrides: Record<keyof IExtenstions, any>;
   whenOverrides: Record<keyof IExtenstions, any>;
 
+  analyzer: Analyzer;
+
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
@@ -57,6 +59,8 @@ export default class BaseTiposkripto<
     testAdapter: Partial<ITestAdapter<I>> = {},
     analyzer: Analyzer
   ) {
+    this.analyzer = analyzer;
+
     const fullAdapter = DefaultAdapter<I>(testAdapter);
 
     const classySuites = Object.entries(testImplementation.suites).reduce(
@@ -262,8 +266,6 @@ export default class BaseTiposkripto<
     });
 
     this.connectWebSocket("3456", "localhost");
-
-    analyzer.analyze(Object.keys(this.testSpecification.files()));
   }
 
   protected async connectWebSocket(port: string, host?: string): Promise<void> {
@@ -422,6 +424,8 @@ export default class BaseTiposkripto<
     testResourceConfig: ITestResourceConfiguration
   ): Promise<any> {
     if (this.testJobs && this.testJobs.length > 0) {
+      this.analyzer.analyze(testResourceConfig.files);
+
       // Pass the test resource configuration object directly
       return await this.testJobs[0].receiveTestResourceConfig(
         testResourceConfig

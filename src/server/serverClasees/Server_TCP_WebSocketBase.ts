@@ -1,90 +1,19 @@
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
-
+import { IMode } from "../types";
 import {
-  WEBSOCKET_MESSAGE_TYPES,
   ERROR_MESSAGES,
   OTHER_CONSTANTS,
   SERVER_CONSTANTS,
+  WEBSOCKET_MESSAGE_TYPES,
 } from "./Server_TCP_constants";
-import {
-  serializeProcessInfo,
-  prepareCommandArgs,
-  handlePromiseResult,
-  sendErrorResponse,
-} from "./utils/Server_TCP_utils";
 import { Server_TCP_Http } from "./Server_TCP_Http";
-import { IMode } from "../types";
-
-export const FileService_methods = [
-  "writeFile_send",
-  "writeFile_receive",
-  "readFile_receive",
-  "readFile_send",
-  "createDirectory_receive",
-  "createDirectory_send",
-  "deleteFile_receive",
-  "deleteFile_send",
-  "files_send",
-  "files_receive",
-  "projects_send",
-  "projects_receive",
-  "tests_send",
-  "tests_receive",
-  "report_send",
-  "report_receive",
-];
-
-export abstract class FileService {
-  abstract writeFile_send(...x);
-  abstract writeFile_receive(...x);
-
-  abstract readFile_receive(...x);
-  abstract readFile_send(...x);
-
-  abstract createDirectory_receive(...x);
-  abstract createDirectory_send(...x);
-
-  abstract deleteFile_receive(...x);
-  abstract deleteFile_send(...x);
-
-  // returns a tree of filenames from the root of the project, disregarding any that match the ignore patterns
-  abstract files_send(...x);
-  abstract files_receive(...x);
-
-  // return the list of all projects via `testeranto/projects.json`
-  abstract projects_send(...x);
-  abstract projects_receive(...x);
-
-  // returns a list of tests for a project
-  abstract tests_send(...x);
-  abstract tests_receive(...x);
-
-  abstract report_send(...x);
-  abstract report_receive(...x);
-}
-
-export interface FileEntry {
-  name: string;
-  path: string;
-  type: "file" | "directory";
-  size?: number;
-  modified?: Date;
-}
-
-export interface FileStatus {
-  status: "unchanged" | "modified" | "added" | "deleted" | "conflicted";
-}
-
-export interface FileChange extends FileStatus {
-  path: string;
-  diff?: string;
-}
-
-export interface RemoteStatus {
-  ahead: number;
-  behind: number;
-}
+import {
+  handlePromiseResult,
+  prepareCommandArgs,
+  sendErrorResponse,
+  serializeProcessInfo,
+} from "./utils/Server_TCP_utils";
 
 export class Server_TCP_WebSocketBase extends Server_TCP_Http {
   processLogs: any;
@@ -93,12 +22,6 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
   runningProcesses: any;
 
   constructor(configs: any, name: string, mode: IMode) {
-    console.log(`[WebSocket] Creating Server_TCP_WebSocketBase with configs:`, {
-      httpPort: configs.httpPort,
-      name,
-      mode,
-    });
-
     // Ensure configs has httpPort, using environment variable WS_PORT or HTTP_PORT as fallback
     const httpPort =
       configs.httpPort ||
@@ -109,34 +32,8 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
       ...configs,
       httpPort,
     };
-    console.log(
-      `[WebSocket] Server_TCP_WebSocketBase constructor: using httpPort=${httpPort}`
-    );
+
     super(updatedConfigs, name, mode);
-
-    console.log(`[WebSocket] After super() call`);
-    console.log(`[WebSocket] wss exists: ${!!this.wss}`);
-    console.log(`[WebSocket] httpServer exists: ${!!this.httpServer}`);
-
-    // Log WebSocket server details
-    if (this.wss) {
-      console.log(`[WebSocket] WebSocket server address:`, this.wss.address());
-      console.log(
-        `[WebSocket] WebSocket server event names:`,
-        this.wss.eventNames()
-      );
-    }
-
-    // Log HTTP server details
-    if (this.httpServer) {
-      const address = this.httpServer.address();
-      console.log(`[WebSocket] HTTP server address:`, address);
-      if (address && typeof address === "object") {
-        console.log(
-          `[WebSocket] HTTP server listening on port ${address.port}`
-        );
-      }
-    }
 
     // Ensure Maps exist (they may be initialized by parent)
     if (!this.processLogs) {
@@ -160,14 +57,10 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
 
     // Ensure logSubscriptions exists
     (this as any).logSubscriptions = new Map();
-
-    console.log(`[WebSocket] Setting up WebSocket handlers`);
     this.setupWebSocketHandlers();
-    console.log(`[WebSocket] Server_TCP_WebSocketBase constructor completed`);
   }
 
   protected setupWebSocketHandlers(): void {
-    console.log(`[WebSocket] Setting up WebSocket handlers on server`);
     if (!this.wss) {
       console.error(
         `[WebSocket] ERROR: WebSocket server (wss) is not initialized!`
@@ -180,9 +73,6 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
     if (address && typeof address === "object") {
       port = address.port;
     }
-    console.log(
-      `[WebSocket] WebSocket server is available on ws://${host}:${port}/ws, attaching connection handler`
-    );
 
     this.wss.on("connection", (ws, req) => {
       console.log(
@@ -238,16 +128,12 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
         console.log(`[WebSocket] Total clients: ${this.clients.size}`);
       });
     });
-
-    console.log(`[WebSocket] WebSocket handlers setup complete`);
   }
 
   protected handleWebSocketMessage(data: any, ws: WebSocket): void {
     try {
       const rawData = data.toString();
-      console.log(
-        `[WebSocket] Received raw message: ${rawData.substring(0, 200)}...`
-      );
+
       let parsed;
       try {
         parsed = JSON.parse(rawData);
@@ -273,18 +159,18 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
       }
 
       const wsm: WebSocketMessage = parsed;
-      console.log(`[WebSocket] Parsed message type: ${wsm.type}`);
+      // console.log(`[WebSocket] Parsed message type: ${wsm.type}`);
 
-      // Check if it's a FileService method
-      let handled = false;
-      FileService_methods.forEach((fsm) => {
-        if (wsm.type === fsm) {
-          console.log("[WebSocket] Handling as FileService method:", fsm);
-          (this as any)[fsm](wsm, ws);
-          handled = true;
-        }
-      });
-      if (handled) return;
+      // // Check if it's a FileService method
+      // let handled = false;
+      // FileService_methods.forEach((fsm) => {
+      //   if (wsm.type === fsm) {
+      //     console.log("[WebSocket] Handling as FileService method:", fsm);
+      //     (this as any)[fsm](wsm, ws);
+      //     handled = true;
+      //   }
+      // });
+      // if (handled) return;
 
       // Handle commands from PM_Node and PM_Web
       if (wsm.type && typeof (this as any)[wsm.type] === "function") {
@@ -404,3 +290,73 @@ export class Server_TCP_WebSocketBase extends Server_TCP_Http {
     }
   }
 }
+
+// export const FileService_methods = [
+//   "writeFile_send",
+//   "writeFile_receive",
+//   "readFile_receive",
+//   "readFile_send",
+//   "createDirectory_receive",
+//   "createDirectory_send",
+//   "deleteFile_receive",
+//   "deleteFile_send",
+//   "files_send",
+//   "files_receive",
+//   "projects_send",
+//   "projects_receive",
+//   "tests_send",
+//   "tests_receive",
+//   "report_send",
+//   "report_receive",
+// ];
+
+// export abstract class FileService {
+//   abstract writeFile_send(...x);
+//   abstract writeFile_receive(...x);
+
+//   abstract readFile_receive(...x);
+//   abstract readFile_send(...x);
+
+//   abstract createDirectory_receive(...x);
+//   abstract createDirectory_send(...x);
+
+//   abstract deleteFile_receive(...x);
+//   abstract deleteFile_send(...x);
+
+//   // returns a tree of filenames from the root of the project, disregarding any that match the ignore patterns
+//   abstract files_send(...x);
+//   abstract files_receive(...x);
+
+//   // return the list of all projects via `testeranto/projects.json`
+//   abstract projects_send(...x);
+//   abstract projects_receive(...x);
+
+//   // returns a list of tests for a project
+//   abstract tests_send(...x);
+//   abstract tests_receive(...x);
+
+//   abstract report_send(...x);
+//   abstract report_receive(...x);
+// }
+
+// export interface FileEntry {
+//   name: string;
+//   path: string;
+//   type: "file" | "directory";
+//   size?: number;
+//   modified?: Date;
+// }
+
+// export interface FileStatus {
+//   status: "unchanged" | "modified" | "added" | "deleted" | "conflicted";
+// }
+
+// export interface FileChange extends FileStatus {
+//   path: string;
+//   diff?: string;
+// }
+
+// export interface RemoteStatus {
+//   ahead: number;
+//   behind: number;
+// }

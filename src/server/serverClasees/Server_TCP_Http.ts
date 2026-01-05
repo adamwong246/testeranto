@@ -1,16 +1,14 @@
-import http from "http";
 import fs from "fs";
+import http from "http";
 import path from "path";
-import { CONTENT_TYPES } from "./Server_TCP_constants";
-import { getContentType } from "./utils/Server_TCP_utils";
-import { Server_TCP_Core } from "./Server_TCP_Core";
 import { IMode } from "../types";
+import { CONTENT_TYPES } from "./Server_TCP_constants";
+import { Server_TCP_Core } from "./Server_TCP_Core";
+import { getContentType } from "./utils/Server_TCP_utils";
 
 export class Server_TCP_Http extends Server_TCP_Core {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
-    console.log(`[HTTP] Server_TCP_Http constructor called`);
-    console.log(`[HTTP] httpServer exists: ${!!this.httpServer}`);
     if (this.httpServer) {
       const address = this.httpServer.address();
       console.log(`[HTTP] HTTP server address:`, address);

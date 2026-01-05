@@ -1,10 +1,10 @@
 import { default as ansiC } from "ansi-colors";
 import { WebSocket } from "ws";
+import { IBuiltConfig, IRunTime } from "../../Types";
+import { ITestResourceConfiguration } from "../../tiposkripto";
+import { IMode } from "../types";
 import { getRunnables } from "../utils";
 import { ServerTaskManager } from "./ServerTaskManager";
-import { IMode } from "../types";
-import { IRunTime, IBuiltConfig } from "../../Types";
-import { ITestResourceConfiguration } from "../../tiposkripto";
 
 export class ServerTaskCoordinator extends ServerTaskManager {
   private queue: Array<{

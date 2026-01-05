@@ -28,10 +28,6 @@ export class Server_TCP_Core extends Server_Base {
       console.log(
         `[Server_TCP_Core] HTTP server running on http://localhost:${httpPort}`
       );
-      console.log(
-        `[Server_TCP_Core] WebSocket server available on ws://localhost:${httpPort}/ws`
-      );
-      console.log(`[Server_TCP_Core] Actual address:`, addr);
     });
   }
 
