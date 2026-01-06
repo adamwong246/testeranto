@@ -64,29 +64,6 @@ export class ServerWriter extends ServerProcessManager {
   };
 
   async stop() {
-    Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-
-    // Safely close WebSocket server if it exists
-    if (this.wss) {
-      this.wss.close(() => {
-        console.log("WebSocket server closed");
-      });
-    }
-
-    this.clients.forEach((client) => {
-      // Check if client has a terminate method
-      if (client.terminate) {
-        client.terminate();
-      }
-    });
-    this.clients.clear();
-
-    // Safely close HTTP server if it exists
-    if (this.httpServer) {
-      this.httpServer.close(() => {
-        console.log("HTTP server closed");
-      });
-    }
-    this.checkForShutdown();
+    await super.stop();
   }
 }

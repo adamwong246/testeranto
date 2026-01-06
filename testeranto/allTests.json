@@ -16,7 +16,9 @@
       }
     },
     "externals": [],
-    "check": "example/staticAnalysis/golang.go"
+    "check": [
+      null
+    ]
   },
   "python": {
     "plugins": [],
@@ -27,7 +29,9 @@
       }
     },
     "externals": [],
-    "check": "example/staticAnalysis/python.py"
+    "check": [
+      null
+    ]
   },
   "web": {
     "plugins": [],
@@ -38,7 +42,10 @@
       }
     },
     "externals": [],
-    "check": "example/staticAnalysis/web.ts"
+    "check": [
+      null,
+      null
+    ]
   },
   "node": {
     "plugins": [],
@@ -49,7 +56,10 @@
       }
     },
     "externals": [],
-    "check": "example/staticAnalysis/node.ts"
+    "check": [
+      null,
+      null
+    ]
   },
   "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/allTests"
 }

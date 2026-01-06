@@ -7,3 +7,4 @@ pathspec==0.12.1
 pycodestyle==2.14.0
 pyflakes==3.4.0
 typing_extensions==4.15.0
+pylint==3.3.1

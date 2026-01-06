@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import { WebSocket } from "ws";
-import { WebSocketMessage } from "../../clients/types";
-import { ITestResourceConfiguration } from "../../tiposkripto";
+import { ITestResourceConfiguration } from "../../lib/tiposkripto";
 import { IMode } from "../types";
 import { Server_WS } from "./Server_WS";
+import { WebSocketMessage } from "./utils/types";
 
 export class Server_WS_Process extends Server_WS {
   private testInfoMap: Map<string, { testName: string; runtime: string }> =
@@ -12,9 +12,6 @@ export class Server_WS_Process extends Server_WS {
 
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
-
-    // No child processes to manage - each client is a test
-    console.log(`[WebSocketProcess] Server initialized for WebSocket tests only`);
   }
 
   protected handleWebSocketMessageTypes(
@@ -130,8 +127,8 @@ export class Server_WS_Process extends Server_WS {
     const processes = Array.from(this.clients).map((client, index) => {
       return {
         processId: `test-${index}`,
-        command: 'Test via WebSocket',
-        status: 'connected',
+        command: "Test via WebSocket",
+        status: "connected",
         timestamp: new Date().toISOString(),
       };
     });
@@ -152,7 +149,7 @@ export class Server_WS_Process extends Server_WS {
       logs: [logEntry],
       timestamp: new Date().toISOString(),
     });
-    
+
     this.clients.forEach((client: WebSocket) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
@@ -390,14 +387,42 @@ export class Server_WS_Process extends Server_WS {
   }
 
   // Helper method to serialize process info
-  private serializeProcessInfo(id: string, procInfo: any, logs: any[]): any {
-    return {
-      processId: id,
-      command: procInfo.command || "unknown",
-      pid: procInfo.pid,
-      timestamp: procInfo.timestamp || new Date().toISOString(),
-      status: procInfo.status || "unknown",
-      logs: logs.slice(-50), // Last 50 logs
-    };
-  }
+  // private serializeProcessInfo(id: string, procInfo: any, logs: any[]): any {
+  //   return {
+  //     processId: id,
+  //     command: procInfo.command || "unknown",
+  //     pid: procInfo.pid,
+  //     timestamp: procInfo.timestamp || new Date().toISOString(),
+  //     status: procInfo.status || "unknown",
+  //     logs: logs.slice(-50), // Last 50 logs
+  //   };
+  // }
+
+  // async stop() {
+  //   // Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
+
+  //   // // Safely close WebSocket server if it exists
+  //   // if (this.wss) {
+  //   //   this.wss.close(() => {
+  //   //     console.log("WebSocket server closed");
+  //   //   });
+  //   // }
+
+  //   // this.clients.forEach((client) => {
+  //   //   // Check if client has a terminate method
+  //   //   if (client.terminate) {
+  //   //     client.terminate();
+  //   //   }
+  //   // });
+  //   // this.clients.clear();
+
+  //   // // Safely close HTTP server if it exists
+  //   // if (this.httpServer) {
+  //   //   this.httpServer.close(() => {
+  //   //     console.log("HTTP server closed");
+  //   //   });
+  //   // }
+  //   // this.checkForShutdown();
+  //   super.stop();
+  // }
 }

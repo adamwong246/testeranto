@@ -1,15 +1,22 @@
 # File: example/Calculator.pitono.test.py
+"""
+Calculator test file for pitono.
+This file contains tests for the Calculator class.
+"""
 
 # Add the src directory to the Python path to find pitono
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
+
+# Import Calculator from the current directory
 
 # Try to import specification and implementation
 # These might be in a subdirectory
 specification = None
 implementation = None
 
-def specification(Suite, Given, When, Then, Check):
+def create_specification(Suite, Given, When, Then, Check):
+    """Create test specification for Calculator."""
     return [
         {
             'name': 'Calculator Suite',
@@ -51,6 +58,8 @@ def specification(Suite, Given, When, Then, Check):
     
 # Define a comprehensive implementation that works with the existing Calculator class
 class SimpleImplementation:
+    """Simple test implementation for Calculator."""
+    
     def __init__(self):
         self.suites = {
             "Default": "Default Suite",
@@ -76,6 +85,7 @@ class SimpleImplementation:
         }
     
     def _press_button(self, store, button):
+        """Press a button on the calculator."""
         # Press the button on the calculator using the existing implementation
         calculator = store["calculator"]
         if button == "=":
@@ -90,43 +100,12 @@ class SimpleImplementation:
 
 implementation = SimpleImplementation()
 
-# Create the test instance
-# Make sure all required parameters are passed
-test_instance = Pitono(
-    input_val=Calculator,
-    test_specification=specification,
-    test_implementation=implementation,
-    test_adapter=SimpleTestAdapter(),
-    test_resource_requirement={"ports": 1}
-)
+# Note: The actual test runner setup is handled by the pitono framework
+# This file is meant to be imported and used by the test runner
 
-# # Set it as the default instance
-set_default_instance(test_instance)
-# print("Default instance set successfully")
-
-# Run the main function if this file is executed directly
 if __name__ == "__main__":
-    # Check if we're being called with the right arguments
-    if len(sys.argv) >= 3:
-        try:
-            asyncio.run(main())
-        except Exception as e:
-            # Suppress any WebSocket connection errors
-            if "Connect call failed" in str(e) or "websocket" in str(e).lower():
-                # Don't print the error to avoid cluttering test output
-                # Exit with success code since tests can run without WebSocket
-                print("Tests completed (WebSocket connection not required for basic tests)")
-                sys.exit(0)
-            else:
-                # Re-raise other errors
-                raise
-    else:
-        print("Running in test mode (not enough arguments for main execution)")
-        # For testing, we can try to run it with some dummy parameters
-        # But this may not work if the implementation expects real parameters
-        # Let's just print a message
-        print("To run properly, this script needs to be called with:")
-        print("  <partialTestResource> <WebSocket_port>", " ".join(sys.argv))
+    print("This test file is meant to be run through the pitono test runner.")
+    print("To run tests, use the appropriate test command from the project root.")
 
 
 # # First, ensure websockets is installed in the current environment
@@ -168,3 +147,119 @@ if __name__ == "__main__":
 #     print(f"Could not import pitono: {e}")
 #     print("Make sure to run from the project root and install pitono")
 #     raise
+
+
+# File: example/Calculator.py
+class Calculator:
+    """A simple calculator class for demonstration purposes."""
+    
+    def __init__(self):
+        self.display = ""
+        self.values = {}
+        self.id = id(self)  # Add a unique ID to track instances
+
+    def press(self, button: str):
+        """Press a button on the calculator."""
+        print(f"[CALCULATOR {self.id}] Pressing: {button}, current display: '{self.display}'")
+        
+        # Handle special buttons first
+        if button == "C":
+            return self.clear()
+        if button == "MS":
+            return self.memory_store()
+        if button == "MR":
+            return self.memory_recall()
+        if button == "MC":
+            return self.memory_clear()
+        if button == "M+":
+            return self.memory_add()
+        
+        # For regular buttons, append to display
+        self.display = self.display + button
+        print(f"[CALCULATOR {self.id}] New display is: '{self.display}'")
+        return self
+
+    def enter(self):
+        """Evaluate the expression on the display."""
+        try:
+            # Simple expression evaluation using eval
+            # Note: Using eval is not recommended for production code
+            # This is just for testing purposes
+            # pylint: disable=eval-used
+            result = eval(self.display)
+            self.display = str(result)
+        except Exception as error:
+            # We'll ignore the specific error for simplicity
+            # pylint: disable=unused-variable
+            self.display = "Error"
+        return self
+
+    def memory_store(self):
+        """Store the current display value in memory."""
+        try:
+            value = float(self.display) if self.display else 0
+            self.set_value("memory", value)
+            self.clear()
+        except ValueError:
+            pass
+        return self
+
+    def memory_recall(self):
+        """Recall the value from memory to the display."""
+        memory_value = self.get_value("memory") or 0
+        self.display = str(memory_value)
+        return self
+
+    def memory_clear(self):
+        """Clear the memory value."""
+        self.set_value("memory", 0)
+        return self
+
+    def memory_add(self):
+        """Add the current display value to memory."""
+        try:
+            current_value = float(self.display) if self.display else 0
+            memory_value = self.get_value("memory") or 0
+            self.set_value("memory", memory_value + current_value)
+            self.clear()
+        except ValueError:
+            pass
+        return self
+
+    def get_display(self):
+        """Get the current display value."""
+        print(f"[CALCULATOR {self.id}] getDisplay: '{self.display}'")
+        return self.display
+
+    def clear(self):
+        """Clear the display."""
+        self.display = ""
+        return self
+
+    # Keep these methods for compatibility
+    def add(self, a, b):
+        """Add two numbers."""
+        return a + b
+
+    def subtract(self, a, b):
+        """Subtract b from a."""
+        return a - b
+
+    def multiply(self, a, b):
+        """Multiply two numbers."""
+        return a * b
+
+    def divide(self, a, b):
+        """Divide a by b."""
+        if b == 0:
+            raise ValueError("Cannot divide by zero")
+        return a / b
+
+    def set_value(self, identifier, value):
+        """Set a value in the calculator's storage."""
+        self.values[identifier] = value
+
+    def get_value(self, identifier):
+        """Get a value from the calculator's storage."""
+        return self.values.get(identifier, None)
+

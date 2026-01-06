@@ -1,35 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import esbuild from "esbuild";
-// import puppeteer from "puppeteer";
+
 import { IBuiltConfig } from "../../../Types";
 import path from "path";
 import fs from "fs";
 import configer from "./esbuild";
 
-// const testName = process.argv[3];
-
-console.log("!!!", process.argv);
-
 const testName = process.argv[2];
-
-// const testName = process.argv[2];
 const mode = process.argv[3] || "dev";
 
-// let browser: puppeteer.Browser;
-
 async function startChromeBrowser() {
-  console.log("Starting Chrome browser via Puppeteer...");
-
+  // console.log("Starting Chrome browser via Puppeteer...");
   // try {
   //   browser = await puppeteer.launch({
   //     slowMo: 1,
   //     waitForInitialPage: false,
   //     // executablePath,
-
   //     defaultViewport: null, // Disable default 800x600 viewport
   //     dumpio: false,
-
   //     executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium-browser",
   //     args: [
   //       "--no-sandbox",
@@ -43,7 +32,6 @@ async function startChromeBrowser() {
   //     ],
   //     headless: "new", // Use new headless mode
   //   });
-
   //   console.log("Chrome browser started");
   //   return browser;
   // } catch (error) {
@@ -152,8 +140,8 @@ async function runTestInBrowser(
 
 // run esbuild in watch mode using esbuildConfigs. Write to fs the bundle and metafile
 async function startBundling(
-  config: IBuiltConfig,
-  onMetafileChange: (esbuild: esbuild.BuildResult) => void
+  config: IBuiltConfig
+  // onMetafileChange: (esbuild: esbuild.BuildResult) => void
 ) {
   // console.log(`WEB BUILDER is now bundling: ${testName}`);
 
@@ -209,7 +197,7 @@ async function startBundling(
   }
 
   // Start Chrome browser
-  await startChromeBrowser();
+  // await startChromeBrowser();
 
   // Read the metafile to find built test files
   const readMetafilePath = path.join(
@@ -251,36 +239,36 @@ async function startBundling(
     builtTestFiles = files.filter((f) => f.endsWith(".test.mjs"));
   }
 
-  console.log(`Found ${builtTestFiles.length} test files to run`);
+  // console.log(`Found ${builtTestFiles.length} test files to run`);
 
-  let allTestsPassed = true;
-  for (const testFile of builtTestFiles) {
-    console.log(`\n=== Running web test: ${testFile} ===`);
-    // Get the absolute path
-    const absoluteTestPath = path.join(process.cwd(), testFile);
-    const testPassed = await runTestInBrowser(
-      absoluteTestPath,
-      config,
-      path.basename(testFile)
-    );
-    if (!testPassed) {
-      allTestsPassed = false;
-    }
-    console.log(`=== Finished web test: ${testFile} ===\n`);
-  }
+  // let allTestsPassed = true;
+  // for (const testFile of builtTestFiles) {
+  //   console.log(`\n=== Running web test: ${testFile} ===`);
+  //   // Get the absolute path
+  //   const absoluteTestPath = path.join(process.cwd(), testFile);
+  //   const testPassed = await runTestInBrowser(
+  //     absoluteTestPath,
+  //     config,
+  //     path.basename(testFile)
+  //   );
+  //   if (!testPassed) {
+  //     allTestsPassed = false;
+  //   }
+  //   console.log(`=== Finished web test: ${testFile} ===\n`);
+  // }
 
-  onMetafileChange(buildResult);
+  // onMetafileChange(buildResult);
 
-  // Report overall status
-  if (allTestsPassed) {
-    console.log("✅ All web tests passed!");
-  } else {
-    console.error("❌ Some web tests failed!");
-    // In dev mode, we don't want to exit with error to keep watching
-    if (mode !== "dev") {
-      process.exit(1);
-    }
-  }
+  // // Report overall status
+  // if (allTestsPassed) {
+  //   console.log("✅ All web tests passed!");
+  // } else {
+  //   console.error("❌ Some web tests failed!");
+  //   // In dev mode, we don't want to exit with error to keep watching
+  //   if (mode !== "dev") {
+  //     process.exit(1);
+  //   }
+  // }
 
   // In dev mode, watch for changes
   if (mode === "dev") {
@@ -308,10 +296,7 @@ async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
 
   try {
-    await startBundling(config, (esbuildResult: esbuild.BuildResult) => {
-      // startStaticAnalysis(esbuildResult);
-      // startBddTests(esbuildResult);
-    });
+    await startBundling(config);
 
     // Keep the process alive in dev mode
     if (mode === "dev") {

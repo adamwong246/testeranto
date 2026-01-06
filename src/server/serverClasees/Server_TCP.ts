@@ -42,4 +42,8 @@ export class Server_TCP extends Server_Base {
   getClients(): Set<WebSocket> {
     return this.clients;
   }
+
+  async stop() {
+    await super.stop();
+  }
 }

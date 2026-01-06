@@ -32,29 +32,30 @@ export const golangDockerComposeFile = (config: IBuiltConfig) => {
     command: [
       "sh",
       "-c",
-      `echo 'Starting pure Go build...'; 
-       echo 'Creating output directories...'; 
-       mkdir -p /workspace/testeranto/bundles/allTests/golang;
-       mkdir -p /workspace/testeranto/metafiles/golang;
+      `echo 'Starting Go build service...'; 
        echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
-       echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
+       
+       # If example directory exists, download its dependencies
+       if [ -f /workspace/example/go.mod ]; then
+         echo "Example project found, downloading dependencies...";
+         cd /workspace/example && go mod download
+       fi
+       
+       # Check if allTests.json exists
        if [ -f /workspace/testeranto/allTests.json ]; then
          echo "Config file found";
+         # Run the pre-compiled Go metafile generator
+         echo "Running Go metafile generator...";
+         /usr/local/bin/golang-main /workspace/testeranto/allTests.json || echo "Go metafile generator completed";
+         
+         echo "Checking if metafile was generated:";
+         ls -la /workspace/testeranto/metafiles/golang/ || echo "Go metafiles directory not found";
        else
-         echo "Config file NOT found";
+         echo "Config file NOT found at /workspace/testeranto/allTests.json";
          ls -la /workspace/testeranto/ || true;
        fi
        
-       echo "Compiling and running Go metafile generator..."
-       # Compile and run the Go program
-       cd /workspace && \
-       go build -o /tmp/golang-main src/server/runtimes/golang/main.go && \
-       /tmp/golang-main /workspace/testeranto/allTests.json || echo "Go metafile generator completed";
-       
-       echo "Checking if metafile was generated:";
-       ls -la /workspace/testeranto/metafiles/golang/ || echo "Go metafiles directory not found";
-       
-       echo "Go build service ready. Keeping container alive..."
+       echo "Go build service ready. Keeping container alive...";
        while true; do
          sleep 3600
        done`,
@@ -74,5 +75,26 @@ export const golangDockerComposeFile = (config: IBuiltConfig) => {
 
 export const golangDockerFile = `FROM golang:1.21-alpine
 WORKDIR /workspace
+
+# Install git for Go modules
+RUN apk add --no-cache git
+
+# Create necessary directories
+RUN mkdir -p /workspace/testeranto/bundles/allTests/golang && \
+    mkdir -p /workspace/testeranto/metafiles/golang
+
+# Copy and compile the Go metafile generator
+COPY src/server/runtimes/golang/main.go /workspace/src/server/runtimes/golang/main.go
+RUN go build -o /usr/local/bin/golang-main src/server/runtimes/golang/main.go
+
+# Install golangci-lint using the version from the example project
+# First, create a temporary go.mod with golangci-lint dependency
+RUN mkdir -p /tmp/golangci-install && \
+    cd /tmp/golangci-install && \
+    echo 'module temp' > go.mod && \
+    echo 'go 1.21' >> go.mod && \
+    echo 'require github.com/golangci/golangci-lint v1.60.3' >> go.mod && \
+    go mod download && \
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.60.3
 
 `;

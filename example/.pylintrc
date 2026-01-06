@@ -1,0 +1,120 @@
+[MASTER]
+# Disable specific messages
+disable=
+    # Disable eval warning since we're using it intentionally in the example
+    eval-used,
+    # Disable print statement warnings since this is a console application
+    print-statement,
+    # Disable missing docstring warnings for test files
+    missing-docstring,
+    # Disable too-few-public-methods for simple classes
+    too-few-public-methods,
+    # Disable unused-argument for callback functions
+    unused-argument
+
+# Set maximum line length
+max-line-length=100
+
+# Set minimum similarity for duplicate code detection
+min-similarity-lines=4
+
+# Enable all checkers
+enable=all
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=100
+
+# Maximum number of lines in a module
+max-module-lines=1000
+
+# String used as indentation unit
+indent-string='    '
+
+[MESSAGES CONTROL]
+# Show all messages
+show-categories=yes
+
+# Don't show confidence levels
+confidence=HIGH
+
+[REPORTS]
+# Set the output format
+output-format=text
+
+# Include message's symbol in output
+include-symbols=yes
+
+# Don't show reports about total score
+reports=no
+
+[REFACTORING]
+# Maximum number of nested blocks
+max-nested-blocks=5
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=5
+
+# Maximum number of locals for function / method body
+max-locals=15
+
+# Maximum number of return statements for function / method body
+max-returns=6
+
+# Maximum number of branch for function / method body
+max-branches=12
+
+# Maximum number of statements in function / method body
+max-statements=50
+
+# Maximum number of parents for a class
+max-parents=7
+
+# Maximum number of attributes for a class
+max-attributes=7
+
+# Minimum number of public methods for a class
+min-public-methods=0
+
+# Maximum number of public methods for a class
+max-public-methods=20
+
+[BASIC]
+# Good variable names which should always be accepted
+good-names=i,
+           j,
+           k,
+           ex,
+           Run,
+           _
+
+# Bad variable names which should always be refused
+bad-names=foo,
+          bar,
+          baz,
+          toto,
+          tutu,
+          tata
+
+# List of builtins function names that should not be used
+bad-functions=map,
+              filter,
+              apply
+
+[TYPECHECK]
+# List of module names for which member attributes should not be checked
+ignored-modules=
+
+# List of class names for which member attributes should not be checked
+ignored-classes=
+
+# List of members which are set dynamically and missed by pylint inference
+generated-members=
+
+# Tells whether missing members accessed in mixin class should be ignored
+ignore-mixin-members=yes
+
+# Tells whether to warn about missing members when the owner of the attribute
+# is inferred to be None
+ignore-none=yes

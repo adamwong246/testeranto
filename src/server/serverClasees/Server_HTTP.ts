@@ -172,4 +172,14 @@ export class Server_HTTP extends Server_TCP {
       res.end(data);
     });
   }
+
+  async stop() {
+    // Safely close HTTP server if it exists
+    if (this.httpServer) {
+      this.httpServer.close(() => {
+        console.log("HTTP server closed");
+      });
+    }
+    await super.stop();
+  }
 }

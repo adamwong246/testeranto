@@ -2,7 +2,7 @@ import { IDockerSteps } from "./src/Types";
 
 export const createLangConfig = (
   testFile: string,
-  check: string,
+  check: ((x: any) => string)[],
   options?: {
     plugins?: any[];
     loaders?: Record<string, string>;

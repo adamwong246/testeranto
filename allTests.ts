@@ -22,25 +22,23 @@ const config: ITestconfig = {
   //   memoryLimitMB: 512,
   // },
 
-  golang: createLangConfig(
-    "example/Calculator.golingvu.test.go",
-    "example/staticAnalysis/golang.go"
-  ),
+  golang: createLangConfig("example/Calculator.golingvu.test.go", [
+    (x) => `cd /workspace/example && golangci-lint run ${x.replace('example/', '')}`,
+  ]),
 
-  python: createLangConfig(
-    "example/Calculator.pitono.test.py",
-    "example/staticAnalysis/python.py"
-  ),
+  python: createLangConfig("example/Calculator.pitono.test.py", [
+    (x) => `pylint ${x}`,
+  ]),
 
-  web: createLangConfig(
-    "example/Calculator.test.ts",
-    "example/staticAnalysis/web.ts"
-  ),
+  web: createLangConfig("example/Calculator.test.ts", [
+    (x) => `yarn eslint ${x}`,
+    (x) => `yarn tsc --noEmit ${x}`,
+  ]),
 
-  node: createLangConfig(
-    "example/Calculator.test.ts",
-    "example/staticAnalysis/node.ts"
-  ),
+  node: createLangConfig("example/Calculator.test.ts", [
+    (x) => `yarn eslint ${x}`,
+    (x) => `yarn tsc --noEmit ${x}`,
+  ]),
 };
 
 export default config;

@@ -1,69 +1,40 @@
-import fs from "fs";
+import readline from "readline";
 import { default as ansiC } from "ansi-colors";
-import path from "path";
 import { IMode } from "../types";
 import { IBuiltConfig } from "../../Types";
-import { Server_Queue } from "./Server_Queue";
+import { Server_FS } from "./Server_FS";
 
-export class Server extends Server_Queue {
-  testName: string;
-  private composeDir: string;
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
+export class Server extends Server_FS {
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
 
-    fs.writeFileSync(
-      path.join(process.cwd(), "testeranto", `${testName}.json`),
-      JSON.stringify(configs, null, 2)
+    console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
+    console.log(ansiC.inverse("Press 'CTRL + c' to quit forcefully."));
+    console.log(
+      ansiC.inverse("Note: In raw mode, use 'CTRL + c' to force quit.")
     );
 
-    configs.ports.forEach((port) => {
-      this.ports[port] = ""; // set ports as open
+    process.stdin.on("keypress", async (str, key) => {
+      if (key.name === "q") {
+        console.log("Testeranto is shutting down gracefully...");
+
+        await this.stop();
+
+        process.exit(0);
+      }
+      // Handle Ctrl+C through keypress when in raw mode
+      if (key.ctrl && key.name === "c") {
+        console.log("\nForce quitting...");
+        process.exit(1);
+      }
     });
 
-    this.launchers = {};
-
-    this.testName = testName;
-    this.composeDir = process.cwd();
-    this.composeFile = path.join(
-      this.composeDir,
-      "testeranto",
-      "bundles",
-      `${this.testName}-docker-compose.yml`
-    );
-
-    // Initialize TestEnvironmentSetup
-    // Note: ports, browser, and queue will be set later
-    // We'll need to update them when they're available
-    // this.testEnvironmentSetup = new TestEnvironmentSetup(
-    //   this.ports,
-    //   this.projectName,
-    //   this.browser,
-    //   this.queue
-    // );
-  }
-
-  async start() {
-    // Wait for build processes to complete first
-    try {
-    } catch (error) {
-      console.error("Build processes failed:", error);
-      return;
-    }
-
-    // Continue with the rest of the setup after builds are done
-    this.mapping().forEach(async ([command, func]) => {
-      globalThis[command] = func;
+    process.on("SIGINT", async () => {
+      console.log("\nForce quitting...");
+      process.exit(1);
     });
-
-    if (!fs.existsSync(`testeranto/reports/${this.projectName}`)) {
-      fs.mkdirSync(`testeranto/reports/${this.projectName}`);
-    }
-  }
-
-  async stop() {
-    console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
-    this.mode = "once";
-    super.stop();
   }
 }

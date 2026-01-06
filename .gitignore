@@ -9,3 +9,12 @@ vendor/
 !testeranto/bundles/golang/Calculator.golingvu.test.go
 
 dist
+
+example/bin
+example/calculator_example
+example/include
+example/include/python3.12
+example/lib
+example/lib/python3.12
+example/lib/python3.12/site-packages
+testeranto/reports/allTests/docker-logs/**/*

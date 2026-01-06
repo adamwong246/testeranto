@@ -9,7 +9,7 @@ import { assert } from "chai";
 
 export const implementation: ITestImplementation<I, O, M> = {
   suites: {
-    Default: "Default test suite for Calculator",
+    Default: { description: "Default test suite for Calculator" },
   },
 
   givens: {

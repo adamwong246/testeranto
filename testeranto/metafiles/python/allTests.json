@@ -4,7 +4,7 @@
   "metafile": {
     "inputs": {
       "example/Calculator.pitono.test.py": {
-        "bytes": 7019,
+        "bytes": 6085,
         "imports": [
           {
             "path": "sys",
@@ -17,16 +17,15 @@
             "external": true
           },
           {
-            "path": "subprocess",
+            "path": "Calculator",
             "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "asyncio",
-            "kind": "import-statement",
-            "external": true
+            "external": false
           }
         ]
+      },
+      "example/Calculator.py": {
+        "bytes": 3550,
+        "imports": []
       }
     },
     "outputs": {
@@ -36,13 +35,16 @@
         "entryPoint": "example/Calculator.pitono.test.py",
         "inputs": {
           "example/Calculator.pitono.test.py": {
-            "bytesInOutput": 7019
+            "bytesInOutput": 6085
+          },
+          "example/Calculator.py": {
+            "bytesInOutput": 3550
           }
         },
-        "bytes": 7019,
-        "signature": "7c1a47db",
+        "bytes": 9635,
+        "signature": "e055d8b1",
         "bundlePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundled.py",
-        "bundleSize": 7004
+        "bundleSize": 9655
       }
     }
   }

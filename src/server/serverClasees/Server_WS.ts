@@ -1,9 +1,7 @@
 import { WebSocket } from "ws";
-import { WebSocketMessage } from "../../clients/types";
 import { IMode } from "../types";
 import {
   ERROR_MESSAGES,
-  OTHER_CONSTANTS,
   SERVER_CONSTANTS,
   WEBSOCKET_MESSAGE_TYPES,
 } from "./utils/Server_TCP_constants";
@@ -12,8 +10,8 @@ import {
   handlePromiseResult,
   prepareCommandArgs,
   sendErrorResponse,
-  serializeProcessInfo,
 } from "./utils/Server_TCP_utils";
+import { WebSocketMessage } from "./utils/types";
 
 export class Server_WS extends Server_HTTP {
   processLogs: any;
@@ -24,14 +22,10 @@ export class Server_WS extends Server_HTTP {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
 
-    // Initialize clients Set for tracking WebSocket connections
     if (!this.clients) {
       this.clients = new Set();
     }
 
-    // No process management needed - each client is a test
-    console.log(`[WebSocket] Server initialized for WebSocket coordination only`);
-    
     this.setupWebSocketHandlers();
   }
 
@@ -187,14 +181,14 @@ export class Server_WS extends Server_HTTP {
     ws: WebSocket
   ): void {
     console.log(`[WebSocket] handling type: ${wsm.type}`);
-    
+
     if (wsm.type === WEBSOCKET_MESSAGE_TYPES.GET_RUNNING_PROCESSES) {
       // Treat each WebSocket connection as a "test process"
       const tests = Array.from(this.clients).map((client, index) => {
         return {
           processId: `test-${index}`,
-          command: 'Test via WebSocket',
-          status: 'connected',
+          command: "Test via WebSocket",
+          status: "connected",
           timestamp: new Date().toISOString(),
         };
       });
@@ -212,8 +206,8 @@ export class Server_WS extends Server_HTTP {
         JSON.stringify({
           type: WEBSOCKET_MESSAGE_TYPES.PROCESS_DATA,
           processId,
-          command: 'Test via WebSocket',
-          status: 'connected',
+          command: "Test via WebSocket",
+          status: "connected",
           timestamp: new Date().toISOString(),
         })
       );
@@ -221,7 +215,9 @@ export class Server_WS extends Server_HTTP {
     } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.STDIN) {
       console.log("[WebSocket] STDIN not supported - no child processes");
     } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.KILL_PROCESS) {
-      console.log("[WebSocket] KILL_PROCESS not supported - no child processes");
+      console.log(
+        "[WebSocket] KILL_PROCESS not supported - no child processes"
+      );
     } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.GET_CHAT_HISTORY) {
       if ((this as any).getChatHistory) {
         (this as any)
@@ -248,5 +244,23 @@ export class Server_WS extends Server_HTTP {
     } else {
       console.warn("[WebSocket] unhandled message type:", wsm.type);
     }
+  }
+
+  async stop() {
+    // Safely close WebSocket server if it exists
+    if (this.wss) {
+      this.wss.close(() => {
+        console.log("WebSocket server closed");
+      });
+    }
+
+    this.clients.forEach((client) => {
+      // Check if client has a terminate method
+      if (client.terminate) {
+        client.terminate();
+      }
+    });
+    this.clients.clear();
+    await super.stop();
   }
 }

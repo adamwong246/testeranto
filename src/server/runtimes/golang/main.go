@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -49,6 +50,8 @@ type Output struct {
 	Inputs     map[string]map[string]interface{} `json:"inputs"`
 	Bytes      int                               `json:"bytes"`
 	Signature  string                            `json:"signature"`
+	BundlePath string                            `json:"bundlePath,omitempty"`
+	BundleSize int                               `json:"bundleSize,omitempty"`
 }
 
 func main() {
@@ -84,7 +87,7 @@ func main() {
 
 	fmt.Printf("Found %d Go test(s)\n", len(entryPoints))
 
-	// Generate metafile
+	// Generate metafile - always generate even if there are no tests
 	metafile := generateMetafile(entryPoints)
 
 	// Write metafile
@@ -92,10 +95,11 @@ func main() {
 	if metafilesDir == "" {
 		metafilesDir = "/workspace/testeranto/metafiles/golang"
 	}
-	// if err := os.MkdirAll(metafilesDir, 0755); err != nil {
-	// 	fmt.Printf("Error creating metafiles directory: %v\n", err)
-	// 	os.Exit(1)
-	// }
+	// Ensure the directory exists
+	if err := os.MkdirAll(metafilesDir, 0755); err != nil {
+		fmt.Printf("Error creating metafiles directory: %v\n", err)
+		os.Exit(1)
+	}
 
 	metafilePath := filepath.Join(metafilesDir, "allTests.json")
 	if err := writeMetafile(metafilePath, metafile); err != nil {
@@ -105,10 +109,43 @@ func main() {
 
 	fmt.Printf("Go metafile written to %s\n", metafilePath)
 
+	// Print bundle information
+	bundlesDir := os.Getenv("BUNDLES_DIR")
+	if bundlesDir == "" {
+		bundlesDir = "/workspace/testeranto/bundles/allTests/golang"
+	}
+	fmt.Printf("Go bundles written to %s\n", bundlesDir)
+
+	// Run tests for each bundle
+	// allTestsPassed := true
+	// for outputKey, outputInfo := range metafile.Metafile.Outputs {
+	// 	if outputInfo.BundlePath != "" {
+	// 		fmt.Printf("  %s: %s\n", outputKey, outputInfo.BundlePath)
+	// 		// Run the Go program
+	// 		entryPoint := outputInfo.EntryPoint
+	// 		if entryPoint != "" {
+	// 			fmt.Printf("Running Go program for %s...\n", entryPoint)
+	// 			testPassed := runGoProgram(entryPoint, outputInfo.BundlePath)
+	// 			if !testPassed {
+	// 				allTestsPassed = false
+	// 			}
+	// 			fmt.Printf("Test %s\n", map[bool]string{true: "passed", false: "failed"}[testPassed])
+	// 		}
+	// 	}
+	// }
+
 	// Print summary
 	numInputs := len(metafile.Metafile.Inputs)
 	numOutputs := len(metafile.Metafile.Outputs)
 	fmt.Printf("Metafile contains %d input files and %d output bundles\n", numInputs, numOutputs)
+
+	// Exit with appropriate code
+	// if !allTestsPassed {
+	// 	fmt.Println("❌ Some Go tests failed!")
+	// 	os.Exit(1)
+	// } else {
+	// 	fmt.Println("✅ All Go tests passed!")
+	// }
 }
 
 func findConfig() string {
@@ -161,12 +198,202 @@ func writeMetafile(path string, metafile Metafile) error {
 	return encoder.Encode(metafile)
 }
 
+func topologicalSort(files []string) []string {
+	// Build dependency graph
+	graph := make(map[string]map[string]bool)
+	for _, file := range files {
+		graph[file] = make(map[string]bool)
+	}
+
+	for _, file := range files {
+		imports := parseGoImports(file)
+		for _, imp := range imports {
+			if imp.External != nil && !*imp.External && imp.Path != "" {
+				resolved := resolveGoImport(imp.Path, file)
+				if resolved != "" {
+					// Check if resolved is in our files list
+					for _, f := range files {
+						if f == resolved {
+							graph[file][resolved] = true
+							break
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Kahn's algorithm
+	inDegree := make(map[string]int)
+	for node := range graph {
+		inDegree[node] = 0
+	}
+	for node := range graph {
+		for neighbor := range graph[node] {
+			inDegree[neighbor]++
+		}
+	}
+
+	// Queue of nodes with no incoming edges
+	queue := []string{}
+	for node := range graph {
+		if inDegree[node] == 0 {
+			queue = append(queue, node)
+		}
+	}
+
+	sortedList := []string{}
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
+		sortedList = append(sortedList, node)
+
+		for neighbor := range graph[node] {
+			inDegree[neighbor]--
+			if inDegree[neighbor] == 0 {
+				queue = append(queue, neighbor)
+			}
+		}
+	}
+
+	// Check for cycles
+	if len(sortedList) != len(files) {
+		fmt.Println("Warning: Circular dependencies detected, using original order")
+		return files
+	}
+
+	return sortedList
+}
+
+func stripImports(content string) string {
+	lines := strings.Split(content, "\n")
+	resultLines := []string{}
+	inImportBlock := false
+	inMultilineComment := false
+	packageDeclarationSeen := false
+
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+
+		// Handle multiline comments
+		if strings.Contains(line, "/*") && !strings.Contains(line, "*/") {
+			inMultilineComment = true
+		}
+		if strings.Contains(line, "*/") {
+			inMultilineComment = false
+			// Skip the line with the closing comment
+			continue
+		}
+		if inMultilineComment {
+			continue
+		}
+
+		// Handle package declarations - keep only the first one
+		if strings.HasPrefix(trimmed, "package ") {
+			if !packageDeclarationSeen {
+				packageDeclarationSeen = true
+				resultLines = append(resultLines, lines[i])
+			}
+			// Skip subsequent package declarations
+			continue
+		}
+
+		// Handle import statements
+		if strings.HasPrefix(trimmed, "import") {
+			if strings.Contains(trimmed, "(") {
+				inImportBlock = true
+			}
+			// Skip this line
+			continue
+		}
+		if inImportBlock {
+			if trimmed == ")" {
+				inImportBlock = false
+			}
+			// Skip lines inside import block
+			continue
+		}
+
+		// Keep all other lines
+		resultLines = append(resultLines, lines[i])
+	}
+
+	return strings.Join(resultLines, "\n")
+}
+
+func bundleGoFiles(entryPoint string, outputDir string) string {
+	// Collect all dependencies
+	allDeps := collectDependencies(entryPoint)
+
+	// Sort them topologically
+	sortedDeps := topologicalSort(allDeps)
+
+	// Read and process each file
+	bundledLines := []string{}
+	seenContents := make(map[string]bool)
+
+	for _, dep := range sortedDeps {
+		content, err := os.ReadFile(dep)
+		if err != nil {
+			fmt.Printf("Warning: Could not read %s: %v\n", dep, err)
+			continue
+		}
+
+		// Generate a hash to avoid duplicates
+		hash := md5.Sum(content)
+		hashStr := hex.EncodeToString(hash[:])
+		if seenContents[hashStr] {
+			continue
+		}
+		seenContents[hashStr] = true
+
+		// Strip import statements
+		strippedContent := stripImports(string(content))
+		if strings.TrimSpace(strippedContent) != "" {
+			bundledLines = append(bundledLines, fmt.Sprintf("// File: %s", dep))
+			bundledLines = append(bundledLines, strippedContent)
+			bundledLines = append(bundledLines, "") // Add a blank line between files
+		}
+	}
+
+	// Combine all lines
+	bundledContent := strings.Join(bundledLines, "\n")
+
+	// Ensure output directory exists
+	if err := os.MkdirAll(outputDir, 0755); err != nil {
+		fmt.Printf("Warning: Could not create output directory %s: %v\n", outputDir, err)
+		return ""
+	}
+
+	// Generate output filename
+	entryName := filepath.Base(entryPoint)
+	if strings.HasSuffix(entryName, ".go") {
+		entryName = strings.TrimSuffix(entryName, ".go")
+	}
+	outputFilename := fmt.Sprintf("%s.bundled.go", entryName)
+	outputPath := filepath.Join(outputDir, outputFilename)
+
+	// Write bundled file
+	if err := os.WriteFile(outputPath, []byte(bundledContent), 0644); err != nil {
+		fmt.Printf("Warning: Could not write bundled file %s: %v\n", outputPath, err)
+		return ""
+	}
+
+	return outputPath
+}
+
 func generateMetafile(entryPoints []string) Metafile {
 	inputs := make(map[string]Input)
 	outputs := make(map[string]Output)
 
 	// Generate a signature
 	signature := generateSignature()
+
+	// Bundle directory
+	bundlesDir := os.Getenv("BUNDLES_DIR")
+	if bundlesDir == "" {
+		bundlesDir = "/workspace/testeranto/bundles/allTests/golang"
+	}
 
 	for _, entryPoint := range entryPoints {
 		if _, err := os.Stat(entryPoint); err != nil {
@@ -189,6 +416,9 @@ func generateMetafile(entryPoints []string) Metafile {
 			}
 		}
 
+		// Generate the bundle
+		bundlePath := bundleGoFiles(entryPoint, bundlesDir)
+
 		// Generate output key
 		entryName := filepath.Base(entryPoint)
 		if strings.HasSuffix(entryName, ".go") {
@@ -207,6 +437,14 @@ func generateMetafile(entryPoints []string) Metafile {
 			totalBytes += bytes
 		}
 
+		// Add bundle size
+		bundleSize := 0
+		if bundlePath != "" {
+			if info, err := os.Stat(bundlePath); err == nil {
+				bundleSize = int(info.Size())
+			}
+		}
+
 		outputs[outputKey] = Output{
 			Imports:    []interface{}{},
 			Exports:    []interface{}{},
@@ -214,6 +452,8 @@ func generateMetafile(entryPoints []string) Metafile {
 			Inputs:     inputBytes,
 			Bytes:      totalBytes,
 			Signature:  signature,
+			BundlePath: bundlePath,
+			BundleSize: bundleSize,
 		}
 	}
 
@@ -369,6 +609,14 @@ func getCurrentDir() string {
 	return dir
 }
 
+func copyFile(src, dst string) error {
+	input, err := os.ReadFile(src)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(dst, input, 0644)
+}
+
 func resolveGoImport(importPath, currentFile string) string {
 	// Simple resolution: look in vendor directory and current directory
 	currentDir := filepath.Dir(currentFile)
@@ -406,4 +654,90 @@ func resolveGoImport(importPath, currentFile string) string {
 	}
 
 	return ""
+}
+
+func runGoProgram(entryPoint string, bundlePath string) bool {
+	// Create report directory
+	testName := filepath.Base(entryPoint)
+	if strings.HasSuffix(testName, ".go") {
+		testName = strings.TrimSuffix(testName, ".go")
+	}
+
+	reportDir := filepath.Join(
+		"testeranto",
+		"reports",
+		"allTests",
+		testName,
+		"golang",
+	)
+	if err := os.MkdirAll(reportDir, 0755); err != nil {
+		fmt.Printf("Error creating report directory: %v\n", err)
+		return false
+	}
+
+	// Create a temporary directory for running the Go program
+	tempDir, err := os.MkdirTemp("", "go-run-*")
+	if err != nil {
+		fmt.Printf("Error creating temp directory: %v\n", err)
+		return false
+	}
+	defer os.RemoveAll(tempDir)
+
+	// Copy the bundled file to the temp directory
+	bundleName := filepath.Base(bundlePath)
+	tempBundlePath := filepath.Join(tempDir, bundleName)
+	if err := copyFile(bundlePath, tempBundlePath); err != nil {
+		fmt.Printf("Error copying bundle: %v\n", err)
+		return false
+	}
+
+	// Create a go.mod file in the temp directory
+	goModContent := `module test
+
+go 1.21
+`
+	goModPath := filepath.Join(tempDir, "go.mod")
+	if err := os.WriteFile(goModPath, []byte(goModContent), 0644); err != nil {
+		fmt.Printf("Error creating go.mod: %v\n", err)
+		return false
+	}
+
+	// Run the program
+	fmt.Printf("Running Go program: %s\n", bundlePath)
+	cmd := exec.Command("go", "run", bundleName)
+	cmd.Dir = tempDir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Go program execution failed: %v\n", err)
+		// Create error report
+		reportFile := filepath.Join(reportDir, "tests.json")
+		reportContent := map[string]interface{}{
+			"tests":    []interface{}{},
+			"features": []interface{}{},
+			"givens":   []interface{}{},
+			"fullPath": entryPoint,
+			"error":    err.Error(),
+		}
+		if jsonData, err := json.MarshalIndent(reportContent, "", "  "); err == nil {
+			os.WriteFile(reportFile, jsonData, 0644)
+		}
+		return false
+	}
+
+	// Create success report
+	reportFile := filepath.Join(reportDir, "tests.json")
+	reportContent := map[string]interface{}{
+		"tests":    []interface{}{},
+		"features": []interface{}{},
+		"givens":   []interface{}{},
+		"fullPath": entryPoint,
+		"success":  true,
+	}
+	if jsonData, err := json.MarshalIndent(reportContent, "", "  "); err == nil {
+		os.WriteFile(reportFile, jsonData, 0644)
+	}
+
+	return true
 }

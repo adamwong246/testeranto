@@ -3,17 +3,32 @@
     {
       "id": "",
       "location": {
-        "column": 11,
-        "file": "src/Tiposkripto.ts",
-        "length": 5,
-        "line": 18,
-        "lineText": "  tpskrt = await import(\"./lib/Web\");",
+        "column": 25,
+        "file": "example/Calculator.test.ts",
+        "length": 29,
+        "line": 5,
+        "lineText": "import { Analyzer } from \"../src/tiposkripto/Analyzer\";",
         "namespace": "",
         "suggestion": ""
       },
       "notes": [],
       "pluginName": "",
-      "text": "Top-level await is not available in the configured target environment (\"es2020\" + 1 override)"
+      "text": "Could not resolve \"../src/tiposkripto/Analyzer\""
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 24,
+        "file": "example/Calculator.test.ts",
+        "length": 32,
+        "line": 6,
+        "lineText": "import Tiposkripto from \"../src/tiposkripto/Tiposkripto\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Could not resolve \"../src/tiposkripto/Tiposkripto\""
     }
   ],
   "warnings": [
@@ -36,6 +51,46 @@
       ],
       "pluginName": "",
       "text": "Using direct eval with a bundler is not recommended and may cause problems"
+    },
+    {
+      "id": "package.json",
+      "location": {
+        "column": 6,
+        "file": "package.json",
+        "length": 7,
+        "line": 86,
+        "lineText": "      \"types\": \"./src/CoreTypes.d.ts\"",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 6,
+            "file": "package.json",
+            "length": 8,
+            "line": 84,
+            "lineText": "      \"import\": \"./src/CoreTypes.ts\",",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The \"import\" condition comes earlier and will be used for all \"import\" statements:"
+        },
+        {
+          "location": {
+            "column": 6,
+            "file": "package.json",
+            "length": 9,
+            "line": 85,
+            "lineText": "      \"require\": \"./src/CoreTypes.ts\",",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The \"require\" condition comes earlier and will be used for all \"require\" calls:"
+        }
+      ],
+      "pluginName": "",
+      "text": "The condition \"types\" here will never be used as it comes after both \"import\" and \"require\""
     }
   ]
 }

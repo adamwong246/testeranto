@@ -3,7 +3,7 @@ import {
   featuresPlugin_default,
   inputFilesPlugin_default,
   rebuildPlugin_default
-} from "../../../chunk-SFBHYNUJ.mjs";
+} from "../../../chunk-ESDZGA4F.mjs";
 
 // src/server/runtimes/node/node.ts
 import fs from "fs";
@@ -53,7 +53,7 @@ var esbuild_default = (config, testName2) => {
 
 // src/server/runtimes/node/node.ts
 var testName = process.argv[2];
-async function startBundling(config, onMetafileChange) {
+async function startBundling(config) {
   console.log(`NODE BUILDER is now bundling:  ${testName}`);
   const n = esbuild_default(config, testName);
   const bv = await esbuild.build(n);
@@ -73,13 +73,11 @@ async function startBundling(config, onMetafileChange) {
   fork(`testeranto/bundles/allTests/node/example/Calculator.test.mjs`, [
     config.httpPort.toString()
   ]);
-  onMetafileChange(bv);
 }
 async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
   try {
-    await startBundling(config, (esbuildResult) => {
-    });
+    await startBundling(config);
   } catch (error) {
     console.error("NODE BUILDER: Error:", error);
     process.exit(1);

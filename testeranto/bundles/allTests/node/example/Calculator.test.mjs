@@ -1,36 +1,24 @@
 import {
   defaultTestResourceRequirement
-} from "../chunk-HTUBWCSZ.mjs";
+} from "../chunk-GONGMDWG.mjs";
 
-// example/Calculator.test.ts
-import { ESLint } from "eslint";
-import fs from "fs";
-import path from "path";
-import typescript from "typescript";
-
-// src/tiposkripto/Analyzer.ts
-var Analyzer = class {
-  constructor() {
-  }
-};
-
-// src/tiposkripto/Tiposkripto.ts
+// src/lib/tiposkripto/Tiposkripto.ts
 var tpskrt;
 if (true) {
-  tpskrt = await import("../Node-2Q4RME6D.mjs");
+  tpskrt = await import("../Node-E7AT2MVY.mjs");
 } else if (false) {
   tpskrt = await null;
 } else {
   throw `Unknown ENV ${"node"}`;
 }
-var Tiposkripto_default = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement, analyzer) => {
+var Tiposkripto_default = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement, testResourceConfiguration) => {
   return (await tpskrt.default)(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
     testAdapter,
-    analyzer
+    testResourceConfiguration
   );
 };
 
@@ -164,7 +152,7 @@ var adapter = {
 import { assert } from "chai";
 var implementation = {
   suites: {
-    Default: "Default test suite for Calculator"
+    Default: { description: "Default test suite for Calculator" }
   },
   givens: {
     Default: () => {
@@ -458,102 +446,13 @@ var specification = (Suite, Given, When, Then) => {
 };
 
 // example/Calculator.test.ts
-var TsAnalyzer = class extends Analyzer {
-  async analyze(files) {
-    const results = {
-      eslint: [],
-      typescript: [],
-      summary: {
-        totalFiles: files.length,
-        analyzedFiles: 0,
-        errors: 0,
-        warnings: 0
-      }
-    };
-    const tsJsFiles = files.filter(
-      (f) => f.endsWith(".ts") || f.endsWith(".tsx") || f.endsWith(".js") || f.endsWith(".jsx")
-    );
-    if (tsJsFiles.length === 0) {
-      throw "No TypeScript/JavaScript files found for analysis";
-    }
-    try {
-      const eslint = new ESLint({
-        // useEslintrc: true,
-        cwd: process.cwd(),
-        fix: false
-      });
-      const eslintResults = await eslint.lintFiles(tsJsFiles);
-      results.eslint = eslintResults.map((result2) => ({
-        filePath: result2.filePath,
-        messages: result2.messages,
-        errorCount: result2.errorCount,
-        warningCount: result2.warningCount,
-        fixableErrorCount: result2.fixableErrorCount,
-        fixableWarningCount: result2.fixableWarningCount
-      }));
-      results.summary.errors += eslintResults.reduce(
-        (sum, r) => sum + r.errorCount,
-        0
-      );
-      results.summary.warnings += eslintResults.reduce(
-        (sum, r) => sum + r.warningCount,
-        0
-      );
-      results.summary.analyzedFiles += tsJsFiles.length;
-    } catch (error) {
-      console.warn("ESLint analysis failed:", error.message);
-    }
-    const tsConfigPath = path.join(process.cwd(), "tsconfig.json");
-    if (fs.existsSync(tsConfigPath) && tsJsFiles.some((f) => f.endsWith(".ts") || f.endsWith(".tsx"))) {
-      try {
-        const tsConfigFile = typescript.readConfigFile(
-          tsConfigPath,
-          (tsPath) => fs.readFileSync(tsPath, "utf8")
-        );
-        if (tsConfigFile.error) {
-          console.warn(
-            "TypeScript config error:",
-            tsConfigFile.error.messageText
-          );
-        } else {
-          const tsProgram = typescript.createProgram(
-            tsJsFiles,
-            tsConfigFile.config
-          );
-          const tsResults = tsProgram.getSemanticDiagnostics().concat(tsProgram.getSyntacticDiagnostics()).concat(tsProgram.getDeclarationDiagnostics());
-          results.typescript = tsResults.map((diagnostic) => ({
-            file: diagnostic.file?.fileName,
-            start: diagnostic.start,
-            length: diagnostic.length,
-            messageText: typeof diagnostic.messageText === "string" ? diagnostic.messageText : diagnostic.messageText?.messageText,
-            category: diagnostic.category === typescript.DiagnosticCategory.Error ? "error" : "warning",
-            code: diagnostic.code
-          }));
-          results.summary.errors += tsResults.filter(
-            (d) => d.category === typescript.DiagnosticCategory.Error
-          ).length;
-          results.summary.warnings += tsResults.filter(
-            (d) => d.category === typescript.DiagnosticCategory.Warning
-          ).length;
-        }
-      } catch (error) {
-        console.warn("TypeScript analysis failed:", error.message);
-      }
-    }
-    console.log("Node.js static analysis completed");
-    console.log(
-      `Summary: ${results.summary.errors} errors, ${results.summary.warnings} warnings`
-    );
-    return results;
-  }
-};
 var Calculator_test_default = Tiposkripto_default(
   Calculator,
   specification,
   implementation,
   adapter,
-  { ports: 1e3 },
-  new TsAnalyzer()
+  { ports: 1e3 }
+  // new TsAnalyzer()
 );
 export {
   Calculator_test_default as default

@@ -1,8 +1,12 @@
 import fs from "fs";
 import path from "path";
+import { exec } from "child_process";
+import { promisify } from "util";
 import { IBuiltConfig } from "../../Types";
 import { DockerComposeOptions, IMode } from "../types";
 import { Server_WS_Process } from "./Server_WS_Process";
+import { setupDockerCompose } from "../docker/index";
+import { DockerComposeExecutor } from "./utils/DockerComposeExecutor";
 
 interface IDockerComposeResult {
   exitCode: number;
@@ -12,17 +16,18 @@ interface IDockerComposeResult {
 }
 
 export class Server_DockerCompose extends Server_WS_Process {
-  private cwd: string;
-  private config: string;
-  private composeDir: string;
-  private composeFile: string;
-  private serviceLogStreams: Map<string, fs.WriteStream> = new Map();
-  private logCaptureInterval: NodeJS.Timeout | null = null;
+  cwd: string;
+  dockerComposeYml: string;
+  composeDir: string;
+  composeFile: string;
+  serviceLogStreams: Map<string, fs.WriteStream> = new Map();
+  logCaptureInterval: NodeJS.Timeout | null = null;
+  executor: DockerComposeExecutor;
 
   constructor(cwd: string, configs: IBuiltConfig, name: string, mode: IMode) {
     super(configs, name, mode);
     this.cwd = cwd;
-    this.config = path.join(
+    this.dockerComposeYml = path.join(
       "testeranto",
       "bundles",
       `${this.projectName}-docker-compose.yml`
@@ -35,6 +40,13 @@ export class Server_DockerCompose extends Server_WS_Process {
       `${this.projectName}-docker-compose.yml`
     );
 
+    // Create executor with promisified exec
+    const execAsync = promisify(exec);
+    const execFunction = async (command: string, options: { cwd: string }) => {
+      return await execAsync(command, options);
+    };
+    this.executor = new DockerComposeExecutor(execFunction);
+
     // Ensure the compose file is created before starting services
     this.initializeAndStart().catch((error) => {
       console.error("Failed to initialize docker-compose:", error);
@@ -42,11 +54,6 @@ export class Server_DockerCompose extends Server_WS_Process {
   }
 
   private async initializeAndStart(): Promise<void> {
-    // Import setupDockerCompose here to avoid circular dependencies
-    const { setupDockerCompose } = await import(
-      "../docker/dockerComposeGenerator"
-    );
-
     // Wait for docker-compose file to be generated
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
@@ -174,70 +181,30 @@ export class Server_DockerCompose extends Server_WS_Process {
     console.log(`Starting docker-compose build to capture build logs...`);
 
     try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
-      const execAsync = promisify(exec);
+      // Run docker compose build using the executor
+      const result = await this.executor.build(
+        this.composeFile,
+        this.composeDir
+      );
 
-      // First, check if docker is available
-      let dockerComposeCmd = "docker compose";
-      // try {
-      //   // Try docker compose v2 first
-      //   await execAsync("docker compose version");
-      //   dockerComposeCmd = "docker compose";
-      //   console.log("Using docker compose v2");
-      // } catch (v2Error) {
-      //   try {
-      //     // Fall back to docker-compose v1
-      //     await execAsync("docker-compose --version");
-      //     console.log("Using docker-compose v1");
-      //   } catch (v1Error) {
-      //     buildLogStream.write("\nERROR: Neither 'docker compose' nor 'docker-compose' command is available\n");
-      //     buildLogStream.write("Please ensure Docker is installed and in your PATH\n");
-      //     console.error("ERROR: Docker Compose is not available");
-      //     buildLogStream.end();
-      //     return;
-      //   }
-      // }
+      // Write the output to the log file
+      if (result.out) {
+        buildLogStream.write(result.out + "\n");
+      }
+      if (result.err) {
+        buildLogStream.write(`[STDERR] ${result.err}\n`);
+      }
 
-      // Run docker compose build directly
-      const cmd = `docker compose -f "${this.composeFile}" build`;
-      console.log(`Running: ${cmd}`);
-
-      try {
-        const { stdout, stderr } = await execAsync(cmd, {
-          cwd: this.composeDir,
-          maxBuffer: 10 * 1024 * 1024, // 10MB buffer for build output
-        });
-
-        // Write the output to the log file
-        if (stdout) {
-          buildLogStream.write(stdout + "\n");
-        }
-        if (stderr) {
-          buildLogStream.write(`[STDERR] ${stderr}\n`);
-        }
-
+      if (result.exitCode === 0) {
         buildLogStream.write("\nBuild process completed successfully\n");
         console.log(`docker-compose build completed successfully`);
-      } catch (execError: any) {
-        // exec throws an error if exit code is non-zero, but we still want to capture output
-        if (execError.stdout) {
-          buildLogStream.write(execError.stdout + "\n");
-        }
-        if (execError.stderr) {
-          buildLogStream.write(`[STDERR] ${execError.stderr}\n`);
-        }
-
+      } else {
         buildLogStream.write(
-          `\nBuild process failed with exit code: ${execError.code || 1}\n`
+          `\nBuild process failed with exit code: ${result.exitCode}\n`
         );
         console.error(
-          `docker-compose build failed with exit code ${execError.code || 1}`
+          `docker-compose build failed with exit code ${result.exitCode}`
         );
-
-        if (execError.message) {
-          buildLogStream.write(`Error: ${execError.message}\n`);
-        }
       }
     } catch (error: any) {
       buildLogStream.write(
@@ -296,23 +263,23 @@ export class Server_DockerCompose extends Server_WS_Process {
         );
         try {
           // Use docker-compose config --services to get all service names
-          const { exec } = await import("child_process");
-          const { promisify } = await import("util");
-          const execAsync = promisify(exec);
-
-          const { stdout } = await execAsync(
-            `docker compose -f "${this.composeFile}" config --services`,
-            { cwd: this.composeDir }
+          const result = await this.executor.configServices(
+            this.composeFile,
+            this.composeDir
           );
 
-          const serviceNames = stdout
-            .trim()
-            .split("\n")
-            .filter((name) => name.trim());
-          for (const serviceName of serviceNames) {
-            if (!this.serviceLogStreams.has(serviceName)) {
-              await this.createLogFileForService(serviceName);
+          if (result.exitCode === 0) {
+            const serviceNames = result.out
+              .trim()
+              .split("\n")
+              .filter((name) => name.trim());
+            for (const serviceName of serviceNames) {
+              if (!this.serviceLogStreams.has(serviceName)) {
+                await this.createLogFileForService(serviceName);
+              }
             }
+          } else {
+            throw new Error(result.err);
           }
         } catch (configError) {
           console.log(
@@ -521,30 +488,7 @@ export class Server_DockerCompose extends Server_WS_Process {
   public async DC_upAll(
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
-    try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
-      const execAsync = promisify(exec);
-
-      const cmd = `docker compose -f "${this.composeFile}" up -d`;
-      const { stdout, stderr } = await execAsync(cmd, {
-        cwd: this.composeDir,
-      });
-
-      return {
-        exitCode: 0,
-        out: stdout,
-        err: stderr,
-        data: null,
-      };
-    } catch (error: any) {
-      return {
-        exitCode: 1,
-        out: "",
-        err: `Error starting services: ${error.message}`,
-        data: null,
-      };
-    }
+    return this.executor.upAll(this.composeFile, this.composeDir);
   }
 
   public async DC_down(
@@ -552,139 +496,51 @@ export class Server_DockerCompose extends Server_WS_Process {
   ): Promise<IDockerComposeResult> {
     // Stop log capture before shutting down
     await this.stopLogCapture();
-
-    try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
-      const execAsync = promisify(exec);
-
-      const cmd = `docker compose -f "${this.composeFile}" down`;
-      const { stdout, stderr } = await execAsync(cmd, {
-        cwd: this.composeDir,
-      });
-
-      return {
-        exitCode: 0,
-        out: stdout,
-        err: stderr,
-        data: null,
-      };
-    } catch (error: any) {
+    // Verify paths exist before attempting to run docker compose down
+    if (!fs.existsSync(this.composeFile)) {
+      console.error(`Docker compose file not found: ${this.composeFile}`);
       return {
         exitCode: 1,
         out: "",
-        err: `Error stopping services: ${error.message}`,
+        err: `Compose file not found: ${this.composeFile}`,
         data: null,
       };
     }
+    const result = await this.executor.down(this.composeFile, this.composeDir);
+    // Check if the command actually succeeded
+    if (result.exitCode !== 0) {
+      console.error(`Failed to stop Docker Compose services: ${result.err}`);
+      console.error(`Compose file: ${this.composeFile}`);
+      console.error(`Working directory: ${this.composeDir}`);
+    }
+    return result;
   }
 
   public async DC_upOne(
     serviceName: string,
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
-    try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
-      const execAsync = promisify(exec);
-
-      const cmd = `docker compose -f "${this.composeFile}" up -d ${serviceName}`;
-      const { stdout, stderr } = await execAsync(cmd, {
-        cwd: this.composeDir,
-      });
-
-      return {
-        exitCode: 0,
-        out: stdout,
-        err: stderr,
-        data: null,
-      };
-    } catch (error: any) {
-      return {
-        exitCode: 1,
-        out: "",
-        err: `Error starting service ${serviceName}: ${error.message}`,
-        data: null,
-      };
-    }
+    return this.executor.upOne(serviceName, this.composeFile, this.composeDir);
   }
 
   public async DC_ps(
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
-    try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
-      const execAsync = promisify(exec);
-
-      const cmd = `docker compose -f "${this.composeFile}" ps`;
-      const { stdout, stderr } = await execAsync(cmd, {
-        cwd: this.composeDir,
-      });
-
-      return {
-        exitCode: 0,
-        out: stdout,
-        err: stderr,
-        data: null,
-      };
-    } catch (error: any) {
-      return {
-        exitCode: 1,
-        out: "",
-        err: `Error getting service status: ${error.message}`,
-        data: null,
-      };
-    }
+    return this.executor.ps(this.composeFile, this.composeDir);
   }
 
   public async DC_logs(
     serviceName: string,
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
-    const opts = this.mergeOptions(options);
-    try {
-      // Use child_process directly for more reliable log capture
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
-      const execAsync = promisify(exec);
-
-      // Build the docker compose command
-      const composeCmd = `docker compose -f "${this.composeFile}" logs --no-color --tail=100`;
-      const fullCmd = serviceName ? `${composeCmd} ${serviceName}` : composeCmd;
-
-      try {
-        const { stdout, stderr } = await execAsync(fullCmd, {
-          cwd: this.composeDir,
-          maxBuffer: 10 * 1024 * 1024, // 10MB buffer for logs
-        });
-
-        return {
-          exitCode: 0,
-          out: stdout,
-          err: stderr,
-          data: null,
-        };
-      } catch (execError: any) {
-        // exec throws an error if exit code is non-zero, but we still want to capture output
-        if (execError.stdout || execError.stderr) {
-          return {
-            exitCode: execError.code || 1,
-            out: execError.stdout || "",
-            err: execError.stderr || execError.message,
-            data: null,
-          };
-        }
-        throw execError;
-      }
-    } catch (error: any) {
-      return {
-        exitCode: 1,
-        out: "",
-        err: `Error getting logs for ${serviceName}: ${error.message}`,
-        data: null,
-      };
-    }
+    const tail = (options as any)?.tail ?? 100;
+    return this.executor.logs(
+      serviceName,
+      this.composeFile,
+      this.composeDir,
+      tail,
+      options
+    );
   }
 
   private mergeOptions(
@@ -692,7 +548,7 @@ export class Server_DockerCompose extends Server_WS_Process {
   ): DockerComposeOptions {
     const base = {
       cwd: this.composeDir, // Use composeDir which is process.cwd()
-      config: this.config, // Path to the docker-compose.yml file
+      config: this.dockerComposeYml, // Path to the docker-compose.yml file
       log: true,
     };
     // Merge options
@@ -705,7 +561,7 @@ export class Server_DockerCompose extends Server_WS_Process {
   }
 
   public getConfig(): string {
-    return this.config;
+    return this.dockerComposeYml;
   }
 
   // Static methods for direct usage without creating an instance
@@ -713,8 +569,6 @@ export class Server_DockerCompose extends Server_WS_Process {
     options: DockerComposeOptions
   ): Promise<IDockerComposeResult> {
     try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
       const execAsync = promisify(exec);
 
       const cmd = `docker compose -f "${options.config}" up -d`;
@@ -742,8 +596,6 @@ export class Server_DockerCompose extends Server_WS_Process {
     options: DockerComposeOptions
   ): Promise<IDockerComposeResult> {
     try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
       const execAsync = promisify(exec);
 
       const cmd = `docker compose -f "${options.config}" down`;
@@ -772,8 +624,6 @@ export class Server_DockerCompose extends Server_WS_Process {
     options: DockerComposeOptions
   ): Promise<IDockerComposeResult> {
     try {
-      const { exec } = await import("child_process");
-      const { promisify } = await import("util");
       const execAsync = promisify(exec);
 
       const composeCmd = `docker compose -f "${options.config}" logs --no-color --tail=100`;
@@ -800,9 +650,16 @@ export class Server_DockerCompose extends Server_WS_Process {
     }
   }
 
-  // Override stop method to clean up log capture
   public async stop(): Promise<void> {
+    console.log(`[Server_DockerCompose] stop()...`);
     await this.stopLogCapture();
+    const result = await this.DC_down();
+    if (result.exitCode !== 0) {
+      console.error(`Docker Compose down failed: ${result.err}`);
+    }
+
+    console.log(`[Server_DockerCompose] stop() result`, result);
+
     await super.stop();
   }
 }

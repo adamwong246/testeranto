@@ -10,8 +10,8 @@ const testName = process.argv[2];
 
 // run esbuild in watch mode using esbuildConfigs. Write to fs the bundle and metafile
 async function startBundling(
-  config: IBuiltConfig,
-  onMetafileChange: (esbuild: esbuild.BuildResult) => void
+  config: IBuiltConfig
+  // onMetafileChange: (esbuild: esbuild.BuildResult) => void
 ) {
   console.log(`NODE BUILDER is now bundling:  ${testName}`);
   const n = nodeConfiger(config, testName);
@@ -44,7 +44,7 @@ async function startBundling(
     config.httpPort.toString(),
   ]);
 
-  onMetafileChange(bv);
+  // onMetafileChange(bv);
 }
 
 // run using user defined static analysis when the metafile changes
@@ -61,10 +61,7 @@ async function main() {
   const config = (await import(`/workspace/${testName}`)).default;
 
   try {
-    await startBundling(config, (esbuildResult: esbuild.BuildResult) => {
-      // startStaticAnalysis(esbuildResult);
-      // startBddTests(esbuildResult);
-    });
+    await startBundling(config);
   } catch (error) {
     console.error("NODE BUILDER: Error:", error);
     process.exit(1);

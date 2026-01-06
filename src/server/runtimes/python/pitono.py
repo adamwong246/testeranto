@@ -346,6 +346,64 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
         }
     }
 
+# def run_python_test(entry_point):
+#     """Execute a Python test and return results."""
+#     import subprocess
+#     import tempfile
+#     import traceback
+    
+#     # Create a temporary file to capture results
+#     with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as tmp:
+#         result_file = tmp.name
+    
+#     # Set environment variable for result file
+#     env = os.environ.copy()
+#     env['TEST_RESULT_FILE'] = result_file
+    
+#     # Run the test from the original entry point
+#     try:
+#         result = subprocess.run(
+#             [sys.executable, entry_point],
+#             env=env,
+#             capture_output=True,
+#             text=True,
+#             timeout=30  # 30 second timeout
+#         )
+        
+#         # Check if test wrote a result file
+#         if os.path.exists(result_file):
+#             with open(result_file, 'r') as f:
+#                 test_result = json.load(f)
+#             os.unlink(result_file)
+#         else:
+#             # Create a default result structure
+#             test_result = {
+#                 'passed': result.returncode == 0,
+#                 'returncode': result.returncode,
+#                 'stdout': result.stdout,
+#                 'stderr': result.stderr
+#             }
+        
+#         return test_result
+#     except subprocess.TimeoutExpired:
+#         return {
+#             'passed': False,
+#             'error': 'Test timed out after 30 seconds'
+#         }
+#     except Exception as e:
+#         return {
+#             'passed': False,
+#             'error': str(e),
+#             'traceback': traceback.format_exc()
+#         }
+#     finally:
+#         # Clean up result file if it still exists
+#         if os.path.exists(result_file):
+#             try:
+#                 os.unlink(result_file)
+#             except:
+#                 pass
+
 def main():
     # Determine config path
     # First, check command line argument
@@ -404,14 +462,145 @@ def main():
     # Print bundle information
     bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')
     print(f"Python bundles written to {bundles_dir}")
-    for output_key, output_info in metafile['metafile']['outputs'].items():
-        if 'bundlePath' in output_info:
-            print(f"  {output_key}: {output_info['bundlePath']}")
+    
+    # Run each test from its original entry point
+    # test_results = []
+    # all_passed = True
+    
+    # for entry_point in entry_points:
+    #     print(f"  Running test: {entry_point}")
+        
+    #     # Run the test
+    #     result = run_python_test(entry_point)
+    #     test_results.append({
+    #         'test': entry_point,
+    #         'result': result
+    #     })
+        
+    #     if not result.get('passed', False):
+    #         all_passed = False
+    #         print(f"  ❌ Test failed")
+    #         if 'error' in result:
+    #             print(f"    Error: {result['error']}")
+    #         if 'stderr' in result and result['stderr']:
+    #             print(f"    Stderr: {result['stderr'][:500]}")
+    #     else:
+    #         print(f"  ✅ Test passed")
     
     # Print summary
     num_inputs = len(metafile['metafile']['inputs'])
     num_outputs = len(metafile['metafile']['outputs'])
     print(f"Metafile contains {num_inputs} input files and {num_outputs} output bundles")
+    
+    # Write test results to the correct location for the test runner
+    # The path should be: testeranto/reports/allTests/example/Calculator.pitono.test/python
+    # We need to extract the test name from the entry points
+    # if entry_points:
+    #     # Use the first entry point to determine the test name
+    #     first_entry = entry_points[0]
+    #     # Extract the test name: example/Calculator.pitono.test.py -> example/Calculator.pitono.test
+    #     test_name = os.path.splitext(first_entry)[0]
+    #     # Remove any leading path components to get just the base name? 
+    #     # Actually, we want the relative path from workspace root
+    #     # Let's get the relative path from /workspace
+    #     workspace_root = '/workspace'
+    #     if first_entry.startswith(workspace_root):
+    #         rel_path = os.path.relpath(first_entry, workspace_root)
+    #         test_name = os.path.splitext(rel_path)[0]
+    #     else:
+    #         # Try to make it relative to current directory
+    #         rel_path = os.path.relpath(first_entry, os.getcwd())
+    #         test_name = os.path.splitext(rel_path)[0]
+        
+    #     # Build the reports directory path
+    #     # The path should be: testeranto/reports/allTests/example/Calculator.pitono.test/python
+    #     # First, get the absolute path of the entry point
+    #     abs_entry = os.path.abspath(first_entry)
+    #     # Remove .py extension
+    #     base_name = os.path.splitext(abs_entry)[0]
+        
+    #     # The workspace root is /workspace
+    #     workspace_root = '/workspace'
+    #     # Make sure base_name is under workspace
+    #     if base_name.startswith(workspace_root):
+    #         # Get path relative to workspace
+    #         rel_path = os.path.relpath(base_name, workspace_root)
+    #     else:
+    #         # This shouldn't happen in Docker, but handle it
+    #         rel_path = base_name
+        
+    #     # Build the full reports directory path
+    #     reports_dir = os.path.join(workspace_root, 'testeranto', 'reports', 'allTests', rel_path, 'python')
+    #     os.makedirs(reports_dir, exist_ok=True)
+        
+    #     # Write tests.json in the format expected by the test runner
+    #     tests_path = os.path.join(reports_dir, 'tests.json')
+        
+    #     # Prepare test data in a format similar to what node produces
+    #     # We need to create a structure with name, givens, fails, failed, features, artifacts
+    #     # Since we don't have the full BDD structure, we'll create a simplified version
+    #     tests_data = {
+    #         'name': os.path.basename(base_name),
+    #         'givens': [],
+    #         'fails': sum(1 for r in test_results if not r['result'].get('passed', False)),
+    #         'failed': not all_passed,
+    #         'features': [f"Test: {r['test']}" for r in test_results],
+    #         'artifacts': []
+    #     }
+        
+    #     with open(tests_path, 'w') as f:
+    #         json.dump(tests_data, f, indent=2)
+        
+    #     print(f"Test results written to {tests_path}")
+        
+    #     # Also write detailed results for debugging
+    #     detailed_path = os.path.join(reports_dir, 'detailed_results.json')
+    #     with open(detailed_path, 'w') as f:
+    #         json.dump({
+    #             'all_passed': all_passed,
+    #             'results': test_results,
+    #             'summary': {
+    #                 'total': len(test_results),
+    #                 'passed': sum(1 for r in test_results if r['result'].get('passed', False)),
+    #                 'failed': sum(1 for r in test_results if not r['result'].get('passed', False))
+    #             }
+    #         }, f, indent=2)
+    # else:
+    #     # Fallback to metafiles directory
+    #     results_dir = os.environ.get('METAFILES_DIR', '/workspace/testeranto/metafiles/python')
+    #     results_path = os.path.join(results_dir, 'test_results.json')
+    #     with open(results_path, 'w') as f:
+    #         json.dump({
+    #             'all_passed': all_passed,
+    #             'results': test_results,
+    #             'summary': {
+    #                 'total': len(test_results),
+    #                 'passed': sum(1 for r in test_results if r['result'].get('passed', False)),
+    #                 'failed': sum(1 for r in test_results if not r['result'].get('passed', False))
+    #             }
+    #         }, f, indent=2)
+    #     print(f"Test results written to {results_path}")
+        
+    #     # Also write tests.json for consistency
+    #     tests_path = os.path.join(results_dir, 'tests.json')
+    #     tests_data = {
+    #         'name': 'PythonTests',
+    #         'givens': [],
+    #         'fails': sum(1 for r in test_results if not r['result'].get('passed', False)),
+    #         'failed': not all_passed,
+    #         'features': [f"Test: {r['test']}" for r in test_results],
+    #         'artifacts': []
+    #     }
+    #     with open(tests_path, 'w') as f:
+    #         json.dump(tests_data, f, indent=2)
+    
+    # Exit with appropriate code
+    # if not all_passed:
+    #     print("Some tests failed")
+    #     sys.exit(1)
+    # else:
+    #     print("All tests passed")
+    #     sys.exit(0)
 
 if __name__ == "__main__":
     main()
