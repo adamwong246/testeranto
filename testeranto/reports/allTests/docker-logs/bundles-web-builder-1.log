@@ -1,93 +1,93 @@
-=== Docker Logs for service: bundles-python-builder-1 ===
+=== Docker Logs for service: bundles-web-builder-1 ===
 Started at: 2026-01-06T00:19:49.572Z
 Project: allTests
 ==================================================
 
-[2026-01-06T00:19:49.872Z] [ERROR] time="2026-01-05T16:19:49-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:49.957Z] [ERROR] time="2026-01-05T16:19:49-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:49-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:19:50.733Z] [ERROR] time="2026-01-05T16:19:50-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:50.869Z] [ERROR] time="2026-01-05T16:19:50-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:50-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:19:50.856Z] [ERROR] time="2026-01-05T16:19:50-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:50.988Z] [ERROR] time="2026-01-05T16:19:50-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:50-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:19:52.725Z] [ERROR] time="2026-01-05T16:19:52-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:52.802Z] [ERROR] time="2026-01-05T16:19:52-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:52-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:19:54.684Z] [ERROR] time="2026-01-05T16:19:54-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:54.741Z] [ERROR] time="2026-01-05T16:19:54-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:54-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:19:56.668Z] [ERROR] time="2026-01-05T16:19:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:56.728Z] [ERROR] time="2026-01-05T16:19:56-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:56-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:19:58.670Z] [ERROR] time="2026-01-05T16:19:58-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:19:58.737Z] [ERROR] time="2026-01-05T16:19:58-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:19:58-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:00.679Z] [ERROR] time="2026-01-05T16:20:00-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:00.744Z] [ERROR] time="2026-01-05T16:20:00-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:00-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:02.654Z] [ERROR] time="2026-01-05T16:20:02-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:02.716Z] [ERROR] time="2026-01-05T16:20:02-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:02-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:04.665Z] [ERROR] time="2026-01-05T16:20:04-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:04.730Z] [ERROR] time="2026-01-05T16:20:04-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:04-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:06.670Z] [ERROR] time="2026-01-05T16:20:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:06.729Z] [ERROR] time="2026-01-05T16:20:06-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:06-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:08.670Z] [ERROR] time="2026-01-05T16:20:08-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:08.730Z] [ERROR] time="2026-01-05T16:20:08-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:08-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:10.632Z] [ERROR] time="2026-01-05T16:20:10-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:10.699Z] [ERROR] time="2026-01-05T16:20:10-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:10-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:10.665Z] [ERROR] time="2026-01-05T16:20:10-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:10.732Z] [ERROR] time="2026-01-05T16:20:10-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:10-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:12.666Z] [ERROR] time="2026-01-05T16:20:12-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:12.726Z] [ERROR] time="2026-01-05T16:20:12-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:12-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:14.669Z] [ERROR] time="2026-01-05T16:20:14-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:14.729Z] [ERROR] time="2026-01-05T16:20:14-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:14-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:16.673Z] [ERROR] time="2026-01-05T16:20:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:16.731Z] [ERROR] time="2026-01-05T16:20:16-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:16-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:18.676Z] [ERROR] time="2026-01-05T16:20:18-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:18.736Z] [ERROR] time="2026-01-05T16:20:18-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:18-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:20.715Z] [ERROR] time="2026-01-05T16:20:20-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:20.815Z] [ERROR] time="2026-01-05T16:20:20-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:20-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:26.136Z] [ERROR] time="2026-01-05T16:20:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:26.196Z] [ERROR] time="2026-01-05T16:20:26-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:26-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:31.274Z] [ERROR] time="2026-01-05T16:20:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:31.369Z] [ERROR] time="2026-01-05T16:20:31-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:31-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 
-[2026-01-06T00:20:36.133Z] [ERROR] time="2026-01-05T16:20:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
+[2026-01-06T00:20:36.206Z] [ERROR] time="2026-01-05T16:20:36-08:00" level=warning msg="The \"BUNDLES_DIR\" variable is not set. Defaulting to a blank string."
 time="2026-01-05T16:20:36-08:00" level=warning msg="/Users/adam/Code/testeranto/testeranto/bundles/allTests-docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
-no such service: bundles-python-builder-1
+no such service: bundles-web-builder-1
 

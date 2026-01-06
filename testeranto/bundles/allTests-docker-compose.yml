@@ -64,7 +64,12 @@ services:
       tags:
         - bundles-web-build:latest
     volumes:
-      - /Users/adam/Code/testeranto:/workspace
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/allTests.ts:/workspace/allTests.ts
+      - /Users/adam/Code/testeranto/allTestsUtils.ts:/workspace/allTestsUtils.ts
     image: bundles-web-build:latest
     restart: 'no'
     environment:
@@ -78,7 +83,7 @@ services:
     command:
       - sh
       - '-c'
-      - TEST_NAME=allTests WS_PORT=3456 yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo 'Build process exited with code $?, but keeping container alive for health checks'
+      - TEST_NAME=allTests WS_PORT=3456 yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
   golang-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -101,26 +106,33 @@ services:
       - '-c'
       - |-
         echo 'Starting pure Go build...'; 
-                        echo 'Creating output directories...'; 
-                        mkdir -p /workspace/testeranto/bundles/allTests/golang;
-                        mkdir -p /workspace/testeranto/metafiles/golang;
-                        echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
-                        
-                        echo "Compiling and running Go metafile generator..."
-                        # Compile and run the Go program
-                        cd /workspace &&                 go build -o /tmp/golang-main src/server/runtimes/golang/main.go &&                 /tmp/golang-main || echo "Go metafile generator completed";
-                        
-                        echo "Build complete. Creating completion signal..."
-                        touch /workspace/testeranto/metafiles/golang/build_complete
-                        
-                        echo "Go build service ready. Keeping container alive..."
-                        while true; do
-                          sleep 3600
-                        done
+               echo 'Creating output directories...'; 
+               mkdir -p /workspace/testeranto/bundles/allTests/golang;
+               mkdir -p /workspace/testeranto/metafiles/golang;
+               echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+               echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
+               if [ -f /workspace/testeranto/allTests.json ]; then
+                 echo "Config file found";
+               else
+                 echo "Config file NOT found";
+                 ls -la /workspace/testeranto/ || true;
+               fi
+               
+               echo "Compiling and running Go metafile generator..."
+               # Compile and run the Go program
+               cd /workspace &&        go build -o /tmp/golang-main src/server/runtimes/golang/main.go &&        /tmp/golang-main /workspace/testeranto/allTests.json || echo "Go metafile generator completed";
+               
+               echo "Checking if metafile was generated:";
+               ls -la /workspace/testeranto/metafiles/golang/ || echo "Go metafiles directory not found";
+               
+               echo "Go build service ready. Keeping container alive..."
+               while true; do
+                 sleep 3600
+               done
     healthcheck:
       test:
         - CMD-SHELL
-        - '[ -f /workspace/testeranto/metafiles/golang/golang.metafile.json ] && echo "healthy" || exit 1'
+        - '[ -f /workspace/testeranto/metafiles/golang/allTests.json ] && echo "healthy" || exit 1'
       interval: 10s
       timeout: 30s
       retries: 10
@@ -148,8 +160,17 @@ services:
       - |-
         echo 'Python service starting...';
                mkdir -p /workspace/testeranto/metafiles/python;
+               echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
+               if [ -f /workspace/testeranto/allTests.json ]; then
+                 echo "Config file found";
+               else
+                 echo "Config file NOT found";
+                 ls -la /workspace/testeranto/ || true;
+               fi
                # Run the pitono.py script with the allTests.json config
                cd /workspace && python src/server/runtimes/python/pitono.py /workspace/testeranto/allTests.json;
+               echo "Checking if metafile was generated:";
+               ls -la /workspace/testeranto/metafiles/python/ || echo "Python metafiles directory not found";
                echo 'Container staying alive...';
                # Keep the container alive
                while true; do sleep 3600; done

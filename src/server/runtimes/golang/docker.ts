@@ -33,29 +33,36 @@ export const golangDockerComposeFile = (config: IBuiltConfig) => {
       "sh",
       "-c",
       `echo 'Starting pure Go build...'; 
-                echo 'Creating output directories...'; 
-                mkdir -p /workspace/testeranto/bundles/allTests/golang;
-                mkdir -p /workspace/testeranto/metafiles/golang;
-                echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
-                
-                echo "Compiling and running Go metafile generator..."
-                # Compile and run the Go program
-                cd /workspace && \
-                go build -o /tmp/golang-main src/server/runtimes/golang/main.go && \
-                /tmp/golang-main || echo "Go metafile generator completed";
-                
-                echo "Build complete. Creating completion signal..."
-                touch /workspace/testeranto/metafiles/golang/build_complete
-                
-                echo "Go build service ready. Keeping container alive..."
-                while true; do
-                  sleep 3600
-                done`,
+       echo 'Creating output directories...'; 
+       mkdir -p /workspace/testeranto/bundles/allTests/golang;
+       mkdir -p /workspace/testeranto/metafiles/golang;
+       echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+       echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
+       if [ -f /workspace/testeranto/allTests.json ]; then
+         echo "Config file found";
+       else
+         echo "Config file NOT found";
+         ls -la /workspace/testeranto/ || true;
+       fi
+       
+       echo "Compiling and running Go metafile generator..."
+       # Compile and run the Go program
+       cd /workspace && \
+       go build -o /tmp/golang-main src/server/runtimes/golang/main.go && \
+       /tmp/golang-main /workspace/testeranto/allTests.json || echo "Go metafile generator completed";
+       
+       echo "Checking if metafile was generated:";
+       ls -la /workspace/testeranto/metafiles/golang/ || echo "Go metafiles directory not found";
+       
+       echo "Go build service ready. Keeping container alive..."
+       while true; do
+         sleep 3600
+       done`,
     ],
     healthcheck: {
       test: [
         "CMD-SHELL",
-        `[ -f /workspace/testeranto/metafiles/golang/golang.metafile.json ] && echo "healthy" || exit 1`,
+        `[ -f /workspace/testeranto/metafiles/golang/allTests.json ] && echo "healthy" || exit 1`,
       ],
       interval: "10s",
       timeout: "30s",

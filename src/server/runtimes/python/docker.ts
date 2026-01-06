@@ -30,8 +30,17 @@ export const pythonDockerComposeFile = (config: IBuiltConfig) => {
       "-c",
       `echo 'Python service starting...';
        mkdir -p /workspace/testeranto/metafiles/python;
+       echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
+       if [ -f /workspace/testeranto/allTests.json ]; then
+         echo "Config file found";
+       else
+         echo "Config file NOT found";
+         ls -la /workspace/testeranto/ || true;
+       fi
        # Run the pitono.py script with the allTests.json config
        cd /workspace && python src/server/runtimes/python/pitono.py /workspace/testeranto/allTests.json;
+       echo "Checking if metafile was generated:";
+       ls -la /workspace/testeranto/metafiles/python/ || echo "Python metafiles directory not found";
        echo 'Container staying alive...';
        # Keep the container alive
        while true; do sleep 3600; done`,

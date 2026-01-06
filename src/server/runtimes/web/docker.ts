@@ -9,8 +9,12 @@ export const webDockerCompose = (config: IBuiltConfig) => {
       tags: [`bundles-web-build:latest`],
     },
     volumes: [
-      `${process.cwd()}:/workspace`,
-      // "node_modules:/workspace/node_modules",
+      "/Users/adam/Code/testeranto/testeranto:/workspace/testeranto",
+      "/Users/adam/Code/testeranto/src:/workspace/src",
+      "/Users/adam/Code/testeranto/example:/workspace/example",
+      "/Users/adam/Code/testeranto/dist:/workspace/dist",
+      "/Users/adam/Code/testeranto/allTests.ts:/workspace/allTests.ts",
+      "/Users/adam/Code/testeranto/allTestsUtils.ts:/workspace/allTestsUtils.ts",
     ],
     image: `bundles-web-build:latest`,
     restart: "no",
@@ -25,7 +29,7 @@ export const webDockerCompose = (config: IBuiltConfig) => {
     command: [
       "sh",
       "-c",
-      "TEST_NAME=allTests WS_PORT=3456 yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo 'Build process exited with code $?, but keeping container alive for health checks'",
+      `TEST_NAME=allTests WS_PORT=${config.httpPort} yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";`,
     ],
   };
 };
@@ -34,13 +38,9 @@ export const webDockerFile = `
 
 FROM node:20.19.4-alpine
 WORKDIR /workspace
-
-EXPOSE 3456
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/web
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/web
-ENV IN_DOCKER=true
-
-COPY ./src ./src
+COPY ./tsconfig*.json ./
+COPY ./package.json ./package.json
+COPY ./.yarnrc.yml ./
 
 # Install system dependencies
 RUN apk add --no-cache python3 make g++ libxml2-utils

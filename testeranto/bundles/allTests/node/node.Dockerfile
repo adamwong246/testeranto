@@ -5,8 +5,6 @@ COPY ./tsconfig*.json ./
 COPY ./package.json ./package.json
 COPY ./.yarnrc.yml ./
 
-RUN ls -al
-
 # Install system dependencies
 RUN apk add --no-cache python3 make g++ libxml2-utils
 

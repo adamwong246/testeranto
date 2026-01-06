@@ -1,0 +1,49 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "example/Calculator.pitono.test.py": {
+        "bytes": 7019,
+        "imports": [
+          {
+            "path": "sys",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "subprocess",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "asyncio",
+            "kind": "import-statement",
+            "external": true
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "python/Calculator.pitono.test.py": {
+        "imports": [],
+        "exports": [],
+        "entryPoint": "example/Calculator.pitono.test.py",
+        "inputs": {
+          "example/Calculator.pitono.test.py": {
+            "bytesInOutput": 7019
+          }
+        },
+        "bytes": 7019,
+        "signature": "7c1a47db",
+        "bundlePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundled.py",
+        "bundleSize": 7004
+      }
+    }
+  }
+}

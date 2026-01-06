@@ -1,97 +1,6 @@
 {
-  "errors": [
-    {
-      "id": "",
-      "pluginName": "metafileWriter",
-      "text": "ENOENT: no such file or directory, open 'testeranto/metafiles/node/allTests.ts.json'",
-      "location": {
-        "file": "/workspace/node_modules/esbuild/lib/main.js",
-        "namespace": "file",
-        "line": 1317,
-        "column": 32,
-        "length": 0,
-        "lineText": "            const value = await callback(result);\n    at Object.writeFileSync (node:fs:2368:20)\n    at file:///workspace/dist/prebuild/chunk-B2JLSCHU.mjs:72:14\n    at /workspace/node_modules/esbuild/lib/main.js:1317:33\n    at runOnEndCallbacks (/workspace/node_modules/esbuild/lib/main.js:1346:9)\n    at buildResponseToResult (/workspace/node_modules/esbuild/lib/main.js:924:7)\n    at /workspace/node_modules/esbuild/lib/main.js:951:16\n    at responseCallbacks.<computed> (/workspace/node_modules/esbuild/lib/main.js:603:9)\n    at handleIncomingPacket (/workspace/node_modules/esbuild/lib/main.js:658:12)\n    at Socket.readFromStdout (/workspace/node_modules/esbuild/lib/main.js:581:7)\n    at Socket.emit (node:events:524:28)",
-        "suggestion": ""
-      },
-      "notes": [
-        {
-          "text": "This error came from the \"onEnd\" callback registered here:",
-          "location": {
-            "file": "/workspace/node_modules/esbuild/lib/main.js",
-            "namespace": "file",
-            "line": 1141,
-            "column": 20,
-            "length": 0,
-            "lineText": "      let promise = setup({\n    at setup (file:///workspace/dist/prebuild/chunk-B2JLSCHU.mjs:71:15)\n    at handlePlugins (/workspace/node_modules/esbuild/lib/main.js:1141:21)\n    at buildOrContextImpl (/workspace/node_modules/esbuild/lib/main.js:854:5)\n    at Object.buildOrContext (/workspace/node_modules/esbuild/lib/main.js:680:5)\n    at /workspace/node_modules/esbuild/lib/main.js:2026:15\n    at new Promise (<anonymous>)\n    at Object.build (/workspace/node_modules/esbuild/lib/main.js:2025:25)\n    at Object.build (/workspace/node_modules/esbuild/lib/main.js:1876:51)\n    at startBundling (/workspace/dist/prebuild/server/runtimes/node/node.mjs:59:28)",
-            "suggestion": ""
-          }
-        }
-      ],
-      "detail": 0
-    }
-  ],
-  "warnings": [
-    {
-      "id": "direct-eval",
-      "location": {
-        "column": 21,
-        "file": "example/Calculator.ts",
-        "length": 4,
-        "line": 17,
-        "lineText": "      const result = eval(this.display);",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [
-        {
-          "location": null,
-          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
-        }
-      ],
-      "pluginName": "",
-      "text": "Using direct eval with a bundler is not recommended and may cause problems"
-    },
-    {
-      "id": "package.json",
-      "location": {
-        "column": 6,
-        "file": "package.json",
-        "length": 7,
-        "line": 86,
-        "lineText": "      \"types\": \"./src/CoreTypes.d.ts\"",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [
-        {
-          "location": {
-            "column": 6,
-            "file": "package.json",
-            "length": 8,
-            "line": 84,
-            "lineText": "      \"import\": \"./src/CoreTypes.ts\",",
-            "namespace": "",
-            "suggestion": ""
-          },
-          "text": "The \"import\" condition comes earlier and will be used for all \"import\" statements:"
-        },
-        {
-          "location": {
-            "column": 6,
-            "file": "package.json",
-            "length": 9,
-            "line": 85,
-            "lineText": "      \"require\": \"./src/CoreTypes.ts\",",
-            "namespace": "",
-            "suggestion": ""
-          },
-          "text": "The \"require\" condition comes earlier and will be used for all \"require\" calls:"
-        }
-      ],
-      "pluginName": "",
-      "text": "The condition \"types\" here will never be used as it comes after both \"import\" and \"require\""
-    }
-  ],
+  "errors": [],
+  "warnings": [],
   "metafile": {
     "inputs": {
       "src/tiposkripto/Analyzer.ts": {
@@ -225,18 +134,18 @@
         ],
         "format": "esm"
       },
-      "src/tiposkripto/Node.ts": {
-        "bytes": 1060,
+      "src/tiposkripto/Web.ts": {
+        "bytes": 2942,
         "imports": [
-          {
-            "path": "../CoreTypes.js",
-            "kind": "import-statement",
-            "external": true
-          },
           {
             "path": "src/tiposkripto/index.ts",
             "kind": "import-statement",
             "original": "./index.js"
+          },
+          {
+            "path": "../CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
           },
           {
             "path": "src/tiposkripto/BaseTiposkripto.ts",
@@ -265,9 +174,9 @@
             "external": true
           },
           {
-            "path": "src/tiposkripto/Node.ts",
+            "path": "src/tiposkripto/Web.ts",
             "kind": "dynamic-import",
-            "original": "./Node"
+            "original": "./Web"
           }
         ],
         "format": "esm"
@@ -403,10 +312,10 @@
       }
     },
     "outputs": {
-      "testeranto/bundles/allTests/node/example/Calculator.test.mjs": {
+      "testeranto/bundles/allTests/web/example/Calculator.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/allTests/node/chunk-HTUBWCSZ.mjs",
+            "path": "testeranto/bundles/allTests/web/chunk-HTUBWCSZ.mjs",
             "kind": "import-statement"
           },
           {
@@ -430,7 +339,7 @@
             "external": true
           },
           {
-            "path": "testeranto/bundles/allTests/node/Node-2Q4RME6D.mjs",
+            "path": "testeranto/bundles/allTests/web/Web-XWDHAE6G.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -451,7 +360,7 @@
             "bytesInOutput": 48
           },
           "src/tiposkripto/Tiposkripto.ts": {
-            "bytesInOutput": 483
+            "bytesInOutput": 481
           },
           "example/Calculator.ts": {
             "bytesInOutput": 2036
@@ -466,12 +375,12 @@
             "bytesInOutput": 7164
           }
         },
-        "bytes": 15353
+        "bytes": 15351
       },
-      "testeranto/bundles/allTests/node/Node-2Q4RME6D.mjs": {
+      "testeranto/bundles/allTests/web/Web-XWDHAE6G.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/allTests/node/chunk-HTUBWCSZ.mjs",
+            "path": "testeranto/bundles/allTests/web/chunk-HTUBWCSZ.mjs",
             "kind": "import-statement"
           },
           {
@@ -481,9 +390,10 @@
           }
         ],
         "exports": [
+          "WebTiposkripto",
           "default"
         ],
-        "entryPoint": "src/tiposkripto/Node.ts",
+        "entryPoint": "src/tiposkripto/Web.ts",
         "inputs": {
           "src/tiposkripto/BaseTiposkripto.ts": {
             "bytesInOutput": 11433
@@ -500,13 +410,13 @@
           "src/tiposkripto/BaseWhen.ts": {
             "bytesInOutput": 1031
           },
-          "src/tiposkripto/Node.ts": {
-            "bytesInOutput": 587
+          "src/tiposkripto/Web.ts": {
+            "bytesInOutput": 1149
           }
         },
-        "bytes": 20261
+        "bytes": 20839
       },
-      "testeranto/bundles/allTests/node/chunk-HTUBWCSZ.mjs": {
+      "testeranto/bundles/allTests/web/chunk-HTUBWCSZ.mjs": {
         "imports": [],
         "exports": [
           "DefaultAdapter",

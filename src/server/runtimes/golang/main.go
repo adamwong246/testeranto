@@ -32,7 +32,7 @@ type Metafile struct {
 }
 
 type Input struct {
-	Bytes  int           `json:"bytes"`
+	Bytes   int          `json:"bytes"`
 	Imports []ImportInfo `json:"imports"`
 }
 
@@ -56,6 +56,15 @@ func main() {
 	configPath := findConfig()
 	if configPath == "" {
 		fmt.Println("Error: allTests.json not found")
+		fmt.Println("Command line arguments:", os.Args)
+		fmt.Println("Current directory:", getCurrentDir())
+		// List files in workspace
+		fmt.Println("Listing /workspace/testeranto/:")
+		if entries, err := os.ReadDir("/workspace/testeranto"); err == nil {
+			for _, entry := range entries {
+				fmt.Println("  ", entry.Name())
+			}
+		}
 		os.Exit(1)
 	}
 
@@ -83,12 +92,12 @@ func main() {
 	if metafilesDir == "" {
 		metafilesDir = "/workspace/testeranto/metafiles/golang"
 	}
-	if err := os.MkdirAll(metafilesDir, 0755); err != nil {
-		fmt.Printf("Error creating metafiles directory: %v\n", err)
-		os.Exit(1)
-	}
+	// if err := os.MkdirAll(metafilesDir, 0755); err != nil {
+	// 	fmt.Printf("Error creating metafiles directory: %v\n", err)
+	// 	os.Exit(1)
+	// }
 
-	metafilePath := filepath.Join(metafilesDir, "golang.metafile.json")
+	metafilePath := filepath.Join(metafilesDir, "allTests.json")
 	if err := writeMetafile(metafilePath, metafile); err != nil {
 		fmt.Printf("Error writing metafile: %v\n", err)
 		os.Exit(1)
@@ -174,7 +183,7 @@ func generateMetafile(entryPoints []string) Metafile {
 				bytes, _ := fileSize(dep)
 				imports := parseGoImports(dep)
 				inputs[dep] = Input{
-					Bytes:  bytes,
+					Bytes:   bytes,
 					Imports: imports,
 				}
 			}
@@ -352,10 +361,18 @@ func isExternalImport(importPath string) bool {
 	return strings.Contains(firstPart, ".")
 }
 
+func getCurrentDir() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		return fmt.Sprintf("error: %v", err)
+	}
+	return dir
+}
+
 func resolveGoImport(importPath, currentFile string) string {
 	// Simple resolution: look in vendor directory and current directory
 	currentDir := filepath.Dir(currentFile)
-	
+
 	// Check vendor directory
 	vendorPath := filepath.Join(currentDir, "vendor", importPath)
 	if _, err := os.Stat(vendorPath + ".go"); err == nil {
@@ -372,13 +389,13 @@ func resolveGoImport(importPath, currentFile string) string {
 			}
 		}
 	}
-	
+
 	// Check relative to current directory
 	relativePath := filepath.Join(currentDir, importPath)
 	if _, err := os.Stat(relativePath + ".go"); err == nil {
 		return relativePath + ".go"
 	}
-	
+
 	// Check GOPATH
 	gopath := os.Getenv("GOPATH")
 	if gopath != "" {
@@ -387,6 +404,6 @@ func resolveGoImport(importPath, currentFile string) string {
 			return gopathPath + ".go"
 		}
 	}
-	
+
 	return ""
 }

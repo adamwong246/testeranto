@@ -142,6 +142,132 @@ def collect_dependencies(file_path: str, visited: Set[str] = None) -> List[str]:
             unique.append(dep)
     return unique
 
+def topological_sort(files: List[str]) -> List[str]:
+    """Sort files based on import dependencies."""
+    # Build dependency graph
+    graph = {file: set() for file in files}
+    for file in files:
+        imports = parse_python_imports(file)
+        for imp in imports:
+            if not imp.get('external') and imp['path']:
+                resolved = resolve_python_import(imp['path'], file)
+                if resolved and resolved in files:
+                    graph[file].add(resolved)
+    
+    # Kahn's algorithm
+    in_degree = {node: 0 for node in graph}
+    for node in graph:
+        for neighbor in graph[node]:
+            in_degree[neighbor] += 1
+    
+    # Queue of nodes with no incoming edges
+    queue = [node for node in graph if in_degree[node] == 0]
+    sorted_list = []
+    
+    while queue:
+        node = queue.pop(0)
+        sorted_list.append(node)
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+    
+    # Check for cycles
+    if len(sorted_list) != len(files):
+        print("Warning: Circular dependencies detected, using original order")
+        return files
+    
+    return sorted_list
+
+def strip_imports(content: str) -> str:
+    """Remove import statements from Python code."""
+    lines = content.split('\n')
+    result_lines = []
+    in_multiline_string = False
+    multiline_delimiter = None
+    
+    for line in lines:
+        # Handle multiline strings
+        stripped_line = line.strip()
+        if not in_multiline_string:
+            # Check for start of multiline string
+            if stripped_line.startswith('"""') or stripped_line.startswith("'''"):
+                # Check if it's a single line or multiline
+                if stripped_line.count('"""') == 1 or stripped_line.count("'''") == 1:
+                    in_multiline_string = True
+                    multiline_delimiter = stripped_line[:3]
+                result_lines.append(line)
+                continue
+            # Check for import statements
+            elif stripped_line.startswith('import ') or stripped_line.startswith('from '):
+                # Skip this line
+                continue
+            else:
+                result_lines.append(line)
+        else:
+            # Inside a multiline string
+            result_lines.append(line)
+            # Check for end of multiline string
+            if multiline_delimiter in stripped_line:
+                # Count occurrences to handle cases where delimiter appears in the string
+                if stripped_line.count(multiline_delimiter) % 2 == 1:
+                    in_multiline_string = False
+                    multiline_delimiter = None
+    
+    return '\n'.join(result_lines)
+
+def bundle_python_files(entry_point: str, output_dir: str) -> str:
+    """Bundle all dependencies of a Python file into a single file."""
+    # Collect all dependencies
+    all_deps = collect_dependencies(entry_point)
+    
+    # Sort them topologically
+    sorted_deps = topological_sort(all_deps)
+    
+    # Read and process each file
+    bundled_lines = []
+    seen_contents = set()
+    
+    for dep in sorted_deps:
+        try:
+            with open(dep, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except Exception as e:
+            print(f"Warning: Could not read {dep}: {e}")
+            continue
+        
+        # Generate a hash to avoid duplicates
+        content_hash = hashlib.md5(content.encode()).hexdigest()
+        if content_hash in seen_contents:
+            continue
+        seen_contents.add(content_hash)
+        
+        # Strip import statements
+        stripped_content = strip_imports(content)
+        if stripped_content.strip():
+            bundled_lines.append(f"# File: {dep}")
+            bundled_lines.append(stripped_content)
+            bundled_lines.append("")  # Add a blank line between files
+    
+    # Combine all lines
+    bundled_content = '\n'.join(bundled_lines)
+    
+    # Ensure output directory exists
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Generate output filename
+    entry_name = os.path.basename(entry_point)
+    if entry_name.endswith('.py'):
+        entry_name = entry_name[:-3]
+    output_filename = f"{entry_name}.bundled.py"
+    output_path = os.path.join(output_dir, output_filename)
+    
+    # Write bundled file
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(bundled_content)
+    
+    return output_path
+
 def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
     """Generate a metafile similar to esbuild's structure."""
     inputs: Dict[str, Any] = {}
@@ -149,6 +275,9 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
     
     # Generate a signature
     signature = hashlib.md5(str(os.getpid()).encode() + str(os.times()).encode()).hexdigest()[:8]
+    
+    # Bundle directory
+    bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')
     
     for entry_point in entry_points:
         if not os.path.exists(entry_point):
@@ -171,6 +300,9 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
                     'imports': imports
                 }
         
+        # Generate the bundle
+        bundle_path = bundle_python_files(entry_point, bundles_dir)
+        
         # Generate output key
         entry_name = os.path.basename(entry_point)
         if entry_name.endswith('.py'):
@@ -188,13 +320,21 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
             input_bytes[dep] = {'bytesInOutput': bytes_size}
             total_bytes += bytes_size
         
+        # Add bundle size
+        try:
+            bundle_size = os.path.getsize(bundle_path)
+        except OSError:
+            bundle_size = 0
+        
         outputs[output_key] = {
             'imports': [],
             'exports': [],
             'entryPoint': entry_point,
             'inputs': input_bytes,
             'bytes': total_bytes,
-            'signature': signature
+            'signature': signature,
+            'bundlePath': bundle_path,
+            'bundleSize': bundle_size
         }
     
     return {
@@ -214,9 +354,6 @@ def main():
     else:
         # Try common locations
         possible_paths = [
-            # '/workspace/testeranto/bundles/allTests/allTests.json',
-            # '/workspace/allTests.json',
-            # 'allTests.json',
             'testeranto/allTests.json'
         ]
         config_path = None
@@ -249,18 +386,27 @@ def main():
     
     print(f"Found {len(entry_points)} Python test(s)")
     
-    # Generate metafile
+    # Generate metafile (which also generates bundles)
     metafile = generate_metafile(entry_points)
     
     # Write metafile
     metafiles_dir = os.environ.get('METAFILES_DIR', '/workspace/testeranto/metafiles/python')
     os.makedirs(metafiles_dir, exist_ok=True)
     
-    metafile_path = os.path.join(metafiles_dir, 'python.metafile.json')
+    metafile_path = os.path.join(metafiles_dir, 'allTests.json')
+    print(f"Writing metafile to: {metafile_path}")
     with open(metafile_path, 'w') as f:
         json.dump(metafile, f, indent=2)
+    print(f"Metafile written successfully")
     
     print(f"Python metafile written to {metafile_path}")
+    
+    # Print bundle information
+    bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')
+    print(f"Python bundles written to {bundles_dir}")
+    for output_key, output_info in metafile['metafile']['outputs'].items():
+        if 'bundlePath' in output_info:
+            print(f"  {output_key}: {output_info['bundlePath']}")
     
     # Print summary
     num_inputs = len(metafile['metafile']['inputs'])
