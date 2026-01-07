@@ -1,162 +1,49 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import esbuild from "esbuild";
-
-import { IBuiltConfig } from "../../../Types";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import puppeteer from "puppeteer-core";
+import { IBuiltConfig } from "../../../Types";
 import configer from "./esbuild";
 
 const testName = process.argv[2];
 const mode = process.argv[3] || "dev";
 
+let browser: puppeteer.Browser;
+
 async function startChromeBrowser() {
-  // console.log("Starting Chrome browser via Puppeteer...");
-  // try {
-  //   browser = await puppeteer.launch({
-  //     slowMo: 1,
-  //     waitForInitialPage: false,
-  //     // executablePath,
-  //     defaultViewport: null, // Disable default 800x600 viewport
-  //     dumpio: false,
-  //     executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium-browser",
-  //     args: [
-  //       "--no-sandbox",
-  //       "--disable-setuid-sandbox",
-  //       "--disable-dev-shm-usage",
-  //       "--disable-accelerated-2d-canvas",
-  //       "--disable-gpu",
-  //       "--window-size=1920,1080",
-  //       "--single-process", // May help in Docker
-  //       "--no-zygote", // May help in Docker
-  //     ],
-  //     headless: "new", // Use new headless mode
-  //   });
-  //   console.log("Chrome browser started");
-  //   return browser;
-  // } catch (error) {
-  //   console.error("Failed to launch Chrome:", error);
-  //   console.error("Chromium is not available in the container.");
-  //   console.error("Make sure chromium is installed in the Docker image.");
-  //   throw new Error(`Chrome is not available: ${error.message}`);
-  // }
-}
-
-async function runTestInBrowser(
-  testPath: string,
-  config: IBuiltConfig,
-  testFile: string
-): Promise<boolean> {
-  console.log(`Running web test: ${testPath}`);
-
-  // const page = await browser.newPage();
-
-  // Set up console logging
-  // page.on("console", (msg) => {
-  //   console.log(`[WEB TEST CONSOLE] ${msg.type()}: ${msg.text()}`);
-  // });
-
-  // page.on("pageerror", (error) => {
-  //   console.error(`[WEB TEST PAGE ERROR] ${error}`);
-  // });
-
-  // Create report directory
-  const reportDest = `./testeranto/reports/${testName}/${testFile.replace(
-    ".test.mjs",
-    ""
-  )}/web`;
-  if (!fs.existsSync(reportDest)) {
-    fs.mkdirSync(reportDest, { recursive: true });
-  }
-
-  // Prepare test resources
-  const webArgz = JSON.stringify({
-    name: testFile,
-    ports: [],
-    fs: reportDest,
-    // browserWSEndpoint: browser.wsEndpoint(),
-  });
-
-  // Load a blank page
-  // await page.goto(`file://${path.dirname(testPath)}/`, {});
-
-  // Create evaluation string to import and run the test module
-  // Add cache busting to prevent caching issues
-  const d = `${testPath}?cacheBust=${Date.now()}`;
-  const evaluation = `
-    (async () => {
-      try {
-        const module = await import('file://${d}');
-        // The module should handle test execution
-        // We need to wait for it to complete
-        console.log('Web test module loaded');
-        return { fails: 0, failed: [], features: [] };
-      } catch (error) {
-        console.error('Failed to run web test:', error);
-        throw error;
-      }
-    })()
-  `;
-
+  console.log("Starting Chrome browser via Puppeteer...");
   try {
-    // await page.evaluate(evaluation);
-    // Wait a bit for tests to run
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
-    // Check if tests.json was created
-    const testsJsonPath = path.join(reportDest, "tests.json");
-    if (fs.existsSync(testsJsonPath)) {
-      console.log(`Tests completed for ${testFile}`);
-      // await page.close();
-      return true;
-    } else {
-      console.error(`No tests.json created for ${testFile}`);
-      // await page.close();
-      return false;
-    }
+    // Start Chrome with remote debugging enabled on port 9222
+    // This matches the port exposed in the Docker Compose file
+    browser = await puppeteer.launch({
+      slowMo: 1,
+      waitForInitialPage: false,
+      executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium-browser",
+      defaultViewport: null,
+      dumpio: true, // Enable to see browser logs in Docker
+      args: [
+        "--remote-debugging-port=9222",
+        "--remote-debugging-address=0.0.0.0", // Allow connections from outside the container
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--disable-gpu",
+        "--window-size=1920,1080",
+        "--headless=new",
+      ],
+      headless: "new",
+    });
+    
+    console.log("Chrome browser started with remote debugging on port 9222");
+    console.log(`WebSocket endpoint: ${browser.wsEndpoint()}`);
+    return browser;
   } catch (error) {
-    console.error(`Web test failed: ${testFile}`, error);
-    // Create a minimal tests.json on failure
-    const testsJsonPath = path.join(reportDest, "tests.json");
-    if (!fs.existsSync(testsJsonPath)) {
-      fs.writeFileSync(
-        testsJsonPath,
-        JSON.stringify(
-          {
-            tests: [],
-            features: [],
-            givens: [],
-            fullPath: testFile,
-          },
-          null,
-          2
-        )
-      );
-    }
-    // await page.close();
-    return false;
+    throw new Error(`Chrome is not available: ${error.message}`);
   }
 }
 
-// run esbuild in watch mode using esbuildConfigs. Write to fs the bundle and metafile
-async function startBundling(
-  config: IBuiltConfig
-  // onMetafileChange: (esbuild: esbuild.BuildResult) => void
-) {
-  // console.log(`WEB BUILDER is now bundling: ${testName}`);
-
-  // const bundlesDir = path.join(
-  //   process.cwd(),
-  //   "testeranto/bundles/allTests/web"
-  // );
-
-  // // Ensure bundles directory exists
-  // if (!fs.existsSync(bundlesDir)) {
-  //   console.log(`Creating bundles directory: ${bundlesDir}`);
-  //   fs.mkdirSync(bundlesDir, { recursive: true });
-  // }
-
-  // Get web build configuration
+async function startBundling(config: IBuiltConfig) {
   const webConfig = configer(config, testName);
 
   // Build the web bundle
@@ -196,99 +83,33 @@ async function startBundling(
     console.warn("No metafile generated by esbuild");
   }
 
-  // Start Chrome browser
-  // await startChromeBrowser();
+  await startChromeBrowser();
 
-  // Read the metafile to find built test files
-  const readMetafilePath = path.join(
-    process.cwd(),
-    "testeranto/metafiles/web/allTests.json"
-  );
-  let builtTestFiles: string[] = [];
-
-  // Define bundlesDir for fallback scanning
-  const bundlesDir = path.join(
-    process.cwd(),
-    "testeranto/bundles/allTests/web"
-  );
-
-  if (fs.existsSync(readMetafilePath)) {
-    console.log(`Reading metafile from: ${readMetafilePath}`);
-    const metafileContent = fs.readFileSync(readMetafilePath, "utf-8");
-    const metafile = JSON.parse(metafileContent);
-
-    // Extract output files from the metafile
-    if (metafile.metafile && metafile.metafile.outputs) {
-      for (const [outputPath, outputInfo] of Object.entries(
-        metafile.metafile.outputs
-      )) {
-        const outputInfoTyped = outputInfo as any;
-        // Look for entry points (test files)
-        if (outputInfoTyped.entryPoint && outputPath.endsWith(".mjs")) {
-          console.log(`Found built test file: ${outputPath}`);
-          builtTestFiles.push(outputPath);
-        }
-      }
-    }
-  } else {
-    console.warn(
-      `Metafile not found at ${readMetafilePath}, falling back to scanning bundles directory`
-    );
-    // Fallback: scan the bundles directory
-    const files = fs.readdirSync(bundlesDir);
-    builtTestFiles = files.filter((f) => f.endsWith(".test.mjs"));
-  }
-
-  // console.log(`Found ${builtTestFiles.length} test files to run`);
-
-  // let allTestsPassed = true;
-  // for (const testFile of builtTestFiles) {
-  //   console.log(`\n=== Running web test: ${testFile} ===`);
-  //   // Get the absolute path
-  //   const absoluteTestPath = path.join(process.cwd(), testFile);
-  //   const testPassed = await runTestInBrowser(
-  //     absoluteTestPath,
-  //     config,
-  //     path.basename(testFile)
-  //   );
-  //   if (!testPassed) {
-  //     allTestsPassed = false;
-  //   }
-  //   console.log(`=== Finished web test: ${testFile} ===\n`);
-  // }
-
-  // onMetafileChange(buildResult);
-
-  // // Report overall status
-  // if (allTestsPassed) {
-  //   console.log("✅ All web tests passed!");
-  // } else {
-  //   console.error("❌ Some web tests failed!");
-  //   // In dev mode, we don't want to exit with error to keep watching
-  //   if (mode !== "dev") {
-  //     process.exit(1);
-  //   }
-  // }
-
-  // In dev mode, watch for changes
+  console.log("WEB BUILDER: Chrome is now hosted and ready for test execution");
+  console.log("WEB BUILDER: Metafiles have been generated");
+  
+  // In dev mode, keep the process alive to host Chrome
   if (mode === "dev") {
-    console.log("WEB BUILDER: Watching for changes...");
+    console.log("WEB BUILDER: Running in dev mode, keeping Chrome instance alive...");
+    
+    // Watch for changes to rebuild metafiles
+    console.log("WEB BUILDER: Setting up file watcher for rebuilds...");
     const ctx = await esbuild.context(webConfig);
     await ctx.watch();
+    
+    // Keep the process alive
+    process.on("SIGINT", async () => {
+      console.log("WEB BUILDER: Shutting down...");
+      if (browser) await browser.close();
+      process.exit(0);
+    });
+    
+    // Keep alive
+    await new Promise(() => {
+      // This promise never resolves, keeping the process alive
+    });
   }
 }
-
-// // run using user defined static analysis when the metafile changes
-// async function startStaticAnalysis(esbuildResult: esbuild.BuildResult) {
-//   console.log(`WEB BUILDER is now performing static analysis upon: `);
-//   // Implement web-specific static analysis if needed
-// }
-
-// // run testeranto tests when the metafile changes
-// async function startBddTests(esbuildResult: esbuild.BuildResult) {
-//   console.log(`WEB BUILDER is now running testeranto tests in browser`);
-//   // Tests are already running via runTestInBrowser
-// }
 
 async function main() {
   const configPathBase = `/workspace/${testName}`;
@@ -304,13 +125,13 @@ async function main() {
       // Keep process alive
       process.on("SIGINT", async () => {
         console.log("WEB BUILDER: Shutting down...");
-        // if (browser) await browser.close();
+        if (browser) await browser.close();
         process.exit(0);
       });
     }
   } catch (error) {
     console.error("WEB BUILDER: Error:", error);
-    // if (browser) await browser.close();
+    if (browser) await browser.close();
     process.exit(1);
   }
 }

@@ -1,0 +1,24 @@
+Command: yarn eslint testeranto/metafiles/node/allTests.json
+Timestamp: 2026-01-07T17:06:44.733Z
+Process ID: static-queue-1767805598737-u99hh92og
+Test: testeranto/metafiles/node/allTests.json
+Runtime: node
+
+=== STDOUT ===
+
+yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint testeranto/metafiles/node/allTests.json
+
+/workspace/testeranto/metafiles/node/allTests.json
+  0:0  warning  File ignored because no matching configuration was supplied
+
+✖ 1 problem (0 errors, 1 warning)
+
+Done in 1.39s.
+
+
+=== STDERR ===
+
+
+
+=== END ===

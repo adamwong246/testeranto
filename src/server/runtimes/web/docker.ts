@@ -26,6 +26,9 @@ export const webDockerCompose = (config: IBuiltConfig) => {
       CHROMIUM_PATH: "/usr/bin/chromium-browser",
     },
     extra_hosts: ["host.docker.internal:host-gateway"],
+    ports: [
+      "9222:9222",  // Expose Chrome's remote debugging port
+    ],
     command: [
       "sh",
       "-c",

@@ -1,0 +1,22 @@
+Command: yarn tsc --noEmit testeranto/metafiles/web/allTests.json
+Timestamp: 2026-01-07T17:07:13.633Z
+Process ID: static-queue-1767805619458-v29ntkfil
+Test: testeranto/metafiles/web/allTests.json
+Runtime: web
+
+=== STDOUT ===
+
+yarn run v1.22.22
+$ /workspace/node_modules/.bin/tsc --noEmit testeranto/metafiles/web/allTests.json
+error TS6054: File 'testeranto/metafiles/web/allTests.json' has an unsupported extension. The only supported extensions are '.ts', '.tsx', '.d.ts', '.cts', '.d.cts', '.mts', '.d.mts'.
+  The file is in the program because:
+    Root file specified for compilation
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+
+=== STDERR ===
+
+error Command failed with exit code 2.
+
+
+=== END ===
