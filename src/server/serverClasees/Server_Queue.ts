@@ -7,7 +7,7 @@ import { WebSocket } from "ws";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { ITestResourceConfiguration } from "../../lib/tiposkripto";
 import { IMode } from "../types";
-import { ServerWriter } from "./ServerWriter";
+import { Server_Writer } from "./Server_Writer";
 import { QueueManager } from "./utils/QueueManager";
 import {
   formatStaticAnalysisOutput,
@@ -17,7 +17,7 @@ import {
   shouldShutdown,
 } from "./utils/QueueUtils";
 
-export class Server_Queue extends ServerWriter {
+export class Server_Queue extends Server_Writer {
   private queueManager: QueueManager;
 
   private testSchedulingQueue: Array<{

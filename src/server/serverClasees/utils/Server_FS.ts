@@ -34,15 +34,3 @@ export const IndexHtml = () => `
 </body>
 </html>
 `;
-
-// export const ReportHtml = () => `
-//   ${getBaseHtml("Testeranto")}
-
-//   <link rel="stylesheet" href="Report.css" />
-//   <script src="Report.js"></script>
-// </head>
-// <body>
-//   <div id="root"></div>
-// </body>
-// </html>
-// `;

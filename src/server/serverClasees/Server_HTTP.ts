@@ -9,6 +9,7 @@ import { getContentType } from "./utils/Server_TCP_utils";
 export class Server_HTTP extends Server_TCP {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
+
     if (this.httpServer) {
       const address = this.httpServer.address();
       console.log(`[HTTP] HTTP server address:`, address);

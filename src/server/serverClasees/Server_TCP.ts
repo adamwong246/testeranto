@@ -1,10 +1,10 @@
 import http from "http";
 import { WebSocket, WebSocketServer } from "ws";
 import { IMode } from "../types";
-import { Server_Base } from "./Server_Base";
+import { Server_DockerCompose } from "./Server_DockerCompose";
 import { SERVER_CONSTANTS } from "./utils/Server_TCP_constants";
 
-export class Server_TCP extends Server_Base {
+export class Server_TCP extends Server_DockerCompose {
   protected wss: WebSocketServer;
   protected httpServer: http.Server;
 

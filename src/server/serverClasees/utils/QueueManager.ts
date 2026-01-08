@@ -1,7 +1,7 @@
 import { default as ansiC } from "ansi-colors";
 import { extractTestNameFromBundlePath, shouldAddToQueue } from "./QueueUtils";
 import { IRunTime } from "../../../Types";
-import { getRunnables } from "../../utils";
+import { getRunnables } from "./getRunnables";
 
 export class QueueManager {
   private queue: Array<{

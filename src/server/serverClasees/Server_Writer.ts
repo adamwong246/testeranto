@@ -1,9 +1,11 @@
 import fs from "fs";
 import { IBuiltConfig, ISummary } from "../../Types";
-import { ServerProcessManager } from "./ServerProcessManager";
+import { Server_ProcessManager } from "./Server_ProcessManager";
 import { IMode } from "../types";
 
-export class ServerWriter extends ServerProcessManager {
+export class Server_Writer extends Server_ProcessManager {
+  summary: ISummary = {};
+
   currentBuildResolve: (() => void) | null = null;
   currentBuildReject: ((error: any) => void) | null = null;
 

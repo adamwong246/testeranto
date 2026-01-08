@@ -1,162 +1,19 @@
-import { ChildProcess } from "child_process";
-import fs from "fs";
 import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
 import { IMode } from "../types";
-import { Server_DockerCompose } from "./Server_DockerCompose";
+import { Server_WS_Process } from "./Server_WS_Process";
+import {
+  createLogStreams,
+  ProcessCategory,
+  ProcessInfo,
+} from "./utils/Server_ProcessManager";
 
-export type LogStreams = {
-  closeAll: () => void;
-  writeExitCode: (code: number, error?: Error) => void;
-  stdout?: fs.WriteStream;
-  stderr?: fs.WriteStream;
-  info?: fs.WriteStream;
-  warn?: fs.WriteStream;
-  error?: fs.WriteStream;
-  debug?: fs.WriteStream;
-  exit: fs.WriteStream;
-};
-
-export function runtimeLogs(
-  runtime: IRunTime,
-  reportDest: string
-): Record<string, fs.WriteStream> {
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-
-  try {
-    if (!fs.existsSync(safeDest)) {
-      fs.mkdirSync(safeDest, { recursive: true });
-    }
-
-    if (runtime === "node") {
-      return {
-        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else if (runtime === "web") {
-      return {
-        info: fs.createWriteStream(`${safeDest}/info.log`),
-        warn: fs.createWriteStream(`${safeDest}/warn.log`),
-        error: fs.createWriteStream(`${safeDest}/error.log`),
-        debug: fs.createWriteStream(`${safeDest}/debug.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    }
-    // else if (runtime === "pure") {
-    //   return {
-    //     exit: fs.createWriteStream(`${safeDest}/exit.log`),
-    //   };
-    // }
-    else if (runtime === "python") {
-      return {
-        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else if (runtime === "golang") {
-      return {
-        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else {
-      throw `unknown runtime: ${runtime}`;
-    }
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-
-export function createLogStreams(
-  reportDest: string,
-  runtime: IRunTime
-): LogStreams {
-  // Create directory if it doesn't exist
-  if (!fs.existsSync(reportDest)) {
-    fs.mkdirSync(reportDest, { recursive: true });
-  }
-
-  // const streams = {
-  //   exit: fs.createWriteStream(`${reportDest}/exit.log`),
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-
-  try {
-    if (!fs.existsSync(safeDest)) {
-      fs.mkdirSync(safeDest, { recursive: true });
-    }
-
-    const streams = runtimeLogs(runtime, safeDest);
-    // const streams = {
-    //   exit: fs.createWriteStream(`${safeDest}/exit.log`),
-    //   ...(runtime === "node" || runtime === "pure"
-    //     ? {
-    //         stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-    //         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-    //       }
-    //     : {
-    //         info: fs.createWriteStream(`${safeDest}/info.log`),
-    //         warn: fs.createWriteStream(`${safeDest}/warn.log`),
-    //         error: fs.createWriteStream(`${safeDest}/error.log`),
-    //         debug: fs.createWriteStream(`${safeDest}/debug.log`),
-    //       }),
-    // };
-
-    return {
-      ...streams,
-      closeAll: () => {
-        Object.values(streams).forEach(
-          (stream) => !stream.closed && stream.close()
-        );
-      },
-      writeExitCode: (code: number, error?: Error) => {
-        if (error) {
-          streams.exit.write(`Error: ${error.message}\n`);
-          if (error.stack) {
-            streams.exit.write(`Stack Trace:\n${error.stack}\n`);
-          }
-        }
-        streams.exit.write(`${code}\n`);
-      },
-      exit: streams.exit,
-    };
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-
-type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
-type ProcessType = "process" | "promise";
-type ProcessStatus = "running" | "exited" | "error" | "completed";
-
-interface ProcessInfo {
-  child?: ChildProcess;
-  promise?: Promise<any>;
-  status: ProcessStatus;
-  exitCode?: number;
-  error?: string;
-  command: string;
-  pid?: number;
-  timestamp: string;
-  type: ProcessType;
-  category: ProcessCategory;
-  testName?: string;
-  platform: IRunTime;
-}
-
-export class ServerProcessManager extends Server_DockerCompose {
+export class Server_ProcessManager extends Server_WS_Process {
+  ports: Record<number, string> = {};
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   launchers: Record<string, () => void>;
-  clients: Set<any> = new Set();
-  connected: boolean;
-
-  // Process management fields
-  protected runningProcesses: Map<string, ChildProcess | Promise<any> | any> =
-    new Map();
-  protected allProcesses: Map<string, ProcessInfo> = new Map();
-  protected processLogs: Map<string, string[]> = new Map();
-  protected webProcesses: Map<
+  allProcesses: Map<string, ProcessInfo> = new Map();
+  processLogs: Map<string, string[]> = new Map();
+  webProcesses: Map<
     string,
     {
       contextId: string;
@@ -166,16 +23,9 @@ export class ServerProcessManager extends Server_DockerCompose {
       status: "running" | "completed" | "error";
     }
   > = new Map();
-  protected ports: Record<number, string> = {};
-
-  summary: ISummary = {};
-  protected configs: IBuiltConfig;
-  protected wss?: any;
-  protected httpServer?: any;
-  protected projectName: string;
 
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
-    super(process.cwd(), configs, testName, mode);
+    super(configs, testName, mode);
     this.configs = configs;
     this.projectName = testName;
 

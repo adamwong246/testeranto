@@ -4,7 +4,7 @@ import { exec } from "child_process";
 import { promisify } from "util";
 import { IBuiltConfig } from "../../Types";
 import { DockerComposeOptions, IMode } from "../types";
-import { Server_WS_Process } from "./Server_WS_Process";
+import { Server_Base } from "./Server_Base";
 import { setupDockerCompose } from "../docker/index";
 import { DockerComposeExecutor } from "./utils/DockerComposeExecutor";
 
@@ -15,7 +15,7 @@ interface IDockerComposeResult {
   data: any;
 }
 
-export class Server_DockerCompose extends Server_WS_Process {
+export class Server_DockerCompose extends Server_Base {
   cwd: string;
   dockerComposeYml: string;
   composeDir: string;
@@ -24,9 +24,9 @@ export class Server_DockerCompose extends Server_WS_Process {
   logCaptureInterval: NodeJS.Timeout | null = null;
   executor: DockerComposeExecutor;
 
-  constructor(cwd: string, configs: IBuiltConfig, name: string, mode: IMode) {
+  constructor(configs: IBuiltConfig, name: string, mode: IMode) {
     super(configs, name, mode);
-    this.cwd = cwd;
+    this.cwd = process.cwd();
     this.dockerComposeYml = path.join(
       "testeranto",
       "bundles",

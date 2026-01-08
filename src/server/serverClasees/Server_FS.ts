@@ -5,11 +5,8 @@ import { IBuiltConfig, IRunTime } from "../../Types";
 import { Server_MetafileWatcher } from "./Server_MetafileWatcher";
 import { makeHtmlTestFiles } from "../../makeHtmlTestFiles";
 import { makeHtmlReportFile } from "../../makeHtmlReportFile";
-import { getRunnables } from "../utils";
-import {
-  ProcessMangerHtml,
-  IndexHtml,
-} from "../../clients/utils/buildTemplates";
+import { getRunnables } from "./utils/getRunnables";
+import { ProcessMangerHtml, IndexHtml } from "./utils/Server_FS";
 
 export class Server_FS extends Server_MetafileWatcher {
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {

@@ -14,10 +14,7 @@ import {
 import { WebSocketMessage } from "./utils/types";
 
 export class Server_WS extends Server_HTTP {
-  processLogs: any;
-  clients: any;
-  allProcesses: any;
-  runningProcesses: any;
+  clients: Set<any> = new Set();
 
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);

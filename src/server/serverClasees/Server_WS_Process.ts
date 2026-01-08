@@ -122,7 +122,7 @@ export class Server_WS_Process extends Server_WS {
     }
   }
 
-  private getProcessSummary(): { processes: any[] } {
+  getProcessSummary(): { processes: any[] } {
     // Return WebSocket connections as "processes"
     const processes = Array.from(this.clients).map((client, index) => {
       return {
@@ -385,44 +385,4 @@ export class Server_WS_Process extends Server_WS {
       `[WebSocketProcess] Sent test error acknowledgment for test ${testId}`
     );
   }
-
-  // Helper method to serialize process info
-  // private serializeProcessInfo(id: string, procInfo: any, logs: any[]): any {
-  //   return {
-  //     processId: id,
-  //     command: procInfo.command || "unknown",
-  //     pid: procInfo.pid,
-  //     timestamp: procInfo.timestamp || new Date().toISOString(),
-  //     status: procInfo.status || "unknown",
-  //     logs: logs.slice(-50), // Last 50 logs
-  //   };
-  // }
-
-  // async stop() {
-  //   // Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-
-  //   // // Safely close WebSocket server if it exists
-  //   // if (this.wss) {
-  //   //   this.wss.close(() => {
-  //   //     console.log("WebSocket server closed");
-  //   //   });
-  //   // }
-
-  //   // this.clients.forEach((client) => {
-  //   //   // Check if client has a terminate method
-  //   //   if (client.terminate) {
-  //   //     client.terminate();
-  //   //   }
-  //   // });
-  //   // this.clients.clear();
-
-  //   // // Safely close HTTP server if it exists
-  //   // if (this.httpServer) {
-  //   //   this.httpServer.close(() => {
-  //   //     console.log("HTTP server closed");
-  //   //   });
-  //   // }
-  //   // this.checkForShutdown();
-  //   super.stop();
-  // }
 }
