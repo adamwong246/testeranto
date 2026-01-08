@@ -2,8 +2,9 @@ import fs from "fs";
 import { IBuiltConfig, ISummary } from "../../Types";
 import { Server_ProcessManager } from "./Server_ProcessManager";
 import { IMode } from "../types";
+import { Server_HTTP } from "./Server_HTTP";
 
-export class Server_Writer extends Server_ProcessManager {
+export class Server_Writer extends Server_HTTP {
   summary: ISummary = {};
 
   currentBuildResolve: (() => void) | null = null;

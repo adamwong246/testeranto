@@ -3,9 +3,7 @@ import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
 import { promisify } from "util";
-import { WebSocket } from "ws";
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { ITestResourceConfiguration } from "../../lib/tiposkripto";
 import { IMode } from "../types";
 import { Server_Writer } from "./Server_Writer";
 import { QueueManager } from "./utils/QueueManager";
@@ -94,43 +92,43 @@ export class Server_Queue extends Server_Writer {
             testResourceConfiguration.ports = allocatedPorts || [3000];
         }
 
-        if (ws.readyState === WebSocket.OPEN) {
-          const testResourceConfig: ITestResourceConfiguration = {
-            name: testName,
-            fs: process.cwd(),
-            ports: testResourceConfiguration.ports,
-            timeout: testResourceConfiguration.timeout,
-            retries: testResourceConfiguration.retries,
-            environment: testResourceConfiguration.environment,
-          };
-          if (
-            runtime === "web" &&
-            testResourceConfiguration.browserWSEndpoint
-          ) {
-            testResourceConfig.browserWSEndpoint =
-              testResourceConfiguration.browserWSEndpoint;
-          }
+        // if (ws.readyState === WebSocket.OPEN) {
+        //   const testResourceConfig: ITestResourceConfiguration = {
+        //     name: testName,
+        //     fs: process.cwd(),
+        //     ports: testResourceConfiguration.ports,
+        //     timeout: testResourceConfiguration.timeout,
+        //     retries: testResourceConfiguration.retries,
+        //     environment: testResourceConfiguration.environment,
+        //   };
+        //   if (
+        //     runtime === "web" &&
+        //     testResourceConfiguration.browserWSEndpoint
+        //   ) {
+        //     testResourceConfig.browserWSEndpoint =
+        //       testResourceConfiguration.browserWSEndpoint;
+        //   }
 
-          const message = {
-            type: "testResource",
-            data: {
-              testId,
-              testName,
-              runtime,
-              allocatedAt: new Date().toISOString(),
-              testResourceConfiguration: testResourceConfig,
-            },
-            timestamp: new Date().toISOString(),
-          };
+        //   const message = {
+        //     type: "testResource",
+        //     data: {
+        //       testId,
+        //       testName,
+        //       runtime,
+        //       allocatedAt: new Date().toISOString(),
+        //       testResourceConfiguration: testResourceConfig,
+        //     },
+        //     timestamp: new Date().toISOString(),
+        //   };
 
-          try {
-            ws.send(JSON.stringify(message));
-          } catch (error) {
-            this.testSchedulingQueue.unshift(item);
-          }
-        } else {
-          this.testSchedulingQueue.unshift(item);
-        }
+        //   try {
+        //     ws.send(JSON.stringify(message));
+        //   } catch (error) {
+        //     this.testSchedulingQueue.unshift(item);
+        //   }
+        // } else {
+        //   this.testSchedulingQueue.unshift(item);
+        // }
       }
     } finally {
       this.processingSchedulingQueue = false;

@@ -2,34 +2,51 @@ import fs from "fs";
 import http from "http";
 import path from "path";
 import { IMode } from "../types";
-import { CONTENT_TYPES } from "./utils/Server_TCP_constants";
-import { Server_TCP } from "./Server_TCP";
+import { CONTENT_TYPES, SERVER_CONSTANTS } from "./utils/Server_TCP_constants";
+import { Server_DockerCompose } from "./Server_DockerCompose";
 import { getContentType } from "./utils/Server_TCP_utils";
 
-export class Server_HTTP extends Server_TCP {
+export class Server_HTTP extends Server_DockerCompose {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
 
-    if (this.httpServer) {
-      const address = this.httpServer.address();
-      console.log(`[HTTP] HTTP server address:`, address);
+    this.httpServer = http.createServer();
 
-      // Listen for server listening event
-      this.httpServer.on("listening", () => {
-        const addr = this.httpServer.address();
-        console.log(`[HTTP] HTTP server is now listening on port ${addr.port}`);
-      });
+    // Use the configured httpPort from configs, fallback to environment variables or default
+    const httpPort =
+      configs.httpPort ||
+      Number(process.env.HTTP_PORT) ||
+      Number(process.env.WS_PORT) ||
+      3456;
+    console.log(
+      `[Server_TCP] Starting HTTP server on port ${httpPort}, host ${SERVER_CONSTANTS.HOST}`
+    );
+    this.httpServer.listen(httpPort, SERVER_CONSTANTS.HOST, () => {
+      const addr = this.httpServer.address();
+      console.log(
+        `[Server_TCP] HTTP server running on http://localhost:${httpPort}`
+      );
+    });
 
-      // Listen for errors
-      this.httpServer.on("error", (error) => {
-        console.error(`[HTTP] HTTP server error:`, error);
-      });
+    const address = this.httpServer.address();
+    console.log(`[HTTP] HTTP server address:`, address);
 
-      // Listen for close
-      this.httpServer.on("close", () => {
-        console.log(`[HTTP] HTTP server closed`);
-      });
-    }
+    // Listen for server listening event
+    this.httpServer.on("listening", () => {
+      const addr = this.httpServer.address();
+      console.log(`[HTTP] HTTP server is now listening on port ${addr.port}`);
+    });
+
+    // Listen for errors
+    this.httpServer.on("error", (error) => {
+      console.error(`[HTTP] HTTP server error:`, error);
+    });
+
+    // Listen for close
+    this.httpServer.on("close", () => {
+      console.log(`[HTTP] HTTP server closed`);
+    });
+
     this.httpServer.on("request", this.handleHttpRequest.bind(this));
     console.log(`[HTTP] HTTP request handler attached`);
   }

@@ -1,13 +1,14 @@
 import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
 import { IMode } from "../types";
-import { Server_WS_Process } from "./Server_WS_Process";
+import { Server_Queue } from "./Server_Queue";
+
 import {
   createLogStreams,
   ProcessCategory,
   ProcessInfo,
 } from "./utils/Server_ProcessManager";
 
-export class Server_ProcessManager extends Server_WS_Process {
+export class Server_ProcessManager extends Server_Queue {
   ports: Record<number, string> = {};
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   launchers: Record<string, () => void>;
@@ -39,29 +40,29 @@ export class Server_ProcessManager extends Server_WS_Process {
     this.launchers = {};
 
     // Start monitoring broadcast if configured
-    if (configs.monitoring) {
-      // Use setTimeout to ensure the server is fully initialized
-      setTimeout(() => {
-        this.startMonitoringBroadcast();
-      }, 1000);
-    }
+    // if (configs.monitoring) {
+    //   // Use setTimeout to ensure the server is fully initialized
+    //   setTimeout(() => {
+    //     this.startMonitoringBroadcast();
+    //   }, 1000);
+    // }
   }
 
   // Start monitoring broadcast using existing WebSocket server
-  startMonitoringBroadcast = () => {
-    console.log("Starting monitoring broadcast via existing WebSocket server");
+  // startMonitoringBroadcast = () => {
+  //   console.log("Starting monitoring broadcast via existing WebSocket server");
 
-    // Broadcast status updates at regular intervals
-    if (this.webSocketBroadcastMessage) {
-      setInterval(() => {
-        this.webSocketBroadcastMessage({
-          type: "statusUpdate",
-          data: this.getProcessSummary(),
-          timestamp: new Date().toISOString(),
-        });
-      }, this.configs.monitoring?.updateInterval || 1000);
-    }
-  };
+  //   // Broadcast status updates at regular intervals
+  //   if (this.webSocketBroadcastMessage) {
+  //     setInterval(() => {
+  //       this.webSocketBroadcastMessage({
+  //         type: "statusUpdate",
+  //         data: this.getProcessSummary(),
+  //         timestamp: new Date().toISOString(),
+  //       });
+  //     }, this.configs.monitoring?.updateInterval || 1000);
+  //   }
+  // };
 
   // Get process summary for monitoring
   getProcessSummary = () => {
@@ -118,27 +119,27 @@ export class Server_ProcessManager extends Server_WS_Process {
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}`;
     this.processLogs.get(processId)!.push(logEntry);
 
-    // Broadcast log via WebSocket
-    if (this.webSocketBroadcastMessage) {
-      this.webSocketBroadcastMessage({
-        type: "logUpdate",
-        processId,
-        source,
-        message,
-        timestamp: timestamp.toISOString(),
-      });
-    }
+    // // Broadcast log via WebSocket
+    // if (this.webSocketBroadcastMessage) {
+    //   this.webSocketBroadcastMessage({
+    //     type: "logUpdate",
+    //     processId,
+    //     source,
+    //     message,
+    //     timestamp: timestamp.toISOString(),
+    //   });
+    // }
 
-    // Also broadcast to monitoring channel
-    if (this.webSocketBroadcastMessage) {
-      this.webSocketBroadcastMessage({
-        type: "monitoringLog",
-        processId,
-        source,
-        message,
-        timestamp: timestamp.toISOString(),
-      });
-    }
+    // // Also broadcast to monitoring channel
+    // if (this.webSocketBroadcastMessage) {
+    //   this.webSocketBroadcastMessage({
+    //     type: "monitoringLog",
+    //     processId,
+    //     source,
+    //     message,
+    //     timestamp: timestamp.toISOString(),
+    //   });
+    // }
 
     // Send to log subscribers if they exist
     if ((this as any).logSubscriptions) {
@@ -242,13 +243,13 @@ export class Server_ProcessManager extends Server_WS_Process {
       });
 
     // Broadcast process update if WebSocket is available
-    if (this.webSocketBroadcastMessage) {
-      this.webSocketBroadcastMessage({
-        type: "processUpdate",
-        processId,
-        process: processInfo,
-      });
-    }
+    // if (this.webSocketBroadcastMessage) {
+    //   this.webSocketBroadcastMessage({
+    //     type: "processUpdate",
+    //     processId,
+    //     process: processInfo,
+    //   });
+    // }
   };
 
   // Add web process (browser context)
@@ -280,13 +281,13 @@ export class Server_ProcessManager extends Server_WS_Process {
     this.allProcesses.set(processId, processInfo);
 
     // Broadcast process update
-    if (this.webSocketBroadcastMessage) {
-      this.webSocketBroadcastMessage({
-        type: "processUpdate",
-        processId,
-        process: processInfo,
-      });
-    }
+    // if (this.webSocketBroadcastMessage) {
+    //   this.webSocketBroadcastMessage({
+    //     type: "processUpdate",
+    //     processId,
+    //     process: processInfo,
+    //   });
+    // }
 
     this.addLogEntry(
       processId,
@@ -315,13 +316,13 @@ export class Server_ProcessManager extends Server_WS_Process {
     }
 
     // Broadcast update
-    if (this.webSocketBroadcastMessage) {
-      this.webSocketBroadcastMessage({
-        type: "processUpdate",
-        processId,
-        process: processInfo,
-      });
-    }
+    // if (this.webSocketBroadcastMessage) {
+    //   this.webSocketBroadcastMessage({
+    //     type: "processUpdate",
+    //     processId,
+    //     process: processInfo,
+    //   });
+    // }
 
     const message =
       status === "completed"
@@ -343,16 +344,16 @@ export class Server_ProcessManager extends Server_WS_Process {
   // };
 
   // WebSocket broadcast method - to be implemented by derived classes or parent
-  webSocketBroadcastMessage(message: any): void {
-    // Default implementation that can be overridden
-    const data =
-      typeof message === "string" ? message : JSON.stringify(message);
-    this.clients.forEach((client) => {
-      if (client.readyState === 1) {
-        client.send(data);
-      }
-    });
-  }
+  // webSocketBroadcastMessage(message: any): void {
+  //   // Default implementation that can be overridden
+  //   const data =
+  //     typeof message === "string" ? message : JSON.stringify(message);
+  //   this.clients.forEach((client) => {
+  //     if (client.readyState === 1) {
+  //       client.send(data);
+  //     }
+  //   });
+  // }
 
   async stop() {
     Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());

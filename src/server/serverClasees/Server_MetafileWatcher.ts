@@ -4,7 +4,7 @@ import path from "path";
 import chokidar from "chokidar";
 import { IMode } from "../types";
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { Server_Queue } from "./Server_Queue";
+import { Server_ProcessManager } from "./Server_ProcessManager";
 
 const metafiles = [
   "testeranto/metafiles/golang/allTests.json",
@@ -13,7 +13,7 @@ const metafiles = [
   "testeranto/metafiles/web/allTests.json",
 ];
 
-export class Server_MetafileWatcher extends Server_Queue {
+export class Server_MetafileWatcher extends Server_ProcessManager {
   private watchers: chokidar.FSWatcher[] = [];
   private metafilePaths: string[] = [];
   private lastProcessed: Map<string, number> = new Map();
