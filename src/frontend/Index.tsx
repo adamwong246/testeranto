@@ -1,21 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, useRef } from "react";
+
+import React, { } from "react";
 import ReactDOM from "react-dom/client";
 import {
   Container,
-  Row,
-  Col,
-  Card,
-  ListGroup,
-  Badge,
-  Button,
-  Form,
-  Alert,
-  Spinner,
-  Tab,
-  Tabs,
-  InputGroup,
-  FormControl,
 } from "react-bootstrap";
 
 import "../style.scss";

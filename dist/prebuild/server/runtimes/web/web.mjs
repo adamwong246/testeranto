@@ -74,7 +74,7 @@ async function startChromeBrowser() {
         "--window-size=1920,1080",
         "--headless=new"
       ],
-      headless: "new"
+      headless: false
     });
     console.log("Chrome browser started with remote debugging on port 9222");
     console.log(`WebSocket endpoint: ${browser.wsEndpoint()}`);
@@ -116,7 +116,9 @@ async function startBundling(config) {
   console.log("WEB BUILDER: Chrome is now hosted and ready for test execution");
   console.log("WEB BUILDER: Metafiles have been generated");
   if (mode === "dev") {
-    console.log("WEB BUILDER: Running in dev mode, keeping Chrome instance alive...");
+    console.log(
+      "WEB BUILDER: Running in dev mode, keeping Chrome instance alive..."
+    );
     console.log("WEB BUILDER: Setting up file watcher for rebuilds...");
     const ctx = await esbuild.context(webConfig);
     await ctx.watch();

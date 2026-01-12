@@ -217,125 +217,237 @@ def strip_imports(content: str) -> str:
     return '\n'.join(result_lines)
 
 def bundle_python_files(entry_point: str, output_dir: str) -> str:
-    """Bundle all dependencies of a Python file into a single file."""
-    # Collect all dependencies
-    all_deps = collect_dependencies(entry_point)
-    
-    # Sort them topologically
-    sorted_deps = topological_sort(all_deps)
-    
-    # Read and process each file
-    bundled_lines = []
-    seen_contents = set()
-    
-    for dep in sorted_deps:
-        try:
-            with open(dep, 'r', encoding='utf-8') as f:
-                content = f.read()
-        except Exception as e:
-            print(f"Warning: Could not read {dep}: {e}")
-            continue
-        
-        # Generate a hash to avoid duplicates
-        content_hash = hashlib.md5(content.encode()).hexdigest()
-        if content_hash in seen_contents:
-            continue
-        seen_contents.add(content_hash)
-        
-        # Strip import statements
-        stripped_content = strip_imports(content)
-        if stripped_content.strip():
-            bundled_lines.append(f"# File: {dep}")
-            bundled_lines.append(stripped_content)
-            bundled_lines.append("")  # Add a blank line between files
-    
-    # Combine all lines
-    bundled_content = '\n'.join(bundled_lines)
+    """Generate a bundle containing the combined hash and list of input files."""
+    print(f"=== Starting bundle generation for: {entry_point}")
+    print(f"=== Output directory: {output_dir}")
     
     # Ensure output directory exists
     os.makedirs(output_dir, exist_ok=True)
+    print(f"=== Output directory exists: {os.path.exists(output_dir)}")
     
-    # Generate output filename
+    # Generate entry name
     entry_name = os.path.basename(entry_point)
     if entry_name.endswith('.py'):
         entry_name = entry_name[:-3]
-    output_filename = f"{entry_name}.bundled.py"
-    output_path = os.path.join(output_dir, output_filename)
+    print(f"=== Entry name: {entry_name}")
     
-    # Write bundled file
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(bundled_content)
+    # Always create a text file with dummy content to prove it works
+    text_filename = f"{entry_name}.txt"
+    text_path = os.path.join(output_dir, text_filename)
+    print(f"=== Text file path: {text_path}")
     
-    return output_path
+    # Write dummy content to text file
+    dummy_content = f"""This is a dummy text file to prove text file generation works.
+Entry point: {entry_point}
+Timestamp: {hashlib.md5(str(os.getpid()).encode()).hexdigest()[:8]}
+"""
+    try:
+        with open(text_path, 'w', encoding='utf-8') as f:
+            f.write(dummy_content)
+        print(f"=== SUCCESS: Wrote dummy text file to {text_path}")
+        print(f"=== File exists after write: {os.path.exists(text_path)}")
+        if os.path.exists(text_path):
+            with open(text_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            print(f"=== File content preview: {content[:100]}")
+    except Exception as e:
+        print(f"=== ERROR writing text file: {e}")
+    
+    # Try to collect dependencies, but if it fails, still create a minimal JSON bundle
+    try:
+        print(f"=== Attempting to collect dependencies for {entry_point}")
+        # Collect all dependencies
+        all_deps = collect_dependencies(entry_point)
+        sorted_deps = sorted(all_deps)
+        print(f"=== Found {len(sorted_deps)} dependencies")
+        
+        # Calculate combined hash
+        combined_hash = hashlib.md5()
+        for dep in sorted_deps:
+            try:
+                with open(dep, 'rb') as f:
+                    content = f.read()
+                combined_hash.update(content)
+                combined_hash.update(dep.encode('utf-8'))
+            except Exception as e:
+                print(f"Warning: Could not read {dep} for hashing: {e}")
+                combined_hash.update(dep.encode('utf-8'))
+        
+        combined_hash_hex = combined_hash.hexdigest()
+        print(f"=== Combined hash: {combined_hash_hex}")
+        
+        # Update text file with actual content
+        actual_text_lines = []
+        actual_text_lines.append(f"Combined signature: {combined_hash_hex}")
+        actual_text_lines.append("")
+        actual_text_lines.append("Input files:")
+        for i, dep in enumerate(sorted_deps, 1):
+            actual_text_lines.append(f"{i}. {dep}")
+        
+        actual_text_content = '\n'.join(actual_text_lines)
+        try:
+            with open(text_path, 'w', encoding='utf-8') as f:
+                f.write(actual_text_content)
+            print(f"=== Updated text file with actual content: {text_path}")
+        except Exception as e:
+            print(f"=== ERROR updating text file: {e}")
+        
+        # Create JSON bundle
+        output_filename_json = f"{entry_name}.bundle.json"
+        output_path_json = os.path.join(output_dir, output_filename_json)
+        print(f"=== JSON bundle path: {output_path_json}")
+        
+        bundle_content = {
+            'combined_hash': combined_hash_hex,
+            'input_files': sorted_deps,
+            'entry_point': entry_point
+        }
+        
+        with open(output_path_json, 'w', encoding='utf-8') as f:
+            json.dump(bundle_content, f, indent=2)
+        
+        print(f"=== Generated JSON bundle: {output_path_json}")
+        return output_path_json
+        
+    except Exception as e:
+        print(f"=== Error during bundle generation: {e}")
+        print("=== Creating minimal JSON bundle with error information")
+        
+        # Create a minimal JSON bundle
+        output_filename_json = f"{entry_name}.bundle.json"
+        output_path_json = os.path.join(output_dir, output_filename_json)
+        
+        bundle_content = {
+            'combined_hash': 'error',
+            'input_files': [],
+            'entry_point': entry_point,
+            'error': str(e)
+        }
+        
+        with open(output_path_json, 'w', encoding='utf-8') as f:
+            json.dump(bundle_content, f, indent=2)
+        
+        print(f"=== Generated minimal JSON bundle due to error: {output_path_json}")
+        return output_path_json
 
 def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
     """Generate a metafile similar to esbuild's structure."""
     inputs: Dict[str, Any] = {}
     outputs: Dict[str, Any] = {}
     
-    # Generate a signature
-    signature = hashlib.md5(str(os.getpid()).encode() + str(os.times()).encode()).hexdigest()[:8]
-    
     # Bundle directory
     bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')
     
     for entry_point in entry_points:
-        if not os.path.exists(entry_point):
-            print(f"Warning: Entry point {entry_point} does not exist")
-            continue
+        print(f"Processing entry point: {entry_point}")
         
-        # Collect all dependencies
-        all_deps = collect_dependencies(entry_point)
-        
-        # Add to inputs
-        for dep in all_deps:
-            if dep not in inputs:
-                try:
-                    bytes_size = os.path.getsize(dep)
-                except OSError:
-                    bytes_size = 0
-                imports = parse_python_imports(dep)
-                inputs[dep] = {
-                    'bytes': bytes_size,
-                    'imports': imports
-                }
-        
-        # Generate the bundle
+        # Generate the bundle (which always creates a text file)
         bundle_path = bundle_python_files(entry_point, bundles_dir)
         
         # Generate output key
         entry_name = os.path.basename(entry_point)
         if entry_name.endswith('.py'):
             entry_name = entry_name[:-3]
-        output_key = f'python/{entry_name}.py'
+        output_key = f'python/{entry_name}.json'
         
-        # Calculate input bytes
-        input_bytes: Dict[str, Dict[str, int]] = {}
-        total_bytes = 0
-        for dep in all_deps:
-            try:
-                bytes_size = os.path.getsize(dep)
-            except OSError:
-                bytes_size = 0
-            input_bytes[dep] = {'bytesInOutput': bytes_size}
-            total_bytes += bytes_size
+        # Generate text file path
+        text_filename = f"{entry_name}.txt"
+        text_path = os.path.join(bundles_dir, text_filename)
         
-        # Add bundle size
+        # Check if entry point exists to collect dependencies
+        if os.path.exists(entry_point):
+            # Collect all dependencies
+            all_deps = collect_dependencies(entry_point)
+            
+            # Add to inputs
+            for dep in all_deps:
+                if dep not in inputs:
+                    try:
+                        bytes_size = os.path.getsize(dep)
+                    except OSError:
+                        bytes_size = 0
+                    
+                    # Calculate MD5 hash for the file content
+                    try:
+                        with open(dep, 'rb') as f:
+                            content = f.read()
+                        md5_hash = hashlib.md5(content).hexdigest()
+                    except Exception:
+                        md5_hash = ''
+                    
+                    imports = parse_python_imports(dep)
+                    inputs[dep] = {
+                        'bytes': bytes_size,
+                        'imports': imports,
+                        'hash': md5_hash
+                    }
+            
+            # Calculate input bytes and collect hashes
+            input_bytes: Dict[str, Dict[str, Any]] = {}
+            total_input_bytes = 0
+            for dep in all_deps:
+                try:
+                    bytes_size = os.path.getsize(dep)
+                except OSError:
+                    bytes_size = 0
+                
+                # Get the MD5 hash for this input
+                md5_hash = ''
+                if dep in inputs:
+                    md5_hash = inputs[dep].get('hash', '')
+                
+                input_bytes[dep] = {
+                    'bytesInOutput': bytes_size,
+                    'hash': md5_hash
+                }
+                total_input_bytes += bytes_size
+            
+            # Generate a signature for this output based on input hashes
+            sorted_deps = sorted(all_deps)
+            signature_content = ''
+            for dep in sorted_deps:
+                if dep in inputs:
+                    signature_content += inputs[dep].get('hash', '')
+            if signature_content:
+                signature = hashlib.md5(signature_content.encode()).hexdigest()
+            else:
+                signature = ''
+        else:
+            print(f"Warning: Entry point {entry_point} does not exist")
+            all_deps = []
+            input_bytes = {}
+            total_input_bytes = 0
+            signature = ''
+            sorted_deps = []
+        
+        # Add bundle size (size of the generated JSON file)
         try:
             bundle_size = os.path.getsize(bundle_path)
         except OSError:
             bundle_size = 0
+        
+        # Read the bundle content to get the combined hash
+        try:
+            with open(bundle_path, 'r', encoding='utf-8') as f:
+                bundle_data = json.load(f)
+            combined_hash = bundle_data.get('combined_hash', '')
+        except Exception:
+            combined_hash = ''
         
         outputs[output_key] = {
             'imports': [],
             'exports': [],
             'entryPoint': entry_point,
             'inputs': input_bytes,
-            'bytes': total_bytes,
+            'bytes': total_input_bytes,
             'signature': signature,
             'bundlePath': bundle_path,
-            'bundleSize': bundle_size
+            'bundleSize': bundle_size,
+            'combinedHash': combined_hash,
+            'inputFiles': sorted_deps,
+            'textFilePath': text_path
         }
+        print(f"Added output for {output_key}")
     
     return {
         'errors': [],
@@ -346,63 +458,6 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
         }
     }
 
-# def run_python_test(entry_point):
-#     """Execute a Python test and return results."""
-#     import subprocess
-#     import tempfile
-#     import traceback
-    
-#     # Create a temporary file to capture results
-#     with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as tmp:
-#         result_file = tmp.name
-    
-#     # Set environment variable for result file
-#     env = os.environ.copy()
-#     env['TEST_RESULT_FILE'] = result_file
-    
-#     # Run the test from the original entry point
-#     try:
-#         result = subprocess.run(
-#             [sys.executable, entry_point],
-#             env=env,
-#             capture_output=True,
-#             text=True,
-#             timeout=30  # 30 second timeout
-#         )
-        
-#         # Check if test wrote a result file
-#         if os.path.exists(result_file):
-#             with open(result_file, 'r') as f:
-#                 test_result = json.load(f)
-#             os.unlink(result_file)
-#         else:
-#             # Create a default result structure
-#             test_result = {
-#                 'passed': result.returncode == 0,
-#                 'returncode': result.returncode,
-#                 'stdout': result.stdout,
-#                 'stderr': result.stderr
-#             }
-        
-#         return test_result
-#     except subprocess.TimeoutExpired:
-#         return {
-#             'passed': False,
-#             'error': 'Test timed out after 30 seconds'
-#         }
-#     except Exception as e:
-#         return {
-#             'passed': False,
-#             'error': str(e),
-#             'traceback': traceback.format_exc()
-#         }
-#     finally:
-#         # Clean up result file if it still exists
-#         if os.path.exists(result_file):
-#             try:
-#                 os.unlink(result_file)
-#             except:
-#                 pass
 
 def main():
     # Determine config path
@@ -463,144 +518,28 @@ def main():
     bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')
     print(f"Python bundles written to {bundles_dir}")
     
-    # Run each test from its original entry point
-    # test_results = []
-    # all_passed = True
-    
-    # for entry_point in entry_points:
-    #     print(f"  Running test: {entry_point}")
-        
-    #     # Run the test
-    #     result = run_python_test(entry_point)
-    #     test_results.append({
-    #         'test': entry_point,
-    #         'result': result
-    #     })
-        
-    #     if not result.get('passed', False):
-    #         all_passed = False
-    #         print(f"  ❌ Test failed")
-    #         if 'error' in result:
-    #             print(f"    Error: {result['error']}")
-    #         if 'stderr' in result and result['stderr']:
-    #             print(f"    Stderr: {result['stderr'][:500]}")
-    #     else:
-    #         print(f"  ✅ Test passed")
-    
     # Print summary
     num_inputs = len(metafile['metafile']['inputs'])
     num_outputs = len(metafile['metafile']['outputs'])
     print(f"Metafile contains {num_inputs} input files and {num_outputs} output bundles")
     
-    # Write test results to the correct location for the test runner
-    # The path should be: testeranto/reports/allTests/example/Calculator.pitono.test/python
-    # We need to extract the test name from the entry points
-    # if entry_points:
-    #     # Use the first entry point to determine the test name
-    #     first_entry = entry_points[0]
-    #     # Extract the test name: example/Calculator.pitono.test.py -> example/Calculator.pitono.test
-    #     test_name = os.path.splitext(first_entry)[0]
-    #     # Remove any leading path components to get just the base name? 
-    #     # Actually, we want the relative path from workspace root
-    #     # Let's get the relative path from /workspace
-    #     workspace_root = '/workspace'
-    #     if first_entry.startswith(workspace_root):
-    #         rel_path = os.path.relpath(first_entry, workspace_root)
-    #         test_name = os.path.splitext(rel_path)[0]
-    #     else:
-    #         # Try to make it relative to current directory
-    #         rel_path = os.path.relpath(first_entry, os.getcwd())
-    #         test_name = os.path.splitext(rel_path)[0]
-        
-    #     # Build the reports directory path
-    #     # The path should be: testeranto/reports/allTests/example/Calculator.pitono.test/python
-    #     # First, get the absolute path of the entry point
-    #     abs_entry = os.path.abspath(first_entry)
-    #     # Remove .py extension
-    #     base_name = os.path.splitext(abs_entry)[0]
-        
-    #     # The workspace root is /workspace
-    #     workspace_root = '/workspace'
-    #     # Make sure base_name is under workspace
-    #     if base_name.startswith(workspace_root):
-    #         # Get path relative to workspace
-    #         rel_path = os.path.relpath(base_name, workspace_root)
-    #     else:
-    #         # This shouldn't happen in Docker, but handle it
-    #         rel_path = base_name
-        
-    #     # Build the full reports directory path
-    #     reports_dir = os.path.join(workspace_root, 'testeranto', 'reports', 'allTests', rel_path, 'python')
-    #     os.makedirs(reports_dir, exist_ok=True)
-        
-    #     # Write tests.json in the format expected by the test runner
-    #     tests_path = os.path.join(reports_dir, 'tests.json')
-        
-    #     # Prepare test data in a format similar to what node produces
-    #     # We need to create a structure with name, givens, fails, failed, features, artifacts
-    #     # Since we don't have the full BDD structure, we'll create a simplified version
-    #     tests_data = {
-    #         'name': os.path.basename(base_name),
-    #         'givens': [],
-    #         'fails': sum(1 for r in test_results if not r['result'].get('passed', False)),
-    #         'failed': not all_passed,
-    #         'features': [f"Test: {r['test']}" for r in test_results],
-    #         'artifacts': []
-    #     }
-        
-    #     with open(tests_path, 'w') as f:
-    #         json.dump(tests_data, f, indent=2)
-        
-    #     print(f"Test results written to {tests_path}")
-        
-    #     # Also write detailed results for debugging
-    #     detailed_path = os.path.join(reports_dir, 'detailed_results.json')
-    #     with open(detailed_path, 'w') as f:
-    #         json.dump({
-    #             'all_passed': all_passed,
-    #             'results': test_results,
-    #             'summary': {
-    #                 'total': len(test_results),
-    #                 'passed': sum(1 for r in test_results if r['result'].get('passed', False)),
-    #                 'failed': sum(1 for r in test_results if not r['result'].get('passed', False))
-    #             }
-    #         }, f, indent=2)
-    # else:
-    #     # Fallback to metafiles directory
-    #     results_dir = os.environ.get('METAFILES_DIR', '/workspace/testeranto/metafiles/python')
-    #     results_path = os.path.join(results_dir, 'test_results.json')
-    #     with open(results_path, 'w') as f:
-    #         json.dump({
-    #             'all_passed': all_passed,
-    #             'results': test_results,
-    #             'summary': {
-    #                 'total': len(test_results),
-    #                 'passed': sum(1 for r in test_results if r['result'].get('passed', False)),
-    #                 'failed': sum(1 for r in test_results if not r['result'].get('passed', False))
-    #             }
-    #         }, f, indent=2)
-    #     print(f"Test results written to {results_path}")
-        
-    #     # Also write tests.json for consistency
-    #     tests_path = os.path.join(results_dir, 'tests.json')
-    #     tests_data = {
-    #         'name': 'PythonTests',
-    #         'givens': [],
-    #         'fails': sum(1 for r in test_results if not r['result'].get('passed', False)),
-    #         'failed': not all_passed,
-    #         'features': [f"Test: {r['test']}" for r in test_results],
-    #         'artifacts': []
-    #     }
-    #     with open(tests_path, 'w') as f:
-    #         json.dump(tests_data, f, indent=2)
-    
-    # Exit with appropriate code
-    # if not all_passed:
-    #     print("Some tests failed")
-    #     sys.exit(1)
-    # else:
-    #     print("All tests passed")
-    #     sys.exit(0)
+    # List all text files in bundles directory
+    print(f"\n=== Checking for generated text files in {bundles_dir} ===")
+    if os.path.exists(bundles_dir):
+        text_files = [f for f in os.listdir(bundles_dir) if f.endswith('.txt')]
+        print(f"Found {len(text_files)} text files:")
+        for tf in text_files:
+            tf_path = os.path.join(bundles_dir, tf)
+            print(f"  - {tf_path}")
+            if os.path.exists(tf_path):
+                try:
+                    with open(tf_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    print(f"    Content preview: {content[:200]}")
+                except Exception as e:
+                    print(f"    Error reading file: {e}")
+    else:
+        print(f"Bundles directory does not exist: {bundles_dir}")
 
 if __name__ == "__main__":
     main()

@@ -3,9 +3,6 @@ import {
   defaultTestResourceRequirement
 } from "./chunk-GONGMDWG.mjs";
 
-// src/lib/tiposkripto/BaseTiposkripto.ts
-import WebSocket from "ws";
-
 // src/lib/tiposkripto/BaseGiven.ts
 var BaseGiven = class {
   constructor(features, whens, thens, givenCB, initialValues) {
@@ -300,7 +297,7 @@ ${this.error.stack}` : null,
     };
     return obj;
   }
-  async test(store, testResourceConfiguration, tLog, pm, filepath) {
+  async test(store, testResourceConfiguration) {
     try {
       const result = await this.andWhen(
         store,
@@ -320,15 +317,10 @@ ${this.error.stack}` : null,
 
 // src/lib/tiposkripto/BaseTiposkripto.ts
 var BaseTiposkripto = class {
-  // analyzer: Analyzer;
   constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter = {}, testResourceConfiguration, wsPort = "3456", wsHost = "localhost") {
-    this.messageCallbacks = /* @__PURE__ */ new Map();
-    this.ws = null;
     this.totalTests = 0;
     this.artifacts = [];
-    if (testResourceConfiguration) {
-      this.testResourceConfiguration = testResourceConfiguration;
-    }
+    this.testResourceConfiguration = testResourceConfiguration;
     const fullAdapter = DefaultAdapter(testAdapter);
     if (!testImplementation.suites || typeof testImplementation.suites !== "object") {
       throw new Error(
@@ -341,13 +333,13 @@ var BaseTiposkripto = class {
       (a, [key], index) => {
         a[key] = (somestring, givens) => {
           return new class extends BaseSuite {
-            afterAll(store, artifactory) {
+            afterAll(store) {
               return fullAdapter.afterAll(store);
             }
             assertThat(t) {
               return fullAdapter.assertThis(t);
             }
-            async setup(s, artifactory, tr) {
+            async setup(s, tr) {
               return fullAdapter.beforeAll?.(s, tr) ?? s;
             }
           }(somestring, index, givens);
@@ -487,169 +479,16 @@ var BaseTiposkripto = class {
       };
       return testJob;
     });
-    if (testResourceConfiguration) {
-      this.runTestsImmediately(testResourceConfiguration);
-    } else {
-      this.connectWebSocket(wsPort, wsHost);
-    }
-  }
-  async connectWebSocket(port, host) {
-    const wsHost = host || process.env.WS_HOST || "localhost";
-    const protocol = "ws";
-    const url = `${protocol}://${wsHost}:${port}`;
-    return new Promise((resolve, reject) => {
-      let timeoutFired = false;
-      const timeout = setTimeout(() => {
-        timeoutFired = true;
-        console.log(
-          `[Tiposkripto] \u274C WebSocket connection timeout after 10 seconds to ${url}`
-        );
-        reject(new Error(`WebSocket connection timeout to ${url}`));
-      }, 1e4);
-      this.ws = new WebSocket(url);
-      this.ws.on("open", () => {
-        if (timeoutFired) return;
-        clearTimeout(timeout);
-        const testName = "Calculator.test";
-        console.log(
-          `[Tiposkripto] Sending greeting with testName: ${testName}`
-        );
-        const greetingMessage = {
-          type: "greeting",
-          data: {
-            testId: `test-${Date.now()}`,
-            testName,
-            runtime: "node"
-          }
-        };
-        this.ws.send(JSON.stringify(greetingMessage));
-        resolve();
-      });
-      this.ws.on("error", (error) => {
-        if (timeoutFired) return;
-        clearTimeout(timeout);
-        console.error(`[Tiposkripto] \u274C WebSocket connection error to ${url}:`);
-        reject(error);
-      });
-      this.ws.on("message", (data) => {
-        const dataStr = data.toString();
-        try {
-          const message = JSON.parse(dataStr);
-          if (message.type === "testResource") {
-            if (this.testJobs && this.testJobs.length > 0) {
-              const testResourceConfig = message.data.testResourceConfiguration;
-              this.testJobs[0].receiveTestResourceConfig(testResourceConfig).then((result) => {
-                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-                  const resultMessage = {
-                    type: "testResult",
-                    data: result.testJob,
-                    timestamp: (/* @__PURE__ */ new Date()).toISOString()
-                  };
-                  this.ws.send(JSON.stringify(resultMessage));
-                  console.log(`[Tiposkripto] Sent test result to server`);
-                }
-              }).catch((error) => {
-                console.error(`[Tiposkripto] Error executing test:`, error);
-                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-                  const errorMessage = {
-                    type: "testError",
-                    data: { error: error.message },
-                    timestamp: (/* @__PURE__ */ new Date()).toISOString()
-                  };
-                  this.ws.send(JSON.stringify(errorMessage));
-                }
-              });
-            } else {
-              console.error(`[Tiposkripto] No test jobs available`);
-            }
-          } else if (message.key && this.messageCallbacks.has(message.key)) {
-            const callback = this.messageCallbacks.get(message.key);
-            if (callback) {
-              callback(message.payload);
-              this.messageCallbacks.delete(message.key);
-            }
-          }
-        } catch (error) {
-          console.error(
-            `[Tiposkripto] Error parsing WebSocket message:`,
-            error
-          );
-        }
-      });
-      this.ws.on("close", (code, reason) => {
-        console.log(
-          `[Tiposkripto] \u{1F50C} WebSocket connection closed. Code: ${code}, Reason: ${reason.toString()}`
-        );
-      });
-    });
-  }
-  sendCommand(command, ...args) {
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-      return Promise.reject(new Error("WebSocket is not connected"));
-    }
-    const key = Math.random().toString();
-    return new Promise((resolve, reject) => {
-      this.messageCallbacks.set(key, (payload) => {
-        resolve(payload);
-      });
-      const timeoutId = setTimeout(() => {
-        this.messageCallbacks.delete(key);
-        reject(
-          new Error(`Timeout waiting for response to command: ${command}`)
-        );
-      }, 1e4);
-      const message = {
-        type: command,
-        data: args.length > 0 ? args : void 0,
-        key
-      };
-      const originalCallback = this.messageCallbacks.get(key);
-      if (originalCallback) {
-        this.messageCallbacks.set(key, (payload) => {
-          clearTimeout(timeoutId);
-          originalCallback(payload);
-        });
-      }
-      this.ws.send(JSON.stringify(message));
-    });
-  }
-  closeWebSocket() {
-    if (this.ws) {
-      this.ws.close();
-      this.ws = null;
-    }
+    const results = this.testJobs[0].receiveTestResourceConfig(
+      testResourceConfiguration
+    );
+    this.writeFileSync();
   }
   async receiveTestResourceConfig(testResourceConfig) {
     if (this.testJobs && this.testJobs.length > 0) {
       return this.testJobs[0].receiveTestResourceConfig(testResourceConfig);
     } else {
       throw new Error("No test jobs available");
-    }
-  }
-  async runTestsImmediately(testResourceConfig) {
-    if (this.testJobs && this.testJobs.length > 0) {
-      try {
-        const results = await this.testJobs[0].receiveTestResourceConfig(testResourceConfig);
-        console.log(`[Tiposkripto] Tests completed immediately:`, results);
-        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-          const resultMessage = {
-            type: "testResult",
-            data: results,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-          this.ws.send(JSON.stringify(resultMessage));
-        }
-      } catch (error) {
-        console.error(`[Tiposkripto] Error executing tests:`, error);
-        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-          const errorMessage = {
-            type: "testError",
-            data: { error: error.message },
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-          this.ws.send(JSON.stringify(errorMessage));
-        }
-      }
     }
   }
   Specs() {
@@ -694,29 +533,51 @@ var BaseTiposkripto = class {
   }
 };
 
-// src/lib/tiposkripto/Node.ts
-var tiposkripto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement, testResourceConfiguration) => {
-  try {
-    const wsPort = "3456";
-    const wsHost = "host.docker.internal";
-    const t = new BaseTiposkripto(
+// src/lib/tiposkripto/Web.ts
+var WebTiposkripto = class extends BaseTiposkripto {
+  constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedConfig = urlParams.get("config");
+    const testResourceConfig = encodedConfig ? decodeURIComponent(encodedConfig) : "{}";
+    super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
       testAdapter,
-      testResourceConfiguration,
-      wsPort,
-      wsHost
+      JSON.parse(testResourceConfig)
+    );
+  }
+  async writeFileSync({
+    filename,
+    payload
+  }) {
+    const root = await navigator.storage.getDirectory();
+    const fileHandle = await root.getFileHandle(filename, { create: true });
+    const writable = await fileHandle.createWritable();
+    await writable.write(JSON.stringify(payload));
+    await writable.close();
+  }
+};
+var tiposkripto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
+  try {
+    const t = new WebTiposkripto(
+      input,
+      testSpecification,
+      testImplementation,
+      testResourceRequirement,
+      testAdapter
     );
     return t;
   } catch (e) {
-    console.error(`[Node] Error creating Tiposkripto:`, e);
-    console.error(e.stack);
-    process.exit(-1);
+    console.error(e);
+    const errorEvent = new CustomEvent("test-error", { detail: e });
+    window.dispatchEvent(errorEvent);
+    throw e;
   }
 };
-var Node_default = tiposkripto;
+var Web_default = tiposkripto;
 export {
-  Node_default as default
+  WebTiposkripto,
+  Web_default as default
 };

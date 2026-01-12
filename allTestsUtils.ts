@@ -1,15 +1,14 @@
-import { IDockerSteps } from "./src/Types";
+import { IChecks, IDockerSteps } from "./src/Types";
 
 export const createLangConfig = (
   testFile: string,
-  check: ((x: any) => string)[],
+  checks: IChecks,
   options?: {
     plugins?: any[];
     loaders?: Record<string, string>;
     externals?: string[];
     testBlocks?: [IDockerSteps, string][][];
     prodBlocks?: [IDockerSteps, string][][];
-    check: string;
   }
 ) => {
   return {
@@ -19,11 +18,7 @@ export const createLangConfig = (
     externals: options?.externals || [],
     test: options?.testBlocks,
     prod: options?.prodBlocks,
-    check: check,
-    // build: options?.build,
-    // processPool: options?.processPool,
-    // chrome: options?.chrome,
-    // monitoring: options?.monitoring || {}, // Include monitoring config
+    checks,
   };
 };
 

@@ -5,6 +5,7 @@ import chokidar from "chokidar";
 import { IMode } from "../types";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { Server_ProcessManager } from "./Server_ProcessManager";
+import { IMetaFile } from "./utils/types";
 
 const metafiles = [
   "testeranto/metafiles/golang/allTests.json",
@@ -49,11 +50,11 @@ export class Server_MetafileWatcher extends Server_ProcessManager {
     }
   }
 
-  async start() {
-    this.startWatchingMetafiles();
-  }
+  // async start() {
+  //   this.startWatchingMetafiles();
+  // }
 
-  private startWatchingMetafiles(): void {
+  async start() {
     console.log(ansiC.blue(ansiC.inverse("Starting metafile watchers...")));
 
     // Filter to only existing metafiles
@@ -202,27 +203,26 @@ export class Server_MetafileWatcher extends Server_ProcessManager {
     }
   }
 
-  private processMetafileUpdate(filePath: string): void {
+  private processMetafileUpdate(metaFileSourcePath: string): void {
     try {
-      if (!fs.existsSync(filePath)) {
-        console.log(ansiC.yellow(`Metafile doesn't exist: ${filePath}`));
+      if (!fs.existsSync(metaFileSourcePath)) {
+        console.log(
+          ansiC.yellow(`Metafile doesn't exist: ${metaFileSourcePath}`)
+        );
         return;
       }
 
-      const data = fs.readFileSync(filePath, "utf8");
-      const metafile = JSON.parse(data);
-
-      // Extract runtime from file path
-      const runtime = this.extractRuntimeFromPath(filePath);
-
-      console.log(
-        ansiC.green(`Processing ${runtime} metafile update from ${filePath}`)
-      );
+      const data = fs.readFileSync(metaFileSourcePath, "utf8");
+      const metafile = JSON.parse(data) as IMetaFile;
+      const runtime = this.extractRuntimeFromPath(metaFileSourcePath);
 
       // Schedule tests based on metafile content
-      this.scheduleTestsFromMetafile(metafile, runtime, filePath);
+      this.scheduleTestsFromMetafile(metafile, runtime);
     } catch (error) {
-      console.error(ansiC.red(`Error processing metafile ${filePath}:`), error);
+      console.error(
+        ansiC.red(`Error processing metafile ${metaFileSourcePath}:`),
+        error
+      );
     }
   }
 
@@ -243,83 +243,42 @@ export class Server_MetafileWatcher extends Server_ProcessManager {
     if (filePath.includes("python")) return "python";
     if (filePath.includes("web")) return "web";
 
-    return "node"; // Default
+    throw "unknown runtime";
   }
 
-  private scheduleTestsFromMetafile(
-    metafile: any,
-    runtime: IRunTime,
-    sourcePath: string
-  ): void {
-    // The metafile should contain information about tests that need to be scheduled
-    // This could be an array of test names, or an object with test information
+  private async scheduleTestsFromMetafile(
+    metafile: IMetaFile,
+    runtime: IRunTime
+  ) {
+    for (const [outputFile, outputs] of Object.entries(
+      metafile.metafile.outputs
+    )) {
+      // ex outputFile "testeranto/bundles/allTests/node/example/Calculator.test.mjs"
+      // ex entrypoint "example/Calculator.test.ts"
 
-    if (Array.isArray(metafile)) {
-      // If it's an array, schedule each test
-      metafile.forEach((testInfo: any) => {
-        this.scheduleTest(testInfo, runtime, sourcePath);
-      });
-    } else if (typeof metafile === "object") {
-      // If it's an object, look for tests property or iterate through keys
-      if (metafile.tests && Array.isArray(metafile.tests)) {
-        metafile.tests.forEach((testInfo: any) => {
-          this.scheduleTest(testInfo, runtime, sourcePath);
-        });
-      } else {
-        // Try to extract test information from the object
-        Object.entries(metafile).forEach(([key, value]) => {
-          this.scheduleTest(value, runtime, sourcePath);
-        });
+      if (
+        outputs.entrypoint ===
+        `testeranto/bundles/allTests/${runtime}/${outputFile
+          .split(".")
+          .slice(0, -1)
+          .concat("ts")
+          .join(".")}`
+      ) {
+        const addableFiles = Object.keys(
+          metafile.metafile.outputs[outputs.entrypoint].inputs as Map<
+            string,
+            number
+          >
+        );
+
+        this.scheduleStaticTests(
+          metafile,
+          runtime,
+          outputs.entrypoint,
+          addableFiles
+        );
+        this.scheduleBddTest(metafile, runtime, outputs.entrypoint);
       }
-    }
-
-    console.log(ansiC.blue(`Scheduled tests from ${runtime} metafile`));
-  }
-
-  private scheduleTest(
-    testInfo: any,
-    runtime: IRunTime,
-    sourcePath: string
-  ): void {
-    // Extract test name from testInfo
-    let testName: string;
-    let addableFiles: string[] | undefined;
-
-    if (typeof testInfo === "string") {
-      testName = testInfo;
-    } else if (testInfo && typeof testInfo === "object") {
-      testName =
-        testInfo.name || testInfo.testName || testInfo.path || "unknown";
-      addableFiles = testInfo.files || testInfo.addableFiles;
-    } else {
-      testName = "unknown";
-    }
-
-    // Use the queue's addToQueue method to schedule the test
-    // The queue should handle deduplication and processing
-    if (this.addToQueue) {
-      // Convert sourcePath to a relative path if needed
-      const src = path.relative(process.cwd(), sourcePath);
-
-      console.log(
-        ansiC.magenta(`Queueing test: ${testName} (${runtime}) from ${src}`)
-      );
-
-      // Add to queue for processing
-      this.addToQueue(
-        src,
-        runtime,
-        this.configs,
-        this.projectName,
-        this.cleanupTestProcessesInternal?.bind(this) ||
-          ((testName: string) => {}),
-        this.checkQueue?.bind(this) || (() => {}),
-        addableFiles
-      );
-    } else {
-      console.log(
-        ansiC.yellow(`Cannot queue test ${testName}: addToQueue not available`)
-      );
     }
   }
 
@@ -334,3 +293,80 @@ export class Server_MetafileWatcher extends Server_ProcessManager {
     await super.stop();
   }
 }
+
+////////////////////////////////////////////////////////////////
+// DEPRECATED
+////////////////////////////////////////////////////////////////
+
+// async scheduleStaticTest(
+//   metafile: IMetaFile,
+//   runtime: IRunTime,
+//   entrypoint: string
+// ) {}
+
+// async scheduleBddTest(
+//   metafile: IMetaFile,
+//   runtime: IRunTime,
+//   entrypoint: string
+// ) {}
+
+// // private scheduleTest(
+// //   metafile: IMetaFile,
+// //   runtime: IRunTime,
+// //   entrypoint: string
+// //   // testInfo: any,
+// //   // runtime: IRunTime,
+// //   // metaFileSourcePath: string
+// // ): void {
+// //   // Extract test name from testInfo
+// //   // let testName: string = "";
+
+// //   // let addableFiles: string[] | undefined;
+// //   // const addableFiles = this.configs[runtime]
+
+// //   // if (typeof testInfo === "string") {
+// //   //   testName = testInfo;
+// //   // } else if (testInfo && typeof testInfo === "object") {
+// //   //   testName =
+// //   //     testInfo.name || testInfo.testName || testInfo.path || "Calculator";
+// //   //   // addableFiles = testInfo.files || testInfo.addableFiles;
+// //   // } else {
+// //   //   testName = "Calculator";
+// //   // }
+
+// //   // If testName is a path, extract just the base name without extension
+// //   // This is important because BDD test commands expect test names, not paths
+// //   // if (testName.includes("/") || testName.includes("\\")) {
+// //   //   const parts = testName.split(/[/\\]/);
+// //   //   const lastPart = parts[parts.length - 1];
+// //   //   // Remove extension
+// //   //   testName = lastPart.replace(/\.[^/.]+$/, "");
+// //   //   console.log(`Extracted test name from path: ${testName}`);
+// //   // }
+
+// //   // Convert metaFileSourcePath to a relative path if needed
+// //   const src = path.relative(process.cwd(), metaFileSourcePath);
+
+// //   console.log(
+// //     ansiC.magenta(`Queueing test: ${testName} (${runtime}) from ${src}`)
+// //   );
+
+// //   // Log additional information for debugging
+// //   console.log(
+// //     ansiC.cyan(
+// //       `Test name: ${testName}, Runtime: ${runtime}, Addable files: ${addableFiles}`
+// //     )
+// //   );
+
+// //   // Add to queue for processing
+// //   this.addToQueue(
+// //     testName, // Use the extracted test name, not the source path
+// //     runtime,
+// //     this.configs,
+// //     this.projectName,
+// //     this.cleanupTestProcessesInternal?.bind(this) ||
+// //       ((testName: string) => {}),
+// //     this.checkQueue?.bind(this) || (() => {}),
+// //     addableFiles
+// //   );
+// // }

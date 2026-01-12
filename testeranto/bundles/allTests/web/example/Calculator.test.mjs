@@ -7,7 +7,7 @@ var tpskrt;
 if (false) {
   tpskrt = await null;
 } else if (true) {
-  tpskrt = await import("../Web-M4RK4V24.mjs");
+  tpskrt = await import("../Web-5H5XPUTR.mjs");
 } else {
   throw `Unknown ENV ${"web"}`;
 }
@@ -120,27 +120,32 @@ var Calculator = class {
 
 // example/Calculator.test.adapter.ts
 var adapter = {
-  beforeAll: async (input, testResource, pm) => {
+  beforeAll: async (input, testResource) => {
     return input;
   },
-  beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
+  beforeEach: async (subject, initializer, testResource, initialValues) => {
     const result2 = await initializer();
     return result2;
   },
-  andWhen: async (store, whenCB, testResource, pm) => {
+  andWhen: async (store, whenCB, testResource) => {
     const transform = whenCB;
     const result2 = transform(store);
     return result2;
   },
-  butThen: async (store, thenCB, testResource, pm) => {
+  butThen: async (store, thenCB, testResource) => {
     thenCB(store);
     const display = store.getDisplay();
     return display;
   },
-  afterEach: async (store, key, pm) => {
+  afterEach: async (store, key) => {
     return store;
   },
-  afterAll: async (store, pm) => {
+  afterAll: async (store) => {
+    const root = await navigator.storage.getDirectory();
+    const fileHandle = await root.getFileHandle("data.txt", { create: true });
+    const writable = await fileHandle.createWritable();
+    await writable.write("Hello from OPFS 2026!");
+    await writable.close();
     return store;
   },
   assertThis: (actual) => {

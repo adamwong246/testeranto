@@ -1,10 +1,11 @@
-import { Plugin } from "esbuild";
-import { ITestResourceConfiguration } from "./tiposkripto/index.js";
-import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
-import { BaseSuite } from "./tiposkripto/BaseSuite.js";
-import { IGivens, BaseGiven } from "./tiposkripto/BaseGiven.js";
-import { BaseThen } from "./tiposkripto/BaseThen.js";
-import { BaseWhen } from "./tiposkripto/BaseWhen.js";
+import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes";
+import { ITestResourceConfiguration } from "./lib/tiposkripto";
+import { IGivens, BaseGiven } from "./lib/tiposkripto/BaseGiven";
+import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
+import { BaseThen } from "./lib/tiposkripto/BaseThen";
+import { BaseWhen } from "./lib/tiposkripto/BaseWhen";
+
+export type IChecks = ((x: any) => string)[];
 
 export type ISummary = Record<
   string,
@@ -187,37 +188,14 @@ export type ITestconfig = {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // build?: Itest; // Separate build for Go
-    // monitoring?: {
-    //   // Go-specific monitoring options
-    //   captureTestOutput?: boolean;
-    //   captureCoverage?: boolean;
-    // };
+    checks: IChecks;
   };
 
   python: {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // processPool?: {
-    //   maxConcurrent: number;
-    //   timeoutMs: number;
-    // };
-    // monitoring?: {
-    //   // Python-specific monitoring options
-    //   capturePytestOutput?: boolean;
-    //   captureLogging?: boolean;
-    // };
+    checks: IChecks;
   };
 
   node: {
@@ -225,20 +203,7 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // processPool?: {
-    //   maxConcurrent: number;
-    //   timeoutMs: number;
-    // };
-    // monitoring?: {
-    //   // Node-specific monitoring options
-    //   captureConsole?: boolean;
-    //   captureUncaughtExceptions?: boolean;
-    // };
+    checks: IChecks;
   };
 
   web: {
@@ -246,28 +211,7 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // chrome?: {
-    //   sharedInstance: boolean;
-    //   maxContexts: number;
-    //   memoryLimitMB: number;
-    //   monitoring?: {
-    //     captureConsole?: boolean;
-    //     captureNetwork?: boolean;
-    //     captureErrors?: boolean;
-    //     wsEndpoint?: string;
-    //   };
-    // };
-    // monitoring?: {
-    //   // Web-specific monitoring options
-    //   capturePageErrors?: boolean;
-    //   captureNetworkRequests?: boolean;
-    //   captureConsoleMessages?: boolean;
-    // };
+    checks: IChecks;
   };
 };
 

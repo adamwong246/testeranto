@@ -23,7 +23,8 @@ const config: ITestconfig = {
   // },
 
   golang: createLangConfig("example/Calculator.golingvu.test.go", [
-    (x) => `cd /workspace/example && golangci-lint run ${x.replace('example/', '')}`,
+    (x) =>
+      `cd /workspace/example && golangci-lint run ${x.replace("example/", "")}`,
   ]),
 
   python: createLangConfig("example/Calculator.pitono.test.py", [

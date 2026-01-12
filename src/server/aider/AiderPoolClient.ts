@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import WebSocket from "ws";
 import net from "net";
 import { EventEmitter } from "events";
@@ -61,7 +60,7 @@ export class AiderPoolClient extends EventEmitter {
           runtime: message.runtime || "node",
           terminal_port: message.terminal_port,
           terminal_host: message.terminal_host || "localhost",
-          contextFiles: new Set<string>()
+          contextFiles: new Set<string>(),
         };
 
         this.instances.set(message.instance_id, instanceInfo);
@@ -106,7 +105,7 @@ export class AiderPoolClient extends EventEmitter {
               runtime: runtime,
               terminal_port: message.terminal_port,
               terminal_host: message.terminal_host || "localhost",
-              contextFiles: new Set<string>(initialFiles)
+              contextFiles: new Set<string>(initialFiles),
             };
 
             this.instances.set(message.instance_id, instanceInfo);
@@ -121,17 +120,17 @@ export class AiderPoolClient extends EventEmitter {
         }
       };
 
-      this.ws.on("message", handler);
+      // this.ws.on("message", handler);
 
-      this.ws.send(
-        JSON.stringify({
-          action: "create",
-          test_name: testName,
-          runtime: runtime,
-          workspace: process.cwd(),
-          initial_files: initialFiles,
-        })
-      );
+      // this.ws.send(
+      //   JSON.stringify({
+      //     action: "create",
+      //     test_name: testName,
+      //     runtime: runtime,
+      //     workspace: process.cwd(),
+      //     initial_files: initialFiles,
+      //   })
+      // );
     });
   }
 
@@ -161,34 +160,37 @@ export class AiderPoolClient extends EventEmitter {
         }
       };
 
-      this.ws.on("message", handler);
+      // this.ws.on("message", handler);
 
-      this.ws.send(
-        JSON.stringify({
-          action: "command",
-          instance_id: instanceId,
-          command: command,
-        })
-      );
+      // this.ws.send(
+      //   JSON.stringify({
+      //     action: "command",
+      //     instance_id: instanceId,
+      //     command: command,
+      //   })
+      // );
     });
   }
 
   async sendMessage(instanceId: string, message: string): Promise<void> {
     if (!this.connected || !this.ws) {
-      throw new Error('Not connected to aider pool');
+      throw new Error("Not connected to aider pool");
     }
 
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
-        reject(new Error('Timeout sending message'));
+        reject(new Error("Timeout sending message"));
       }, 10000);
 
       const handler = (data: string) => {
         try {
           const response = JSON.parse(data);
-          if (response.status === 'message_sent' && response.instance_id === instanceId) {
+          if (
+            response.status === "message_sent" &&
+            response.instance_id === instanceId
+          ) {
             clearTimeout(timeout);
-            this.ws!.off('message', handler);
+            this.ws!.off("message", handler);
             resolve();
           }
         } catch (error) {
@@ -196,13 +198,15 @@ export class AiderPoolClient extends EventEmitter {
         }
       };
 
-      this.ws.on('message', handler);
-      
-      this.ws.send(JSON.stringify({
-        action: 'message',
-        instance_id: instanceId,
-        message: message
-      }));
+      // this.ws.on("message", handler);
+
+      // this.ws.send(
+      //   JSON.stringify({
+      //     action: "message",
+      //     instance_id: instanceId,
+      //     message: message,
+      //   })
+      // );
     });
   }
 
@@ -212,48 +216,56 @@ export class AiderPoolClient extends EventEmitter {
   ): Promise<void> {
     const fs = await import("fs");
     const path = await import("path");
-    
+
     try {
       const metafileContent = fs.readFileSync(metafilePath, "utf-8");
       const metafile = JSON.parse(metafileContent);
-      
+
       // Extract source files
       const files = Object.keys(metafile.inputs || {})
-        .filter(file => file.endsWith('.ts') || file.endsWith('.js') || 
-                       file.endsWith('.py') || file.endsWith('.go'))
-        .map(file => path.relative(process.cwd(), path.join(process.cwd(), file)));
-      
+        .filter(
+          (file) =>
+            file.endsWith(".ts") ||
+            file.endsWith(".js") ||
+            file.endsWith(".py") ||
+            file.endsWith(".go")
+        )
+        .map((file) =>
+          path.relative(process.cwd(), path.join(process.cwd(), file))
+        );
+
       // Get current instance
       const instance = this.instances.get(instanceId);
       if (!instance) {
         throw new Error(`Instance ${instanceId} not found`);
       }
-      
+
       // Get current files from instance
       const currentFiles = instance.contextFiles || new Set<string>();
-      
+
       // Calculate added/removed files
-      const added = files.filter(f => !currentFiles.has(f));
-      const removed = Array.from(currentFiles).filter(f => !files.includes(f));
-      
+      const added = files.filter((f) => !currentFiles.has(f));
+      const removed = Array.from(currentFiles).filter(
+        (f) => !files.includes(f)
+      );
+
       // Send commands to aider
       if (added.length > 0) {
         await this.sendCommand(instanceId, {
-          type: 'add_files',
-          files: added
+          type: "add_files",
+          files: added,
         });
       }
-      
+
       if (removed.length > 0) {
         await this.sendCommand(instanceId, {
-          type: 'drop_files',
-          files: removed
+          type: "drop_files",
+          files: removed,
         });
       }
-      
+
       // Update tracking
       instance.contextFiles = new Set(files);
-      
     } catch (error) {
       console.error(`Error updating files from metafile:`, error);
     }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export class Calculator {
   private display: string = "";
   private values: { [key: string]: any } = {};

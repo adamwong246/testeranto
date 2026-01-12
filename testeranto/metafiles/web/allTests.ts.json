@@ -7,7 +7,7 @@
         "column": 21,
         "file": "example/Calculator.ts",
         "length": 4,
-        "line": 17,
+        "line": 16,
         "lineText": "      const result = eval(this.display);",
         "namespace": "",
         "suggestion": ""
@@ -65,10 +65,10 @@
   "metafile": {
     "inputs": {
       "src/lib/tiposkripto/index.ts": {
-        "bytes": 2586,
+        "bytes": 2589,
         "imports": [
           {
-            "path": "../CoreTypes",
+            "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
           },
@@ -129,15 +129,10 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/BaseWhen.ts": {
-        "bytes": 2516,
+        "bytes": 2144,
         "imports": [
           {
-            "path": ".",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types.js",
+            "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
           }
@@ -145,7 +140,7 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/BaseTiposkripto.ts": {
-        "bytes": 16702,
+        "bytes": 16325,
         "imports": [
           {
             "path": "type-fest",
@@ -153,7 +148,7 @@
             "external": true
           },
           {
-            "path": "ws",
+            "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
           },
@@ -181,17 +176,12 @@
             "path": "src/lib/tiposkripto/index.ts",
             "kind": "import-statement",
             "original": "./index.js"
-          },
-          {
-            "path": "./Analyzer",
-            "kind": "import-statement",
-            "external": true
           }
         ],
         "format": "esm"
       },
       "src/lib/tiposkripto/Web.ts": {
-        "bytes": 3074,
+        "bytes": 2388,
         "imports": [
           {
             "path": "src/lib/tiposkripto/index.ts",
@@ -199,7 +189,7 @@
             "original": "./index.js"
           },
           {
-            "path": "../CoreTypes.js",
+            "path": "../../CoreTypes.js",
             "kind": "import-statement",
             "external": true
           },
@@ -238,20 +228,15 @@
         "format": "esm"
       },
       "example/Calculator.ts": {
-        "bytes": 2565,
+        "bytes": 2509,
         "imports": [],
         "format": "esm"
       },
       "example/Calculator.test.adapter.ts": {
-        "bytes": 1362,
+        "bytes": 1254,
         "imports": [
           {
             "path": "../src/CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./Calculator",
             "kind": "import-statement",
             "external": true
           },
@@ -264,7 +249,7 @@
         "format": "esm"
       },
       "example/Calculator.test.implementation.ts": {
-        "bytes": 1480,
+        "bytes": 1301,
         "imports": [
           {
             "path": "./Calculator.test.types",
@@ -355,7 +340,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/web/Web-M4RK4V24.mjs",
+            "path": "testeranto/bundles/allTests/web/Web-5H5XPUTR.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -376,7 +361,7 @@
             "bytesInOutput": 2036
           },
           "example/Calculator.test.adapter.ts": {
-            "bytesInOutput": 701
+            "bytesInOutput": 948
           },
           "example/Calculator.test.implementation.ts": {
             "bytesInOutput": 1004
@@ -388,18 +373,13 @@
             "bytesInOutput": 153
           }
         },
-        "bytes": 11922
+        "bytes": 12169
       },
-      "testeranto/bundles/allTests/web/Web-M4RK4V24.mjs": {
+      "testeranto/bundles/allTests/web/Web-5H5XPUTR.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/web/chunk-GONGMDWG.mjs",
             "kind": "import-statement"
-          },
-          {
-            "path": "ws",
-            "kind": "import-statement",
-            "external": true
           }
         ],
         "exports": [
@@ -408,9 +388,6 @@
         ],
         "entryPoint": "src/lib/tiposkripto/Web.ts",
         "inputs": {
-          "src/lib/tiposkripto/BaseTiposkripto.ts": {
-            "bytesInOutput": 12528
-          },
           "src/lib/tiposkripto/BaseGiven.ts": {
             "bytesInOutput": 2598
           },
@@ -421,13 +398,16 @@
             "bytesInOutput": 1362
           },
           "src/lib/tiposkripto/BaseWhen.ts": {
-            "bytesInOutput": 1031
+            "bytesInOutput": 1011
+          },
+          "src/lib/tiposkripto/BaseTiposkripto.ts": {
+            "bytesInOutput": 6753
           },
           "src/lib/tiposkripto/Web.ts": {
-            "bytesInOutput": 1217
+            "bytesInOutput": 1385
           }
         },
-        "bytes": 22030
+        "bytes": 16360
       },
       "testeranto/bundles/allTests/web/chunk-GONGMDWG.mjs": {
         "imports": [],

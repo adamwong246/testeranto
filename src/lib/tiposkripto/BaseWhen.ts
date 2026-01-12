@@ -1,13 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-// Do not add logging to this file as it is used by the pure runtime.
-
-import type { Ibdd_in_any } from "../CoreTypes";
-
-import { ITLog } from ".";
-import { IPM } from "./types.js";
-// import { andWhenProxy } from "./pmProxy.js";
+import { Ibdd_in_any } from "../../CoreTypes";
 
 export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;
@@ -36,8 +27,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   abstract andWhen(
     store: I["istore"],
     whenCB: (x: I["iselection"]) => I["then"],
-    testResource,
-    pm: IPM
+    testResource
   ): Promise<any>;
 
   toObj() {
@@ -52,13 +42,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
     return obj;
   }
 
-  async test(
-    store: I["istore"],
-    testResourceConfiguration,
-    tLog: ITLog,
-    pm: IPM,
-    filepath: string
-  ) {
+  async test(store: I["istore"], testResourceConfiguration) {
     try {
       // Ensure addArtifact is properly bound to 'this'
       // const addArtifact = this.addArtifact.bind(this);

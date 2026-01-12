@@ -7,6 +7,8 @@ import { Server_DockerCompose } from "./Server_DockerCompose";
 import { getContentType } from "./utils/Server_TCP_utils";
 
 export class Server_HTTP extends Server_DockerCompose {
+  protected httpServer: http.Server;
+
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
 

@@ -1,29 +1,23 @@
-import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
+// This Server manages processes-as-docker-commands.
+
+import fs from "fs";
+import path from "path";
+import { IBuiltConfig, IRunTime } from "../../Types";
 import { IMode } from "../types";
 import { Server_Queue } from "./Server_Queue";
-
 import {
   createLogStreams,
   ProcessCategory,
   ProcessInfo,
 } from "./utils/Server_ProcessManager";
+import { IMetaFile } from "./utils/types";
 
 export class Server_ProcessManager extends Server_Queue {
   ports: Record<number, string> = {};
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
-  launchers: Record<string, () => void>;
   allProcesses: Map<string, ProcessInfo> = new Map();
   processLogs: Map<string, string[]> = new Map();
-  webProcesses: Map<
-    string,
-    {
-      contextId: string;
-      testName: string;
-      startTime: Date;
-      logs: string[];
-      status: "running" | "completed" | "error";
-    }
-  > = new Map();
+  runningProcesses: Map<string, Promise<any>> = new Map();
 
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
@@ -36,33 +30,12 @@ export class Server_ProcessManager extends Server_Queue {
         this.ports[port] = ""; // set ports as open
       });
     }
-
-    this.launchers = {};
-
-    // Start monitoring broadcast if configured
-    // if (configs.monitoring) {
-    //   // Use setTimeout to ensure the server is fully initialized
-    //   setTimeout(() => {
-    //     this.startMonitoringBroadcast();
-    //   }, 1000);
-    // }
   }
 
-  // Start monitoring broadcast using existing WebSocket server
-  // startMonitoringBroadcast = () => {
-  //   console.log("Starting monitoring broadcast via existing WebSocket server");
-
-  //   // Broadcast status updates at regular intervals
-  //   if (this.webSocketBroadcastMessage) {
-  //     setInterval(() => {
-  //       this.webSocketBroadcastMessage({
-  //         type: "statusUpdate",
-  //         data: this.getProcessSummary(),
-  //         timestamp: new Date().toISOString(),
-  //       });
-  //     }, this.configs.monitoring?.updateInterval || 1000);
-  //   }
-  // };
+  async stop() {
+    Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
+    await super.stop();
+  }
 
   // Get process summary for monitoring
   getProcessSummary = () => {
@@ -119,27 +92,8 @@ export class Server_ProcessManager extends Server_Queue {
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}`;
     this.processLogs.get(processId)!.push(logEntry);
 
-    // // Broadcast log via WebSocket
-    // if (this.webSocketBroadcastMessage) {
-    //   this.webSocketBroadcastMessage({
-    //     type: "logUpdate",
-    //     processId,
-    //     source,
-    //     message,
-    //     timestamp: timestamp.toISOString(),
-    //   });
-    // }
-
-    // // Also broadcast to monitoring channel
-    // if (this.webSocketBroadcastMessage) {
-    //   this.webSocketBroadcastMessage({
-    //     type: "monitoringLog",
-    //     processId,
-    //     source,
-    //     message,
-    //     timestamp: timestamp.toISOString(),
-    //   });
-    // }
+    // Also write to a log file for docker processes
+    this.writeToProcessLogFile(processId, source, message, timestamp);
 
     // Send to log subscribers if they exist
     if ((this as any).logSubscriptions) {
@@ -160,6 +114,30 @@ export class Server_ProcessManager extends Server_Queue {
       }
     }
   };
+
+  private writeToProcessLogFile(
+    processId: string,
+    source: "stdout" | "stderr" | "console" | "network" | "error",
+    message: string,
+    timestamp: Date
+  ) {
+    const logDir = path.join(
+      process.cwd(),
+      "testeranto",
+      "reports",
+      this.projectName,
+      "docker-process-logs"
+    );
+    if (!fs.existsSync(logDir)) {
+      fs.mkdirSync(logDir, { recursive: true });
+    }
+
+    // Create or append to log file
+    const logFile = path.join(logDir, `${processId}.log`);
+    const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}\n`;
+
+    fs.appendFileSync(logFile, logEntry);
+  }
 
   // Port management methods
   allocatePorts(numPorts: number, testName: string): number[] | null {
@@ -195,6 +173,49 @@ export class Server_ProcessManager extends Server_Queue {
     return this.ports[port] || null;
   }
 
+  // Execute a command and track it as a process
+  executeCommand = async (
+    processId: string,
+    command: string,
+    category: ProcessCategory,
+    testName?: string,
+    platform?: IRunTime,
+    options?: any
+  ) => {
+    const { exec } = await import("child_process");
+    const { promisify } = await import("util");
+    const execAsync = promisify(exec);
+
+    this.addLogEntry(processId, "stdout", `Starting command: ${command}`);
+
+    const promise = execAsync(command, {
+      ...options,
+      maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large outputs
+    })
+      .then(({ stdout, stderr }) => {
+        // Return stdout and stderr for capture
+        return { stdout, stderr };
+      })
+      .catch((error) => {
+        // Ensure error has stdout and stderr
+        error.stdout = error.stdout || "";
+        error.stderr = error.stderr || "";
+        throw error;
+      });
+
+    // Add as a promise process which will capture logs
+    this.addPromiseProcess(
+      processId,
+      promise,
+      command,
+      category,
+      testName,
+      platform
+    );
+
+    return promise;
+  };
+
   // Add promise process tracking
   addPromiseProcess = (
     processId: string,
@@ -204,12 +225,44 @@ export class Server_ProcessManager extends Server_Queue {
     testName?: string,
     platform?: IRunTime
   ) => {
-    // If promise is undefined, create a resolved promise
-    const actualPromise = promise || Promise.resolve();
+    // Create a wrapper promise that never rejects to prevent system crashes
+    const safePromise = new Promise<{
+      success: boolean;
+      error?: any;
+      stdout?: string;
+      stderr?: string;
+    }>(async (resolve) => {
+      try {
+        // If promise is undefined, just resolve with success
+        if (!promise) {
+          resolve({ success: true });
+          return;
+        }
+
+        // Wait for the actual promise to settle
+        const result = await promise;
+        // If it resolves, we're good
+        resolve({
+          success: true,
+          stdout: result?.stdout,
+          stderr: result?.stderr,
+        });
+      } catch (error: any) {
+        // If it rejects, capture stdout and stderr from the error if available
+        console.log(
+          `[Process ${processId}] Non-critical error:`,
+          error.message
+        );
+        // Try to extract stdout and stderr from the error object
+        const stdout = error.stdout || error.output?.[1] || error.message;
+        const stderr = error.stderr || error.output?.[2] || error.stack;
+        resolve({ success: false, error, stdout, stderr });
+      }
+    });
 
     // Store the process info
     const processInfo: ProcessInfo = {
-      promise: actualPromise,
+      promise: safePromise,
       status: "running",
       command,
       timestamp: new Date().toISOString(),
@@ -220,143 +273,132 @@ export class Server_ProcessManager extends Server_Queue {
     };
 
     this.allProcesses.set(processId, processInfo);
-    this.runningProcesses.set(processId, actualPromise);
+    this.runningProcesses.set(processId, safePromise);
 
     // Set up promise completion handlers
-    actualPromise
-      .then(() => {
+    safePromise
+      .then(({ success, error, stdout, stderr }) => {
         const info = this.allProcesses.get(processId);
         if (info) {
           info.status = "completed";
-          info.exitCode = 0;
+          info.exitCode = success ? 0 : 1;
+          // Build a comprehensive error message
+          let errorMessage = "";
+          if (error) {
+            errorMessage = error.message || String(error);
+          }
+          // Include stdout and stderr in the error field for better debugging
+          const details = [];
+          if (stdout) details.push(`stdout: ${stdout}`);
+          if (stderr) details.push(`stderr: ${stderr}`);
+          if (details.length > 0) {
+            info.error = `${errorMessage}\n${details.join("\n")}`;
+          } else if (errorMessage) {
+            info.error = errorMessage;
+          }
         }
         this.runningProcesses.delete(processId);
+
+        // Log stdout and stderr separately
+        if (stdout) {
+          this.addLogEntry(processId, "stdout", stdout);
+        }
+        if (stderr) {
+          this.addLogEntry(processId, "stderr", stderr);
+        }
+
+        const message = success
+          ? `Process ${processId} completed successfully`
+          : `Process ${processId} completed with non-critical error`;
+        this.addLogEntry(processId, success ? "stdout" : "stderr", message);
       })
       .catch((error) => {
+        // This should never happen since safePromise never rejects, but just in case
         const info = this.allProcesses.get(processId);
         if (info) {
-          info.status = "error";
-          info.exitCode = -1;
-          info.error = error.message;
+          info.status = "completed";
+          info.exitCode = 1;
+          info.error = error?.message || String(error);
         }
         this.runningProcesses.delete(processId);
+        this.addLogEntry(
+          processId,
+          "stderr",
+          `Process ${processId} completed with unexpected error: ${
+            error?.message || String(error)
+          }`
+        );
       });
-
-    // Broadcast process update if WebSocket is available
-    // if (this.webSocketBroadcastMessage) {
-    //   this.webSocketBroadcastMessage({
-    //     type: "processUpdate",
-    //     processId,
-    //     process: processInfo,
-    //   });
-    // }
   };
 
-  // Add web process (browser context)
-  addWebProcess = (
-    processId: string,
-    contextId: string,
-    testName: string,
-    url: string
-  ) => {
-    this.webProcesses.set(processId, {
-      contextId,
-      testName,
-      startTime: new Date(),
-      logs: [],
-      status: "running",
-    });
-
-    // Create a virtual process for tracking
-    const processInfo: ProcessInfo = {
-      status: "running",
-      command: `Web test: ${testName} (${url})`,
-      timestamp: new Date().toISOString(),
-      type: "process",
-      category: "bdd-test",
-      testName,
-      platform: "web",
-    };
-
-    this.allProcesses.set(processId, processInfo);
-
-    // Broadcast process update
-    // if (this.webSocketBroadcastMessage) {
-    //   this.webSocketBroadcastMessage({
-    //     type: "processUpdate",
-    //     processId,
-    //     process: processInfo,
-    //   });
-    // }
-
-    this.addLogEntry(
-      processId,
-      "console",
-      `Started web test: ${testName} at ${url}`
+  async scheduleBddTest(
+    metafile: IMetaFile,
+    runtime: IRunTime,
+    entrypoint: string
+  ): Promise<void> {
+    console.log(
+      `[ProcessManager] Scheduling BDD test for ${entrypoint} (${runtime})`
     );
-  };
 
-  // Update web process status
-  updateWebProcessStatus = (
-    processId: string,
-    status: "completed" | "error",
-    exitCode?: number,
-    error?: string
-  ) => {
-    const webProcess = this.webProcesses.get(processId);
-    if (webProcess) {
-      webProcess.status = status;
-    }
+    this.enqueue(runtime, `yarn tsx ${entrypoint}`);
+  }
 
-    const processInfo = this.allProcesses.get(processId);
-    if (processInfo) {
-      processInfo.status = status;
-      if (exitCode !== undefined) processInfo.exitCode = exitCode;
-      if (error) processInfo.error = error;
-    }
-
-    // Broadcast update
-    // if (this.webSocketBroadcastMessage) {
-    //   this.webSocketBroadcastMessage({
-    //     type: "processUpdate",
-    //     processId,
-    //     process: processInfo,
-    //   });
-    // }
-
-    const message =
-      status === "completed"
-        ? `Web test completed: ${webProcess?.testName || processId}`
-        : `Web test failed: ${webProcess?.testName || processId} - ${
-            error || "Unknown error"
-          }`;
-
-    this.addLogEntry(
-      processId,
-      status === "completed" ? "stdout" : "stderr",
-      message
+  async scheduleStaticTests(
+    metafile: IMetaFile,
+    runtime: IRunTime,
+    entrypoint: string,
+    addableFiles: string[]
+  ): Promise<void> {
+    console.log(
+      `[ProcessManager] Scheduling Static test for ${entrypoint} (${runtime})`
     );
-  };
 
-  // Check for shutdown (to be overridden or used by derived classes)
-  // checkForShutdown = async () => {
-  //   // Base implementation can be empty or provide common logic
-  // };
-
-  // WebSocket broadcast method - to be implemented by derived classes or parent
-  // webSocketBroadcastMessage(message: any): void {
-  //   // Default implementation that can be overridden
-  //   const data =
-  //     typeof message === "string" ? message : JSON.stringify(message);
-  //   this.clients.forEach((client) => {
-  //     if (client.readyState === 1) {
-  //       client.send(data);
-  //     }
-  //   });
-  // }
-
-  async stop() {
-    Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-    await super.stop();
+    for (const check of this.configs[runtime].checks) {
+      this.enqueue(runtime, `${check(addableFiles)}`);
+    }
   }
 }
+
+////////////////////////////////////////////////////////////////
+// DEPRECATED
+////////////////////////////////////////////////////////////////
+
+// const bddCommands = this.getBddTestCommand(testName, runtime);
+// console.log(`[BDD] Commands retrieved:`, bddCommands);
+// if (!bddCommands || bddCommands.length === 0) {
+//   console.log(
+//     `[BDD] No BDD test commands found for ${testName} (${runtime})`
+//   );
+//   // Try to get default commands
+
+//   console.log(`[BDD] Default commands:`, defaultCommands);
+//   if (defaultCommands && defaultCommands.length > 0) {
+//     console.log(`[BDD] Using default commands`);
+
+//   }
+//   return;
+// }
+
+// const defaultCommand = this.getDefaultBddTestCommand(testName, runtime);
+// await this.runBddCommandsWithDefaults(
+//   testId,
+//   testName,
+//   runtime,
+//   this.getDefaultBddTestCommand(testName, runtime)
+// );
+// const processId = `bdd-${testId}`;
+// console.log(`[BDD] Process ID: ${processId}`);
+// await this.executeBddTestInDocker(processId, testName, runtime, command);
+
+// DEPRECATED
+// await this.runBddCommandsWithDefaults(
+//   testId,
+//   testName,
+//   runtime,
+//   this.getDefaultBddTestCommand(testName, runtime)
+// );
+
+// const processId = `bdd-${testId}`;
+// console.log(`[BDD] Process ID: ${processId}`);
+
+// await this.executeBddTestInDocker(processId, testName, runtime, command);

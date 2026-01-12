@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import path from "path";
 import { fork } from "child_process";
@@ -46,16 +45,6 @@ async function startBundling(
 
   // onMetafileChange(bv);
 }
-
-// run using user defined static analysis when the metafile changes
-// async function startStaticAnalysis(esbuildResult: esbuild.BuildResult) {
-//   console.log(`NODE BUILDER is now performing static analysis upon: `);
-// }
-
-// // run testeranto tests when the metafile changes
-// async function startBddTests(esbuildResult: esbuild.BuildResult) {
-//   console.log(`NODE BUILDER is now running testeranto tests:`);
-// }
 
 async function main() {
   const config = (await import(`/workspace/${testName}`)).default;

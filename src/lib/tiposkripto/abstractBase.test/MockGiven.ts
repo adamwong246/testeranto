@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { Ibdd_in_any } from "../../CoreTypes";
+import { Ibdd_in_any } from "../../../CoreTypes";
 import { BaseGiven } from "../BaseGiven";
 import { BaseThen } from "../BaseThen";
 import { BaseWhen } from "../BaseWhen";
@@ -23,12 +20,11 @@ export class MockGiven<I extends Ibdd_in_any> extends BaseGiven<I> {
     testResourceConfiguration: any,
     artifactory: any,
     givenCB: I["given"],
-    initialValues: any,
-    pm: any
+    initialValues: any
   ): Promise<I["istore"]> {
     // Call the givenCB which is a function that returns the store
     const result = givenCB();
-    if (typeof result === 'function') {
+    if (typeof result === "function") {
       return result();
     }
     return result;

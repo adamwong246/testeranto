@@ -21,30 +21,40 @@
             "kind": "import-statement",
             "external": false
           }
-        ]
+        ],
+        "hash": "a1fad2c4d39519eb22f3c2f51b5e90dd"
       },
       "example/Calculator.py": {
         "bytes": 3550,
-        "imports": []
+        "imports": [],
+        "hash": "8d2bc5521bf8e1f1a81502c94cf6bc8b"
       }
     },
     "outputs": {
-      "python/Calculator.pitono.test.py": {
+      "python/Calculator.pitono.test.json": {
         "imports": [],
         "exports": [],
         "entryPoint": "example/Calculator.pitono.test.py",
         "inputs": {
           "example/Calculator.pitono.test.py": {
-            "bytesInOutput": 6085
+            "bytesInOutput": 6085,
+            "hash": "a1fad2c4d39519eb22f3c2f51b5e90dd"
           },
           "example/Calculator.py": {
-            "bytesInOutput": 3550
+            "bytesInOutput": 3550,
+            "hash": "8d2bc5521bf8e1f1a81502c94cf6bc8b"
           }
         },
         "bytes": 9635,
-        "signature": "d1802d9a",
-        "bundlePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundled.py",
-        "bundleSize": 9655
+        "signature": "084a4054e0321a412fc9ad9e6538c423",
+        "bundlePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.json",
+        "bundleSize": 204,
+        "combinedHash": "2e56dab370fe3ddf8a7941480410cf0e",
+        "inputFiles": [
+          "example/Calculator.pitono.test.py",
+          "example/Calculator.py"
+        ],
+        "textFilePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.txt"
       }
     }
   }

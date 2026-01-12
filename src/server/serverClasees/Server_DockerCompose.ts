@@ -660,6 +660,6 @@ export class Server_DockerCompose extends Server_Base {
 
     console.log(`[Server_DockerCompose] stop() result`, result);
 
-    await super.stop();
+    // await super.stop();
   }
 }

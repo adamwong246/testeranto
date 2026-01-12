@@ -16,7 +16,7 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null
     ]
   },
@@ -29,7 +29,7 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null
     ]
   },
@@ -42,7 +42,7 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null,
       null
     ]
@@ -56,7 +56,7 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null,
       null
     ]

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import Tiposkripto from "../Tiposkripto";
 import { testAdapter } from "./adapter";
 import { implementation } from "./implementation";

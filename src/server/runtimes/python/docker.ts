@@ -92,7 +92,11 @@ export const pythonDockerComposeFile = (config: IBuiltConfig) => {
        cd /workspace && python src/server/runtimes/python/pitono.py /workspace/testeranto/allTests.json;
        echo "Checking if metafile was generated:";
        ls -la /workspace/testeranto/metafiles/python/ || echo "Python metafiles directory not found";
-       echo 'Python tests completed';`,
+       echo "Checking if bundles were generated:";
+       ls -la /workspace/testeranto/bundles/allTests/python/ || echo "Python bundles directory not found";
+       echo "Checking for generated text files:";
+       find /workspace/testeranto/bundles/allTests/python/ -name "*.txt" -type f | head -10;
+       echo 'Python bundle generation completed';`,
     ],
     healthcheck: {
       test: ["CMD-SHELL", "python -c \"import pylint; import sys; sys.exit(0)\" || exit 1"],
