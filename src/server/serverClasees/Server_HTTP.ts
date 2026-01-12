@@ -1,12 +1,19 @@
+// Gives the server HTTP capabilities
+// 1) serve static files from the project directory
+// 2) handle HTTP requests which are defined by child classes.
+////  for instance, Server_Process_Manager will define the react component.
+////  So we want the Server_Process_Manager class to handle the react component and logic defined by that child class
+////  These extra pages are routed under the ~ (tilde) to seperate the file server from the extra commands
+
 import fs from "fs";
 import http from "http";
 import path from "path";
 import { IMode } from "../types";
 import { CONTENT_TYPES, SERVER_CONSTANTS } from "./utils/Server_TCP_constants";
-import { Server_DockerCompose } from "./Server_DockerCompose";
+import { Server_WS } from "./Server_WS";
 import { getContentType } from "./utils/Server_TCP_utils";
 
-export class Server_HTTP extends Server_DockerCompose {
+export abstract class Server_HTTP extends Server_WS {
   protected httpServer: http.Server;
 
   constructor(configs: any, name: string, mode: IMode) {
@@ -51,6 +58,16 @@ export class Server_HTTP extends Server_DockerCompose {
 
     this.httpServer.on("request", this.handleHttpRequest.bind(this));
     console.log(`[HTTP] HTTP request handler attached`);
+
+    // Set up WebSocket upgrade handling
+    this.setupWebSocketUpgrade();
+  }
+
+  routes(
+    routes: Record<string, React.ComponentType<any> | React.ReactElement>
+  ) {
+    // Store routes for later use in request handling
+    (this as any)._routes = routes;
   }
 
   protected handleHttpRequest(
@@ -59,9 +76,82 @@ export class Server_HTTP extends Server_DockerCompose {
       req: http.IncomingMessage;
     }
   ): void {
-    // Always serve static files from the project directory
-    this.serveStaticFile(req, res);
-    return;
+    // Check if this is a route request (starts with /~/)
+    if (req.url && req.url.startsWith("/~/")) {
+      this.handleRouteRequest(req, res);
+    } else {
+      // Otherwise serve static files
+      this.serveStaticFile(req, res);
+    }
+  }
+
+  private handleRouteRequest(
+    req: http.IncomingMessage,
+    res: http.ServerResponse<http.IncomingMessage> & {
+      req: http.IncomingMessage;
+    }
+  ): void {
+    const urlPath = new URL(req.url!, `http://${req.headers.host}`).pathname;
+
+    // Extract route name (remove /~/ prefix)
+    const routeName = urlPath.slice(3); // Remove '/~/'
+
+    // Get routes from instance
+    const routes = (this as any)._routes as
+      | Record<string, React.ComponentType<any> | React.ReactElement>
+      | undefined;
+
+    if (!routes || !routes[routeName]) {
+      res.writeHead(404, { "Content-Type": "text/html" });
+      res.end(`<h1>Route not found: /~/${routeName}</h1>`);
+      return;
+    }
+
+    // Serve the process manager React app
+    if (routeName === "process_manager") {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(`
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Process Manager</title>
+            <link href="/dist/prebuild/ProcessManger.css" rel="stylesheet">
+            
+          </head>
+          <body>
+            <div id="root"></div>
+            <script src="/dist/prebuild/ProcessManagerReactApp.js"></script>
+            <script>
+              // The bundled script automatically calls initApp when loaded
+              // Ensure the root element exists
+              if (!document.getElementById('root').innerHTML) {
+                document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Process Manager...</p></div>';
+              }
+            </script>
+          </body>
+        </html>
+      `);
+      return;
+    }
+
+    // Fallback for other routes (should not happen)
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${routeName}</title>
+        </head>
+        <body>
+          <div id="root"></div>
+          <script>
+            document.getElementById('root').innerHTML = '<h1>${routeName}</h1><p>Component not fully implemented.</p>';
+          </script>
+        </body>
+      </html>
+    `);
   }
 
   private serveStaticFile(
@@ -193,6 +283,15 @@ export class Server_HTTP extends Server_DockerCompose {
     });
   }
 
+  protected setupWebSocketUpgrade(): void {
+    // Attach WebSocket upgrade handler using the parent class method
+    if (this.ws) {
+      this.attachWebSocketToHttpServer(this.httpServer);
+    } else {
+      console.error("[HTTP] WebSocket server not available");
+    }
+  }
+
   async stop() {
     // Safely close HTTP server if it exists
     if (this.httpServer) {
@@ -202,4 +301,6 @@ export class Server_HTTP extends Server_DockerCompose {
     }
     await super.stop();
   }
+
+  abstract route(a: any): any;
 }

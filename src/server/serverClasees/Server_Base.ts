@@ -13,4 +13,6 @@ export abstract class Server_Base {
     this.mode = mode;
     this.projectName = projectName;
   }
+
+  start() {}
 }

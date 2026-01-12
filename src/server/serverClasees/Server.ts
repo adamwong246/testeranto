@@ -2,12 +2,12 @@ import readline from "readline";
 import { default as ansiC } from "ansi-colors";
 import { IMode } from "../types";
 import { IBuiltConfig } from "../../Types";
-import { Server_FS } from "./Server_FS";
+import { Server_MetafileWatcher } from "./Server_MetafileWatcher";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-export class Server extends Server_FS {
+export class Server extends Server_MetafileWatcher {
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
 
@@ -36,5 +36,14 @@ export class Server extends Server_FS {
       console.log("\nForce quitting...");
       process.exit(1);
     });
+  }
+
+  async start(): Promise<void> {
+    console.log(ansiC.blue(ansiC.inverse("Starting Server...")));
+    
+    // Call parent's start method to start metafile watching
+    await super.start();
+    
+    console.log(ansiC.green(ansiC.inverse("Server started successfully")));
   }
 }

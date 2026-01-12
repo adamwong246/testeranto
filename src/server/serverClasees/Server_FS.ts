@@ -1,14 +1,19 @@
 import fs from "fs";
 import path from "path";
 import { IMode } from "../types";
-import { IBuiltConfig, IRunTime } from "../../Types";
-import { Server_MetafileWatcher } from "./Server_MetafileWatcher";
+import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
+import { Server_HTTP } from "./Server_HTTP";
 import { makeHtmlTestFiles } from "../../makeHtmlTestFiles";
 import { makeHtmlReportFile } from "../../makeHtmlReportFile";
 import { getRunnables } from "./utils/getRunnables";
 import { ProcessMangerHtml, IndexHtml } from "./utils/Server_FS";
 
-export class Server_FS extends Server_MetafileWatcher {
+export class Server_FS extends Server_HTTP {
+  summary: ISummary = {};
+
+  currentBuildResolve: (() => void) | null = null;
+  currentBuildReject: ((error: any) => void) | null = null;
+
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
 
@@ -58,6 +63,62 @@ export class Server_FS extends Server_MetafileWatcher {
     if (!fs.existsSync(`testeranto/reports/${this.projectName}`)) {
       fs.mkdirSync(`testeranto/reports/${this.projectName}`);
     }
+  }
+
+  ensureSummaryEntry(src: string, isSidecar = false) {
+    if (!this.summary[src]) {
+      this.summary[src] = {
+        runTimeTests: undefined,
+        runTimeErrors: undefined,
+        typeErrors: undefined,
+        staticErrors: undefined,
+        prompt: undefined,
+        failingFeatures: undefined,
+      };
+    }
+    return this.summary[src];
+  }
+
+  getSummary() {
+    return this.summary;
+  }
+
+  setSummary(summary: ISummary) {
+    this.summary = summary;
+  }
+
+  updateSummaryEntry(
+    src: string,
+    updates: Partial<{
+      typeErrors: number | "?" | undefined;
+      staticErrors: number | "?" | undefined;
+      runTimeErrors: number | "?" | undefined;
+      prompt: string | "?" | undefined;
+      failingFeatures: object | undefined;
+    }>
+  ) {
+    if (!this.summary[src]) {
+      this.ensureSummaryEntry(src);
+    }
+    this.summary[src] = { ...this.summary[src], ...updates };
+  }
+
+  writeBigBoard = () => {
+    const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
+    const summaryData = JSON.stringify(this.summary, null, 2);
+    fs.writeFileSync(summaryPath, summaryData);
+
+    // Broadcast the update if WebSocket is available
+    // if (this.webSocketBroadcastMessage) {
+    //   this.webSocketBroadcastMessage({
+    //     type: "summaryUpdate",
+    //     data: this.summary,
+    //   });
+    // }
+  };
+
+  async stop() {
+    await super.stop();
   }
 }
 

@@ -1,28 +1,47 @@
-// This Server manages processes-as-docker-commands.
+// This Server manages processes-as-docker-commands. Processes are scheduled in queue.
+// It should also leverage Server_HTTP and SERVER_WS
 
+import { default as ansiC } from "ansi-colors";
+import Queue from "queue";
 import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { IMode } from "../types";
-import { Server_Queue } from "./Server_Queue";
+import { Server_FS } from "./Server_FS";
 import {
   createLogStreams,
   ProcessCategory,
   ProcessInfo,
 } from "./utils/Server_ProcessManager";
 import { IMetaFile } from "./utils/types";
+// ProcessManagerReactApp is bundled separately and served via HTTP
+// We don't need to import it here
 
-export class Server_ProcessManager extends Server_Queue {
+export class Server_ProcessManager extends Server_FS {
   ports: Record<number, string> = {};
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   allProcesses: Map<string, ProcessInfo> = new Map();
   processLogs: Map<string, string[]> = new Map();
   runningProcesses: Map<string, Promise<any>> = new Map();
+  private jobQueue: any;
+
+  // Track queued items for monitoring
+  private queuedItems: Array<{
+    testName: string;
+    runtime: IRunTime;
+    addableFiles: string[];
+    command?: string;
+  }> = [];
 
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
     this.configs = configs;
     this.projectName = testName;
+
+    // Initialize the queue with default options
+    this.jobQueue = new Queue();
+    this.jobQueue.autostart = true;
+    this.jobQueue.concurrency = 1; // Process one job at a time by default
 
     // Initialize ports if configs.ports exists
     if (configs.ports && Array.isArray(configs.ports)) {
@@ -30,9 +49,28 @@ export class Server_ProcessManager extends Server_Queue {
         this.ports[port] = ""; // set ports as open
       });
     }
+
+    // Register the process manager route
+    this.routes({});
+  }
+
+  routes(
+    routes: Record<string, React.ComponentType<any> | React.ReactElement>
+  ) {
+    // Use a placeholder component object; the actual component is loaded via bundle
+    super.routes({
+      process_manager: {} as React.ComponentType<any>,
+      ...routes,
+    });
   }
 
   async stop() {
+    // Stop the queue and wait for current jobs to finish
+    if (this.jobQueue) {
+      this.jobQueue.end();
+      this.jobQueue.stop();
+    }
+
     Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
     await super.stop();
   }
@@ -41,8 +79,16 @@ export class Server_ProcessManager extends Server_Queue {
   getProcessSummary = () => {
     const processes = [];
 
+    // Debug: log all process IDs
+    console.log(`[ProcessManager] All process IDs:`, Array.from(this.allProcesses.keys()));
+
     // Docker/process-based tests
     for (const [id, info] of this.allProcesses.entries()) {
+      // Ensure id is valid
+      if (!id) {
+        console.warn(`[ProcessManager] Found process with undefined ID, info:`, info);
+        continue;
+      }
       processes.push({
         id,
         command: info.command,
@@ -70,6 +116,8 @@ export class Server_ProcessManager extends Server_Queue {
         (p) => p.status === "error"
       ).length,
       processes,
+      queueLength: this.jobQueue ? this.jobQueue.length : 0,
+      queuedItems: this.queuedItems,
     };
   };
 
@@ -182,13 +230,20 @@ export class Server_ProcessManager extends Server_Queue {
     platform?: IRunTime,
     options?: any
   ) => {
+    // Validate processId
+    if (!processId || typeof processId !== 'string') {
+      console.error(`[ProcessManager] Invalid processId: ${processId}. Generating fallback ID.`);
+      processId = `fallback-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
     const { exec } = await import("child_process");
     const { promisify } = await import("util");
     const execAsync = promisify(exec);
 
     this.addLogEntry(processId, "stdout", `Starting command: ${command}`);
 
-    const promise = execAsync(command, {
+    // Create the original promise
+    const originalPromise = execAsync(command, {
       ...options,
       maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large outputs
     })
@@ -203,28 +258,35 @@ export class Server_ProcessManager extends Server_Queue {
         throw error;
       });
 
-    // Add as a promise process which will capture logs
-    this.addPromiseProcess(
+    // Add as a promise process which will capture logs and handle errors safely
+    const safePromise = this.addPromiseProcessAndGetSafePromise(
       processId,
-      promise,
+      originalPromise,
       command,
       category,
       testName,
       platform
     );
 
-    return promise;
+    // Return the safe promise that never rejects
+    return safePromise;
   };
 
-  // Add promise process tracking
-  addPromiseProcess = (
+  // Helper method to add promise process and get the safe promise
+  addPromiseProcessAndGetSafePromise = (
     processId: string,
-    promise: Promise<any> | undefined,
+    promise: Promise<any>,
     command: string,
     category: ProcessCategory,
     testName?: string,
     platform?: IRunTime
-  ) => {
+  ): Promise<{ success: boolean; error?: any; stdout?: string; stderr?: string }> => {
+    // Validate processId
+    if (!processId || typeof processId !== 'string') {
+      console.error(`[ProcessManager] Invalid processId in addPromiseProcessAndGetSafePromise: ${processId}`);
+      processId = `invalid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
     // Create a wrapper promise that never rejects to prevent system crashes
     const safePromise = new Promise<{
       success: boolean;
@@ -233,12 +295,6 @@ export class Server_ProcessManager extends Server_Queue {
       stderr?: string;
     }>(async (resolve) => {
       try {
-        // If promise is undefined, just resolve with success
-        if (!promise) {
-          resolve({ success: true });
-          return;
-        }
-
         // Wait for the actual promise to settle
         const result = await promise;
         // If it resolves, we're good
@@ -329,6 +385,66 @@ export class Server_ProcessManager extends Server_Queue {
           }`
         );
       });
+
+    return safePromise;
+  };
+
+  // Create aider process for a specific test
+  createAiderProcess = async (
+    runtime: IRunTime,
+    testPath: string,
+    metafile: IMetaFile
+  ): Promise<void> => {
+    const processId = `allTests-${runtime}-${testPath}-aider`;
+    console.log(`[ProcessManager] Creating aider process: ${processId}`);
+    
+    // Extract relevant files from metafile for aider context
+    const contextFiles: string[] = [];
+    if (metafile.metafile && metafile.metafile.inputs) {
+      const inputs = metafile.metafile.inputs;
+      if (inputs instanceof Map) {
+        contextFiles.push(...Array.from(inputs.keys()));
+      } else if (typeof inputs === 'object') {
+        contextFiles.push(...Object.keys(inputs));
+      }
+    }
+    
+    // For now, we'll create a placeholder command
+    // In a real implementation, this would start an aider instance with the context files
+    const command = `echo "Aider process for ${runtime} test ${testPath} with ${contextFiles.length} context files"`;
+    
+    await this.executeCommand(
+      processId,
+      command,
+      "other",
+      testPath,
+      runtime
+    );
+    
+    this.addLogEntry(processId, "stdout", `Aider process created for ${testPath} (${runtime})`);
+  };
+
+  // Add promise process tracking
+  addPromiseProcess = (
+    processId: string,
+    promise: Promise<any> | undefined,
+    command: string,
+    category: ProcessCategory,
+    testName?: string,
+    platform?: IRunTime
+  ) => {
+    // Handle undefined promise
+    const actualPromise = promise || Promise.resolve({ stdout: '', stderr: '' });
+    
+    // Use the helper method to create a safe promise
+    this.addPromiseProcessAndGetSafePromise(
+      processId,
+      actualPromise,
+      command,
+      category,
+      testName,
+      platform
+    );
   };
 
   async scheduleBddTest(
@@ -340,7 +456,44 @@ export class Server_ProcessManager extends Server_Queue {
       `[ProcessManager] Scheduling BDD test for ${entrypoint} (${runtime})`
     );
 
-    this.enqueue(runtime, `yarn tsx ${entrypoint}`);
+    // Validate entrypoint
+    if (!entrypoint || typeof entrypoint !== 'string') {
+      console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
+      return;
+    }
+
+    // Extract test path from entrypoint
+    const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
+    
+    // Ensure testPath is valid
+    if (!testPath || testPath.trim() === '') {
+      console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
+      return;
+    }
+    
+    // Create aider process first
+    await this.createAiderProcess(runtime, testPath, metafile);
+    
+    // Enqueue BDD test with proper process ID pattern
+    const processId = `allTests-${runtime}-${testPath}-bdd`;
+    console.log(`[ProcessManager] BDD process ID: ${processId}`);
+    
+    const command = `yarn tsx ${entrypoint}`;
+    
+    // Instead of using enqueue, we'll execute directly with proper ID
+    // The executeCommand now returns a safe promise that never rejects
+    const result = await this.executeCommand(
+      processId,
+      command,
+      "bdd-test",
+      testPath,
+      runtime
+    );
+    
+    // Log the result for debugging
+    if (!result.success) {
+      console.log(`[ProcessManager] BDD test ${processId} failed:`, result.error?.message);
+    }
   }
 
   async scheduleStaticTests(
@@ -353,9 +506,244 @@ export class Server_ProcessManager extends Server_Queue {
       `[ProcessManager] Scheduling Static test for ${entrypoint} (${runtime})`
     );
 
-    for (const check of this.configs[runtime].checks) {
-      this.enqueue(runtime, `${check(addableFiles)}`);
+    // Validate entrypoint
+    if (!entrypoint || typeof entrypoint !== 'string') {
+      console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
+      return;
     }
+
+    // Extract test path from entrypoint
+    const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
+    
+    // Ensure testPath is valid
+    if (!testPath || testPath.trim() === '') {
+      console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
+      return;
+    }
+    
+    // Check if configs[runtime] exists
+    if (!this.configs[runtime] || !Array.isArray(this.configs[runtime].checks)) {
+      console.error(`[ProcessManager] No checks configured for runtime: ${runtime}`);
+      return;
+    }
+    
+    let checkIndex = 0;
+    for (const check of this.configs[runtime].checks) {
+      const processId = `allTests-${runtime}-${testPath}-${checkIndex}`;
+      console.log(`[ProcessManager] Static process ID: ${processId}`);
+      
+      const command = `${check(addableFiles)}`;
+      
+      const result = await this.executeCommand(
+        processId,
+        command,
+        "build-time",
+        testPath,
+        runtime
+      );
+      
+      // Log the result for debugging
+      if (!result.success) {
+        console.log(`[ProcessManager] Static test ${processId} failed:`, result.error?.message);
+      }
+      
+      checkIndex++;
+    }
+  }
+
+  shouldShutdown(
+    summary: Record<string, any>,
+    queueLength: number,
+    hasRunningProcesses: boolean,
+    mode: string
+  ): boolean {
+    if (mode === "dev") return false;
+
+    // Check for inflight operations
+    const inflight = Object.keys(summary).some(
+      (k) =>
+        summary[k].prompt === "?" ||
+        summary[k].runTimeErrors === "?" ||
+        summary[k].staticErrors === "?" ||
+        summary[k].typeErrors === "?"
+    );
+
+    return !inflight && !hasRunningProcesses && queueLength === 0;
+  }
+
+  checkForShutdown = async () => {
+    console.log(
+      ansiC.inverse(
+        `The following jobs are awaiting resources: ${JSON.stringify(
+          this.getAllQueueItems()
+        )}`
+      )
+    );
+
+    this.writeBigBoard();
+
+    const summary = this.getSummary();
+    const hasRunningProcesses = this.runningProcesses.size > 0;
+    const queueLength = this.jobQueue ? this.jobQueue.length : 0;
+
+    if (
+      this.shouldShutdown(summary, queueLength, hasRunningProcesses, this.mode)
+    ) {
+      console.log(
+        ansiC.inverse(`${this.projectName} has been tested. Goodbye.`)
+      );
+    }
+  };
+
+  async enqueue(
+    runtime: IRunTime,
+    command: string,
+    addableFiles: string[] = []
+  ): Promise<void> {
+    // Extract test name from command if possible
+    let testName = `test-${Date.now()}-${Math.random()
+      .toString(36)
+      .substr(2, 9)}`;
+    
+    // Try to extract a better test name from the command
+    const match = command.match(/example\/([^.\s]+)/);
+    if (match) {
+      testName = match[1];
+    }
+    
+    const testPath = testName;
+    // Use a more descriptive process ID that follows the pattern
+    // Since this is a queued job, we'll use 'job' as the type
+    const processId = `allTests-${runtime}-${testPath}-job`;
+
+    // Create a job function for the queue
+    const job = async () => {
+      console.log(
+        ansiC.blue(
+          ansiC.inverse(`Processing ${processId} (${runtime}) from queue`)
+        )
+      );
+
+      try {
+        // Execute the command
+        await this.executeCommand(
+          processId,
+          command,
+          "bdd-test",
+          testName,
+          runtime
+        );
+      } catch (error) {
+        console.error(
+          ansiC.red(`Error executing test ${processId} (${runtime}): ${error}`)
+        );
+      }
+
+      // Remove from queued items after processing
+      this.queuedItems = this.queuedItems.filter(
+        (item) => item.testName !== testName
+      );
+
+      // Update the board and check for shutdown
+      this.writeBigBoard();
+      this.checkForShutdown();
+    };
+
+    // Add the job to the queue
+    this.jobQueue.push(job);
+
+    // Track the queued item
+    this.queuedItems.push({
+      testName,
+      runtime,
+      addableFiles,
+      command,
+    });
+
+    console.log(
+      `[Queue] Added job ${processId} to queue. Queue length: ${this.jobQueue.length}`
+    );
+  }
+
+  async checkQueue(
+    processQueueItem: (
+      testName: string,
+      runtime: IRunTime,
+      addableFiles: string[]
+    ) => Promise<void>,
+    writeBigBoard: () => void,
+    checkForShutdown: () => void
+  ) {
+    // The queue library handles processing automatically when autostart is true
+    // We just need to ensure it's running
+    if (this.jobQueue && !this.jobQueue.running) {
+      this.jobQueue.start();
+    }
+
+    // Update the board
+    writeBigBoard();
+
+    // Check for shutdown if queue is empty and no running processes
+    if (
+      this.jobQueue &&
+      this.jobQueue.length === 0 &&
+      this.runningProcesses.size === 0
+    ) {
+      checkForShutdown();
+    }
+  }
+
+  // Remove and return the last item from the queue
+  pop():
+    | { testName: string; runtime: IRunTime; addableFiles?: string[] }
+    | undefined {
+    // Note: The queue library doesn't support popping specific items easily
+    // We'll manage this through our queuedItems tracking
+    const item = this.queuedItems.pop();
+    if (item) {
+      // We can't easily remove from jobQueue once added, but we can track it as removed
+      console.warn(
+        `[Queue] Item ${item.testName} marked as popped, but may still be in queue`
+      );
+    }
+    return item;
+  }
+
+  // Check if a test is in the queue
+  includes(testName: string, runtime?: IRunTime): boolean {
+    if (runtime !== undefined) {
+      return this.queuedItems.some(
+        (item) => item.testName === testName && item.runtime === runtime
+      );
+    }
+    return this.queuedItems.some((item) => item.testName === testName);
+  }
+
+  // Get the current queue length
+  get queueLength(): number {
+    return this.jobQueue ? this.jobQueue.length : 0;
+  }
+
+  // Clear the entire queue
+  clearQueue(): void {
+    if (this.jobQueue) {
+      this.jobQueue.end();
+      this.jobQueue.stop();
+    }
+    // Create a new queue instance
+    this.jobQueue = new Queue();
+    this.jobQueue.autostart = true;
+    this.jobQueue.concurrency = 1;
+    this.queuedItems = [];
+  }
+
+  // Get all items in the queue
+  getAllQueueItems(): Array<{
+    testName: string;
+    runtime: IRunTime;
+    addableFiles: string[];
+  }> {
+    return [...this.queuedItems];
   }
 }
 

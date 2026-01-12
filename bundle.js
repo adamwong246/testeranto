@@ -50,9 +50,9 @@ await esbuild.build({
 
 await esbuild.build({
   entryPoints: [
-    'src/frontend/Index.tsx',
-    'src/frontend/ProcessManger.tsx',
-    'src/frontend/Report.tsx',
+    // 'src/frontend/Index.tsx',
+    'src/server/serverClasees/ProcessManagerReactApp.tsx',
+    // 'src/frontend/Report.tsx',
   ],
   bundle: true,
   format: "iife",
@@ -60,7 +60,7 @@ await esbuild.build({
   outdir: 'dist/prebuild',
   logLevel: 'error',
   loader: {
-    ".scss": "text",
+    // ".scss": "text",
     ".ttf": "binary",
     ".png": "binary",
     ".jpg": "binary",

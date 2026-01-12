@@ -33,3 +33,13 @@ Each image/process should be associated with a websocket connection to a test, e
 - as each test comes online with a set of "test resource configurations". For BDD tests, this contains 1 or more ports (plus some more info). For static analysis, this payload should contains a list of files derived from the metafile. These files should be the input files for a test.
   - as each BDD test completes, it passes it's results back over websocket (this is to accamodate webtests which cannot write files directly)
   - for each static analysis, we can write files directly to the reports folder via the volume
+
+# processes
+
+The Process manager needs to account for processes of the following "shape"
+
+- The System process
+- The BDD process for each test. id: `allTests-${runtime}-${pathToTest}-bdd`
+- The Static Test processes for each test. id: `allTests-${runtime}-${pathToTest}-${N}`
+- The aider process for each test. id: `allTests-${runtime}-${pathToTest}-aider`
+- The builder process for each runtime. id `allTests-${runtime}-${pathToTest}-builder`

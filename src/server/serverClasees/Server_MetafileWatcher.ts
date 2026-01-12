@@ -213,7 +213,58 @@ export class Server_MetafileWatcher extends Server_ProcessManager {
       }
 
       const data = fs.readFileSync(metaFileSourcePath, "utf8");
-      const metafile = JSON.parse(data) as IMetaFile;
+      const parsed = JSON.parse(data);
+      
+      // Debug: log the parsed structure
+      console.log(ansiC.cyan(`Parsed metafile keys: ${Object.keys(parsed).join(', ')}`));
+      
+      // The actual metafile structure might be different from IMetaFile
+      // Let's check if 'metafile' exists, otherwise the parsed object might be the metafile itself
+      let metafileData = parsed;
+      if (parsed.metafile) {
+        metafileData = parsed.metafile;
+      }
+      
+      // Convert to IMetaFile structure
+      const metafile: IMetaFile = {
+        errors: parsed.errors || [],
+        warnings: parsed.warnings || [],
+        metafile: {
+          inputs: new Map(),
+          outputs: new Map()
+        }
+      };
+      
+      // Try to populate inputs and outputs
+      // Check if metafileData has inputs and outputs
+      if (metafileData.inputs) {
+        if (metafileData.inputs instanceof Map) {
+          metafile.metafile.inputs = metafileData.inputs;
+        } else if (typeof metafileData.inputs === 'object') {
+          const inputsMap = new Map();
+          for (const [key, value] of Object.entries(metafileData.inputs)) {
+            inputsMap.set(key, value);
+          }
+          metafile.metafile.inputs = inputsMap;
+        }
+      }
+      
+      if (metafileData.outputs) {
+        if (metafileData.outputs instanceof Map) {
+          metafile.metafile.outputs = metafileData.outputs;
+        } else if (typeof metafileData.outputs === 'object') {
+          const outputsMap = new Map();
+          for (const [key, value] of Object.entries(metafileData.outputs)) {
+            outputsMap.set(key, value);
+          }
+          metafile.metafile.outputs = outputsMap;
+        }
+      }
+      
+      console.log(ansiC.green(`Metafile processed: ${metaFileSourcePath}`));
+      console.log(ansiC.cyan(`Inputs count: ${metafile.metafile.inputs.size}`));
+      console.log(ansiC.cyan(`Outputs count: ${metafile.metafile.outputs.size}`));
+      
       const runtime = this.extractRuntimeFromPath(metaFileSourcePath);
 
       // Schedule tests based on metafile content
@@ -250,34 +301,162 @@ export class Server_MetafileWatcher extends Server_ProcessManager {
     metafile: IMetaFile,
     runtime: IRunTime
   ) {
-    for (const [outputFile, outputs] of Object.entries(
-      metafile.metafile.outputs
-    )) {
-      // ex outputFile "testeranto/bundles/allTests/node/example/Calculator.test.mjs"
-      // ex entrypoint "example/Calculator.test.ts"
-
-      if (
-        outputs.entrypoint ===
-        `testeranto/bundles/allTests/${runtime}/${outputFile
-          .split(".")
-          .slice(0, -1)
-          .concat("ts")
-          .join(".")}`
-      ) {
-        const addableFiles = Object.keys(
-          metafile.metafile.outputs[outputs.entrypoint].inputs as Map<
-            string,
-            number
-          >
-        );
-
-        this.scheduleStaticTests(
-          metafile,
-          runtime,
-          outputs.entrypoint,
-          addableFiles
-        );
-        this.scheduleBddTest(metafile, runtime, outputs.entrypoint);
+    // Check if metafile.metafile exists
+    if (!metafile.metafile) {
+      console.error(ansiC.red('Metafile missing metafile property'));
+      return;
+    }
+    
+    // Check if outputs exists
+    if (!metafile.metafile.outputs) {
+      console.error(ansiC.red('Metafile missing outputs property'));
+      return;
+    }
+    
+    const outputsMap = metafile.metafile.outputs;
+    console.log(ansiC.cyan(`Processing ${outputsMap.size} outputs for ${runtime}`));
+    
+    // Track which entrypoints we've already scheduled to avoid duplicates
+    const scheduledEntrypoints = new Set<string>();
+    
+    // Iterate through Map entries
+    for (const [outputFile, outputs] of outputsMap.entries()) {
+      // Log for debugging
+      console.log(ansiC.magenta(`Output file: ${outputFile}`));
+      
+      // Check if outputs is valid
+      if (!outputs || typeof outputs !== 'object') {
+        console.error(ansiC.yellow(`Skipping invalid output entry for ${outputFile}`));
+        continue;
+      }
+      
+      const entrypoint = outputs.entryPoint || outputs.entrypoint;
+      if (!entrypoint) {
+        console.log(ansiC.yellow(`No entrypoint for ${outputFile}`));
+        continue;
+      }
+      
+      console.log(ansiC.magenta(`Outputs entrypoint: ${entrypoint}`));
+      
+      // We need to identify which outputs are actual test entrypoints vs chunks
+      // Entrypoints should be source files (e.g., .ts files), not bundled .mjs files
+      // Also, we should skip chunk files and other non-entrypoint outputs
+      
+      // Check if this output file is a chunk or a non-entrypoint bundle
+      // Chunks typically have names like "chunk-*.mjs" or "Node-*.mjs"
+      const isChunkFile = 
+        outputFile.includes('chunk-') || 
+        outputFile.includes('Node-') ||
+        !outputFile.includes('example/');
+      
+      // The entrypoint should be a source file path, not a bundled path
+      // For example: entrypoint should be "example/Calculator.test.ts"
+      // not "testeranto/bundles/allTests/node/example/Calculator.test.mjs"
+      
+      // We want to schedule tests for source entrypoints, not for chunk files
+      // Also, we should only schedule each entrypoint once
+      if (isChunkFile) {
+        console.log(ansiC.yellow(`Skipping chunk file: ${outputFile}`));
+        continue;
+      }
+      
+      // Check if the entrypoint is a source file (ends with .ts, .js, .go, .py, etc.)
+      const isSourceEntrypoint = 
+        entrypoint.endsWith('.ts') || 
+        entrypoint.endsWith('.js') ||
+        entrypoint.endsWith('.go') ||
+        entrypoint.endsWith('.py');
+      
+      if (!isSourceEntrypoint) {
+        console.log(ansiC.yellow(`Entrypoint ${entrypoint} doesn't appear to be a source file`));
+        continue;
+      }
+      
+      // Avoid scheduling the same entrypoint multiple times
+      if (scheduledEntrypoints.has(entrypoint)) {
+        console.log(ansiC.yellow(`Entrypoint ${entrypoint} already scheduled`));
+        continue;
+      }
+      
+      // Get addableFiles from inputs
+      let addableFiles: string[] = [];
+      
+      // Try to get inputs from the current outputs
+      if (outputs.inputs) {
+        if (outputs.inputs instanceof Map) {
+          addableFiles = Array.from(outputs.inputs.keys());
+        } else if (typeof outputs.inputs === 'object') {
+          // Convert plain object to array of keys
+          addableFiles = Object.keys(outputs.inputs);
+        }
+      } else {
+        // Try to get inputs from the entrypoint in outputs
+        const entrypointOutputs = outputsMap.get(entrypoint);
+        if (entrypointOutputs?.inputs) {
+          if (entrypointOutputs.inputs instanceof Map) {
+            addableFiles = Array.from(entrypointOutputs.inputs.keys());
+          } else if (typeof entrypointOutputs.inputs === 'object') {
+            addableFiles = Object.keys(entrypointOutputs.inputs);
+          }
+        }
+      }
+      
+      // Also, we can get all input files from the metafile's inputs section
+      if (addableFiles.length === 0 && metafile.metafile.inputs) {
+        const inputsMap = metafile.metafile.inputs;
+        if (inputsMap instanceof Map) {
+          addableFiles = Array.from(inputsMap.keys());
+        } else if (typeof inputsMap === 'object') {
+          addableFiles = Object.keys(inputsMap);
+        }
+      }
+      
+      console.log(ansiC.green(`Scheduling tests for ${entrypoint} with ${addableFiles.length} addable files`));
+      
+      // Schedule tests
+      this.scheduleStaticTests(
+        metafile,
+        runtime,
+        entrypoint,
+        addableFiles
+      );
+      this.scheduleBddTest(metafile, runtime, entrypoint);
+      
+      // Mark this entrypoint as scheduled
+      scheduledEntrypoints.add(entrypoint);
+    }
+    
+    // If no entrypoints were found, log a warning
+    if (scheduledEntrypoints.size === 0) {
+      console.log(ansiC.yellow(`No valid entrypoints found for ${runtime}. Checking all outputs...`));
+      
+      // Fallback: try to find any output that looks like a test file
+      for (const [outputFile, outputs] of outputsMap.entries()) {
+        if (outputs && typeof outputs === 'object') {
+          const entrypoint = outputs.entryPoint || outputs.entrypoint;
+          if (entrypoint && entrypoint.includes('example/')) {
+            console.log(ansiC.yellow(`Fallback scheduling for ${entrypoint}`));
+            
+            let addableFiles: string[] = [];
+            if (metafile.metafile.inputs) {
+              const inputsMap = metafile.metafile.inputs;
+              if (inputsMap instanceof Map) {
+                addableFiles = Array.from(inputsMap.keys());
+              } else if (typeof inputsMap === 'object') {
+                addableFiles = Object.keys(inputsMap);
+              }
+            }
+            
+            this.scheduleStaticTests(
+              metafile,
+              runtime,
+              entrypoint,
+              addableFiles
+            );
+            this.scheduleBddTest(metafile, runtime, entrypoint);
+            break;
+          }
+        }
       }
     }
   }

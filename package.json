@@ -236,6 +236,7 @@
     "node-static": "^0.7.11",
     "puppeteer": "^24.4.0",
     "puppeteer-core": "24.4.0",
+    "queue": "^7.0.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "18.2.0",
@@ -257,13 +258,13 @@
     "xterm-react": "^1.0.0"
   },
   "optionalDependencies": {
-    "esbuild": "^0.27.2",
-    "@esbuild/linux-arm64": "^0.27.2",
-    "@esbuild/linux-x64": "^0.27.2",
     "@esbuild/darwin-arm64": "^0.27.2",
     "@esbuild/darwin-x64": "^0.27.2",
+    "@esbuild/linux-arm64": "^0.27.2",
+    "@esbuild/linux-x64": "^0.27.2",
+    "@esbuild/win32-arm64": "^0.27.2",
     "@esbuild/win32-x64": "^0.27.2",
-    "@esbuild/win32-arm64": "^0.27.2"
+    "esbuild": "^0.27.2"
   },
   "keywords": [
     "typescript",
