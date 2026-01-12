@@ -1,8 +1,8 @@
-[2026-01-12T19:35:57.866Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:35:58.983Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:07.125Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:07.822Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:35:58.983Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:07.822Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -17,4 +17,4 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:35:58.983Z] [stderr] Process allTests-web-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:07.823Z] [stderr] Process allTests-web-Calculator.test-bdd completed with non-critical error

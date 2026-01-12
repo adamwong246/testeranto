@@ -131,10 +131,27 @@ export class Server_ProcessManager extends Server_FS {
     processId: string,
     source: "stdout" | "stderr" | "console" | "network" | "error",
     message: string,
-    timestamp: Date = new Date()
+    timestamp: Date = new Date(),
+    level?: string
   ) => {
     if (!this.processLogs.has(processId)) {
       this.processLogs.set(processId, []);
+    }
+
+    // Determine level from source if not provided
+    let logLevel = level;
+    if (!logLevel) {
+      switch (source) {
+        case "stderr":
+        case "error":
+          logLevel = "error";
+          break;
+        case "stdout":
+          logLevel = "info";
+          break;
+        default:
+          logLevel = "info";
+      }
     }
 
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}`;
@@ -151,6 +168,7 @@ export class Server_ProcessManager extends Server_FS {
           type: "logEntry",
           processId,
           source,
+          level: logLevel,
           message,
           timestamp: timestamp.toISOString(),
         };
@@ -240,7 +258,7 @@ export class Server_ProcessManager extends Server_FS {
     const { promisify } = await import("util");
     const execAsync = promisify(exec);
 
-    this.addLogEntry(processId, "stdout", `Starting command: ${command}`);
+    this.addLogEntry(processId, "stdout", `Starting command: ${command}`, new Date(), "info");
 
     // Create the original promise
     const originalPromise = execAsync(command, {
@@ -357,16 +375,16 @@ export class Server_ProcessManager extends Server_FS {
 
         // Log stdout and stderr separately
         if (stdout) {
-          this.addLogEntry(processId, "stdout", stdout);
+          this.addLogEntry(processId, "stdout", stdout, new Date(), "info");
         }
         if (stderr) {
-          this.addLogEntry(processId, "stderr", stderr);
+          this.addLogEntry(processId, "stderr", stderr, new Date(), "error");
         }
 
         const message = success
           ? `Process ${processId} completed successfully`
           : `Process ${processId} completed with non-critical error`;
-        this.addLogEntry(processId, success ? "stdout" : "stderr", message);
+        this.addLogEntry(processId, success ? "stdout" : "stderr", message, new Date(), success ? "info" : "warn");
       })
       .catch((error) => {
         // This should never happen since safePromise never rejects, but just in case
@@ -382,7 +400,9 @@ export class Server_ProcessManager extends Server_FS {
           "stderr",
           `Process ${processId} completed with unexpected error: ${
             error?.message || String(error)
-          }`
+          }`,
+          new Date(),
+          "error"
         );
       });
 
@@ -421,7 +441,7 @@ export class Server_ProcessManager extends Server_FS {
       runtime
     );
     
-    this.addLogEntry(processId, "stdout", `Aider process created for ${testPath} (${runtime})`);
+    this.addLogEntry(processId, "stdout", `Aider process created for ${testPath} (${runtime})`, new Date(), "info");
   };
 
   // Add promise process tracking
@@ -616,6 +636,19 @@ export class Server_ProcessManager extends Server_FS {
     // Since this is a queued job, we'll use 'job' as the type
     const processId = `allTests-${runtime}-${testPath}-job`;
 
+    // Broadcast enqueue event
+    this.broadcast({
+      type: 'enqueue',
+      processId,
+      runtime,
+      command,
+      testName,
+      testPath,
+      addableFiles,
+      timestamp: new Date().toISOString(),
+      queueLength: this.jobQueue.length + 1, // +1 because we're about to add this job
+    });
+
     // Create a job function for the queue
     const job = async () => {
       console.log(
@@ -623,6 +656,18 @@ export class Server_ProcessManager extends Server_FS {
           ansiC.inverse(`Processing ${processId} (${runtime}) from queue`)
         )
       );
+
+      // Broadcast dequeue event when job starts processing
+      this.broadcast({
+        type: 'dequeue',
+        processId,
+        runtime,
+        command,
+        testName,
+        testPath,
+        timestamp: new Date().toISOString(),
+        details: 'Started processing job from queue'
+      });
 
       try {
         // Execute the command

@@ -44,34 +44,7 @@ const ProcessManger = () => {
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [filterLevel, setFilterLevel] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const [events, setEvents] = useState<Event[]>(() => {
-    // Add some initial test events for demonstration
-    const initialEvents: Event[] = [];
-    const now = new Date();
-    for (let i = 0; i < 3; i++) {
-      const time = new Date(now.getTime() - (i * 60000)); // 1 minute apart
-      initialEvents.push({
-        id: `test-enqueue-${i}`,
-        type: 'enqueue',
-        processId: `process-${i + 100}`,
-        command: `yarn test example/Calculator.test.mjs`,
-        timestamp: time.toISOString(),
-        details: `Test enqueue event ${i + 1}`
-      });
-    }
-    for (let i = 0; i < 2; i++) {
-      const time = new Date(now.getTime() - (i * 30000)); // 30 seconds apart
-      initialEvents.push({
-        id: `test-dequeue-${i}`,
-        type: 'dequeue',
-        processId: `process-${i + 200}`,
-        command: `npm run build`,
-        timestamp: time.toISOString(),
-        details: `Test dequeue event ${i + 1}`
-      });
-    }
-    return initialEvents;
-  });
+  const [events, setEvents] = useState<Event[]>([]);
   const [eventFilterType, setEventFilterType] = useState<'all' | 'enqueue' | 'dequeue'>('all');
 
   const wsRef = useRef<WebSocket | null>(null);
@@ -141,38 +114,6 @@ const ProcessManger = () => {
     }
   }, [logs]);
 
-  // Simulate receiving WebSocket events for demonstration
-  useEffect(() => {
-    if (!isConnected) return;
-    
-    // Only add simulated events if we have no real events from WebSocket
-    // This is just for demonstration purposes
-    const interval = setInterval(() => {
-      // Randomly decide whether to add an event (20% chance every 10 seconds)
-      if (Math.random() < 0.2 && events.length < 20) {
-        const type: 'enqueue' | 'dequeue' = Math.random() > 0.5 ? 'enqueue' : 'dequeue';
-        const commands = [
-          'yarn test:unit',
-          'npm run lint',
-          'docker build -t test .',
-          'tsc --watch',
-          'jest --updateSnapshot'
-        ];
-        const processIds = ['unit-test-123', 'lint-456', 'docker-789', 'tsc-012', 'jest-345'];
-        
-        const randomIndex = Math.floor(Math.random() * commands.length);
-        addEvent(
-          type,
-          processIds[randomIndex],
-          commands[randomIndex],
-          `Simulated ${type} event from WebSocket`
-        );
-      }
-    }, 10000); // Check every 10 seconds
-
-    return () => clearInterval(interval);
-  }, [isConnected, events.length]);
-
   // Add event to event log
   const addEvent = (type: 'enqueue' | 'dequeue', processId: string, command: string, details?: string) => {
     const newEvent: Event = {
@@ -186,30 +127,7 @@ const ProcessManger = () => {
     setEvents(prev => [newEvent, ...prev.slice(0, 99)]); // Keep last 100 events
   };
 
-  // Add a test event for demonstration
-  const addTestEvent = (type: 'enqueue' | 'dequeue') => {
-    const commands = [
-      'yarn test example/Calculator.test.mjs',
-      'npm run build',
-      'docker compose up',
-      'tsc --noEmit',
-      'jest --coverage',
-      'eslint src/',
-      'webpack --mode production'
-    ];
-    const processIds = ['calc-test-001', 'build-002', 'docker-003', 'type-check-004', 'jest-005', 'lint-006', 'webpack-007'];
-    
-    const randomIndex = Math.floor(Math.random() * commands.length);
-    const command = commands[randomIndex];
-    const processId = processIds[randomIndex];
-    
-    addEvent(
-      type,
-      processId,
-      command,
-      `Test ${type} event added manually at ${new Date().toLocaleTimeString()}`
-    );
-  };
+
 
   // Clear all events
   const clearEvents = () => {
@@ -220,23 +138,31 @@ const ProcessManger = () => {
   const handleWebSocketMessage = (data: any) => {
     console.log('Received WebSocket message:', data);
 
-    // Check for enqueue/dequeue events
+    // Handle connection message
+    if (data.type === 'connected') {
+      console.log('WebSocket connected successfully');
+      return;
+    }
+
+    // Check for enqueue/dequeue events from server
     if (data.type === 'enqueue' || data.type === 'dequeue') {
+      console.log(`Processing ${data.type} event for process ${data.processId}`);
       addEvent(
         data.type,
         data.processId || 'unknown',
         data.command || 'Unknown command',
-        data.details
+        data.details || `Runtime: ${data.runtime || 'unknown'} | Test: ${data.testName || 'unknown'}`
       );
+      // Don't return early, continue processing other message types
     }
 
     // Handle all types of process lists: 'processes', 'runningProcesses', or any other type that contains processes
-    if (data.type === 'processes' || data.type === 'runningProcesses' || 
-        (data.processes && Array.isArray(data.processes)) || 
-        (data.data && Array.isArray(data.data))) {
-      
+    if (data.type === 'processes' || data.type === 'runningProcesses' ||
+      (data.processes && Array.isArray(data.processes)) ||
+      (data.data && Array.isArray(data.data))) {
+
       let processList: any[] = [];
-      
+
       // Extract process list from various possible structures
       if (data.processes && Array.isArray(data.processes)) {
         processList = data.processes;
@@ -247,7 +173,7 @@ const ProcessManger = () => {
       } else if (Array.isArray(data)) {
         processList = data;
       }
-      
+
       console.log('Extracted process list:', processList);
 
       // Map server's 'id' field to 'processId' and ensure all required fields
@@ -449,11 +375,10 @@ const ProcessManger = () => {
               filterType={eventFilterType}
               onFilterTypeChange={setEventFilterType}
               formatTime={formatTime}
-              onAddTestEvent={addTestEvent}
               onClearEvents={clearEvents}
             />
           </div>
-          
+
           {/* Column 2: Process List */}
           <div className="h-100 d-flex flex-column">
             <ProcessList
@@ -463,7 +388,7 @@ const ProcessManger = () => {
               formatTime={formatTime}
             />
           </div>
-          
+
           {/* Column 3: Process Details */}
           <div className="h-100 d-flex flex-column">
             <ProcessDetails
@@ -474,7 +399,7 @@ const ProcessManger = () => {
               onClearLogs={() => selectedProcessId && clearLogs(selectedProcessId)}
             />
           </div>
-          
+
           {/* Column 4: Log Viewer */}
           <div className="h-100 d-flex flex-column">
             {selectedProcessId ? (

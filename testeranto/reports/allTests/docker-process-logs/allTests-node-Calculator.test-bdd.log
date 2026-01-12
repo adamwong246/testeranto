@@ -1,8 +1,8 @@
-[2026-01-12T19:35:57.470Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:35:58.707Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:08.620Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:09.219Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:35:58.707Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:09.219Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -17,12 +17,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:35:58.707Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:35:59.386Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:00.730Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:09.219Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:17.649Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:18.258Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:00.730Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:18.258Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -37,12 +37,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:00.730Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:36:01.995Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:02.935Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:18.258Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:26.595Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:27.287Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:02.935Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:27.287Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -57,12 +57,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:02.935Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:36:11.302Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:11.943Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:27.287Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:28.126Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:28.760Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:11.943Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:28.760Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -77,12 +77,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:11.943Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:36:20.530Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:21.157Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:28.760Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:36.498Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:37.123Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:21.157Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:37.123Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -97,12 +97,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:21.157Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:36:30.221Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:30.810Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:37.123Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:45.193Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:45.831Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:30.810Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:45.832Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -117,12 +117,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:30.810Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:36:39.604Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:40.284Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:45.832Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:47:54.408Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:47:55.014Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:40.285Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:55.015Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -137,12 +137,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:40.285Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:36:49.049Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:36:49.666Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:47:55.015Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:48:12.916Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:48:13.534Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:49.666Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:48:13.534Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -157,12 +157,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:49.666Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:37:07.543Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:37:08.224Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:48:13.534Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:48:39.173Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:48:39.816Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:37:08.225Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:48:39.816Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -177,12 +177,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:37:08.225Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:37:33.825Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:37:34.501Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:48:39.816Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:49:31.138Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:49:31.745Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:37:34.501Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:49:31.745Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -197,12 +197,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:37:34.501Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:38:25.710Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:38:26.328Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:49:31.745Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:50:31.800Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:50:32.436Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:38:26.328Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:50:32.437Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -217,12 +217,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:38:26.328Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:39:26.429Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:39:27.077Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:50:32.437Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:51:32.466Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:51:33.138Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:39:27.077Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:51:33.138Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -237,12 +237,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:39:27.077Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:40:27.086Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:40:27.761Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:51:33.138Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:52:33.124Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:52:33.745Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:40:27.761Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:52:33.745Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -257,12 +257,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:40:27.761Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:41:27.753Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:41:28.381Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:52:33.746Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:53:33.771Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:53:34.281Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:41:28.381Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:53:34.281Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -277,12 +277,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:41:28.381Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:42:28.439Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:42:28.948Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:53:34.281Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:54:34.439Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:54:35.095Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:42:28.948Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:54:35.095Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -297,12 +297,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:42:28.948Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:43:29.156Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:43:29.674Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:54:35.095Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:55:35.138Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:55:35.790Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:43:29.674Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:55:35.790Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -317,12 +317,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:43:29.674Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:44:29.823Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:44:30.469Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:55:35.790Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:56:35.892Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:56:36.515Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:44:30.470Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:56:36.515Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -337,12 +337,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:44:30.470Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:45:30.468Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:45:31.105Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:56:36.515Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:57:36.478Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:57:37.149Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:45:31.105Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:57:37.149Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -357,12 +357,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:45:31.105Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:46:31.208Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:46:31.863Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:57:37.149Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:58:37.126Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:58:37.632Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:46:31.863Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:58:37.632Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -377,12 +377,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:46:31.863Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:47:31.863Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:47:32.513Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:58:37.632Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T21:59:37.778Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T21:59:38.422Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:47:32.513Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:59:38.422Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -397,12 +397,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:47:32.513Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:48:32.534Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:48:33.209Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T21:59:38.422Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:00:38.472Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:00:39.145Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:48:33.209Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:00:39.145Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -417,12 +417,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:48:33.209Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:49:33.242Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:49:33.882Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:00:39.145Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:01:39.154Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:01:39.799Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:49:33.882Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:01:39.799Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -437,12 +437,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:49:33.882Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:50:33.938Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:50:34.462Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:01:39.799Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:02:39.875Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:02:40.511Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:50:34.462Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:02:40.512Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -457,12 +457,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:50:34.462Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:51:34.605Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:51:35.149Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:02:40.512Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:03:40.503Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:03:41.117Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:51:35.149Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:03:41.117Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -477,12 +477,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:51:35.149Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:52:35.274Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:52:35.920Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:03:41.117Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:04:41.167Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:04:41.789Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:52:35.920Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:04:41.790Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -497,12 +497,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:52:35.920Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:53:36.132Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:53:36.847Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:04:41.790Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:05:41.899Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:05:42.516Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:53:36.847Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:05:42.516Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -517,12 +517,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:53:36.847Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:54:37.012Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:54:37.602Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:05:42.516Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:06:42.653Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:06:43.300Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:54:37.602Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:06:43.300Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -537,12 +537,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:54:37.602Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:55:37.721Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:55:38.442Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:06:43.300Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:07:43.244Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:07:43.893Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:55:38.442Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:07:43.893Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -557,12 +557,12 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:55:38.442Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
-[2026-01-12T19:56:38.428Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
-[2026-01-12T19:56:39.079Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+[2026-01-12T22:07:43.893Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:08:43.903Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:08:44.546Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:56:39.079Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:08:44.546Z] [stderr] warning ../../package.json: No license field
 /Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
 if (ENV === "node") {
 ^
@@ -577,4 +577,431 @@ ReferenceError: ENV is not defined
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:56:39.080Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:08:44.546Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:09:44.592Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:09:45.249Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:09:45.249Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:09:45.249Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:10:45.290Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:10:45.986Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:10:45.986Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:10:45.986Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:11:45.890Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:11:46.366Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:11:46.366Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:11:46.366Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:12:46.684Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:12:47.316Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:12:47.316Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:12:47.316Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:13:47.365Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:13:47.992Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:13:47.992Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:13:47.992Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:14:48.026Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:14:48.658Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:14:48.659Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:14:48.659Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:15:48.664Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:15:49.307Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:15:49.307Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:15:49.307Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:16:49.366Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:16:49.925Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:16:49.925Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:16:49.925Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:17:50.020Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:17:50.680Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:17:50.680Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:17:50.680Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:18:50.685Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:18:51.352Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:18:51.352Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:18:51.352Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:19:51.381Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:19:52.066Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:19:52.066Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:19:52.066Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:20:52.201Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:20:52.890Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:20:52.891Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:20:52.891Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:21:53.146Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:21:53.815Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:21:53.815Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:21:53.815Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:22:53.881Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:22:54.567Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:22:54.567Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:22:54.567Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:23:54.683Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:23:55.354Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:23:55.354Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:23:55.354Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:24:55.443Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:24:56.000Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:24:56.000Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:24:56.000Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:25:56.127Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:25:56.763Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:25:56.763Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:25:56.763Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:26:56.836Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:26:57.491Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:26:57.492Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:26:57.492Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:27:57.608Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:27:58.239Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:27:58.239Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:27:58.239Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:28:58.336Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:28:59.009Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:28:59.009Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:28:59.009Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:29:59.147Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:29:59.879Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:29:59.879Z] [stderr] warning ../../package.json: No license field
+/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16
+if (ENV === "node") {
+^
+
+
+ReferenceError: ENV is not defined
+    at <anonymous> (/Users/adam/Code/testeranto/src/lib/tiposkripto/Tiposkripto.ts:16:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:29:59.879Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-12T22:30:59.977Z] [stdout] Starting command: yarn tsx example/Calculator.test.ts
+[2026-01-12T22:31:00.252Z] [stdout] info If you think this is a bug, please open a bug report with the information provided in "/Users/adam/Code/testeranto/yarn-error.log".
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:31:00.253Z] [stderr] error An unexpected error occurred: "/Users/adam/Code/testeranto/package.json: Expected double-quoted property name in JSON at position 826".
+
+[2026-01-12T22:31:00.253Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error

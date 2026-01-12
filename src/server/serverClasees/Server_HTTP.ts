@@ -284,8 +284,10 @@ export abstract class Server_HTTP extends Server_WS {
   }
 
   protected setupWebSocketUpgrade(): void {
+    console.log("[HTTP] Setting up WebSocket upgrade handler");
     // Attach WebSocket upgrade handler using the parent class method
     if (this.ws) {
+      console.log("[HTTP] WebSocket server is available, attaching to HTTP server");
       this.attachWebSocketToHttpServer(this.httpServer);
     } else {
       console.error("[HTTP] WebSocket server not available");

@@ -1,11 +1,11 @@
-[2026-01-12T19:35:58.755Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T19:36:00.835Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-12T21:47:07.670Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-12T21:47:08.675Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
   The file is in the program because:
     Root file specified for compilation
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:00.835Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:08.676Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T19:36:00.835Z] [stderr] Process allTests-web-Calculator.test-1 completed with non-critical error
+[2026-01-12T21:47:08.676Z] [stderr] Process allTests-web-Calculator.test-1 completed with non-critical error

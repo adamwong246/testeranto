@@ -1,10 +1,14 @@
 {
   "name": "testeranto",
+  "displayName": "Testeranto",
   "description": "the Dockerized, AI powered, BDD test framework for polyglot projects",
   "version": "0.212.0",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=20.19.0",
+    "vscode": "^1.60.0"
   },
+  "publisher": "adamwong246",
+  "main": "./dist/vscode/extension.mjs",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -12,6 +16,88 @@
   "homepage": "https://github.com/adamwong246/testeranto",
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
+  "categories": [
+    "Testing",
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:testerantoView",
+    "onCommand:testeranto.showTests",
+    "onCommand:testeranto.runTest",
+    "onCommand:testeranto.openFile",
+    "onCommand:testeranto.openConfig",
+    "onCommand:testeranto.refresh"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "testeranto.showTests",
+        "title": "Testeranto: Show Tests"
+      },
+      {
+        "command": "testeranto.runTest",
+        "title": "Run Test"
+      },
+      {
+        "command": "testeranto.openFile",
+        "title": "Open File"
+      },
+      {
+        "command": "testeranto.openConfig",
+        "title": "Open Configuration"
+      },
+      {
+        "command": "testeranto.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "testeranto.refresh",
+          "when": "view == testerantoView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "testeranto.runTest",
+          "when": "view == testerantoView && viewItem == testItem",
+          "group": "inline"
+        },
+        {
+          "command": "testeranto.openFile",
+          "when": "view == testerantoView && viewItem == fileItem",
+          "group": "inline"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "testerantoContainer",
+          "title": "Testeranto",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "testerantoContainer": [
+        {
+          "id": "testerantoView",
+          "name": "Tests",
+          "type": "tree"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "testerantoView",
+        "contents": "Welcome to Testeranto!\n[Run Tests](command:testeranto.showTests) to get started.\n[Refresh](command:testeranto.refresh) to update the view."
+      }
+    ]
+  },
   "scripts": {
     "mothership": "node dist/prebuild/mothership/index.mjs",
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
@@ -41,11 +127,18 @@
     "build:all": "npm run build3 && npm run build:example",
     "test:all": "npm run build:all && npm run test:example",
     "verify": "node scripts/verify-build.js",
+    "verify:extension": "node scripts/verify-extension.js",
+    "verify:build": "npm run bundle && npm run verify:extension",
     "ci": "npm run build:all && npm run test:all && npm run verify",
     "devV2:clean": "npm run clean:all && npm run devV2",
     "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
     "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
-    "devV4": "rm -rf testeranto/bundles/** testeranto/reports/** testeranto/metafiles/** ; yarn bundle && yarn run testeranto allTests.ts once"
+    "devV4": "rm -rf testeranto/bundles/** testeranto/reports/** testeranto/metafiles/** ; yarn bundle && yarn run testeranto allTests.ts once",
+    "vscode:prepublish": "yarn run bundle",
+    "compile": "yarn run bundle",
+    "watch": "yarn run bundle --watch",
+    "package": "npx vsce package",
+    "package:full": "node scripts/package-extension.js"
   },
   "exports": {
     "./Puppeteer": {
@@ -165,23 +258,27 @@
   "devDependencies": {
     "@eslint/js": "^9.23.0",
     "@swc/core": "^1.3.26",
-    "@types/express": "^5.0.0",
     "@types/express-session": "^1.18.1",
+    "@types/express": "^5.0.0",
     "@types/marked": "^6.0.0",
     "@types/node": "^24.1.0",
-    "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "@types/react-test-renderer": "^19.1.0",
+    "@types/react": "18.2.0",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/codicons": "^0.0.39",
+    "@vscode/vsce": "^3.7.1",
+    "@vscode/webview-ui-toolkit": "^1.4.0",
     "react-app-rewired": "^2.2.1",
     "self-import": "*",
     "testeranto-react": "0.0.9",
     "testeranto-stilo": "0.0.11",
     "ts-node": "^10.9.1",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vscode": "^1.1.37"
   },
   "dependencies": {
     "@bscotch/debounce-watch": "^1.1.0",
@@ -196,14 +293,12 @@
     "@types/node-static": "^0.7.11",
     "@types/xmldom": "^0.1.34",
     "@ungap/structured-clone": "^1.3.0",
-    "@vscode/codicons": "^0.0.39",
-    "@vscode/webview-ui-toolkit": "^1.4.0",
     "@xterm/addon-fit": "^0.10.0",
     "ansi-colors": "^4.1.3",
     "axios": "^1.11.0",
     "babel-loader": "^8.2.5",
-    "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
+    "bootstrap": "^5.3.7",
     "buffer": "^6.0.3",
     "chai": "^5.2.0",
     "chokidar": "^4.0.3",
@@ -216,11 +311,11 @@
     "esbuild-plugin-markdown": "^0.0.3",
     "esbuild-plugin-polyfill-node": "^0.3.0",
     "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^9.23.0",
     "eslint-formatter-compact": "^8.40.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint": "^9.23.0",
     "express": "^4.21.2",
     "fast-xml-parser": "^5.2.5",
     "file-saver": "^2.0.5",
@@ -229,19 +324,19 @@
     "jiti": "*",
     "license-checker": "^25.0.1",
     "marked": "^17.0.1",
-    "micromark": "^4.0.2",
     "micromark-extension-gfm-table": "^2.1.1",
+    "micromark": "^4.0.2",
     "monaco-editor": "^0.45.0",
     "node-pty": "^1.0.0",
     "node-static": "^0.7.11",
-    "puppeteer": "^24.4.0",
     "puppeteer-core": "24.4.0",
+    "puppeteer": "^24.4.0",
     "queue": "^7.0.0",
-    "react": "18.2.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "18.2.0",
     "react-router-dom": "^7.7.0",
     "react-test-renderer": "^19.2.0",
+    "react": "18.2.0",
     "sass": "^1.90.0",
     "ssml-check": "^0.4.6",
     "tsc-prog": "^2.3.0",
@@ -253,9 +348,9 @@
     "validate-with-xmllint": "^1.2.1",
     "ws": "^8.18.3",
     "xmldom": "^0.6.0",
-    "xterm": "^5.3.0",
     "xterm-addon-fit": "^0.8.0",
-    "xterm-react": "^1.0.0"
+    "xterm-react": "^1.0.0",
+    "xterm": "^5.3.0"
   },
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "^0.27.2",

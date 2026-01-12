@@ -1,8 +1,8 @@
-[2026-01-12T19:35:57.041Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:35:58.189Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:06.081Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:06.907Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:35:58.190Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:06.907Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -12,7 +12,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246557917:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254426808:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -22,12 +22,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:35:58.190Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:36:00.080Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:36:01.265Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:06.907Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:47:08.511Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:09.091Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:01.265Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:09.091Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -37,7 +37,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246561148:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254429001:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -47,12 +47,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:01.265Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:36:01.974Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:36:02.568Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:09.091Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:47:16.711Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:17.209Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:02.568Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:17.209Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -62,7 +62,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246562442:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254437143:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -72,12 +72,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:02.568Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:36:10.990Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:36:11.516Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:17.209Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:47:26.155Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:26.710Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:11.516Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:26.711Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -87,7 +87,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246571435:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254446572:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -97,12 +97,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:11.516Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:36:20.260Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:36:20.767Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:26.711Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:47:35.599Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:36.051Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:20.768Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:36.051Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -112,7 +112,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246580689:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254455991:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -122,12 +122,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:20.768Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:36:29.898Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:36:30.374Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:36.051Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:47:44.875Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:45.405Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:30.375Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:47:45.405Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -137,7 +137,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246590302:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254465314:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -147,12 +147,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:30.375Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:36:48.642Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:36:49.104Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:47:45.405Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:48:03.215Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:48:03.678Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:36:49.105Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:48:03.678Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -162,7 +162,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246609031:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254483612:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -172,12 +172,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:36:49.105Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:37:16.460Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:37:16.910Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:48:03.679Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:48:36.159Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:48:36.625Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:37:16.910Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:48:36.625Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -187,7 +187,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246636851:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254516563:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -197,12 +197,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:37:16.910Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:38:07.931Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:38:08.403Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:48:36.625Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:49:27.535Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:49:28.027Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:38:08.403Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:49:28.027Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -212,7 +212,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246688342:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254567958:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -222,12 +222,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:38:08.403Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:39:08.114Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:39:08.593Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:49:28.027Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:50:27.762Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:50:28.242Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:39:08.593Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:50:28.242Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -237,7 +237,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246748531:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254628182:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -247,12 +247,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:39:08.593Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:40:08.275Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:40:08.748Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:50:28.242Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:51:27.948Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:51:28.440Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:40:08.748Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:51:28.440Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -262,7 +262,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246808684:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254688379:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -272,12 +272,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:40:08.748Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:41:08.444Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:41:08.918Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:51:28.440Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:52:28.125Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:52:28.610Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:41:08.918Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:52:28.610Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -287,7 +287,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246868855:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254748549:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -297,12 +297,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:41:08.919Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:42:08.610Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:42:09.079Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:52:28.610Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:53:28.297Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:53:28.772Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:42:09.079Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:53:28.772Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -312,7 +312,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246929016:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254808708:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -322,12 +322,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:42:09.079Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:43:08.816Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:43:09.306Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:53:28.772Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:54:28.464Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:54:28.967Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:43:09.306Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:54:28.967Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -337,7 +337,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768246989242:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254868898:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -347,12 +347,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:43:09.306Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:44:08.985Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:44:09.470Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:54:28.967Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:55:28.670Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:55:29.169Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:44:09.470Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:55:29.170Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -362,7 +362,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247049407:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254929097:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -372,12 +372,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:44:09.470Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:45:09.169Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:45:09.640Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:55:29.170Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:56:28.823Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:56:29.309Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:45:09.640Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:56:29.310Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -387,7 +387,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247109578:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768254989245:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -397,12 +397,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:45:09.640Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:46:09.346Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:46:09.828Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:56:29.310Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:57:29.018Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:57:29.506Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:46:09.828Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:57:29.506Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -412,7 +412,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247169764:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255049441:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -422,12 +422,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:46:09.828Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:47:09.526Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:47:10.012Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:57:29.506Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:58:29.156Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:58:29.632Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:47:10.012Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:58:29.632Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -437,7 +437,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247229952:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255109569:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -447,12 +447,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:47:10.012Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:48:09.690Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:48:10.189Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:58:29.632Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T21:59:29.333Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T21:59:29.822Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:48:10.190Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T21:59:29.822Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -462,7 +462,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247290115:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255169760:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -472,12 +472,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:48:10.190Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:49:09.867Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:49:10.425Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T21:59:29.822Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:00:29.497Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:00:29.981Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:49:10.426Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:00:29.981Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -487,7 +487,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247350351:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255229921:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -497,12 +497,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:49:10.426Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:50:10.040Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:50:10.545Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:00:29.981Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:01:29.700Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:01:30.221Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:50:10.546Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:01:30.221Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -512,7 +512,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247410474:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255290145:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -522,12 +522,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:50:10.546Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:51:10.213Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:51:10.694Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:01:30.221Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:02:29.866Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:02:30.349Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:51:10.694Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:02:30.349Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -537,7 +537,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247470634:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255350285:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -547,12 +547,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:51:10.694Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:52:10.369Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:52:10.855Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:02:30.349Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:03:30.039Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:03:30.525Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:52:10.855Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:03:30.525Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -562,7 +562,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247530769:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255410454:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -572,12 +572,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:52:10.856Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:53:10.546Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:53:11.062Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:03:30.525Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:04:30.184Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:04:30.711Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:53:11.063Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:04:30.711Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -587,7 +587,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247590992:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255470631:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -597,12 +597,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:53:11.063Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:54:11.219Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:54:11.724Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:04:30.711Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:05:30.344Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:05:30.847Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:54:11.725Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:05:30.847Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -612,7 +612,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247651654:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255530783:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -622,12 +622,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:54:11.725Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:55:12.555Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:55:13.041Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:05:30.847Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:06:30.513Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:06:31.012Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:55:13.041Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:06:31.012Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -637,7 +637,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247712980:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255590946:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -647,12 +647,12 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:55:13.041Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
-[2026-01-12T19:56:13.860Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
-[2026-01-12T19:56:14.342Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+[2026-01-12T22:06:31.012Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:07:30.655Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:07:31.158Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T19:56:14.342Z] [stderr] warning ../../package.json: No license field
+[2026-01-12T22:07:31.158Z] [stderr] warning ../../package.json: No license field
 
 node:internal/modules/run_main:123
     triggerUncaughtException(
@@ -662,7 +662,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
     at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
     at defaultLoad (node:internal/modules/esm/load:145:22)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
-    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768247774282:2:1771)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255651094:2:1771)
     at async nextLoad (node:internal/modules/esm/hooks:864:22)
     at async Hooks.load (node:internal/modules/esm/hooks:451:20)
     at async handleMessage (node:internal/modules/esm/worker:196:18) {
@@ -672,4 +672,579 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/
 Node.js v20.19.4
 error Command failed with exit code 1.
 
-[2026-01-12T19:56:14.342Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:07:31.158Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:08:30.825Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:08:31.333Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:08:31.333Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255711236:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:08:31.333Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:09:30.998Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:09:31.472Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:09:31.472Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255771405:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:09:31.472Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:10:31.192Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:10:31.677Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:10:31.678Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255831616:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:10:31.678Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:11:31.359Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:11:31.883Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:11:31.883Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255891787:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:11:31.883Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:12:31.517Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:12:31.998Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:12:31.998Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768255951932:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:12:31.998Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:13:31.692Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:13:32.165Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:13:32.165Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256012103:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:13:32.165Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:14:31.863Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:14:32.347Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:14:32.347Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256072287:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:14:32.347Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:15:32.045Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:15:32.515Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:15:32.515Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256132453:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:15:32.515Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:16:32.196Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:16:32.680Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:16:32.680Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256192619:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:16:32.680Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:17:32.344Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:17:32.826Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:17:32.827Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256252763:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:17:32.827Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:18:32.537Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:18:33.024Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:18:33.024Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256312964:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:18:33.024Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:19:33.942Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:19:34.444Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:19:34.444Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256374377:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:19:34.444Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:20:37.954Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:20:38.446Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:20:38.447Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256438383:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:20:38.447Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:21:39.471Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:21:40.029Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:21:40.029Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256499947:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:21:40.029Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:22:41.043Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:22:41.617Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:22:41.617Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256561551:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:22:41.617Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:23:42.386Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:23:42.979Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:23:42.979Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256622884:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:23:42.979Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:24:44.147Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:24:44.669Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:24:44.670Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256684599:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:24:44.670Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:25:45.525Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:25:46.037Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:25:46.038Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256745969:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:25:46.038Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:26:47.114Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:26:47.601Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:26:47.601Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256807541:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:26:47.601Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:27:48.721Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:27:49.281Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:27:49.282Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256869217:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:27:49.282Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:28:49.944Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:28:50.497Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:28:50.497Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256930433:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:28:50.497Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:29:51.575Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:29:52.064Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:29:52.064Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768256991998:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:29:52.064Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-12T22:30:53.270Z] [stdout] Starting command: yarn tsx example/Calculator.pitono.test.py
+[2026-01-12T22:30:53.856Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsx example/Calculator.pitono.test.py
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-12T22:30:53.856Z] [stderr] warning ../../package.json: No license field
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".py" for /Users/adam/Code/testeranto/example/Calculator.pitono.test.py
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:189:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:232:36)
+    at defaultLoad (node:internal/modules/esm/load:145:22)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async load (file:///Users/adam/Code/testeranto/node_modules/tsx/dist/esm/index.mjs?1768257053728:2:1771)
+    at async nextLoad (node:internal/modules/esm/hooks:864:22)
+    at async Hooks.load (node:internal/modules/esm/hooks:451:20)
+    at async handleMessage (node:internal/modules/esm/worker:196:18) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v20.19.4
+error Command failed with exit code 1.
+
+[2026-01-12T22:30:53.857Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error

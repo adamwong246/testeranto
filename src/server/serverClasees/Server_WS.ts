@@ -36,6 +36,22 @@ export class Server_WS extends Server_DockerCompose {
         timestamp: new Date().toISOString()
       }));
 
+      // Send a test enqueue event to verify the connection
+      setTimeout(() => {
+        const testEvent = {
+          type: 'enqueue',
+          processId: 'test-process-123',
+          runtime: 'node',
+          command: 'yarn test example/Calculator.test.ts',
+          testName: 'Calculator.test',
+          testPath: 'Calculator.test',
+          timestamp: new Date().toISOString(),
+          details: 'Test event to verify WebSocket connection'
+        };
+        ws.send(JSON.stringify(testEvent));
+        console.log('[WebSocket] Sent test enqueue event to new client');
+      }, 1000);
+
       // Handle messages from clients
       ws.on("message", (data: Buffer) => {
         try {
@@ -187,12 +203,40 @@ export class Server_WS extends Server_DockerCompose {
       ws.send(JSON.stringify({
         type: "logs",
         processId,
-        logs: logs.map((log: string) => ({
-          timestamp: new Date().toISOString(),
-          level: "info",
-          message: log,
-          source: "process"
-        })),
+        logs: logs.map((log: string) => {
+          // Parse the log entry to extract level
+          // Log format is: [timestamp] [source] message
+          // We need to extract level from source or message
+          let level = "info";
+          let source = "process";
+          let message = log;
+          
+          // Try to parse the log format
+          const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
+          if (match) {
+            const timestamp = match[1];
+            source = match[2];
+            message = match[3];
+            
+            // Map source to level
+            if (source === "stderr" || source === "error") {
+              level = "error";
+            } else if (source === "warn") {
+              level = "warn";
+            } else if (source === "debug") {
+              level = "debug";
+            } else {
+              level = "info";
+            }
+          }
+          
+          return {
+            timestamp: new Date().toISOString(),
+            level: level,
+            message: message,
+            source: source
+          };
+        }),
         timestamp: new Date().toISOString()
       }));
     } else {
@@ -208,11 +252,18 @@ export class Server_WS extends Server_DockerCompose {
   // Broadcast a message to all connected WebSocket clients
   public broadcast(message: any): void {
     const data = typeof message === "string" ? message : JSON.stringify(message);
+    console.log(`[WebSocket] Broadcasting to ${this.wsClients.size} clients:`, message.type || message);
+    
+    let sentCount = 0;
     this.wsClients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(data);
+        sentCount++;
+      } else {
+        console.log(`[WebSocket] Client not open, state: ${client.readyState}`);
       }
     });
+    console.log(`[WebSocket] Sent to ${sentCount} clients`);
   }
 
   async stop() {
