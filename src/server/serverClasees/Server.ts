@@ -2,12 +2,12 @@ import readline from "readline";
 import { default as ansiC } from "ansi-colors";
 import { IMode } from "../types";
 import { IBuiltConfig } from "../../Types";
-import { Server_ProcessManager } from "./Server_ProcessManager";
+import { Server_BuildListener } from "./Server_BuildListener";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-export class Server extends Server_ProcessManager {
+export class Server extends Server_BuildListener {
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
 
