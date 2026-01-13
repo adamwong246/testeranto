@@ -4,7 +4,9 @@ import {
   inputFilesPlugin_default,
   rebuildPlugin_default
 } from "../../../chunk-ESDZGA4F.mjs";
-import "../../../chunk-Y6FXYEAI.mjs";
+import {
+  __require
+} from "../../../chunk-Y6FXYEAI.mjs";
 
 // src/server/runtimes/web/web.ts
 import esbuild from "esbuild";
@@ -84,6 +86,24 @@ async function startChromeBrowser() {
     throw new Error(`Chrome is not available: ${error.message}`);
   }
 }
+async function extractFilesFromPage(page) {
+  return await page.evaluate(() => {
+    return window.__testeranto_files__ || {};
+  });
+}
+async function saveExtractedFiles(files, basePath) {
+  const fs2 = __require("fs");
+  const path2 = __require("path");
+  for (const [filename, content] of Object.entries(files)) {
+    const fullPath = path2.join(basePath, filename);
+    const dir = path2.dirname(fullPath);
+    if (!fs2.existsSync(dir)) {
+      fs2.mkdirSync(dir, { recursive: true });
+    }
+    fs2.writeFileSync(fullPath, content);
+    console.log(`Saved file: ${fullPath}`);
+  }
+}
 async function startBundling(config) {
   const webConfig = esbuild_default(config, testName);
   const buildResult = await esbuild.build(webConfig);
@@ -116,6 +136,7 @@ async function startBundling(config) {
   await startChromeBrowser();
   console.log("WEB BUILDER: Chrome is now hosted and ready for test execution");
   console.log("WEB BUILDER: Metafiles have been generated");
+  await runTestsAndExtractFiles(config);
   if (mode === "dev") {
     console.log(
       "WEB BUILDER: Running in dev mode, keeping Chrome instance alive..."
@@ -130,6 +151,34 @@ async function startBundling(config) {
     });
     await new Promise(() => {
     });
+  }
+}
+async function runTestsAndExtractFiles(config) {
+  try {
+    const page = await browser.newPage();
+    const testBundlePath = `file://${process.cwd()}/testeranto/bundles/allTests/web/example/Calculator.test.mjs`;
+    console.log(`Navigating to test bundle: ${testBundlePath}`);
+    await page.goto(testBundlePath);
+    const maxWaitTime = 3e4;
+    const startTime = Date.now();
+    while (Date.now() - startTime < maxWaitTime) {
+      const hasFiles = await page.evaluate(() => {
+        return !!window.__testeranto_files__ && Object.keys(window.__testeranto_files__).length > 0;
+      });
+      if (hasFiles) {
+        console.log("Tests have written files, proceeding to extract...");
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1e3));
+    }
+    console.log("Extracting files...");
+    const files = await extractFilesFromPage(page);
+    const basePath = process.cwd();
+    await saveExtractedFiles(files, basePath);
+    console.log(`Extracted ${Object.keys(files).length} files`);
+    await page.close();
+  } catch (error) {
+    console.error("Error running tests and extracting files:", error);
   }
 }
 async function main() {

@@ -1,4 +1,0 @@
-[2026-01-13T04:37:10.239Z] [stdout] Starting command: docker rm -f aider-web-Calculator-test
-[2026-01-13T04:37:10.283Z] [stdout] aider-web-Calculator-test
-
-[2026-01-13T04:37:10.283Z] [stdout] Process allTests-web-Calculator.test-aider-remove completed successfully

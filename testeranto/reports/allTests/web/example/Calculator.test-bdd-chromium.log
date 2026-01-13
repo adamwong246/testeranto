@@ -1,6 +1,0 @@
-[2026-01-13T04:37:11.561Z] [stdout] Starting command: docker run -d       --name chromium-Calculator-test       --network allTests_network       -p 9222:9222       --shm-size=2g       browserless/chrome:latest       --remote-debugging-port=9222       --remote-debugging-address=0.0.0.0
-[2026-01-13T04:37:12.660Z] [stdout] c997f82cced2ee80467d77b9ba326906d19345674d3fa19315e68a1ab804472c
-
-[2026-01-13T04:37:12.660Z] [stderr] docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: "--remote-debugging-port=9222": executable file not found in $PATH.
-
-[2026-01-13T04:37:12.661Z] [stderr] Process allTests-web-Calculator.test-bdd-chromium completed with non-critical error

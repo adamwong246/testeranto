@@ -252,14 +252,9 @@ RUN echo "Checking for requirements.txt..." &&     find /workspace -name "requir
 
 COPY example/requirements.txt /tmp/requirements.txt
 
-# Verify the file was copied successfully
-RUN if [ ! -f /tmp/requirements.txt ]; then         echo "ERROR: requirements.txt not found at /tmp/requirements.txt" &&         echo "Current directory:" && pwd &&         echo "Files in /workspace:" && ls -la /workspace &&         echo "Files in /workspace/example:" && ls -la /workspace/example 2>/dev/null || echo "example directory not found" &&         exit 1;     else         echo "requirements.txt found, installing dependencies..." &&         cat /tmp/requirements.txt;     fi
 
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
-
-# Verify pylint is installed and available in PATH
-RUN python -c "import pylint; print(f'pylint version: {pylint.__version__}')" &&     echo "Pylint installation verified successfully" &&     which pylint &&     pylint --version
 
 RUN echo "Python environment ready with pylint and all dependencies"
 `;
@@ -292,22 +287,11 @@ var pythonDockerComposeFile = (config2) => {
     command: [
       "sh",
       "-c",
-      `echo 'Python service starting...';
-       # Verify pylint is available
-       python -c "import pylint; print(f'pylint {pylint.__version__} is available')" || {
-         echo "ERROR: pylint not available";
-         exit 1;
-       };
-       mkdir -p /workspace/testeranto/metafiles/python;
-       echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
-       if [ -f /workspace/testeranto/allTests.json ]; then
-         echo "Config file found";
-       else
-         echo "Config file NOT found";
-         ls -la /workspace/testeranto/ || true;
-       fi
+      `
+       
        # Run the pitono.py script with the allTests.json config
        cd /workspace && python src/server/runtimes/python/pitono.py /workspace/testeranto/allTests.json;
+       
        echo "Checking if metafile was generated:";
        ls -la /workspace/testeranto/metafiles/python/ || echo "Python metafiles directory not found";
        echo "Checking if bundles were generated:";

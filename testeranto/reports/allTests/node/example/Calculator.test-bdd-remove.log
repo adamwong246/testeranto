@@ -1,7 +1,0 @@
-[2026-01-13T04:37:19.459Z] [stdout] Starting command: docker rm -f bdd-node-Calculator-test
-[2026-01-13T04:37:19.751Z] [stdout] Command failed: docker rm -f bdd-node-Calculator-test
-Error response from daemon: removal of container bdd-node-Calculator-test is already in progress
-
-[2026-01-13T04:37:19.751Z] [stderr] Error response from daemon: removal of container bdd-node-Calculator-test is already in progress
-
-[2026-01-13T04:37:19.751Z] [stderr] Process allTests-node-Calculator.test-bdd-remove completed with non-critical error

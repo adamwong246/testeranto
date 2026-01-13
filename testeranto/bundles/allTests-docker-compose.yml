@@ -136,23 +136,12 @@ services:
     command:
       - sh
       - '-c'
-      - |-
-        echo 'Python service starting...';
-               # Verify pylint is available
-               python -c "import pylint; print(f'pylint {pylint.__version__} is available')" || {
-                 echo "ERROR: pylint not available";
-                 exit 1;
-               };
-               mkdir -p /workspace/testeranto/metafiles/python;
-               echo "Checking if allTests.json exists at /workspace/testeranto/allTests.json:";
-               if [ -f /workspace/testeranto/allTests.json ]; then
-                 echo "Config file found";
-               else
-                 echo "Config file NOT found";
-                 ls -la /workspace/testeranto/ || true;
-               fi
+      - |2-
+
+               
                # Run the pitono.py script with the allTests.json config
                cd /workspace && python src/server/runtimes/python/pitono.py /workspace/testeranto/allTests.json;
+               
                echo "Checking if metafile was generated:";
                ls -la /workspace/testeranto/metafiles/python/ || echo "Python metafiles directory not found";
                echo "Checking if bundles were generated:";

@@ -1,4 +1,0 @@
-[2026-01-13T04:37:11.522Z] [stdout] Starting command: docker rm -f chromium-Calculator-test
-[2026-01-13T04:37:11.560Z] [stdout] chromium-Calculator-test
-
-[2026-01-13T04:37:11.561Z] [stdout] Process allTests-web-Calculator.test-bdd-remove-chromium completed successfully

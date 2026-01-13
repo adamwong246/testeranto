@@ -1,4 +1,0 @@
-[2026-01-13T04:37:13.473Z] [stdout] Starting command: docker logs aider-web-Calculator-test
-[2026-01-13T04:37:13.569Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
-
-[2026-01-13T04:37:13.569Z] [stdout] Process allTests-web-Calculator.test-aider-logs completed successfully
