@@ -1,19 +1,11 @@
-import {
-  __require
-} from "./chunk-Y6FXYEAI.mjs";
+import "./chunk-Y6FXYEAI.mjs";
 
 // src/testeranto.ts
-import path12 from "path";
+import path11 from "path";
 
 // src/server/serverClasees/Server.ts
 import readline from "readline";
-import { default as ansiC3 } from "ansi-colors";
-
-// src/server/serverClasees/Server_MetafileWatcher.ts
-import fs8 from "fs";
 import { default as ansiC2 } from "ansi-colors";
-import path11 from "path";
-import chokidar from "chokidar";
 
 // src/server/serverClasees/Server_ProcessManager.ts
 import { default as ansiC } from "ansi-colors";
@@ -2023,16 +2015,12 @@ var Server_ProcessManager = class extends Server_FS {
     this.runningProcesses = /* @__PURE__ */ new Map();
     this.aiderProcesses = /* @__PURE__ */ new Map();
     // Store actual aider processes
-    // Track queued items for monitoring
     this.queuedItems = [];
-    // Get process summary for monitoring
     this.getProcessSummary = () => {
       const processes = [];
-      console.log(`[ProcessManager] All process IDs:`, Array.from(this.allProcesses.keys()));
       for (const [id, info] of this.allProcesses.entries()) {
         if (!id) {
-          console.warn(`[ProcessManager] Found process with undefined ID, info:`, info);
-          continue;
+          throw `[ProcessManager] Found process with undefined ID, info: ${info}`;
         }
         processes.push({
           id,
@@ -2065,11 +2053,9 @@ var Server_ProcessManager = class extends Server_FS {
         queuedItems: this.queuedItems
       };
     };
-    // Get logs for a process
     this.getProcessLogs = (processId) => {
       return this.processLogs.get(processId) || [];
     };
-    // Add log entry from any source
     this.addLogEntry = (processId, source, message, timestamp = /* @__PURE__ */ new Date(), level) => {
       if (!this.processLogs.has(processId)) {
         this.processLogs.set(processId, []);
@@ -2110,261 +2096,58 @@ var Server_ProcessManager = class extends Server_FS {
         }
       }
     };
-    // Execute a command and track it as a process
     this.executeCommand = async (processId, command, category, testName, platform, options) => {
-      console.log(`[ProcessManager] executeCommand( ${processId}, ${command} )`);
-      if (!processId || typeof processId !== "string") {
-        console.error(`[ProcessManager] Invalid processId: ${processId}. Generating fallback ID.`);
-        processId = `fallback-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      if (!this.processExecution) {
+        const { ProcessExecution } = await import("./ProcessExecution-CIAOJJAI.mjs");
+        this.processExecution = new ProcessExecution(
+          this.addLogEntry,
+          this.allProcesses,
+          this.runningProcesses
+        );
       }
-      const execAsync = promisify2(exec2);
-      this.addLogEntry(processId, "stdout", `Starting command: ${command}`, /* @__PURE__ */ new Date(), "info");
-      const originalPromise = execAsync(command, {
-        ...options,
-        maxBuffer: 10 * 1024 * 1024
-        // 10MB buffer for large outputs
-      }).then(({ stdout, stderr }) => {
-        return { stdout, stderr };
-      }).catch((error) => {
-        error.stdout = error.stdout || "";
-        error.stderr = error.stderr || "";
-        throw error;
-      });
-      const safePromise = this.addPromiseProcessAndGetSafePromise(
+      return this.processExecution.executeCommand(
         processId,
-        originalPromise,
+        command,
+        category,
+        testName,
+        platform,
+        options
+      );
+    };
+    this.addPromiseProcessAndGetSafePromise = async (processId, promise, command, category, testName, platform) => {
+      if (!this.processExecution) {
+        const { ProcessExecution } = await import("./ProcessExecution-CIAOJJAI.mjs");
+        this.processExecution = new ProcessExecution(
+          this.addLogEntry,
+          this.allProcesses,
+          this.runningProcesses
+        );
+      }
+      return this.processExecution.addPromiseProcessAndGetSafePromise(
+        processId,
+        promise,
         command,
         category,
         testName,
         platform
       );
-      return safePromise;
-    };
-    // Helper method to add promise process and get the safe promise
-    this.addPromiseProcessAndGetSafePromise = (processId, promise, command, category, testName, platform) => {
-      if (!processId || typeof processId !== "string") {
-        console.error(`[ProcessManager] Invalid processId in addPromiseProcessAndGetSafePromise: ${processId}`);
-        processId = `invalid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      }
-      const safePromise = new Promise(async (resolve) => {
-        try {
-          const result = await promise;
-          resolve({
-            success: true,
-            stdout: result?.stdout,
-            stderr: result?.stderr
-          });
-        } catch (error) {
-          console.log(
-            `[Process ${processId}] Non-critical error:`,
-            error.message
-          );
-          const stdout = error.stdout || error.output?.[1] || error.message;
-          const stderr = error.stderr || error.output?.[2] || error.stack;
-          resolve({ success: false, error, stdout, stderr });
-        }
-      });
-      const processInfo = {
-        promise: safePromise,
-        status: "running",
-        command,
-        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-        type: "promise",
-        category,
-        testName,
-        platform: platform || "node"
-      };
-      this.allProcesses.set(processId, processInfo);
-      this.runningProcesses.set(processId, safePromise);
-      safePromise.then(({ success, error, stdout, stderr }) => {
-        const info = this.allProcesses.get(processId);
-        if (info) {
-          info.status = "completed";
-          info.exitCode = success ? 0 : 1;
-          let errorMessage = "";
-          if (error) {
-            errorMessage = error.message || String(error);
-          }
-          const details = [];
-          if (stdout) details.push(`stdout: ${stdout}`);
-          if (stderr) details.push(`stderr: ${stderr}`);
-          if (details.length > 0) {
-            info.error = `${errorMessage}
-${details.join("\n")}`;
-          } else if (errorMessage) {
-            info.error = errorMessage;
-          }
-        }
-        this.runningProcesses.delete(processId);
-        if (stdout) {
-          this.addLogEntry(processId, "stdout", stdout, /* @__PURE__ */ new Date(), "info");
-        }
-        if (stderr) {
-          this.addLogEntry(processId, "stderr", stderr, /* @__PURE__ */ new Date(), "error");
-        }
-        const message = success ? `Process ${processId} completed successfully` : `Process ${processId} completed with non-critical error`;
-        this.addLogEntry(processId, success ? "stdout" : "stderr", message, /* @__PURE__ */ new Date(), success ? "info" : "warn");
-      }).catch((error) => {
-        const info = this.allProcesses.get(processId);
-        if (info) {
-          info.status = "completed";
-          info.exitCode = 1;
-          info.error = error?.message || String(error);
-        }
-        this.runningProcesses.delete(processId);
-        this.addLogEntry(
-          processId,
-          "stderr",
-          `Process ${processId} completed with unexpected error: ${error?.message || String(error)}`,
-          /* @__PURE__ */ new Date(),
-          "error"
-        );
-      });
-      return safePromise;
     };
     // Create aider process for a specific test as a background command
     this.createAiderProcess = async (runtime, testPath, metafile) => {
-      const processId = `allTests-${runtime}-${testPath}-aider`;
-      console.log(`[ProcessManager] Creating aider Docker container: ${processId}`);
-      const imageReady = await this.ensureAiderImage();
-      if (!imageReady) {
-        console.error("[ProcessManager] Cannot create aider container: base image not available");
-        this.addLogEntry(processId, "error", "Failed to build aider base image", /* @__PURE__ */ new Date(), "error");
-        return;
-      }
-      const contextFiles = [];
-      if (metafile.metafile && metafile.metafile.inputs) {
-        const inputs = metafile.metafile.inputs;
-        if (inputs instanceof Map) {
-          contextFiles.push(...Array.from(inputs.keys()));
-        } else if (typeof inputs === "object") {
-          contextFiles.push(...Object.keys(inputs));
-        }
-      }
-      const sourceFiles = contextFiles.filter(
-        (file) => file.endsWith(".ts") || file.endsWith(".js") || file.endsWith(".py") || file.endsWith(".go")
-      ).slice(0, 10);
-      const containerName = `aider-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
-      const checkRunningCmd = `docker ps --filter "name=${containerName}" --filter "status=running" --format "{{.Names}}"`;
-      const checkRunningResult = await this.executeCommand(
-        `${processId}-check-running`,
-        checkRunningCmd,
-        "aider",
-        testPath,
-        runtime
-      );
-      if (checkRunningResult.success && checkRunningResult.stdout && checkRunningResult.stdout.trim() === containerName) {
-        console.log(`[ProcessManager] Aider container ${containerName} is already running, skipping creation`);
-        this.addLogEntry(processId, "stdout", `Aider Docker container already running: ${containerName}`, /* @__PURE__ */ new Date(), "info");
-        const processInfo2 = {
-          promise: Promise.resolve({ stdout: "", stderr: "" }),
-          status: "running",
-          command: "docker container already running",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          type: "docker",
-          category: "aider",
-          testName: testPath,
-          platform: runtime,
-          containerName
-        };
-        this.allProcesses.set(processId, processInfo2);
-        this.aiderProcesses.set(processId, { containerName });
-        return;
-      }
-      const checkAllCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
-      const checkAllResult = await this.executeCommand(
-        `${processId}-check-all`,
-        checkAllCmd,
-        "aider",
-        testPath,
-        runtime
-      );
-      if (checkAllResult.success && checkAllResult.stdout && checkAllResult.stdout.trim() === containerName) {
-        console.log(`[ProcessManager] Container ${containerName} exists but is not running, removing...`);
-        const removeResult = await this.executeCommand(
-          `${processId}-remove`,
-          `docker rm -f ${containerName}`,
-          "aider",
-          testPath,
-          runtime
+      if (!this.aiderProcessManager) {
+        const { AiderProcessManager } = await import("./AiderProcessManager-25VHFOXA.mjs");
+        this.aiderProcessManager = new AiderProcessManager(
+          this.executeCommand,
+          this.addLogEntry,
+          this.allProcesses,
+          this.aiderProcesses
         );
-        if (!removeResult.success) {
-          console.error(`[ProcessManager] Failed to remove existing container ${containerName}:`, removeResult.error);
-        } else {
-          console.log(`[ProcessManager] Removed existing container ${containerName}`);
-        }
       }
-      const apiKeys = this.loadAiderApiKeys();
-      const envVars = Object.entries(apiKeys).map(([key, value]) => `-e ${key}=${value}`);
-      const dockerArgs = [
-        "docker",
-        "run",
-        "-d",
-        // Run in detached mode
-        "--name",
-        containerName,
-        "-v",
-        `${process.cwd()}:/workspace`,
-        // Mount the current directory
-        "-w",
-        "/workspace",
-        // Set working directory
-        "--network",
-        "allTests_network",
-        // Use the same network as other services
-        ...envVars,
-        // Add API key environment variables
-        "testeranto-aider:latest",
-        // Pass source files to aider
-        ...sourceFiles.slice(0, 5)
-        // Limit to first 5 files to avoid command line being too long
-      ];
-      const command = dockerArgs.join(" ");
-      const result = await this.executeCommand(
-        processId,
-        command,
-        "aider",
-        testPath,
-        runtime
-      );
-      const processInfo = {
-        promise: Promise.resolve({ stdout: "", stderr: "" }),
-        status: "running",
-        command,
-        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-        type: "docker",
-        category: "aider",
-        testName: testPath,
-        platform: runtime,
-        containerName
-      };
-      this.allProcesses.set(processId, processInfo);
-      this.aiderProcesses.set(processId, { containerName });
-      if (result.success) {
-        this.addLogEntry(processId, "stdout", `Aider Docker container started: ${containerName}`, /* @__PURE__ */ new Date(), "info");
-        console.log(`[ProcessManager] Aider Docker container ${containerName} started`);
-        setTimeout(async () => {
-          const logResult = await this.executeCommand(
-            `${processId}-logs`,
-            `docker logs ${containerName}`,
-            "aider",
-            testPath,
-            runtime
-          );
-        }, 2e3);
-      } else {
-        this.addLogEntry(processId, "error", `Failed to start aider Docker container: ${result.error}`, /* @__PURE__ */ new Date(), "error");
-        console.error(`[ProcessManager] Failed to start aider Docker container:`, result.error);
-      }
-      const connectionInfo = `To connect to this aider session, use: docker exec -it ${containerName} /bin/bash`;
-      this.addLogEntry(processId, "stdout", connectionInfo, /* @__PURE__ */ new Date(), "info");
-      const vscodeCommand = `docker exec -it ${containerName} bash -c "aider --yes --dark-mode ${sourceFiles.join(" ")}"`;
-      this.addLogEntry(processId, "stdout", `VS Code terminal command: ${vscodeCommand}`, /* @__PURE__ */ new Date(), "info");
+      return this.aiderProcessManager.createAiderProcess(runtime, testPath, metafile);
     };
-    // Add promise process tracking
-    this.addPromiseProcess = (processId, promise, command, category, testName, platform) => {
+    this.addPromiseProcess = async (processId, promise, command, category, testName, platform) => {
       const actualPromise = promise || Promise.resolve({ stdout: "", stderr: "" });
-      this.addPromiseProcessAndGetSafePromise(
+      await this.addPromiseProcessAndGetSafePromise(
         processId,
         actualPromise,
         command,
@@ -2396,11 +2179,10 @@ ${details.join("\n")}`;
     this.jobQueue = new Queue();
     this.jobQueue.autostart = true;
     this.jobQueue.concurrency = 1;
-    if (configs.ports && Array.isArray(configs.ports)) {
-      configs.ports.forEach((port) => {
-        this.ports[port] = "";
-      });
-    }
+    configs.ports.forEach((port) => {
+      this.ports[port] = "";
+    });
+    this.processExecution = null;
     this.routes({});
   }
   routes(routes) {
@@ -2447,9 +2229,6 @@ ${details.join("\n")}`;
       runtime,
       "example"
     );
-    if (!fs7.existsSync(logDir)) {
-      fs7.mkdirSync(logDir, { recursive: true });
-    }
     let logFileName = processId;
     if (processId.startsWith("allTests-")) {
       const withoutPrefix = processId.substring("allTests-".length);
@@ -2463,7 +2242,6 @@ ${details.join("\n")}`;
 `;
     fs7.appendFileSync(logFile, logEntry);
   }
-  // Port management methods
   allocatePorts(numPorts, testName) {
     const openPorts = Object.entries(this.ports).filter(([, status]) => status === "").map(([port]) => parseInt(port));
     if (openPorts.length >= numPorts) {
@@ -2489,87 +2267,6 @@ ${details.join("\n")}`;
   getPortOwner(port) {
     return this.ports[port] || null;
   }
-  // Load aider API keys from .aider.conf.yml
-  loadAiderApiKeys() {
-    try {
-      const configPath = path10.join(process.cwd(), ".aider.conf.yml");
-      if (!fs7.existsSync(configPath)) {
-        console.log("[ProcessManager] No .aider.conf.yml file found");
-        return {};
-      }
-      const yaml2 = __require("js-yaml");
-      const config2 = yaml2.load(fs7.readFileSync(configPath, "utf8"));
-      const apiKeys = {};
-      if (config2["openai-api-key"]) {
-        apiKeys["OPENAI_API_KEY"] = config2["openai-api-key"];
-      }
-      if (config2["anthropic-api-key"]) {
-        apiKeys["ANTHROPIC_API_KEY"] = config2["anthropic-api-key"];
-      }
-      if (config2["api-key"]) {
-        if (Array.isArray(config2["api-key"])) {
-          config2["api-key"].forEach((key, index) => {
-            apiKeys[`API_KEY_${index}`] = key;
-          });
-        } else {
-          apiKeys["API_KEY"] = config2["api-key"];
-        }
-      }
-      console.log("[ProcessManager] Loaded API keys from .aider.conf.yml");
-      return apiKeys;
-    } catch (error) {
-      console.error("[ProcessManager] Failed to load API keys from .aider.conf.yml:", error);
-      return {};
-    }
-  }
-  // Build the aider base image if not already built
-  async ensureAiderImage() {
-    const imageName = "testeranto-aider:latest";
-    const checkImageCmd = `docker images -q ${imageName}`;
-    const checkResult = await this.executeCommand(
-      "aider-image-check",
-      checkImageCmd,
-      "aider",
-      "image-check",
-      "node"
-    );
-    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() !== "") {
-      console.log("[ProcessManager] Aider base image already exists");
-      return true;
-    }
-    console.log("[ProcessManager] Building aider base image...");
-    const dockerfileContent = [
-      "FROM python:3.11-slim",
-      "WORKDIR /workspace",
-      "RUN pip install --no-cache-dir aider-chat",
-      "# Create a non-root user for security",
-      "RUN useradd -m -u 1000 aider && chown -R aider:aider /workspace",
-      "USER aider",
-      "# Default command starts aider in interactive mode",
-      'CMD ["aider", "--yes", "--dark-mode"]'
-    ].join("\n");
-    const tempDir = path10.join(process.cwd(), "testeranto", "temp");
-    if (!fs7.existsSync(tempDir)) {
-      fs7.mkdirSync(tempDir, { recursive: true });
-    }
-    const dockerfilePath = path10.join(tempDir, "Dockerfile.aider");
-    fs7.writeFileSync(dockerfilePath, dockerfileContent);
-    const buildCmd = `docker build -t ${imageName} -f ${dockerfilePath} ${tempDir}`;
-    const buildResult = await this.executeCommand(
-      "aider-image-build",
-      buildCmd,
-      "aider",
-      "image-build",
-      "node"
-    );
-    if (buildResult.success) {
-      console.log("[ProcessManager] Aider base image built successfully");
-      return true;
-    } else {
-      console.error("[ProcessManager] Failed to build aider base image:", buildResult.error);
-      return false;
-    }
-  }
   async scheduleBddTest(metafile, runtime, entrypoint) {
     console.log(
       `[ProcessManager] Scheduling BDD test for ${entrypoint} (${runtime})`
@@ -2585,7 +2282,6 @@ ${details.join("\n")}`;
     }
     await this.createAiderProcess(runtime, testPath, metafile);
     const processId = `allTests-${runtime}-${testPath}-bdd`;
-    console.log(`[ProcessManager] BDD process ID: ${processId}`);
     let bddCommand = "";
     if (runtime === "node") {
       bddCommand = nodeBddCommand(this.configs.httpPort);
@@ -2598,85 +2294,7 @@ ${details.join("\n")}`;
     } else {
       bddCommand = `echo 'not yet implemented'`;
     }
-    if (runtime === "web") {
-      await this.runWebBddTest(processId, testPath, bddCommand);
-    } else {
-      await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
-    }
-  }
-  async runWebBddTest(processId, testPath, bddCommand) {
-    console.log(`[ProcessManager] Running web BDD test: ${processId}`);
-    const chromiumContainerName = `chromium-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
-    const checkCmd = `docker ps -a --filter "name=${chromiumContainerName}" --format "{{.Names}}"`;
-    const checkResult = await this.executeCommand(
-      `${processId}-check-chromium`,
-      checkCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === chromiumContainerName) {
-      await this.executeCommand(
-        `${processId}-remove-chromium`,
-        `docker rm -f ${chromiumContainerName}`,
-        "bdd-test",
-        testPath,
-        "web"
-      );
-    }
-    const chromiumCmd = `docker run -d       --name ${chromiumContainerName}       --network allTests_network       -p 9222:9222       --shm-size=2g       browserless/chrome:latest       --remote-debugging-port=9222       --remote-debugging-address=0.0.0.0`;
-    console.log(`[ProcessManager] Starting chromium container: ${chromiumCmd}`);
-    const chromiumResult = await this.executeCommand(
-      `${processId}-chromium`,
-      chromiumCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    if (!chromiumResult.success) {
-      console.error(`[ProcessManager] Failed to start chromium: ${chromiumResult.error}`);
-      return;
-    }
-    await new Promise((resolve) => setTimeout(resolve, 5e3));
-    const testContainerName = `web-test-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
-    const checkTestCmd = `docker ps -a --filter "name=${testContainerName}" --format "{{.Names}}"`;
-    const checkTestResult = await this.executeCommand(
-      `${processId}-check-test`,
-      checkTestCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    if (checkTestResult.success && checkTestResult.stdout && checkTestResult.stdout.trim() === testContainerName) {
-      await this.executeCommand(
-        `${processId}-remove-test`,
-        `docker rm -f ${testContainerName}`,
-        "bdd-test",
-        testPath,
-        "web"
-      );
-    }
-    const testRunCmd = `docker run --rm       --name ${testContainerName}       --network allTests_network       -v ${process.cwd()}:/workspace       -w /workspace       -e CHROMIUM_URL=http://${chromiumContainerName}:9222       bundles-web-build:latest       sh -c "${bddCommand}"`;
-    console.log(`[ProcessManager] Running web test: ${testRunCmd}`);
-    const testResult = await this.executeCommand(
-      processId,
-      testRunCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    await this.executeCommand(
-      `${processId}-cleanup-chromium`,
-      `docker rm -f ${chromiumContainerName}`,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    if (!testResult.success) {
-      console.log(`[ProcessManager] Web BDD test ${processId} failed:`, testResult.error?.message);
-    } else {
-      console.log(`[ProcessManager] Web BDD test ${processId} completed successfully`);
-    }
+    await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
   }
   async runBddTestInDocker(processId, testPath, runtime, bddCommand) {
     const containerName = `bdd-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
@@ -2699,7 +2317,6 @@ ${details.join("\n")}`;
     }
     const baseImage = this.getRuntimeImage(runtime);
     const dockerRunCmd = `docker run --rm       --name ${containerName}       --network allTests_network       -v ${process.cwd()}:/workspace       -w /workspace       ${baseImage}       sh -c "${bddCommand}"`;
-    console.log(`[ProcessManager] Running BDD test in Docker: ${dockerRunCmd}`);
     const result = await this.executeCommand(
       processId,
       dockerRunCmd,
@@ -2713,7 +2330,6 @@ ${details.join("\n")}`;
       console.log(`[ProcessManager] BDD test ${processId} completed successfully`);
     }
   }
-  // Helper to get the appropriate Docker image for each runtime
   getRuntimeImage(runtime) {
     switch (runtime) {
       case "node":
@@ -2729,9 +2345,6 @@ ${details.join("\n")}`;
     }
   }
   async scheduleStaticTests(metafile, runtime, entrypoint, addableFiles) {
-    console.log(
-      `[ProcessManager] Scheduling Static test for ${entrypoint} (${runtime})`
-    );
     if (!entrypoint || typeof entrypoint !== "string") {
       console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
       return;
@@ -2748,7 +2361,6 @@ ${details.join("\n")}`;
     let checkIndex = 0;
     for (const check of this.configs[runtime].checks) {
       const processId = `allTests-${runtime}-${testPath}-static-${checkIndex}`;
-      console.log(`[ProcessManager] Static process ID: ${processId}`);
       const checkCommand = check(addableFiles);
       const containerName = `static-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}-${checkIndex}`;
       const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
@@ -2770,7 +2382,6 @@ ${details.join("\n")}`;
       }
       const baseImage = this.getRuntimeImage(runtime);
       const dockerRunCmd = `docker run --rm         --name ${containerName}         --network allTests_network         -v ${process.cwd()}:/workspace         -w /workspace         ${baseImage}         sh -c "${checkCommand}"`;
-      console.log(`[ProcessManager] Running static test in Docker: ${dockerRunCmd}`);
       const result = await this.executeCommand(
         processId,
         dockerRunCmd,
@@ -2850,7 +2461,6 @@ ${details.join("\n")}`;
         }
         const baseImage = this.getRuntimeImage(runtime);
         const dockerRunCmd = `docker run --rm           --name ${containerName}           --network allTests_network           -v ${process.cwd()}:/workspace           -w /workspace           ${baseImage}           sh -c "${command}"`;
-        console.log(`[Queue] Running in Docker: ${dockerRunCmd}`);
         await this.executeCommand(
           processId,
           dockerRunCmd,
@@ -2876,9 +2486,6 @@ ${details.join("\n")}`;
       addableFiles,
       command
     });
-    console.log(
-      `[Queue] Added job ${processId} to queue. Queue length: ${this.jobQueue.length}`
-    );
   }
   async checkQueue(processQueueItem, writeBigBoard, checkForShutdown) {
     if (this.jobQueue && !this.jobQueue.running) {
@@ -2889,7 +2496,6 @@ ${details.join("\n")}`;
       checkForShutdown();
     }
   }
-  // Remove and return the last item from the queue
   pop() {
     const item = this.queuedItems.pop();
     if (item) {
@@ -2899,7 +2505,6 @@ ${details.join("\n")}`;
     }
     return item;
   }
-  // Check if a test is in the queue
   includes(testName, runtime) {
     if (runtime !== void 0) {
       return this.queuedItems.some(
@@ -2908,11 +2513,9 @@ ${details.join("\n")}`;
     }
     return this.queuedItems.some((item) => item.testName === testName);
   }
-  // Get the current queue length
   get queueLength() {
     return this.jobQueue ? this.jobQueue.length : 0;
   }
-  // Clear the entire queue
   clearQueue() {
     if (this.jobQueue) {
       this.jobQueue.end();
@@ -2923,359 +2526,21 @@ ${details.join("\n")}`;
     this.jobQueue.concurrency = 1;
     this.queuedItems = [];
   }
-  // Get all items in the queue
   getAllQueueItems() {
     return [...this.queuedItems];
-  }
-};
-
-// src/server/serverClasees/Server_MetafileWatcher.ts
-var metafiles = [
-  "testeranto/metafiles/golang/allTests.json",
-  "testeranto/metafiles/node/allTests.json",
-  "testeranto/metafiles/python/allTests.json",
-  "testeranto/metafiles/web/allTests.json"
-];
-var Server_MetafileWatcher = class extends Server_ProcessManager {
-  constructor(configs, testName, mode2) {
-    super(configs, testName, mode2);
-    this.watchers = [];
-    this.metafilePaths = [];
-    this.lastProcessed = /* @__PURE__ */ new Map();
-    this.initializeMetafilePaths();
-  }
-  initializeMetafilePaths() {
-    const baseDir = process.cwd();
-    this.metafilePaths = metafiles.map((file) => path11.join(baseDir, file));
-    if (this.configs.src) {
-      const srcDir = this.configs.src;
-      const runtimes2 = ["golang", "node", "python", "web"];
-      runtimes2.forEach((runtime) => {
-        const metafilePath = path11.join(
-          baseDir,
-          srcDir,
-          "testeranto",
-          "metafiles",
-          runtime,
-          "allTests.json"
-        );
-        if (!this.metafilePaths.includes(metafilePath)) {
-          this.metafilePaths.push(metafilePath);
-        }
-      });
-    }
-  }
-  // async start() {
-  //   this.startWatchingMetafiles();
-  // }
-  async start() {
-    console.log(ansiC2.blue(ansiC2.inverse("Starting metafile watchers...")));
-    const existingMetafiles = this.metafilePaths.filter((file) => {
-      const exists = fs8.existsSync(file);
-      if (!exists) {
-        console.log(
-          ansiC2.yellow(
-            `Metafile does not exist, will watch when created: ${file}`
-          )
-        );
-      }
-      return exists;
-    });
-    if (existingMetafiles.length === 0) {
-      console.log(
-        ansiC2.yellow(
-          "No existing metafiles found to watch. Will watch for creation."
-        )
-      );
-    }
-    const watchDirs = [
-      path11.join(process.cwd(), "testeranto", "metafiles"),
-      ...this.configs.src ? [
-        path11.join(
-          process.cwd(),
-          this.configs.src,
-          "testeranto",
-          "metafiles"
-        )
-      ] : []
-    ].filter((dir) => fs8.existsSync(dir));
-    if (watchDirs.length === 0) {
-      console.log(ansiC2.yellow("No metafile directories found to watch."));
-      return;
-    }
-    watchDirs.forEach((dir) => {
-      console.log(ansiC2.blue(`Watching directory: ${dir}`));
-      const watcher = chokidar.watch(dir, {
-        persistent: true,
-        ignoreInitial: true,
-        depth: 2,
-        awaitWriteFinish: {
-          stabilityThreshold: 1e3,
-          pollInterval: 100
-        }
-      });
-      watcher.on("add", (filePath) => this.handleMetafileChange("add", filePath)).on(
-        "change",
-        (filePath) => this.handleMetafileChange("change", filePath)
-      ).on(
-        "unlink",
-        (filePath) => this.handleMetafileChange("unlink", filePath)
-      ).on(
-        "error",
-        (error) => console.error(ansiC2.red(`Watcher error: ${error}`))
-      );
-      this.watchers.push(watcher);
-    });
-    existingMetafiles.forEach((metafile) => {
-      const dir = path11.dirname(metafile);
-      const watcher = chokidar.watch(metafile, {
-        persistent: true,
-        ignoreInitial: true,
-        awaitWriteFinish: {
-          stabilityThreshold: 1e3,
-          pollInterval: 100
-        }
-      });
-      watcher.on(
-        "change",
-        (filePath) => this.handleMetafileChange("change", filePath)
-      ).on(
-        "unlink",
-        (filePath) => this.handleMetafileChange("unlink", filePath)
-      ).on(
-        "error",
-        (error) => console.error(ansiC2.red(`Metafile watcher error: ${error}`))
-      );
-      this.watchers.push(watcher);
-      console.log(ansiC2.blue(`Watching metafile: ${metafile}`));
-    });
-    console.log(
-      ansiC2.green(
-        ansiC2.inverse(`Started ${this.watchers.length} metafile watchers`)
-      )
-    );
-  }
-  handleMetafileChange(event, filePath) {
-    if (!filePath.endsWith(".json") || !filePath.includes("metafiles")) {
-      return;
-    }
-    const isMetafile = this.metafilePaths.some(
-      (metafile) => path11.resolve(metafile) === path11.resolve(filePath) || filePath.includes("allTests.json")
-    );
-    if (!isMetafile) {
-      return;
-    }
-    const now = Date.now();
-    const lastProcessed = this.lastProcessed.get(filePath) || 0;
-    if (now - lastProcessed < 1e3) {
-      return;
-    }
-    this.lastProcessed.set(filePath, now);
-    console.log(ansiC2.cyan(`Metafile ${event}: ${filePath}`));
-    switch (event) {
-      case "add":
-      case "change":
-        this.processMetafileUpdate(filePath);
-        break;
-      case "unlink":
-        console.log(ansiC2.yellow(`Metafile removed: ${filePath}`));
-        break;
-    }
-  }
-  processMetafileUpdate(metaFileSourcePath) {
-    try {
-      if (!fs8.existsSync(metaFileSourcePath)) {
-        console.log(
-          ansiC2.yellow(`Metafile doesn't exist: ${metaFileSourcePath}`)
-        );
-        return;
-      }
-      const data = fs8.readFileSync(metaFileSourcePath, "utf8");
-      const parsed = JSON.parse(data);
-      console.log(ansiC2.cyan(`Parsed metafile keys: ${Object.keys(parsed).join(", ")}`));
-      let metafileData = parsed;
-      if (parsed.metafile) {
-        metafileData = parsed.metafile;
-      }
-      const metafile = {
-        errors: parsed.errors || [],
-        warnings: parsed.warnings || [],
-        metafile: {
-          inputs: /* @__PURE__ */ new Map(),
-          outputs: /* @__PURE__ */ new Map()
-        }
-      };
-      if (metafileData.inputs) {
-        if (metafileData.inputs instanceof Map) {
-          metafile.metafile.inputs = metafileData.inputs;
-        } else if (typeof metafileData.inputs === "object") {
-          const inputsMap = /* @__PURE__ */ new Map();
-          for (const [key, value] of Object.entries(metafileData.inputs)) {
-            inputsMap.set(key, value);
-          }
-          metafile.metafile.inputs = inputsMap;
-        }
-      }
-      if (metafileData.outputs) {
-        if (metafileData.outputs instanceof Map) {
-          metafile.metafile.outputs = metafileData.outputs;
-        } else if (typeof metafileData.outputs === "object") {
-          const outputsMap = /* @__PURE__ */ new Map();
-          for (const [key, value] of Object.entries(metafileData.outputs)) {
-            outputsMap.set(key, value);
-          }
-          metafile.metafile.outputs = outputsMap;
-        }
-      }
-      console.log(ansiC2.green(`Metafile processed: ${metaFileSourcePath}`));
-      console.log(ansiC2.cyan(`Inputs count: ${metafile.metafile.inputs.size}`));
-      console.log(ansiC2.cyan(`Outputs count: ${metafile.metafile.outputs.size}`));
-      const runtime = this.extractRuntimeFromPath(metaFileSourcePath);
-      this.scheduleTestsFromMetafile(metafile, runtime);
-    } catch (error) {
-      console.error(
-        ansiC2.red(`Error processing metafile ${metaFileSourcePath}:`),
-        error
-      );
-    }
-  }
-  extractRuntimeFromPath(filePath) {
-    const pathParts = filePath.split(path11.sep);
-    const metafilesIndex = pathParts.indexOf("metafiles");
-    if (metafilesIndex !== -1 && metafilesIndex + 1 < pathParts.length) {
-      const runtime = pathParts[metafilesIndex + 1];
-      if (["golang", "node", "python", "web"].includes(runtime)) {
-        return runtime;
-      }
-    }
-    if (filePath.includes("golang")) return "golang";
-    if (filePath.includes("node")) return "node";
-    if (filePath.includes("python")) return "python";
-    if (filePath.includes("web")) return "web";
-    throw "unknown runtime";
-  }
-  async scheduleTestsFromMetafile(metafile, runtime) {
-    if (!metafile.metafile) {
-      console.error(ansiC2.red("Metafile missing metafile property"));
-      return;
-    }
-    if (!metafile.metafile.outputs) {
-      console.error(ansiC2.red("Metafile missing outputs property"));
-      return;
-    }
-    const outputsMap = metafile.metafile.outputs;
-    console.log(ansiC2.cyan(`Processing ${outputsMap.size} outputs for ${runtime}`));
-    const scheduledEntrypoints = /* @__PURE__ */ new Set();
-    for (const [outputFile, outputs] of outputsMap.entries()) {
-      console.log(ansiC2.magenta(`Output file: ${outputFile}`));
-      if (!outputs || typeof outputs !== "object") {
-        console.error(ansiC2.yellow(`Skipping invalid output entry for ${outputFile}`));
-        continue;
-      }
-      const entrypoint = outputs.entryPoint || outputs.entrypoint;
-      if (!entrypoint) {
-        console.log(ansiC2.yellow(`No entrypoint for ${outputFile}`));
-        continue;
-      }
-      console.log(ansiC2.magenta(`Outputs entrypoint: ${entrypoint}`));
-      const isChunkFile = outputFile.includes("chunk-") || outputFile.includes("Node-") || !outputFile.includes("example/");
-      if (isChunkFile) {
-        console.log(ansiC2.yellow(`Skipping chunk file: ${outputFile}`));
-        continue;
-      }
-      const isSourceEntrypoint = entrypoint.endsWith(".ts") || entrypoint.endsWith(".js") || entrypoint.endsWith(".go") || entrypoint.endsWith(".py");
-      if (!isSourceEntrypoint) {
-        console.log(ansiC2.yellow(`Entrypoint ${entrypoint} doesn't appear to be a source file`));
-        continue;
-      }
-      if (scheduledEntrypoints.has(entrypoint)) {
-        console.log(ansiC2.yellow(`Entrypoint ${entrypoint} already scheduled`));
-        continue;
-      }
-      let addableFiles = [];
-      if (outputs.inputs) {
-        if (outputs.inputs instanceof Map) {
-          addableFiles = Array.from(outputs.inputs.keys());
-        } else if (typeof outputs.inputs === "object") {
-          addableFiles = Object.keys(outputs.inputs);
-        }
-      } else {
-        const entrypointOutputs = outputsMap.get(entrypoint);
-        if (entrypointOutputs?.inputs) {
-          if (entrypointOutputs.inputs instanceof Map) {
-            addableFiles = Array.from(entrypointOutputs.inputs.keys());
-          } else if (typeof entrypointOutputs.inputs === "object") {
-            addableFiles = Object.keys(entrypointOutputs.inputs);
-          }
-        }
-      }
-      if (addableFiles.length === 0 && metafile.metafile.inputs) {
-        const inputsMap = metafile.metafile.inputs;
-        if (inputsMap instanceof Map) {
-          addableFiles = Array.from(inputsMap.keys());
-        } else if (typeof inputsMap === "object") {
-          addableFiles = Object.keys(inputsMap);
-        }
-      }
-      console.log(ansiC2.green(`Scheduling tests for ${entrypoint} with ${addableFiles.length} addable files`));
-      this.scheduleStaticTests(
-        metafile,
-        runtime,
-        entrypoint,
-        addableFiles
-      );
-      this.scheduleBddTest(metafile, runtime, entrypoint);
-      scheduledEntrypoints.add(entrypoint);
-    }
-    if (scheduledEntrypoints.size === 0) {
-      console.log(ansiC2.yellow(`No valid entrypoints found for ${runtime}. Checking all outputs...`));
-      for (const [outputFile, outputs] of outputsMap.entries()) {
-        if (outputs && typeof outputs === "object") {
-          const entrypoint = outputs.entryPoint || outputs.entrypoint;
-          if (entrypoint && entrypoint.includes("example/")) {
-            console.log(ansiC2.yellow(`Fallback scheduling for ${entrypoint}`));
-            let addableFiles = [];
-            if (metafile.metafile.inputs) {
-              const inputsMap = metafile.metafile.inputs;
-              if (inputsMap instanceof Map) {
-                addableFiles = Array.from(inputsMap.keys());
-              } else if (typeof inputsMap === "object") {
-                addableFiles = Object.keys(inputsMap);
-              }
-            }
-            this.scheduleStaticTests(
-              metafile,
-              runtime,
-              entrypoint,
-              addableFiles
-            );
-            this.scheduleBddTest(metafile, runtime, entrypoint);
-            break;
-          }
-        }
-      }
-    }
-  }
-  async stop() {
-    console.log(ansiC2.blue(ansiC2.inverse("Stopping metafile watchers...")));
-    this.watchers.forEach((watcher) => {
-      watcher.close();
-    });
-    this.watchers = [];
-    await super.stop();
   }
 };
 
 // src/server/serverClasees/Server.ts
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
-var Server = class extends Server_MetafileWatcher {
+var Server = class extends Server_ProcessManager {
   constructor(configs, testName, mode2) {
     super(configs, testName, mode2);
-    console.log(ansiC3.inverse("Press 'q' to initiate a graceful shutdown."));
-    console.log(ansiC3.inverse("Press 'CTRL + c' to quit forcefully."));
+    console.log(ansiC2.inverse("Press 'q' to initiate a graceful shutdown."));
+    console.log(ansiC2.inverse("Press 'CTRL + c' to quit forcefully."));
     console.log(
-      ansiC3.inverse("Note: In raw mode, use 'CTRL + c' to force quit.")
+      ansiC2.inverse("Note: In raw mode, use 'CTRL + c' to force quit.")
     );
     process.stdin.on("keypress", async (str, key) => {
       if (key.name === "q") {
@@ -3294,9 +2559,9 @@ var Server = class extends Server_MetafileWatcher {
     });
   }
   async start() {
-    console.log(ansiC3.blue(ansiC3.inverse("Starting Server...")));
+    console.log(ansiC2.blue(ansiC2.inverse("Starting Server...")));
     await super.start();
-    console.log(ansiC3.green(ansiC3.inverse("Server started successfully")));
+    console.log(ansiC2.green(ansiC2.inverse("Server started successfully")));
   }
 };
 
@@ -3306,7 +2571,7 @@ if (!process.argv[2]) {
   process.exit(-1);
 }
 var configFilepath = process.argv[2];
-var testsName = path12.basename(configFilepath).split(".").slice(0, -1).join(".");
+var testsName = path11.basename(configFilepath).split(".").slice(0, -1).join(".");
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error(`The 3rd argument should be 'dev' or 'once', not '${mode}'.`);

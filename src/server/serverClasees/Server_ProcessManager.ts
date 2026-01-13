@@ -20,10 +20,10 @@ import { nodeBddCommand } from "../runtimes/node/docker";
 import { webBddCommand } from "../runtimes/web/docker";
 import { pythonBDDCommand } from "../runtimes/python/docker";
 import { golangBddCommand } from "../runtimes/golang/docker";
-// ProcessManagerReactApp is bundled separately and served via HTTP
-// We don't need to import it here
 
 export class Server_ProcessManager extends Server_FS {
+  private aiderProcessManager: any;
+  private processExecution: any;
   ports: Record<number, string> = {};
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   allProcesses: Map<string, ProcessInfo> = new Map();
@@ -32,7 +32,6 @@ export class Server_ProcessManager extends Server_FS {
   private jobQueue: any;
   private aiderProcesses: Map<string, any> = new Map(); // Store actual aider processes
 
-  // Track queued items for monitoring
   private queuedItems: Array<{
     testName: string;
     runtime: IRunTime;
@@ -45,26 +44,23 @@ export class Server_ProcessManager extends Server_FS {
     this.configs = configs;
     this.projectName = testName;
 
-    // Initialize the queue with default options
     this.jobQueue = new Queue();
     this.jobQueue.autostart = true;
     this.jobQueue.concurrency = 1; // Process one job at a time by default
 
-    // Initialize ports if configs.ports exists
-    if (configs.ports && Array.isArray(configs.ports)) {
-      configs.ports.forEach((port) => {
-        this.ports[port] = ""; // set ports as open
-      });
-    }
+    configs.ports.forEach((port) => {
+      this.ports[port] = ""; // set ports as open
+    });
 
-    // Register the process manager route
+    // Initialize processExecution lazily when needed
+    this.processExecution = null;
+
     this.routes({});
   }
 
   routes(
     routes: Record<string, React.ComponentType<any> | React.ReactElement>
   ) {
-    // Use a placeholder component object; the actual component is loaded via bundle
     super.routes({
       process_manager: {} as React.ComponentType<any>,
       ...routes,
@@ -88,7 +84,7 @@ export class Server_ProcessManager extends Server_FS {
       }
     }
     this.aiderProcesses.clear();
-    
+
     // Stop the queue and wait for current jobs to finish
     if (this.jobQueue) {
       this.jobQueue.end();
@@ -99,20 +95,15 @@ export class Server_ProcessManager extends Server_FS {
     await super.stop();
   }
 
-  // Get process summary for monitoring
   getProcessSummary = () => {
     const processes = [];
 
-    // Debug: log all process IDs
-    console.log(`[ProcessManager] All process IDs:`, Array.from(this.allProcesses.keys()));
-
-    // Docker/process-based tests
     for (const [id, info] of this.allProcesses.entries()) {
-      // Ensure id is valid
+
       if (!id) {
-        console.warn(`[ProcessManager] Found process with undefined ID, info:`, info);
-        continue;
+        throw `[ProcessManager] Found process with undefined ID, info: ${info}`;
       }
+
       processes.push({
         id,
         command: info.command,
@@ -145,12 +136,11 @@ export class Server_ProcessManager extends Server_FS {
     };
   };
 
-  // Get logs for a process
+
   getProcessLogs = (processId: string): string[] => {
     return this.processLogs.get(processId) || [];
   };
 
-  // Add log entry from any source
   addLogEntry = (
     processId: string,
     source: "stdout" | "stderr" | "console" | "network" | "error",
@@ -162,7 +152,6 @@ export class Server_ProcessManager extends Server_FS {
       this.processLogs.set(processId, []);
     }
 
-    // Determine level from source if not provided
     let logLevel = level;
     if (!logLevel) {
       switch (source) {
@@ -181,7 +170,6 @@ export class Server_ProcessManager extends Server_FS {
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}`;
     this.processLogs.get(processId)!.push(logEntry);
 
-    // Also write to a log file for docker processes
     this.writeToProcessLogFile(processId, source, message, timestamp);
 
     // Send to log subscribers if they exist
@@ -221,8 +209,7 @@ export class Server_ProcessManager extends Server_FS {
         runtime = parts[1];
       }
     }
-    
-    // All tests are in the 'example' directory
+
     const logDir = path.join(
       process.cwd(),
       "testeranto",
@@ -231,11 +218,6 @@ export class Server_ProcessManager extends Server_FS {
       runtime,
       "example"
     );
-    
-    // Ensure the directory exists
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir, { recursive: true });
-    }
 
     // Extract the filename from processId
     // allTests-node-Calculator.test-0 -> Calculator.test-0.log
@@ -250,15 +232,13 @@ export class Server_ProcessManager extends Server_FS {
         logFileName = withoutPrefix.substring(firstDashIndex + 1);
       }
     }
-    
-    // Create or append to log file
+
     const logFile = path.join(logDir, `${logFileName}.log`);
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}\n`;
 
     fs.appendFileSync(logFile, logEntry);
   }
 
-  // Port management methods
   allocatePorts(numPorts: number, testName: string): number[] | null {
     const openPorts = Object.entries(this.ports)
       .filter(([, status]) => status === "")
@@ -292,7 +272,6 @@ export class Server_ProcessManager extends Server_FS {
     return this.ports[port] || null;
   }
 
-  // Execute a command and track it as a process
   executeCommand = async (
     processId: string,
     command: string,
@@ -301,52 +280,27 @@ export class Server_ProcessManager extends Server_FS {
     platform?: IRunTime,
     options?: any
   ) => {
-
-    console.log(`[ProcessManager] executeCommand( ${processId}, ${command} )`);
-    
-    // Validate processId
-    if (!processId || typeof processId !== 'string') {
-      console.error(`[ProcessManager] Invalid processId: ${processId}. Generating fallback ID.`);
-      processId = `fallback-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    // Initialize processExecution if not already done
+    if (!this.processExecution) {
+      const { ProcessExecution } = await import("./utils/ProcessExecution");
+      this.processExecution = new ProcessExecution(
+        this.addLogEntry,
+        this.allProcesses,
+        this.runningProcesses
+      );
     }
 
-    
-    const execAsync = promisify(exec);
-
-    this.addLogEntry(processId, "stdout", `Starting command: ${command}`, new Date(), "info");
-
-    // Create the original promise
-    const originalPromise = execAsync(command, {
-      ...options,
-      maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large outputs
-    })
-      .then(({ stdout, stderr }) => {
-        // Return stdout and stderr for capture
-        return { stdout, stderr };
-      })
-      .catch((error) => {
-        // Ensure error has stdout and stderr
-        error.stdout = error.stdout || "";
-        error.stderr = error.stderr || "";
-        throw error;
-      });
-
-    // Add as a promise process which will capture logs and handle errors safely
-    const safePromise = this.addPromiseProcessAndGetSafePromise(
+    return this.processExecution.executeCommand(
       processId,
-      originalPromise,
       command,
       category,
       testName,
-      platform
+      platform,
+      options
     );
-
-    // Return the safe promise that never rejects
-    return safePromise;
   };
 
-  // Helper method to add promise process and get the safe promise
-  addPromiseProcessAndGetSafePromise = (
+  addPromiseProcessAndGetSafePromise = async (
     processId: string,
     promise: Promise<any>,
     command: string,
@@ -354,220 +308,27 @@ export class Server_ProcessManager extends Server_FS {
     testName?: string,
     platform?: IRunTime
   ): Promise<{ success: boolean; error?: any; stdout?: string; stderr?: string }> => {
-    // Validate processId
-    if (!processId || typeof processId !== 'string') {
-      console.error(`[ProcessManager] Invalid processId in addPromiseProcessAndGetSafePromise: ${processId}`);
-      processId = `invalid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    // Initialize processExecution if not already done
+    if (!this.processExecution) {
+      const { ProcessExecution } = await import("./utils/ProcessExecution");
+      this.processExecution = new ProcessExecution(
+        this.addLogEntry,
+        this.allProcesses,
+        this.runningProcesses
+      );
     }
 
-    // Create a wrapper promise that never rejects to prevent system crashes
-    const safePromise = new Promise<{
-      success: boolean;
-      error?: any;
-      stdout?: string;
-      stderr?: string;
-    }>(async (resolve) => {
-      try {
-        // Wait for the actual promise to settle
-        const result = await promise;
-        // If it resolves, we're good
-        resolve({
-          success: true,
-          stdout: result?.stdout,
-          stderr: result?.stderr,
-        });
-      } catch (error: any) {
-        // If it rejects, capture stdout and stderr from the error if available
-        console.log(
-          `[Process ${processId}] Non-critical error:`,
-          error.message
-        );
-        // Try to extract stdout and stderr from the error object
-        const stdout = error.stdout || error.output?.[1] || error.message;
-        const stderr = error.stderr || error.output?.[2] || error.stack;
-        resolve({ success: false, error, stdout, stderr });
-      }
-    });
-
-    // Store the process info
-    const processInfo: ProcessInfo = {
-      promise: safePromise,
-      status: "running",
+    return this.processExecution.addPromiseProcessAndGetSafePromise(
+      processId,
+      promise,
       command,
-      timestamp: new Date().toISOString(),
-      type: "promise",
       category,
       testName,
-      platform: platform || "node",
-    };
-
-    this.allProcesses.set(processId, processInfo);
-    this.runningProcesses.set(processId, safePromise);
-
-    // Set up promise completion handlers
-    safePromise
-      .then(({ success, error, stdout, stderr }) => {
-        const info = this.allProcesses.get(processId);
-        if (info) {
-          info.status = "completed";
-          info.exitCode = success ? 0 : 1;
-          // Build a comprehensive error message
-          let errorMessage = "";
-          if (error) {
-            errorMessage = error.message || String(error);
-          }
-          // Include stdout and stderr in the error field for better debugging
-          const details = [];
-          if (stdout) details.push(`stdout: ${stdout}`);
-          if (stderr) details.push(`stderr: ${stderr}`);
-          if (details.length > 0) {
-            info.error = `${errorMessage}\n${details.join("\n")}`;
-          } else if (errorMessage) {
-            info.error = errorMessage;
-          }
-        }
-        this.runningProcesses.delete(processId);
-
-        // Log stdout and stderr separately
-        if (stdout) {
-          this.addLogEntry(processId, "stdout", stdout, new Date(), "info");
-        }
-        if (stderr) {
-          this.addLogEntry(processId, "stderr", stderr, new Date(), "error");
-        }
-
-        const message = success
-          ? `Process ${processId} completed successfully`
-          : `Process ${processId} completed with non-critical error`;
-        this.addLogEntry(processId, success ? "stdout" : "stderr", message, new Date(), success ? "info" : "warn");
-      })
-      .catch((error) => {
-        // This should never happen since safePromise never rejects, but just in case
-        const info = this.allProcesses.get(processId);
-        if (info) {
-          info.status = "completed";
-          info.exitCode = 1;
-          info.error = error?.message || String(error);
-        }
-        this.runningProcesses.delete(processId);
-        this.addLogEntry(
-          processId,
-          "stderr",
-          `Process ${processId} completed with unexpected error: ${
-            error?.message || String(error)
-          }`,
-          new Date(),
-          "error"
-        );
-      });
-
-    return safePromise;
+      platform
+    );
   };
 
-  // Load aider API keys from .aider.conf.yml
-  private loadAiderApiKeys(): Record<string, string> {
-    try {
-      const configPath = path.join(process.cwd(), '.aider.conf.yml');
-      if (!fs.existsSync(configPath)) {
-        console.log('[ProcessManager] No .aider.conf.yml file found');
-        return {};
-      }
-      
-      const yaml = require('js-yaml');
-      const config = yaml.load(fs.readFileSync(configPath, 'utf8'));
-      
-      const apiKeys: Record<string, string> = {};
-      
-      // Extract API keys from config
-      if (config['openai-api-key']) {
-        apiKeys['OPENAI_API_KEY'] = config['openai-api-key'];
-      }
-      if (config['anthropic-api-key']) {
-        apiKeys['ANTHROPIC_API_KEY'] = config['anthropic-api-key'];
-      }
-      if (config['api-key']) {
-        // Handle both string and array
-        if (Array.isArray(config['api-key'])) {
-          config['api-key'].forEach((key: string, index: number) => {
-            apiKeys[`API_KEY_${index}`] = key;
-          });
-        } else {
-          apiKeys['API_KEY'] = config['api-key'];
-        }
-      }
-      
-      console.log('[ProcessManager] Loaded API keys from .aider.conf.yml');
-      return apiKeys;
-    } catch (error) {
-      console.error('[ProcessManager] Failed to load API keys from .aider.conf.yml:', error);
-      return {};
-    }
-  }
 
-  // Build the aider base image if not already built
-  private async ensureAiderImage(): Promise<boolean> {
-    const imageName = 'testeranto-aider:latest';
-    const checkImageCmd = `docker images -q ${imageName}`;
-    
-    const checkResult = await this.executeCommand(
-      'aider-image-check',
-      checkImageCmd,
-      'aider',
-      'image-check',
-      'node'
-    );
-    
-    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() !== '') {
-      console.log('[ProcessManager] Aider base image already exists');
-      return true;
-    }
-    
-    console.log('[ProcessManager] Building aider base image...');
-    
-    // Create a temporary Dockerfile
-    const dockerfileContent = [
-      'FROM python:3.11-slim',
-      'WORKDIR /workspace',
-      'RUN pip install --no-cache-dir aider-chat',
-      '# Create a non-root user for security',
-      'RUN useradd -m -u 1000 aider && chown -R aider:aider /workspace',
-      'USER aider',
-      '# Default command starts aider in interactive mode',
-      'CMD ["aider", "--yes", "--dark-mode"]'
-    ].join('\n');
-    
-    const tempDir = path.join(process.cwd(), 'testeranto', 'temp');
-    if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir, { recursive: true });
-    }
-    
-    const dockerfilePath = path.join(tempDir, 'Dockerfile.aider');
-    fs.writeFileSync(dockerfilePath, dockerfileContent);
-    
-    const buildCmd = `docker build -t ${imageName} -f ${dockerfilePath} ${tempDir}`;
-    const buildResult = await this.executeCommand(
-      'aider-image-build',
-      buildCmd,
-      'aider',
-      'image-build',
-      'node'
-    );
-    
-    // Clean up temp file
-    // try {
-    //   fs.unlinkSync(dockerfilePath);
-    // } catch (e) {
-    //   // Ignore cleanup errors
-    // }
-    
-    if (buildResult.success) {
-      console.log('[ProcessManager] Aider base image built successfully');
-      return true;
-    } else {
-      console.error('[ProcessManager] Failed to build aider base image:', buildResult.error);
-      return false;
-    }
-  }
 
   // Create aider process for a specific test as a background command
   createAiderProcess = async (
@@ -575,180 +336,21 @@ export class Server_ProcessManager extends Server_FS {
     testPath: string,
     metafile: IMetaFile
   ): Promise<void> => {
-    const processId = `allTests-${runtime}-${testPath}-aider`;
-    console.log(`[ProcessManager] Creating aider Docker container: ${processId}`);
-    
-    // Ensure aider base image exists
-    const imageReady = await this.ensureAiderImage();
-    if (!imageReady) {
-      console.error('[ProcessManager] Cannot create aider container: base image not available');
-      this.addLogEntry(processId, "error", "Failed to build aider base image", new Date(), "error");
-      return;
-    }
-    
-    // Extract relevant files from metafile for aider context
-    const contextFiles: string[] = [];
-    if (metafile.metafile && metafile.metafile.inputs) {
-      const inputs = metafile.metafile.inputs;
-      if (inputs instanceof Map) {
-        contextFiles.push(...Array.from(inputs.keys()));
-      } else if (typeof inputs === 'object') {
-        contextFiles.push(...Object.keys(inputs));
-      }
-    }
-    
-    // Filter to relevant source files
-    const sourceFiles = contextFiles.filter(file => 
-      file.endsWith('.ts') || 
-      file.endsWith('.js') || 
-      file.endsWith('.py') || 
-      file.endsWith('.go')
-    ).slice(0, 10); // Limit to first 10 files
-    
-    // Create a Docker container for aider
-    const containerName = `aider-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
-    
-    // First, check if container is already running
-    const checkRunningCmd = `docker ps --filter "name=${containerName}" --filter "status=running" --format "{{.Names}}"`;
-    const checkRunningResult = await this.executeCommand(
-      `${processId}-check-running`,
-      checkRunningCmd,
-      "aider",
-      testPath,
-      runtime
-    );
-    
-    // If container is already running, don't create a new one
-    if (checkRunningResult.success && checkRunningResult.stdout && checkRunningResult.stdout.trim() === containerName) {
-      console.log(`[ProcessManager] Aider container ${containerName} is already running, skipping creation`);
-      this.addLogEntry(processId, "stdout", `Aider Docker container already running: ${containerName}`, new Date(), "info");
-      
-      // Store container info for tracking
-      const processInfo: ProcessInfo = {
-        promise: Promise.resolve({ stdout: '', stderr: '' }),
-        status: "running",
-        command: "docker container already running",
-        timestamp: new Date().toISOString(),
-        type: "docker",
-        category: "aider",
-        testName: testPath,
-        platform: runtime,
-        containerName: containerName,
-      } as any;
-      
-      this.allProcesses.set(processId, processInfo);
-      (this.aiderProcesses as any).set(processId, { containerName });
-      return;
-    }
-    
-    // Check if container exists but is not running (exited, stopped, etc.)
-    const checkAllCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
-    const checkAllResult = await this.executeCommand(
-      `${processId}-check-all`,
-      checkAllCmd,
-      "aider",
-      testPath,
-      runtime
-    );
-    
-    // If container exists but is not running, remove it so we can create a fresh one
-    if (checkAllResult.success && checkAllResult.stdout && checkAllResult.stdout.trim() === containerName) {
-      console.log(`[ProcessManager] Container ${containerName} exists but is not running, removing...`);
-      const removeResult = await this.executeCommand(
-        `${processId}-remove`,
-        `docker rm -f ${containerName}`,
-        "aider",
-        testPath,
-        runtime
+    if (!this.aiderProcessManager) {
+      const { AiderProcessManager } = await import("./utils/AiderProcessManager");
+      this.aiderProcessManager = new AiderProcessManager(
+        this.executeCommand,
+        this.addLogEntry,
+        this.allProcesses,
+        this.aiderProcesses
       );
-      if (!removeResult.success) {
-        console.error(`[ProcessManager] Failed to remove existing container ${containerName}:`, removeResult.error);
-      } else {
-        console.log(`[ProcessManager] Removed existing container ${containerName}`);
-      }
     }
-    
-    // Load API keys from .aider.conf.yml
-    const apiKeys = this.loadAiderApiKeys();
-    
-    // Build environment variables for API keys
-    const envVars = Object.entries(apiKeys).map(([key, value]) => `-e ${key}=${value}`);
-    
-    // Build the Docker run command using the pre-built aider image
-    // Start aider with the relevant source files
-    const dockerArgs = [
-      'docker', 'run',
-      '-d', // Run in detached mode
-      '--name', containerName,
-      '-v', `${process.cwd()}:/workspace`, // Mount the current directory
-      '-w', '/workspace', // Set working directory
-      '--network', 'allTests_network', // Use the same network as other services
-      ...envVars, // Add API key environment variables
-      'testeranto-aider:latest',
-      // Pass source files to aider
-      ...sourceFiles.slice(0, 5) // Limit to first 5 files to avoid command line being too long
-    ];
-    
-    const command = dockerArgs.join(' ');
-    
-    // Execute the Docker command
-    const result = await this.executeCommand(
-      processId,
-      command,
-      "aider",
-      testPath,
-      runtime
-    );
-    
-    // Store container info for later management
-    const processInfo: ProcessInfo = {
-      promise: Promise.resolve({ stdout: '', stderr: '' }),
-      status: "running",
-      command,
-      timestamp: new Date().toISOString(),
-      type: "docker",
-      category: "aider",
-      testName: testPath,
-      platform: runtime,
-      containerName: containerName,
-    } as any;
-    
-    this.allProcesses.set(processId, processInfo);
-    
-    // Store container name for later reference
-    (this.aiderProcesses as any).set(processId, { containerName });
-    
-    // Check if container started successfully
-    if (result.success) {
-      this.addLogEntry(processId, "stdout", `Aider Docker container started: ${containerName}`, new Date(), "info");
-      console.log(`[ProcessManager] Aider Docker container ${containerName} started`);
-      
-      // Get container logs
-      setTimeout(async () => {
-        const logResult = await this.executeCommand(
-          `${processId}-logs`,
-          `docker logs ${containerName}`,
-          "aider",
-          testPath,
-          runtime
-        );
-      }, 2000);
-    } else {
-      this.addLogEntry(processId, "error", `Failed to start aider Docker container: ${result.error}`, new Date(), "error");
-      console.error(`[ProcessManager] Failed to start aider Docker container:`, result.error);
-    }
-    
-    // Provide connection instructions
-    const connectionInfo = `To connect to this aider session, use: docker exec -it ${containerName} /bin/bash`;
-    this.addLogEntry(processId, "stdout", connectionInfo, new Date(), "info");
-    
-    // Also provide VS Code terminal command
-    const vscodeCommand = `docker exec -it ${containerName} bash -c "aider --yes --dark-mode ${sourceFiles.join(' ')}"`;
-    this.addLogEntry(processId, "stdout", `VS Code terminal command: ${vscodeCommand}`, new Date(), "info");
+
+    return this.aiderProcessManager.createAiderProcess(runtime, testPath, metafile);
   };
 
-  // Add promise process tracking
-  addPromiseProcess = (
+
+  addPromiseProcess = async (
     processId: string,
     promise: Promise<any> | undefined,
     command: string,
@@ -758,9 +360,8 @@ export class Server_ProcessManager extends Server_FS {
   ) => {
     // Handle undefined promise
     const actualPromise = promise || Promise.resolve({ stdout: '', stderr: '' });
-    
-    // Use the helper method to create a safe promise
-    this.addPromiseProcessAndGetSafePromise(
+
+    await this.addPromiseProcessAndGetSafePromise(
       processId,
       actualPromise,
       command,
@@ -787,20 +388,19 @@ export class Server_ProcessManager extends Server_FS {
 
     // Extract test path from entrypoint
     const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
-    
+
     // Ensure testPath is valid
     if (!testPath || testPath.trim() === '') {
       console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
       return;
     }
-    
-    // Create aider process first
+
+
     await this.createAiderProcess(runtime, testPath, metafile);
-    
-    // Enqueue BDD test with proper process ID pattern
+
+
     const processId = `allTests-${runtime}-${testPath}-bdd`;
-    console.log(`[ProcessManager] BDD process ID: ${processId}`);
-    
+
     // Get the appropriate BDD command for the runtime
     let bddCommand = "";
     if (runtime === "node") {
@@ -814,138 +414,8 @@ export class Server_ProcessManager extends Server_FS {
     } else {
       bddCommand = `echo 'not yet implemented'`;
     }
-    
-    // For web tests, we need a different approach to keep chromium running
-    if (runtime === "web") {
-      await this.runWebBddTest(processId, testPath, bddCommand);
-    } else {
-      // Run other BDD tests in Docker containers as before
-      await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
-    }
-  }
 
-  private async runWebBddTest(
-    processId: string,
-    testPath: string,
-    bddCommand: string
-  ): Promise<void> {
-    console.log(`[ProcessManager] Running web BDD test: ${processId}`);
-    
-    // For web tests, we need to:
-    // 1. Start chromium with remote debugging
-    // 2. Run the actual test script that connects to chromium
-    // 3. Ensure chromium stays alive during the test
-    
-    // First, start chromium in the background
-    const chromiumContainerName = `chromium-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
-    
-    // Check if chromium container is already running
-    const checkCmd = `docker ps -a --filter "name=${chromiumContainerName}" --format "{{.Names}}"`;
-    const checkResult = await this.executeCommand(
-      `${processId}-check-chromium`,
-      checkCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    
-    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === chromiumContainerName) {
-      // Container exists, remove it
-      await this.executeCommand(
-        `${processId}-remove-chromium`,
-        `docker rm -f ${chromiumContainerName}`,
-        "bdd-test",
-        testPath,
-        "web"
-      );
-    }
-    
-    // Start chromium container
-    const chromiumCmd = `docker run -d \
-      --name ${chromiumContainerName} \
-      --network allTests_network \
-      -p 9222:9222 \
-      --shm-size=2g \
-      browserless/chrome:latest \
-      --remote-debugging-port=9222 \
-      --remote-debugging-address=0.0.0.0`;
-    
-    console.log(`[ProcessManager] Starting chromium container: ${chromiumCmd}`);
-    
-    const chromiumResult = await this.executeCommand(
-      `${processId}-chromium`,
-      chromiumCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    
-    if (!chromiumResult.success) {
-      console.error(`[ProcessManager] Failed to start chromium: ${chromiumResult.error}`);
-      return;
-    }
-    
-    // Wait for chromium to be ready
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    
-    // Now run the test command which should connect to chromium via remote debugging
-    const testContainerName = `web-test-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
-    
-    // Remove existing test container if any
-    const checkTestCmd = `docker ps -a --filter "name=${testContainerName}" --format "{{.Names}}"`;
-    const checkTestResult = await this.executeCommand(
-      `${processId}-check-test`,
-      checkTestCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    
-    if (checkTestResult.success && checkTestResult.stdout && checkTestResult.stdout.trim() === testContainerName) {
-      await this.executeCommand(
-        `${processId}-remove-test`,
-        `docker rm -f ${testContainerName}`,
-        "bdd-test",
-        testPath,
-        "web"
-      );
-    }
-    
-    // Run the test in a separate container that connects to chromium
-    const testRunCmd = `docker run --rm \
-      --name ${testContainerName} \
-      --network allTests_network \
-      -v ${process.cwd()}:/workspace \
-      -w /workspace \
-      -e CHROMIUM_URL=http://${chromiumContainerName}:9222 \
-      bundles-web-build:latest \
-      sh -c "${bddCommand}"`;
-    
-    console.log(`[ProcessManager] Running web test: ${testRunCmd}`);
-    
-    const testResult = await this.executeCommand(
-      processId,
-      testRunCmd,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    
-    // Clean up chromium container after test
-    await this.executeCommand(
-      `${processId}-cleanup-chromium`,
-      `docker rm -f ${chromiumContainerName}`,
-      "bdd-test",
-      testPath,
-      "web"
-    );
-    
-    // Log the result
-    if (!testResult.success) {
-      console.log(`[ProcessManager] Web BDD test ${processId} failed:`, testResult.error?.message);
-    } else {
-      console.log(`[ProcessManager] Web BDD test ${processId} completed successfully`);
-    }
+    await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
   }
 
   private async runBddTestInDocker(
@@ -955,7 +425,7 @@ export class Server_ProcessManager extends Server_FS {
     bddCommand: string
   ): Promise<void> {
     const containerName = `bdd-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
-    
+
     // First, check if container is already running and remove it
     const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
     const checkResult = await this.executeCommand(
@@ -965,7 +435,7 @@ export class Server_ProcessManager extends Server_FS {
       testPath,
       runtime
     );
-    
+
     if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
       // Container exists, remove it
       await this.executeCommand(
@@ -976,11 +446,9 @@ export class Server_ProcessManager extends Server_FS {
         runtime
       );
     }
-    
-    // Determine the base image to use
+
     const baseImage = this.getRuntimeImage(runtime);
-    
-    // Run the BDD test in a new container
+
     const dockerRunCmd = `docker run --rm \
       --name ${containerName} \
       --network allTests_network \
@@ -988,9 +456,7 @@ export class Server_ProcessManager extends Server_FS {
       -w /workspace \
       ${baseImage} \
       sh -c "${bddCommand}"`;
-    
-    console.log(`[ProcessManager] Running BDD test in Docker: ${dockerRunCmd}`);
-    
+
     const result = await this.executeCommand(
       processId,
       dockerRunCmd,
@@ -998,8 +464,7 @@ export class Server_ProcessManager extends Server_FS {
       testPath,
       runtime
     );
-    
-    // Log the result for debugging
+
     if (!result.success) {
       console.log(`[ProcessManager] BDD test ${processId} failed:`, result.error?.message);
     } else {
@@ -1007,7 +472,6 @@ export class Server_ProcessManager extends Server_FS {
     }
   }
 
-  // Helper to get the appropriate Docker image for each runtime
   private getRuntimeImage(runtime: IRunTime): string {
     switch (runtime) {
       case "node":
@@ -1029,9 +493,6 @@ export class Server_ProcessManager extends Server_FS {
     entrypoint: string,
     addableFiles: string[]
   ): Promise<void> {
-    console.log(
-      `[ProcessManager] Scheduling Static test for ${entrypoint} (${runtime})`
-    );
 
     // Validate entrypoint
     if (!entrypoint || typeof entrypoint !== 'string') {
@@ -1041,31 +502,27 @@ export class Server_ProcessManager extends Server_FS {
 
     // Extract test path from entrypoint
     const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
-    
+
     // Ensure testPath is valid
     if (!testPath || testPath.trim() === '') {
       console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
       return;
     }
-    
+
     // Check if configs[runtime] exists
     if (!this.configs[runtime] || !Array.isArray(this.configs[runtime].checks)) {
       console.error(`[ProcessManager] No checks configured for runtime: ${runtime}`);
       return;
     }
-    
+
     let checkIndex = 0;
     for (const check of this.configs[runtime].checks) {
       const processId = `allTests-${runtime}-${testPath}-static-${checkIndex}`;
-      console.log(`[ProcessManager] Static process ID: ${processId}`);
-      
-      // Get the check command
+
       const checkCommand = check(addableFiles);
-      
-      // Run static test in a Docker container
+
       const containerName = `static-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}-${checkIndex}`;
-      
-      // First, check if container is already running and remove it
+
       const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
       const checkResult = await this.executeCommand(
         `${processId}-check`,
@@ -1074,7 +531,7 @@ export class Server_ProcessManager extends Server_FS {
         testPath,
         runtime
       );
-      
+
       if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
         // Container exists, remove it
         await this.executeCommand(
@@ -1085,10 +542,10 @@ export class Server_ProcessManager extends Server_FS {
           runtime
         );
       }
-      
+
       // Determine the base image to use
       const baseImage = this.getRuntimeImage(runtime);
-      
+
       // Run the static test in a new container
       // Mount the workspace to access source files and built artifacts
       const dockerRunCmd = `docker run --rm \
@@ -1098,9 +555,7 @@ export class Server_ProcessManager extends Server_FS {
         -w /workspace \
         ${baseImage} \
         sh -c "${checkCommand}"`;
-      
-      console.log(`[ProcessManager] Running static test in Docker: ${dockerRunCmd}`);
-      
+
       const result = await this.executeCommand(
         processId,
         dockerRunCmd,
@@ -1108,14 +563,13 @@ export class Server_ProcessManager extends Server_FS {
         testPath,
         runtime
       );
-      
-      // Log the result for debugging
+
       if (!result.success) {
         console.log(`[ProcessManager] Static test ${processId} failed:`, result.error?.message);
       } else {
         console.log(`[ProcessManager] Static test ${processId} completed successfully`);
       }
-      
+
       checkIndex++;
     }
   }
@@ -1173,19 +627,18 @@ export class Server_ProcessManager extends Server_FS {
     let testName = `test-${Date.now()}-${Math.random()
       .toString(36)
       .substr(2, 9)}`;
-    
+
     // Try to extract a better test name from the command
     const match = command.match(/example\/([^.\s]+)/);
     if (match) {
       testName = match[1];
     }
-    
+
     const testPath = testName;
     // Use a more descriptive process ID that follows the pattern
     // Since this is a queued job, we'll use 'job' as the type
     const processId = `allTests-${runtime}-${testPath}-job`;
 
-    // Broadcast enqueue event
     this.broadcast({
       type: 'enqueue',
       processId,
@@ -1206,7 +659,6 @@ export class Server_ProcessManager extends Server_FS {
         )
       );
 
-      // Broadcast dequeue event when job starts processing
       this.broadcast({
         type: 'dequeue',
         processId,
@@ -1221,7 +673,7 @@ export class Server_ProcessManager extends Server_FS {
       try {
         // Run in a Docker container
         const containerName = `queue-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
-        
+
         // First, check if container is already running and remove it
         const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
         const checkResult = await this.executeCommand(
@@ -1231,9 +683,8 @@ export class Server_ProcessManager extends Server_FS {
           testName,
           runtime
         );
-        
+
         if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
-          // Container exists, remove it
           await this.executeCommand(
             `${processId}-remove`,
             `docker rm -f ${containerName}`,
@@ -1242,11 +693,9 @@ export class Server_ProcessManager extends Server_FS {
             runtime
           );
         }
-        
-        // Determine the base image to use
+
         const baseImage = this.getRuntimeImage(runtime);
-        
-        // Run the command in a Docker container
+
         const dockerRunCmd = `docker run --rm \
           --name ${containerName} \
           --network allTests_network \
@@ -1254,10 +703,7 @@ export class Server_ProcessManager extends Server_FS {
           -w /workspace \
           ${baseImage} \
           sh -c "${command}"`;
-        
-        console.log(`[Queue] Running in Docker: ${dockerRunCmd}`);
-        
-        // Execute the command in Docker
+
         await this.executeCommand(
           processId,
           dockerRunCmd,
@@ -1292,9 +738,6 @@ export class Server_ProcessManager extends Server_FS {
       command,
     });
 
-    console.log(
-      `[Queue] Added job ${processId} to queue. Queue length: ${this.jobQueue.length}`
-    );
   }
 
   async checkQueue(
@@ -1325,7 +768,6 @@ export class Server_ProcessManager extends Server_FS {
     }
   }
 
-  // Remove and return the last item from the queue
   pop():
     | { testName: string; runtime: IRunTime; addableFiles?: string[] }
     | undefined {
@@ -1341,7 +783,6 @@ export class Server_ProcessManager extends Server_FS {
     return item;
   }
 
-  // Check if a test is in the queue
   includes(testName: string, runtime?: IRunTime): boolean {
     if (runtime !== undefined) {
       return this.queuedItems.some(
@@ -1351,25 +792,21 @@ export class Server_ProcessManager extends Server_FS {
     return this.queuedItems.some((item) => item.testName === testName);
   }
 
-  // Get the current queue length
   get queueLength(): number {
     return this.jobQueue ? this.jobQueue.length : 0;
   }
 
-  // Clear the entire queue
   clearQueue(): void {
     if (this.jobQueue) {
       this.jobQueue.end();
       this.jobQueue.stop();
     }
-    // Create a new queue instance
     this.jobQueue = new Queue();
     this.jobQueue.autostart = true;
     this.jobQueue.concurrency = 1;
     this.queuedItems = [];
   }
 
-  // Get all items in the queue
   getAllQueueItems(): Array<{
     testName: string;
     runtime: IRunTime;
@@ -1378,47 +815,3 @@ export class Server_ProcessManager extends Server_FS {
     return [...this.queuedItems];
   }
 }
-
-////////////////////////////////////////////////////////////////
-// DEPRECATED
-////////////////////////////////////////////////////////////////
-
-// const bddCommands = this.getBddTestCommand(testName, runtime);
-// console.log(`[BDD] Commands retrieved:`, bddCommands);
-// if (!bddCommands || bddCommands.length === 0) {
-//   console.log(
-//     `[BDD] No BDD test commands found for ${testName} (${runtime})`
-//   );
-//   // Try to get default commands
-
-//   console.log(`[BDD] Default commands:`, defaultCommands);
-//   if (defaultCommands && defaultCommands.length > 0) {
-//     console.log(`[BDD] Using default commands`);
-
-//   }
-//   return;
-// }
-
-// const defaultCommand = this.getDefaultBddTestCommand(testName, runtime);
-// await this.runBddCommandsWithDefaults(
-//   testId,
-//   testName,
-//   runtime,
-//   this.getDefaultBddTestCommand(testName, runtime)
-// );
-// const processId = `bdd-${testId}`;
-// console.log(`[BDD] Process ID: ${processId}`);
-// await this.executeBddTestInDocker(processId, testName, runtime, command);
-
-// DEPRECATED
-// await this.runBddCommandsWithDefaults(
-//   testId,
-//   testName,
-//   runtime,
-//   this.getDefaultBddTestCommand(testName, runtime)
-// );
-
-// const processId = `bdd-${testId}`;
-// console.log(`[BDD] Process ID: ${processId}`);
-
-// await this.executeBddTestInDocker(processId, testName, runtime, command);

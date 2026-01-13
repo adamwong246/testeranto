@@ -3,7 +3,7 @@
 import { WebSocketServer, WebSocket } from "ws";
 import { IMode } from "../types";
 import { Server_DockerCompose } from "./Server_DockerCompose";
-import { Server_HTTP } from "./Server_HTTP";
+
 
 export class Server_WS extends Server_DockerCompose {
   protected ws: WebSocketServer;
@@ -11,7 +11,7 @@ export class Server_WS extends Server_DockerCompose {
 
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
-    
+
     // Create WebSocket server
     this.ws = new WebSocketServer({
       noServer: true,
@@ -19,7 +19,7 @@ export class Server_WS extends Server_DockerCompose {
 
     // Set up WebSocket event handlers
     this.setupWebSocketHandlers();
-    
+
     // Note: The upgrade handler will be attached by Server_HTTP
     // to avoid duplicate attachment
   }
@@ -96,10 +96,10 @@ export class Server_WS extends Server_DockerCompose {
       console.error("[WebSocket] HTTP server not available for WebSocket attachment");
       return;
     }
-    
+
     httpServer.on("upgrade", (request: any, socket: any, head: any) => {
       const pathname = new URL(request.url || "", `http://${request.headers.host}`).pathname;
-      
+
       // Handle WebSocket connections at /ws
       if (pathname === "/ws") {
         console.log("[WebSocket] Upgrade request for /ws");
@@ -116,7 +116,7 @@ export class Server_WS extends Server_DockerCompose {
 
   private handleWebSocketMessage(ws: WebSocket, message: any): void {
     console.log("[WebSocket] Received message:", message.type);
-    
+
     switch (message.type) {
       case "getProcesses":
         this.handleGetProcesses(ws);
@@ -210,14 +210,14 @@ export class Server_WS extends Server_DockerCompose {
           let level = "info";
           let source = "process";
           let message = log;
-          
+
           // Try to parse the log format
           const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
           if (match) {
             const timestamp = match[1];
             source = match[2];
             message = match[3];
-            
+
             // Map source to level
             if (source === "stderr" || source === "error") {
               level = "error";
@@ -229,7 +229,7 @@ export class Server_WS extends Server_DockerCompose {
               level = "info";
             }
           }
-          
+
           return {
             timestamp: new Date().toISOString(),
             level: level,
@@ -253,7 +253,7 @@ export class Server_WS extends Server_DockerCompose {
   public broadcast(message: any): void {
     const data = typeof message === "string" ? message : JSON.stringify(message);
     console.log(`[WebSocket] Broadcasting to ${this.wsClients.size} clients:`, message.type || message);
-    
+
     let sentCount = 0;
     this.wsClients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
@@ -272,12 +272,12 @@ export class Server_WS extends Server_DockerCompose {
       client.close();
     });
     this.wsClients.clear();
-    
+
     // Close the WebSocket server
     this.ws.close(() => {
       console.log("[WebSocket] Server closed");
     });
-    
+
     await super.stop();
   }
 }
