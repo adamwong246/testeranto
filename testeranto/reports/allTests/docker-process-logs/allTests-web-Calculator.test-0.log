@@ -1,8 +1,8 @@
-[2026-01-12T21:47:07.096Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:07.669Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:14.931Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:15.565Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:07.669Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:15.566Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -13,4 +13,4 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:07.669Z] [stderr] Process allTests-web-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:15.566Z] [stderr] Process allTests-web-Calculator.test-0 completed with non-critical error

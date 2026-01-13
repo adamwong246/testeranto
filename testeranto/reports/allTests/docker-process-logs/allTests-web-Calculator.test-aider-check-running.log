@@ -1,0 +1,4 @@
+[2026-01-13T00:53:14.984Z] [stdout] Starting command: docker ps --filter "name=aider-web-Calculator-test" --filter "status=running" --format "{{.Names}}"
+[2026-01-13T00:53:15.019Z] [stdout] aider-web-Calculator-test
+
+[2026-01-13T00:53:15.019Z] [stdout] Process allTests-web-Calculator.test-aider-check-running completed successfully

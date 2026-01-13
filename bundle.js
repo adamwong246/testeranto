@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as esbuild from 'esbuild'
 import { sassPlugin } from 'esbuild-sass-plugin'
 
@@ -44,37 +46,13 @@ try {
     logLevel: 'info',
   });
   console.log("VS Code extension built successfully to dist/vscode/extension.mjs");
-  
-  // Check if the file was created
-  const fs = await import('fs');
-  const path = await import('path');
-  const outputPath = path.join('dist', 'vscode', 'extension.mjs');
-  if (fs.existsSync(outputPath)) {
-    console.log(`Output file exists at ${outputPath}`);
-    const stats = fs.statSync(outputPath);
-    console.log(`File size: ${stats.size} bytes`);
-    
-    // Read first few lines to verify content
-    const content = fs.readFileSync(outputPath, 'utf8');
-    const lines = content.split('\n').slice(0, 5).join('\n');
-    console.log("First 5 lines of built file:");
-    console.log(lines);
-    
-    // Check if it contains ES module exports
-    if (!content.includes('export function activate') && !content.includes('export { activate }')) {
-      console.warn("Built file may not have proper ES module exports");
-    }
-  } else {
-    console.error(`Output file does NOT exist at ${outputPath}`);
-  }
 } catch (error) {
   console.error("Failed to build VS Code extension:", error);
   process.exit(1);
 }
 
 // Copy media files for webview
-import * as fs from 'fs';
-import * as path from 'path';
+
 
 const mediaDir = 'media';
 const distMediaDir = 'dist/vscode/media';

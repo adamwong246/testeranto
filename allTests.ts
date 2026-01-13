@@ -33,12 +33,12 @@ const config: ITestconfig = {
 
   web: createLangConfig("example/Calculator.test.ts", [
     (x) => `yarn eslint ${x}`,
-    (x) => `yarn tsc --noEmit ${x}`,
+    (x) => `yarn tsc --noEmit ${x.join(' ')}`,
   ]),
 
   node: createLangConfig("example/Calculator.test.ts", [
     (x) => `yarn eslint ${x}`,
-    (x) => `yarn tsc --noEmit ${x}`,
+    (x) => `yarn tsc --noEmit ${x.join(' ')}`,
   ]),
 };
 

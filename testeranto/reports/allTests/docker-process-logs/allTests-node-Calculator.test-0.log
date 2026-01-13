@@ -1,8 +1,8 @@
-[2026-01-12T21:47:08.603Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:09.278Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:14.339Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:15.233Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:09.278Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:15.233Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -13,12 +13,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:09.278Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:47:17.633Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:18.072Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:15.233Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:15.526Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:16.190Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:18.072Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:16.190Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -29,12 +29,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:18.072Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:47:26.581Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:27.080Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:16.190Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:16.912Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:18.075Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:27.080Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:18.075Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -45,12 +45,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:27.080Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:47:28.110Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:28.550Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:18.075Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:19.282Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:20.176Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:28.551Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:20.177Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -61,12 +61,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:28.551Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:47:36.479Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:36.924Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:20.177Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:21.912Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:23.322Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:36.925Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:23.322Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -77,12 +77,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:36.925Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:47:45.186Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:45.649Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:23.322Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:26.425Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:27.346Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:45.649Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:27.346Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -93,12 +93,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:45.649Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:47:54.396Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:54.825Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:27.346Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:31.465Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:32.026Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:54.825Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:32.026Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -109,12 +109,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:54.825Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:48:12.903Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:48:13.398Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:32.026Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:38.942Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:39.370Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:48:13.398Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:39.371Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -125,12 +125,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:48:13.398Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:48:39.154Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:48:39.652Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:39.371Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:53:52.526Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:52.952Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:48:39.652Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:52.953Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -141,12 +141,12 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:48:39.652Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:49:31.124Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:49:31.601Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:53:52.953Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:54:18.815Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
+[2026-01-13T00:54:19.327Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:49:31.601Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:54:19.327Z] [stderr] warning ../../package.json: No license field
 
 Oops! Something went wrong! :(
 
@@ -157,651 +157,4 @@ Please check for typing mistakes in the pattern.
 
 error Command failed with exit code 2.
 
-[2026-01-12T21:49:31.601Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:50:31.774Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:50:32.299Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:50:32.299Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:50:32.299Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:51:32.439Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:51:32.956Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:51:32.956Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:51:32.956Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:52:33.097Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:52:33.616Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:52:33.616Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:52:33.616Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:53:33.743Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:53:34.393Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:53:34.393Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:53:34.393Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:54:34.409Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:54:34.962Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:54:34.962Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:54:34.962Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:55:35.118Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:55:35.626Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:55:35.627Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:55:35.627Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:56:35.877Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:56:36.379Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:56:36.380Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:56:36.380Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:57:36.452Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:57:36.986Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:57:36.986Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:57:36.986Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:58:37.098Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:58:37.738Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:58:37.738Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:58:37.738Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T21:59:37.752Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:59:38.282Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:59:38.282Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T21:59:38.282Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:00:38.444Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:00:38.959Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:00:38.960Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:00:38.960Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:01:39.134Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:01:39.663Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:01:39.663Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:01:39.663Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:02:39.847Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:02:40.362Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:02:40.362Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:02:40.362Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:03:40.487Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:03:40.952Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:03:40.953Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:03:40.953Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:04:41.144Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:04:41.651Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:04:41.652Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:04:41.652Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:05:41.872Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:05:42.381Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:05:42.381Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:05:42.381Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:06:42.632Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:06:43.142Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:06:43.142Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:06:43.142Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:07:43.216Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:07:43.733Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:07:43.733Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:07:43.733Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:08:43.876Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:08:44.389Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:08:44.389Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:08:44.389Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:09:44.563Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:09:45.096Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:09:45.096Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:09:45.096Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:10:45.262Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:10:45.786Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:10:45.786Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:10:45.786Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:11:45.883Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:11:46.482Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:11:46.482Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:11:46.482Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:12:46.657Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:12:47.162Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:12:47.163Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:12:47.163Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:13:47.337Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:13:47.843Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:13:47.843Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:13:47.843Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:14:47.998Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:14:48.507Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:14:48.507Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:14:48.507Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:15:48.643Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:15:49.144Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:15:49.145Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:15:49.145Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:16:49.328Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:16:50.023Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:16:50.023Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:16:50.023Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:17:49.991Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:17:50.521Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:17:50.522Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:17:50.522Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:18:50.666Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:18:51.226Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:18:51.226Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:18:51.226Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:19:51.363Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:19:51.907Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:19:51.907Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:19:51.907Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:20:52.178Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:20:52.710Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:20:52.710Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:20:52.711Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:21:53.105Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:21:53.670Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:21:53.670Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:21:53.670Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:22:53.858Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:22:54.383Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:22:54.383Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:22:54.383Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:23:54.669Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:23:55.193Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:23:55.193Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:23:55.193Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:24:55.415Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:24:56.132Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:24:56.132Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:24:56.132Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:25:56.117Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:25:56.608Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:25:56.608Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:25:56.608Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:26:56.810Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:26:57.360Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:26:57.360Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:26:57.360Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:27:57.587Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:27:58.097Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:27:58.097Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:27:58.097Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:28:58.321Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:28:58.824Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:28:58.824Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:28:58.824Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:29:59.138Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:29:59.767Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:29:59.768Z] [stderr] warning ../../package.json: No license field
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.1
-
-No files matching the pattern "src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts" were found.
-Please check for typing mistakes in the pattern.
-
-error Command failed with exit code 2.
-
-[2026-01-12T22:29:59.768Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
-[2026-01-12T22:30:59.958Z] [stdout] Starting command: yarn eslint src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:31:00.232Z] [stdout] info If you think this is a bug, please open a bug report with the information provided in "/Users/adam/Code/testeranto/yarn-error.log".
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:31:00.232Z] [stderr] error An unexpected error occurred: "/Users/adam/Code/testeranto/package.json: Expected double-quoted property name in JSON at position 826".
-
-[2026-01-12T22:31:00.233Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error
+[2026-01-13T00:54:19.328Z] [stderr] Process allTests-node-Calculator.test-0 completed with non-critical error

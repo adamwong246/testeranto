@@ -2,7 +2,7 @@ import { golangDockerComposeFile } from "../runtimes/golang/docker";
 import { nodeDockerComposeFile } from "../runtimes/node/docker";
 import { pythonDockerComposeFile } from "../runtimes/python/docker";
 import { webDockerCompose } from "../runtimes/web/docker";
-import aiderPoolService from "./aiderPoolService";
+import aiderPoolService from "../aider/docker";
 // import chromiumService from "./chromiumService";
 import fs from "fs";
 import yaml from "js-yaml";
@@ -216,11 +216,6 @@ export async function generateServices(
   error: (...args: any[]) => void
 ): Promise<Record<string, any>> {
   const services: any = {};
-
-  // Add Aider Pool service
-  services["aider-pool"] = {
-    ...aiderPoolService,
-  };
 
   // Ensure all services use the same network configuration
   for (const serviceName in services) {

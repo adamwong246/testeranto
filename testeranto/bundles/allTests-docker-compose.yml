@@ -1,27 +1,5 @@
 version: '3.8'
 services:
-  aider-pool:
-    image: paulgauthier/aider-full:latest
-    restart: unless-stopped
-    environment:
-      PYTHONUNBUFFERED: '1'
-      AIDER_POOL_HOST: 0.0.0.0
-      AIDER_POOL_PORT: '8765'
-      DEEPSEEK_API_KEY: sk-44ac90c2cca746e2b152dd3f97cbf36c
-      GIT_AUTHOR_NAME: Testeranto Bot
-      GIT_AUTHOR_EMAIL: bot@testeranto.local
-      GIT_COMMITTER_NAME: Testeranto Bot
-      GIT_COMMITTER_EMAIL: bot@testeranto.local
-    networks:
-      - default
-    volumes:
-      - /Users/adam/Code/testeranto:/workspace
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /Users/adam/Code/testeranto/.aider.conf.yml:/workspace/.aider.conf.yml:ro
-    working_dir: /workspace
-    ports:
-      - '8765:8765'
-      - 9000-9100:9000-9100
   node-builder:
     build:
       context: /Users/adam/Code/testeranto

@@ -1,557 +1,620 @@
-[2026-01-12T21:47:09.278Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:10.127Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:15.235Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:16.196Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:18.076Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:20.178Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:23.323Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:26.778Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:10.127Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:26.778Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:10.127Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:47:18.073Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:18.901Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:26.778Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:27.349Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:28.014Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:18.901Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:28.014Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:18.901Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:47:27.081Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:27.927Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:28.014Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:29.317Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:27.927Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:29.318Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:27.927Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:47:28.551Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:29.361Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:29.318Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:30.678Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:29.361Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:30.680Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:29.361Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:47:36.925Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:37.738Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:30.680Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:31.666Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:37.739Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:31.666Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:37.739Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:47:45.649Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:46.448Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:31.666Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:32.030Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:32.743Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:46.448Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:32.744Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:46.448Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:47:54.826Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:47:55.654Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:32.744Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:35.314Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:47:55.654Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:35.315Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:47:55.654Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:48:13.399Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:48:14.272Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:35.315Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:39.371Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:42.567Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:48:14.272Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:42.567Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:48:14.272Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:48:39.653Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:48:40.535Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:42.567Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:53:52.953Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:53:56.125Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:48:40.535Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:53:56.125Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:48:40.535Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:49:31.601Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:49:32.496Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
+[2026-01-13T00:53:56.125Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:54:19.328Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+[2026-01-13T00:54:22.439Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+example/Calculator.test.adapter.ts(8,3): error TS2322: Type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<() => Calculator>' is not assignable to type '(subject: typeof Calculator, initializer: (c?: any) => () => Calculator, testResource: ITestResourceConfiguration, initialValues: any) => Promise<Calculator>'.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+example/Calculator.test.adapter.ts(44,3): error TS2322: Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+example/Calculator.test.implementation.ts(8,5): error TS2322: Type '{ description: string; }' is not assignable to type 'string'.
+example/Calculator.test.ts(1,26): error TS2307: Cannot find module '../src/lib/tiposkripto/Analyzer' or its corresponding type declarations.
+node_modules/@types/react-transition-group/TransitionGroup.d.ts(1,34): error TS2305: Module '"react"' has no exported member 'JSX'.
+node_modules/@types/react/index.d.ts(41,53): error TS2307: Cannot find module 'scheduler/tracing' or its corresponding type declarations.
+src/CoreTypes.ts(1,44): error TS2307: Cannot find module './tiposkripto' or its corresponding type declarations.
+src/CoreTypes.ts(2,27): error TS2307: Cannot find module './tiposkripto/BaseSuite' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(1,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseGiven.ts(54,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(103,10): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(124,12): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(130,41): error TS2802: Type 'ArrayIterator<[number, any]>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+src/lib/tiposkripto/BaseGiven.ts(142,16): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseGiven.ts(153,20): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseGiven.ts(156,14): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(2,43): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseSuite.ts(66,26): error TS2339: Property 'name' does not exist on type 'never'.
+src/lib/tiposkripto/BaseSuite.ts(136,32): error TS2554: Expected 3 arguments, but got 2.
+src/lib/tiposkripto/BaseSuite.ts(146,34): error TS2554: Expected 6 arguments, but got 5.
+src/lib/tiposkripto/BaseSuite.ts(154,29): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(160,19): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(161,31): error TS2551: Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+src/lib/tiposkripto/BaseSuite.ts(176,12): error TS2554: Expected 2 arguments, but got 1.
+src/lib/tiposkripto/BaseThen.ts(2,34): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/BaseTiposkripto.ts(64,10): error TS2339: Property 'testResourceConfiguration' does not exist on type 'BaseTiposkripto<I, O, M>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(90,19): error TS2416: Property 'setup' in type '(Anonymous class)' is not assignable to the same property in base type 'BaseSuite<I, O>'.
+  Type '(s: I["iinput"], tr: ITestResourceConfiguration) => Promise<I["isubject"]>' is not assignable to type '(s: I["iinput"], artifactory: ITestArtifactory, tr: ITestResourceConfiguration) => Promise<I["isubject"]>'.
+    Types of parameters 'tr' and 'artifactory' are incompatible.
+      Type 'ITestArtifactory' is not assignable to type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(190,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/tiposkripto/BaseTiposkripto.ts(211,17): error TS2345: Argument of type 'ITestResourceConfiguration | { name: string; fs: string; ports: undefined[]; timeout: number; retries: number; environment: {}; }' is not assignable to parameter of type 'ITestResourceConfiguration'.
+  Object literal may only specify known properties, and 'timeout' does not exist in type 'ITestResourceConfiguration'.
+src/lib/tiposkripto/BaseTiposkripto.ts(274,10): error TS2554: Expected 1 arguments, but got 0.
+src/lib/tiposkripto/index.ts(27,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/index.ts(34,12): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/tiposkripto/Node.ts(1,8): error TS1192: Module '"fs"' has no default export.
+src/lib/tiposkripto/Node.ts(31,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/tiposkripto/Tiposkripto.ts(7,8): error TS2307: Cannot find module '../CoreTypes' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(10,26): error TS2307: Cannot find module './Analyzer' or its corresponding type declarations.
+src/lib/tiposkripto/Tiposkripto.ts(17,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(19,12): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+src/lib/tiposkripto/Tiposkripto.ts(29,28): error TS2552: Cannot find name 'ITestResourceRequest'. Did you mean 'ITTestResourceRequest'?
+src/lib/tiposkripto/Tiposkripto.ts(30,31): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Tiposkripto.ts(43,35): error TS2304: Cannot find name 'ITestResourceConfiguration'.
+src/lib/tiposkripto/Web.ts(38,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-[2026-01-12T21:49:32.497Z] [stderr] warning ../../package.json: No license field
+[2026-01-13T00:54:22.439Z] [stderr] warning ../../package.json: No license field
 error Command failed with exit code 2.
 
-[2026-01-12T21:49:32.497Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:50:32.300Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:50:33.216Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:50:33.216Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:50:33.216Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:51:32.956Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:51:33.853Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:51:33.853Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:51:33.853Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:52:33.617Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:52:34.514Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:52:34.514Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:52:34.514Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:53:34.393Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:53:35.267Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:53:35.267Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:53:35.267Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:54:34.963Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:54:35.885Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:54:35.885Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:54:35.885Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:55:35.628Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:55:36.540Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:55:36.540Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:55:36.540Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:56:36.380Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:56:37.265Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:56:37.266Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:56:37.266Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:57:36.987Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:57:37.886Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:57:37.886Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:57:37.886Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:58:37.739Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:58:38.591Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:58:38.591Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:58:38.592Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T21:59:38.283Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T21:59:39.169Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T21:59:39.169Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T21:59:39.169Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:00:38.960Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:00:39.827Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:00:39.828Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:00:39.828Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:01:39.664Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:01:40.563Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:01:40.563Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:01:40.563Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:02:40.363Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:02:41.276Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:02:41.276Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:02:41.276Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:03:40.953Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:03:41.850Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:03:41.850Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:03:41.850Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:04:41.652Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:04:42.562Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:04:42.562Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:04:42.562Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:05:42.382Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:05:43.254Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:05:43.254Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:05:43.254Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:06:43.143Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:06:44.024Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:06:44.024Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:06:44.024Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:07:43.734Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:07:44.588Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:07:44.588Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:07:44.588Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:08:44.389Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:08:45.280Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:08:45.280Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:08:45.281Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:09:45.097Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:09:46.043Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:09:46.043Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:09:46.044Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:10:45.789Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:10:46.667Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:10:46.667Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:10:46.667Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:11:46.482Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:11:47.351Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:11:47.351Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:11:47.351Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:12:47.163Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:12:48.017Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:12:48.017Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:12:48.017Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:13:47.843Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:13:48.689Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:13:48.689Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:13:48.689Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:14:48.507Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:14:49.372Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:14:49.372Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:14:49.372Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:15:49.145Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:15:49.996Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:15:49.996Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:15:49.996Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:16:50.024Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:16:51.024Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:16:51.024Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:16:51.024Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:17:50.522Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:17:51.486Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:17:51.486Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:17:51.486Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:18:51.229Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:18:52.147Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:18:52.147Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:18:52.147Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:19:51.908Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:19:52.846Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:19:52.847Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:19:52.847Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:20:52.711Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:20:53.721Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:20:53.721Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:20:53.721Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:21:53.671Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:21:54.734Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:21:54.734Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:21:54.734Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:22:54.384Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:22:55.382Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:22:55.383Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:22:55.383Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:23:55.194Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:23:56.219Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:23:56.219Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:23:56.219Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:24:56.133Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:24:57.031Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:24:57.031Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:24:57.031Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:25:56.609Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:25:57.526Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:25:57.526Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:25:57.526Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:26:57.361Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:26:58.264Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:26:58.264Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:26:58.264Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:27:58.098Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:27:59.011Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:27:59.012Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:27:59.012Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:28:58.825Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:28:59.821Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:28:59.822Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:28:59.822Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:29:59.768Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:30:00.715Z] [stdout] $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-error TS6053: File 'src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:30:00.716Z] [stderr] warning ../../package.json: No license field
-error Command failed with exit code 2.
-
-[2026-01-12T22:30:00.716Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
-[2026-01-12T22:31:00.233Z] [stdout] Starting command: yarn tsc --noEmit src/lib/tiposkripto/Tiposkripto.ts,example/Calculator.ts,example/Calculator.test.adapter.ts,example/Calculator.test.implementation.ts,example/Calculator.test.specification.ts,example/Calculator.test.ts
-[2026-01-12T22:31:00.375Z] [stdout] info If you think this is a bug, please open a bug report with the information provided in "/Users/adam/Code/testeranto/yarn-error.log".
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-[2026-01-12T22:31:00.375Z] [stderr] error An unexpected error occurred: "/Users/adam/Code/testeranto/package.json: Expected double-quoted property name in JSON at position 826".
-
-[2026-01-12T22:31:00.375Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error
+[2026-01-13T00:54:22.439Z] [stderr] Process allTests-node-Calculator.test-1 completed with non-critical error

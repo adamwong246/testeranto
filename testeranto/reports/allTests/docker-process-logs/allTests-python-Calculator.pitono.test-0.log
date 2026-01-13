@@ -1,8 +1,21 @@
-[2026-01-12T21:47:06.059Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:47:06.452Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:16.287Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:16.778Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
 example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
 
-[2026-01-12T21:47:06.452Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:16.779Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T00:53:16.779Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
+[2026-01-13T00:53:18.526Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:18.847Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
+example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
+
+[2026-01-13T00:53:18.847Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
 
     at genericNodeError (node:internal/errors:984:15)
     at wrappedFn (node:internal/errors:538:14)
@@ -12,12 +25,12 @@ example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module na
     at Socket.<anonymous> (node:internal/child_process:456:11)
     at Socket.emit (node:events:524:28)
     at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:47:06.452Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:47:08.502Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:47:08.737Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:18.848Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
+[2026-01-13T00:53:22.831Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:23.348Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
 example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
 
-[2026-01-12T21:47:08.737Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:23.349Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
 
     at genericNodeError (node:internal/errors:984:15)
     at wrappedFn (node:internal/errors:538:14)
@@ -25,38 +38,12 @@ example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module na
     at ChildProcess.emit (node:events:524:28)
     at maybeClose (node:internal/child_process:1104:16)
     at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:47:08.737Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:47:16.702Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:47:16.878Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:23.349Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
+[2026-01-13T00:53:29.799Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:30.039Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
 example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
 
-[2026-01-12T21:47:16.878Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:47:16.878Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:47:26.147Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:47:26.310Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:47:26.310Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:47:26.310Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:47:35.586Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:47:35.756Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:47:35.756Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:30.040Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
 
     at genericNodeError (node:internal/errors:984:15)
     at wrappedFn (node:internal/errors:538:14)
@@ -66,12 +53,12 @@ example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module na
     at Socket.<anonymous> (node:internal/child_process:456:11)
     at Socket.emit (node:events:524:28)
     at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:47:35.756Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:47:44.865Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:47:45.037Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:30.040Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
+[2026-01-13T00:53:42.946Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:43.146Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
 example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
 
-[2026-01-12T21:47:45.038Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:43.147Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
 
     at genericNodeError (node:internal/errors:984:15)
     at wrappedFn (node:internal/errors:538:14)
@@ -79,12 +66,12 @@ example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module na
     at ChildProcess.emit (node:events:524:28)
     at maybeClose (node:internal/child_process:1104:16)
     at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:47:45.038Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:48:03.204Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:48:03.462Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:53:43.147Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
+[2026-01-13T00:54:08.827Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:54:09.106Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
 example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
 
-[2026-01-12T21:48:03.462Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
+[2026-01-13T00:54:09.106Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
 
     at genericNodeError (node:internal/errors:984:15)
     at wrappedFn (node:internal/errors:538:14)
@@ -92,595 +79,4 @@ example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module na
     at ChildProcess.emit (node:events:524:28)
     at maybeClose (node:internal/child_process:1104:16)
     at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:48:03.462Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:48:36.143Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:48:36.402Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:48:36.402Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:48:36.402Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:49:27.520Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:49:27.806Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:49:27.806Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:49:27.806Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:50:27.735Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:50:28.014Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:50:28.014Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:50:28.014Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:51:27.920Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:51:28.226Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:51:28.226Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:51:28.226Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:52:28.093Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:52:28.404Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:52:28.404Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:52:28.404Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:53:28.269Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:53:28.547Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:53:28.547Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:53:28.547Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:54:28.437Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:54:28.748Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:54:28.748Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:54:28.748Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:55:28.642Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:55:28.951Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:55:28.951Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:55:28.951Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:56:28.801Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:56:29.112Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:56:29.112Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:56:29.112Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:57:28.987Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:57:29.290Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:57:29.290Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T21:57:29.290Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:58:29.137Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:58:29.381Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:58:29.381Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:58:29.381Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T21:59:29.306Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T21:59:29.617Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T21:59:29.617Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T21:59:29.617Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:00:29.468Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:00:29.775Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:00:29.775Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:00:29.775Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:01:29.674Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:01:29.971Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:01:29.971Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:01:29.971Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:02:29.836Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:02:30.145Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:02:30.145Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:02:30.145Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:03:30.015Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:03:30.289Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:03:30.289Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:03:30.289Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:04:30.153Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:04:30.457Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:04:30.457Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:04:30.457Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:05:30.318Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:05:30.635Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:05:30.635Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:05:30.635Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:06:30.486Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:06:30.790Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:06:30.790Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:06:30.790Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:07:30.647Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:07:30.950Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:07:30.950Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:07:30.950Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:08:30.818Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:08:31.083Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:08:31.083Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:08:31.084Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:09:30.990Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:09:31.256Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:09:31.256Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:09:31.256Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:10:31.171Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:10:31.469Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:10:31.469Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:10:31.469Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:11:31.334Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:11:31.607Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:11:31.607Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:11:31.607Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:12:31.495Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:12:31.788Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:12:31.788Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:12:31.788Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:13:31.665Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:13:31.966Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:13:31.966Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:13:31.966Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:14:31.836Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:14:32.125Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:14:32.126Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:14:32.126Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:15:32.017Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:15:32.275Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:15:32.275Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:15:32.275Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:16:32.170Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:16:32.468Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:16:32.468Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:16:32.469Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:17:32.317Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:17:32.631Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:17:32.631Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:17:32.632Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:18:32.514Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:18:32.785Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:18:32.785Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:18:32.785Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:19:33.922Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:19:34.236Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:19:34.236Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:19:34.236Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:20:37.931Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:20:38.225Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:20:38.225Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:20:38.225Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:21:39.449Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:21:39.738Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:21:39.739Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:21:39.739Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:22:41.036Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:22:41.418Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:22:41.418Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:22:41.418Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:23:42.372Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:23:42.714Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:23:42.714Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:23:42.714Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:24:44.126Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:24:44.445Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:24:44.445Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:24:44.445Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:25:45.494Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:25:45.814Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:25:45.815Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at Socket.<anonymous> (node:internal/child_process:456:11)
-    at Socket.emit (node:events:524:28)
-    at Pipe.<anonymous> (node:net:343:12)
-[2026-01-12T22:25:45.815Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:26:47.094Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:26:47.389Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:26:47.389Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:26:47.390Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:27:48.689Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:27:49.028Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:27:49.028Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:27:49.028Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:28:49.927Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:28:50.272Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:28:50.272Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:28:50.272Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:29:51.567Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:29:51.847Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:29:51.848Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:29:51.848Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
-[2026-01-12T22:30:53.259Z] [stdout] Starting command: pylint example/Calculator.pitono.test.py,example/Calculator.py
-[2026-01-12T22:30:53.574Z] [stdout] ************* Module example/Calculator.pitono.test.py,example/Calculator.py
-example/Calculator.pitono.test.py,example/Calculator.py:1:0: F0001: No module named example/Calculator.pitono.test.py,example/Calculator.py (fatal)
-
-[2026-01-12T22:30:53.574Z] [stderr] Error: Command failed: pylint example/Calculator.pitono.test.py,example/Calculator.py
-
-    at genericNodeError (node:internal/errors:984:15)
-    at wrappedFn (node:internal/errors:538:14)
-    at ChildProcess.exithandler (node:child_process:422:12)
-    at ChildProcess.emit (node:events:524:28)
-    at maybeClose (node:internal/child_process:1104:16)
-    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
-[2026-01-12T22:30:53.574Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error
+[2026-01-13T00:54:09.107Z] [stderr] Process allTests-python-Calculator.pitono.test-0 completed with non-critical error

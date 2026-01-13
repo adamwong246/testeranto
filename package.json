@@ -24,6 +24,7 @@
     "onView:testerantoView",
     "onCommand:testeranto.showTests",
     "onCommand:testeranto.runTest",
+    "onCommand:testeranto.aider",
     "onCommand:testeranto.openFile",
     "onCommand:testeranto.openConfig",
     "onCommand:testeranto.refresh"
@@ -35,8 +36,8 @@
         "title": "Testeranto: Show Tests"
       },
       {
-        "command": "testeranto.runTest",
-        "title": "Run Test"
+        "command": "testeranto.aider",
+        "title": "Aider"
       },
       {
         "command": "testeranto.openFile",
@@ -63,6 +64,11 @@
       "view/item/context": [
         {
           "command": "testeranto.runTest",
+          "when": "view == testerantoView && viewItem == testItem",
+          "group": "inline"
+        },
+        {
+          "command": "testeranto.aider",
           "when": "view == testerantoView && viewItem == testItem",
           "group": "inline"
         },

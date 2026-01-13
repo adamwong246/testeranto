@@ -1,30 +1,34 @@
+import {
+  __require
+} from "./chunk-Y6FXYEAI.mjs";
+
 // src/testeranto.ts
-import path13 from "path";
+import path12 from "path";
 
 // src/server/serverClasees/Server.ts
 import readline from "readline";
 import { default as ansiC3 } from "ansi-colors";
 
 // src/server/serverClasees/Server_MetafileWatcher.ts
-import fs9 from "fs";
+import fs8 from "fs";
 import { default as ansiC2 } from "ansi-colors";
-import path12 from "path";
+import path11 from "path";
 import chokidar from "chokidar";
 
 // src/server/serverClasees/Server_ProcessManager.ts
 import { default as ansiC } from "ansi-colors";
 import Queue from "queue";
-import fs8 from "fs";
-import path11 from "path";
-
-// src/server/serverClasees/Server_FS.ts
 import fs7 from "fs";
 import path10 from "path";
 
+// src/server/serverClasees/Server_FS.ts
+import fs6 from "fs";
+import path9 from "path";
+
 // src/server/serverClasees/Server_HTTP.ts
-import fs4 from "fs";
+import fs3 from "fs";
 import http from "http";
-import path6 from "path";
+import path5 from "path";
 
 // src/server/serverClasees/utils/Server_TCP_constants.ts
 import path from "path";
@@ -62,8 +66,8 @@ var CONTENT_TYPES = {
 import { WebSocketServer, WebSocket } from "ws";
 
 // src/server/serverClasees/Server_DockerCompose.ts
-import fs3 from "fs";
-import path4 from "path";
+import fs2 from "fs";
+import path3 from "path";
 import { exec } from "child_process";
 import { promisify } from "util";
 
@@ -438,169 +442,10 @@ RUN yarn install
 
 `;
 
-// src/server/aider/configParser.ts
-import fs from "fs";
-import path2 from "path";
-import yaml from "js-yaml";
-function parseAiderConfig() {
-  console.log("parseAiderConfig: Looking for .aider.conf.yml");
-  const configPath = path2.join(process.cwd(), ".aider.conf.yml");
-  if (!fs.existsSync(configPath)) {
-    console.log(`No .aider.conf.yml file found at ${configPath}`);
-    return null;
-  }
-  try {
-    console.log(`Found .aider.conf.yml at ${configPath}`);
-    const fileContent = fs.readFileSync(configPath, "utf8");
-    const cleanedContent = fileContent.replace(/\r\n/g, "\n").replace(/\t/g, "  ").replace(/[^\x20-\x7E\n\r]/g, "").trim();
-    const config2 = yaml.load(cleanedContent, { json: true });
-    if (!config2) {
-      console.log("Config file is empty or contains only comments");
-      return null;
-    }
-    return config2;
-  } catch (error) {
-    console.error(`Failed to parse .aider.conf.yml:`, error.message);
-    try {
-      const lines = fs.readFileSync(configPath, "utf8").split("\n");
-      console.error("File contents (line by line):");
-      lines.forEach((line, index) => {
-        console.error(`Line ${index + 1}: "${line}"`);
-        const hasInvalidChars = /[^\x20-\x7E]/.test(line);
-        if (hasInvalidChars) {
-          console.error(
-            `  WARNING: Line ${index + 1} contains non-printable characters`
-          );
-        }
-      });
-    } catch (readError) {
-      console.error(
-        "Could not read file for line-by-line analysis:",
-        readError
-      );
-    }
-    return null;
-  }
-}
-function extractApiKeys(config2) {
-  const apiKeys = {};
-  if (!config2) {
-    console.log("No config provided to extractApiKeys");
-    return apiKeys;
-  }
-  if (typeof config2["api-key"] === "string") {
-    const [provider, key] = config2["api-key"].split("=");
-    if (provider && key) {
-      apiKeys[provider.trim()] = key.trim();
-    }
-  } else if (Array.isArray(config2["api-key"])) {
-    console.log(`Found api-key array with ${config2["api-key"].length} entries`);
-    config2["api-key"].forEach((keyEntry, index) => {
-      const [provider, key] = keyEntry.split("=");
-      if (provider && key) {
-        apiKeys[provider.trim()] = key.trim();
-      } else {
-        console.log(`Could not parse api-key entry: ${keyEntry}`);
-      }
-    });
-  } else if (config2["api-key"]) {
-    console.log(
-      `api-key has unexpected type: ${typeof config2["api-key"]}, value: ${config2["api-key"]}`
-    );
-  }
-  if (config2["openai-api-key"]) {
-    apiKeys["openai"] = config2["openai-api-key"];
-  }
-  if (config2["anthropic-api-key"]) {
-    apiKeys["anthropic"] = config2["anthropic-api-key"];
-  }
-  console.log(
-    `Extracted API keys for providers: ${Object.keys(apiKeys).join(", ")}`
-  );
-  return apiKeys;
-}
-function getApiKeyEnvironmentVariables(config2) {
-  const apiKeys = extractApiKeys(config2);
-  const envVars = {};
-  const providerToEnvVar = {
-    openai: "OPENAI_API_KEY",
-    anthropic: "ANTHROPIC_API_KEY",
-    deepseek: "DEEPSEEK_API_KEY",
-    google: "GOOGLE_API_KEY",
-    groq: "GROQ_API_KEY",
-    mistral: "MISTRAL_API_KEY",
-    cohere: "COHERE_API_KEY",
-    together: "TOGETHER_API_KEY"
-  };
-  for (const [provider, key] of Object.entries(apiKeys)) {
-    const envVarName = providerToEnvVar[provider.toLowerCase()] || `${provider.toUpperCase()}_API_KEY`;
-    envVars[envVarName] = key;
-    console.log(
-      `Setting environment variable ${envVarName} for provider ${provider}`
-    );
-  }
-  return envVars;
-}
-
-// src/server/docker/aiderPoolService.ts
-function loadAiderApiKeys() {
-  try {
-    console.log("Attempting to load API keys from .aider.conf.yml...");
-    const config2 = parseAiderConfig();
-    if (config2) {
-      const envVars = getApiKeyEnvironmentVariables(config2);
-      if (Object.keys(envVars).length > 0) {
-        console.log("Successfully loaded API keys from .aider.conf.yml");
-        return envVars;
-      } else {
-        console.log("No API keys found in .aider.conf.yml");
-      }
-    } else {
-      console.log("Could not parse .aider.conf.yml or file not found");
-    }
-  } catch (error) {
-    console.error("Failed to load API keys from .aider.conf.yml:", error);
-  }
-  return {};
-}
-var aiderPoolService_default = {
-  image: "paulgauthier/aider-full:latest",
-  restart: "unless-stopped",
-  environment: {
-    PYTHONUNBUFFERED: "1",
-    AIDER_POOL_HOST: "0.0.0.0",
-    AIDER_POOL_PORT: "8765",
-    // Load API keys from .aider.conf.yml (will be empty if parsing fails)
-    ...loadAiderApiKeys(),
-    GIT_AUTHOR_NAME: "Testeranto Bot",
-    GIT_AUTHOR_EMAIL: "bot@testeranto.local",
-    GIT_COMMITTER_NAME: "Testeranto Bot",
-    GIT_COMMITTER_EMAIL: "bot@testeranto.local"
-  },
-  networks: ["default"],
-  volumes: [
-    `${process.cwd()}:/workspace`,
-    // "node_modules:/workspace/node_modules",
-    "/var/run/docker.sock:/var/run/docker.sock",
-    // Mount the aider config file so aider can read it directly if needed
-    `${process.cwd()}/.aider.conf.yml:/workspace/.aider.conf.yml:ro`
-  ],
-  working_dir: "/workspace",
-  ports: ["8765:8765", "9000-9100:9000-9100"]
-  // command: [
-  //   "sh",
-  //   "-c",
-  //   `
-  //   pwd
-  //   ls -al
-  // `,
-  // ],
-};
-
 // src/server/docker/index.ts
-import fs2 from "fs";
-import yaml2 from "js-yaml";
-import path3 from "path";
+import fs from "fs";
+import yaml from "js-yaml";
+import path2 from "path";
 var BaseCompose = (services) => {
   return {
     version: "3.8",
@@ -618,14 +463,14 @@ var BaseCompose = (services) => {
   };
 };
 async function writeComposeFile(services, testsName2, composeDir, error) {
-  const composeFilePath = path3.join(
+  const composeFilePath = path2.join(
     composeDir,
     `${testsName2}-docker-compose.yml`
   );
   try {
-    fs2.writeFileSync(
+    fs.writeFileSync(
       composeFilePath,
-      yaml2.dump(BaseCompose(services), {
+      yaml.dump(BaseCompose(services), {
         lineWidth: -1,
         noRefs: true
       })
@@ -653,21 +498,21 @@ function generateDockerfileContent(runtime, config2) {
 async function generateRuntimeDockerfiles(config2, runtimes2, composeDir, log, error) {
   log(`Generating Dockerfiles for runtimes: ${runtimes2.join(", ")}`);
   for (const runtime of runtimes2) {
-    const runtimeDockerfilePath = path3.join(
+    const runtimeDockerfilePath = path2.join(
       composeDir,
       "allTests",
       runtime,
       `${runtime}.Dockerfile`
     );
     log(
-      `Creating directory for ${runtime} Dockerfile: ${path3.dirname(
+      `Creating directory for ${runtime} Dockerfile: ${path2.dirname(
         runtimeDockerfilePath
       )}`
     );
-    fs2.mkdirSync(path3.dirname(runtimeDockerfilePath), { recursive: true });
+    fs.mkdirSync(path2.dirname(runtimeDockerfilePath), { recursive: true });
     log(`Generating ${runtime} Dockerfile at: ${runtimeDockerfilePath}`);
     const dockerfileContent = generateDockerfileContent(runtime, config2);
-    fs2.writeFileSync(runtimeDockerfilePath, dockerfileContent);
+    fs.writeFileSync(runtimeDockerfilePath, dockerfileContent);
     log(`Generated ${runtime} Dockerfile successfully`);
   }
 }
@@ -680,9 +525,9 @@ async function setupDockerCompose(config2, testsName2, options) {
     testsName2 = "allTests";
     log(`WARNING: testsName was empty, using default: ${testsName2}`);
   }
-  const composeDir = path3.join(process.cwd(), "testeranto", "bundles");
+  const composeDir = path2.join(process.cwd(), "testeranto", "bundles");
   try {
-    fs2.mkdirSync(composeDir, { recursive: true });
+    fs.mkdirSync(composeDir, { recursive: true });
     await generateRuntimeDockerfiles(config2, runtimes, composeDir, log, error);
     const services = await generateServices(
       config2,
@@ -699,9 +544,6 @@ async function setupDockerCompose(config2, testsName2, options) {
 }
 async function generateServices(config2, runtimes2, webSocketPort, log, error) {
   const services = {};
-  services["aider-pool"] = {
-    ...aiderPoolService_default
-  };
   for (const serviceName in services) {
     services[serviceName].networks = ["default"];
   }
@@ -869,13 +711,13 @@ var Server_DockerCompose = class extends Server_Base {
     this.serviceLogStreams = /* @__PURE__ */ new Map();
     this.logCaptureInterval = null;
     this.cwd = process.cwd();
-    this.dockerComposeYml = path4.join(
+    this.dockerComposeYml = path3.join(
       "testeranto",
       "bundles",
       `${this.projectName}-docker-compose.yml`
     );
     this.composeDir = process.cwd();
-    this.composeFile = path4.join(
+    this.composeFile = path3.join(
       this.composeDir,
       "testeranto",
       "bundles",
@@ -900,14 +742,14 @@ var Server_DockerCompose = class extends Server_Base {
     await this.startServices();
   }
   async startServices() {
-    if (!fs3.existsSync(this.composeFile)) {
+    if (!fs2.existsSync(this.composeFile)) {
       console.error(`Docker-compose file not found: ${this.composeFile}`);
       console.error(`Current directory: ${process.cwd()}`);
-      const bundlesDir = path4.join(process.cwd(), "testeranto", "bundles");
-      if (fs3.existsSync(bundlesDir)) {
+      const bundlesDir = path3.join(process.cwd(), "testeranto", "bundles");
+      if (fs2.existsSync(bundlesDir)) {
         console.error(`Contents of ${bundlesDir}:`);
         try {
-          const files = fs3.readdirSync(bundlesDir);
+          const files = fs2.readdirSync(bundlesDir);
           console.error(files);
         } catch (e) {
           console.error(`Error reading directory: ${e}`);
@@ -975,7 +817,7 @@ var Server_DockerCompose = class extends Server_Base {
     }
   }
   async captureBuildLogs() {
-    const buildLogPath = path4.join(
+    const buildLogPath = path3.join(
       process.cwd(),
       "testeranto",
       "reports",
@@ -983,11 +825,11 @@ var Server_DockerCompose = class extends Server_Base {
       "docker-logs",
       "docker-compose-build.log"
     );
-    const buildLogDir = path4.dirname(buildLogPath);
-    if (!fs3.existsSync(buildLogDir)) {
-      fs3.mkdirSync(buildLogDir, { recursive: true });
+    const buildLogDir = path3.dirname(buildLogPath);
+    if (!fs2.existsSync(buildLogDir)) {
+      fs2.mkdirSync(buildLogDir, { recursive: true });
     }
-    const buildLogStream = fs3.createWriteStream(buildLogPath, { flags: "a" });
+    const buildLogStream = fs2.createWriteStream(buildLogPath, { flags: "a" });
     let header = `=== Docker Compose Build Logs ===
 `;
     header += `Started at: ${(/* @__PURE__ */ new Date()).toISOString()}
@@ -1092,18 +934,18 @@ Unexpected error during build: ${error.message}
     }
   }
   async createLogFileForService(serviceName) {
-    const reportsDir = path4.join(
+    const reportsDir = path3.join(
       process.cwd(),
       "testeranto",
       "reports",
       this.projectName,
       "docker-logs"
     );
-    if (!fs3.existsSync(reportsDir)) {
-      fs3.mkdirSync(reportsDir, { recursive: true });
+    if (!fs2.existsSync(reportsDir)) {
+      fs2.mkdirSync(reportsDir, { recursive: true });
     }
-    const logFilePath = path4.join(reportsDir, `${serviceName}.log`);
-    const writeStream = fs3.createWriteStream(logFilePath, { flags: "a" });
+    const logFilePath = path3.join(reportsDir, `${serviceName}.log`);
+    const writeStream = fs2.createWriteStream(logFilePath, { flags: "a" });
     let header = `=== Docker Logs for service: ${serviceName} ===
 `;
     header += `Started at: ${(/* @__PURE__ */ new Date()).toISOString()}
@@ -1197,7 +1039,7 @@ Unexpected error during build: ${error.message}
       });
       if (allLogsResult.out || allLogsResult.err) {
         const timestamp = (/* @__PURE__ */ new Date()).toISOString();
-        const generalLogFile = path4.join(
+        const generalLogFile = path3.join(
           process.cwd(),
           "testeranto",
           "reports",
@@ -1205,11 +1047,11 @@ Unexpected error during build: ${error.message}
           "docker-logs",
           "docker-compose-general.log"
         );
-        const reportsDir = path4.dirname(generalLogFile);
-        if (!fs3.existsSync(reportsDir)) {
-          fs3.mkdirSync(reportsDir, { recursive: true });
+        const reportsDir = path3.dirname(generalLogFile);
+        if (!fs2.existsSync(reportsDir)) {
+          fs2.mkdirSync(reportsDir, { recursive: true });
         }
-        const writeStream = fs3.createWriteStream(generalLogFile, {
+        const writeStream = fs2.createWriteStream(generalLogFile, {
           flags: "a"
         });
         if (allLogsResult.out) {
@@ -1251,7 +1093,7 @@ Unexpected error during build: ${error.message}
   }
   async DC_down(options) {
     await this.stopLogCapture();
-    if (!fs3.existsSync(this.composeFile)) {
+    if (!fs2.existsSync(this.composeFile)) {
       console.error(`Docker compose file not found: ${this.composeFile}`);
       return {
         exitCode: 1,
@@ -1607,7 +1449,7 @@ var Server_WS = class extends Server_DockerCompose {
 };
 
 // src/server/serverClasees/utils/Server_TCP_utils.ts
-import path5 from "path";
+import path4 from "path";
 function getContentType(filePath) {
   if (filePath.endsWith(".html")) return CONTENT_TYPES.HTML;
   else if (filePath.endsWith(".js") || filePath.endsWith(".mjs"))
@@ -1724,20 +1566,20 @@ var Server_HTTP = class extends Server_WS {
     const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
     const decodedPath = decodeURIComponent(urlPath);
     const relativePath = decodedPath.startsWith("/") ? decodedPath.slice(1) : decodedPath;
-    const normalizedPath = path6.normalize(relativePath);
+    const normalizedPath = path5.normalize(relativePath);
     if (normalizedPath.includes("..")) {
       res.writeHead(403);
       res.end("Forbidden: Directory traversal not allowed");
       return;
     }
     const projectRoot = process.cwd();
-    const filePath = path6.join(projectRoot, normalizedPath);
-    if (!filePath.startsWith(path6.resolve(projectRoot))) {
+    const filePath = path5.join(projectRoot, normalizedPath);
+    if (!filePath.startsWith(path5.resolve(projectRoot))) {
       res.writeHead(403);
       res.end("Forbidden");
       return;
     }
-    fs4.stat(filePath, (err, stats) => {
+    fs3.stat(filePath, (err, stats) => {
       if (err) {
         if (err.code === "ENOENT") {
           res.writeHead(404);
@@ -1750,7 +1592,7 @@ var Server_HTTP = class extends Server_WS {
         }
       }
       if (stats.isDirectory()) {
-        fs4.readdir(filePath, (readErr, files) => {
+        fs3.readdir(filePath, (readErr, files) => {
           if (readErr) {
             res.writeHead(500);
             res.end(`Server Error: ${readErr.message}`);
@@ -1758,15 +1600,15 @@ var Server_HTTP = class extends Server_WS {
           }
           const items = files.map((file) => {
             try {
-              const stat = fs4.statSync(path6.join(filePath, file));
+              const stat = fs3.statSync(path5.join(filePath, file));
               const isDir = stat.isDirectory();
               const slash = isDir ? "/" : "";
-              return `<li><a href="${path6.join(
+              return `<li><a href="${path5.join(
                 urlPath,
                 file
               )}${slash}">${file}${slash}</a></li>`;
             } catch {
-              return `<li><a href="${path6.join(
+              return `<li><a href="${path5.join(
                 urlPath,
                 file
               )}">${file}</a></li>`;
@@ -1793,7 +1635,7 @@ var Server_HTTP = class extends Server_WS {
   }
   serveFile(filePath, res) {
     const contentType = getContentType(filePath) || CONTENT_TYPES.OCTET_STREAM;
-    fs4.readFile(filePath, (err, data) => {
+    fs3.readFile(filePath, (err, data) => {
       if (err) {
         if (err.code === "ENOENT") {
           res.writeHead(404);
@@ -1828,8 +1670,8 @@ var Server_HTTP = class extends Server_WS {
 };
 
 // src/makeHtmlTestFiles.ts
-import path7 from "path";
-import fs5 from "fs";
+import path6 from "path";
+import fs4 from "fs";
 
 // src/web.html.ts
 var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
@@ -1889,11 +1731,11 @@ var config = {
   ]),
   web: createLangConfig("example/Calculator.test.ts", [
     (x) => `yarn eslint ${x}`,
-    (x) => `yarn tsc --noEmit ${x}`
+    (x) => `yarn tsc --noEmit ${x.join(" ")}`
   ]),
   node: createLangConfig("example/Calculator.test.ts", [
     (x) => `yarn eslint ${x}`,
-    (x) => `yarn tsc --noEmit ${x}`
+    (x) => `yarn tsc --noEmit ${x.join(" ")}`
   ])
 };
 var allTests_default = config;
@@ -1913,15 +1755,15 @@ var makeHtmlTestFiles = (testsName2) => {
     const sourceDir = sourceFileSplit.slice(0, -1);
     const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
     const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-    const htmlFilePath = path7.normalize(
+    const htmlFilePath = path6.normalize(
       `${process.cwd()}/testeranto/bundles/${testsName2}/${sourceDir.join(
         "/"
       )}/${sourceFileNameMinusJs}.html`
     );
     const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
     const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-    fs5.mkdirSync(path7.dirname(htmlFilePath), { recursive: true });
-    fs5.writeFileSync(
+    fs4.mkdirSync(path6.dirname(htmlFilePath), { recursive: true });
+    fs4.writeFileSync(
       htmlFilePath,
       web_html_default(jsfilePath, htmlFilePath, cssFilePath)
     );
@@ -1930,8 +1772,8 @@ var makeHtmlTestFiles = (testsName2) => {
 };
 
 // src/makeHtmlReportFile.ts
-import path8 from "path";
-import fs6 from "fs";
+import path7 from "path";
+import fs5 from "fs";
 
 // src/htmlReportLogic.ts
 var getSecondaryEndpointsPoints2 = (config2) => {
@@ -2038,29 +1880,29 @@ var makeHtmlReportFile = (testsName2, config2) => {
       )}`
     );
     for (const runtime of applicableRuntimes) {
-      const htmlFilePath = path8.normalize(
+      const htmlFilePath = path7.normalize(
         `${process.cwd()}/testeranto/reports/${testsName2}/${sourceDir.join(
           "/"
         )}/${sourceFileNameMinusExtension}/${runtime}/index.html`
       );
-      fs6.mkdirSync(path8.dirname(htmlFilePath), { recursive: true });
-      const htmlDir = path8.dirname(htmlFilePath);
-      const reportJsPath = path8.join(
+      fs5.mkdirSync(path7.dirname(htmlFilePath), { recursive: true });
+      const htmlDir = path7.dirname(htmlFilePath);
+      const reportJsPath = path7.join(
         process.cwd(),
         "dist",
         "prebuild",
         "Report.js"
       );
-      const relativeReportJsPath = path8.relative(htmlDir, reportJsPath);
-      const relativeReportJsUrl = relativeReportJsPath.split(path8.sep).join("/");
-      const reportCssPath = path8.join(
+      const relativeReportJsPath = path7.relative(htmlDir, reportJsPath);
+      const relativeReportJsUrl = relativeReportJsPath.split(path7.sep).join("/");
+      const reportCssPath = path7.join(
         process.cwd(),
         "dist",
         "prebuild",
         "Report.css"
       );
-      const relativeReportCssPath = path8.relative(htmlDir, reportCssPath);
-      const relativeReportCssUrl = relativeReportCssPath.split(path8.sep).join("/");
+      const relativeReportCssPath = path7.relative(htmlDir, reportCssPath);
+      const relativeReportCssUrl = relativeReportCssPath.split(path7.sep).join("/");
       const htmlContent = generateHtmlContent({
         sourceFileNameMinusExtension,
         relativeReportCssUrl,
@@ -2069,36 +1911,36 @@ var makeHtmlReportFile = (testsName2, config2) => {
         sourceFilePath,
         testsName: testsName2
       });
-      fs6.writeFileSync(htmlFilePath, htmlContent);
+      fs5.writeFileSync(htmlFilePath, htmlContent);
       console.log(`Generated HTML file: ${htmlFilePath}`);
     }
   }
 };
 
 // src/server/serverClasees/utils/getRunnables.ts
-import path9 from "path";
+import path8 from "path";
 var getRunnables = (config2, projectName) => {
   return {
     // pureEntryPoints: payload.pureEntryPoints || {},
     golangEntryPoints: Object.entries(config2.golang.tests).reduce((pt, cv) => {
-      pt[cv[0]] = path9.resolve(cv[0]);
+      pt[cv[0]] = path8.resolve(cv[0]);
       return pt;
     }, {}),
     // golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
     nodeEntryPoints: Object.entries(config2.node.tests).reduce((pt, cv) => {
-      pt[cv[0]] = path9.resolve(
+      pt[cv[0]] = path8.resolve(
         `./testeranto/bundles/${projectName}/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
       return pt;
     }, {}),
     // nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
     pythonEntryPoints: Object.entries(config2.python.tests).reduce((pt, cv) => {
-      pt[cv[0]] = path9.resolve(cv[0]);
+      pt[cv[0]] = path8.resolve(cv[0]);
       return pt;
     }, {}),
     // pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
     webEntryPoints: Object.entries(config2.web.tests).reduce((pt, cv) => {
-      pt[cv[0]] = path9.resolve(
+      pt[cv[0]] = path8.resolve(
         `./testeranto/bundles/${projectName}/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
       return pt;
@@ -2153,16 +1995,16 @@ var Server_FS = class extends Server_HTTP {
     this.writeBigBoard = () => {
       const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
       const summaryData = JSON.stringify(this.summary, null, 2);
-      fs7.writeFileSync(summaryPath, summaryData);
+      fs6.writeFileSync(summaryPath, summaryData);
     };
-    fs7.writeFileSync(
-      path10.join(process.cwd(), "testeranto", `${testName}.json`),
+    fs6.writeFileSync(
+      path9.join(process.cwd(), "testeranto", `${testName}.json`),
       JSON.stringify(configs, null, 2)
     );
-    if (!fs7.existsSync(`testeranto/reports/${testName}`)) {
-      fs7.mkdirSync(`testeranto/reports/${testName}`);
+    if (!fs6.existsSync(`testeranto/reports/${testName}`)) {
+      fs6.mkdirSync(`testeranto/reports/${testName}`);
     }
-    fs7.writeFileSync(
+    fs6.writeFileSync(
       `testeranto/reports/${testName}/config.json`,
       JSON.stringify(configs, null, 2)
     );
@@ -2181,15 +2023,15 @@ var Server_FS = class extends Server_HTTP {
       ["golang", Object.keys(golangEntryPoints)]
     ].forEach(async ([runtime, keys]) => {
       keys.forEach(async (k) => {
-        fs7.mkdirSync(
+        fs6.mkdirSync(
           `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`,
           { recursive: true }
         );
       });
     });
     setupFileSystem(configs, testName);
-    if (!fs7.existsSync(`testeranto/reports/${this.projectName}`)) {
-      fs7.mkdirSync(`testeranto/reports/${this.projectName}`);
+    if (!fs6.existsSync(`testeranto/reports/${this.projectName}`)) {
+      fs6.mkdirSync(`testeranto/reports/${this.projectName}`);
     }
   }
   ensureSummaryEntry(src, isSidecar = false) {
@@ -2222,15 +2064,15 @@ var Server_FS = class extends Server_HTTP {
   }
 };
 function setupFileSystem(config2, testsName2) {
-  fs7.writeFileSync(
+  fs6.writeFileSync(
     `${process.cwd()}/testeranto/ProcessManger.html`,
     ProcessMangerHtml()
   );
-  fs7.writeFileSync(`${process.cwd()}/testeranto/index.html`, IndexHtml());
-  if (!fs7.existsSync(`testeranto/reports/${testsName2}`)) {
-    fs7.mkdirSync(`testeranto/reports/${testsName2}`, { recursive: true });
+  fs6.writeFileSync(`${process.cwd()}/testeranto/index.html`, IndexHtml());
+  if (!fs6.existsSync(`testeranto/reports/${testsName2}`)) {
+    fs6.mkdirSync(`testeranto/reports/${testsName2}`, { recursive: true });
   }
-  fs7.writeFileSync(
+  fs6.writeFileSync(
     `testeranto/reports/${testsName2}/config.json`,
     JSON.stringify(config2, null, 2)
   );
@@ -2245,6 +2087,8 @@ var Server_ProcessManager = class extends Server_FS {
     this.allProcesses = /* @__PURE__ */ new Map();
     this.processLogs = /* @__PURE__ */ new Map();
     this.runningProcesses = /* @__PURE__ */ new Map();
+    this.aiderProcesses = /* @__PURE__ */ new Map();
+    // Store actual aider processes
     // Track queued items for monitoring
     this.queuedItems = [];
     // Get process summary for monitoring
@@ -2334,6 +2178,7 @@ var Server_ProcessManager = class extends Server_FS {
     };
     // Execute a command and track it as a process
     this.executeCommand = async (processId, command, category, testName, platform, options) => {
+      console.log(`[ProcessManager] ${processId} ${command}`);
       if (!processId || typeof processId !== "string") {
         console.error(`[ProcessManager] Invalid processId: ${processId}. Generating fallback ID.`);
         processId = `fallback-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -2445,10 +2290,16 @@ ${details.join("\n")}`;
       });
       return safePromise;
     };
-    // Create aider process for a specific test
+    // Create aider process for a specific test as a background command
     this.createAiderProcess = async (runtime, testPath, metafile) => {
       const processId = `allTests-${runtime}-${testPath}-aider`;
-      console.log(`[ProcessManager] Creating aider process: ${processId}`);
+      console.log(`[ProcessManager] Creating aider Docker container: ${processId}`);
+      const imageReady = await this.ensureAiderImage();
+      if (!imageReady) {
+        console.error("[ProcessManager] Cannot create aider container: base image not available");
+        this.addLogEntry(processId, "error", "Failed to build aider base image", /* @__PURE__ */ new Date(), "error");
+        return;
+      }
       const contextFiles = [];
       if (metafile.metafile && metafile.metafile.inputs) {
         const inputs = metafile.metafile.inputs;
@@ -2458,15 +2309,125 @@ ${details.join("\n")}`;
           contextFiles.push(...Object.keys(inputs));
         }
       }
-      const command = `echo "Aider process for ${runtime} test ${testPath} with ${contextFiles.length} context files"`;
-      await this.executeCommand(
-        processId,
-        command,
-        "other",
+      const sourceFiles = contextFiles.filter(
+        (file) => file.endsWith(".ts") || file.endsWith(".js") || file.endsWith(".py") || file.endsWith(".go")
+      ).slice(0, 10);
+      const containerName = `aider-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
+      const checkRunningCmd = `docker ps --filter "name=${containerName}" --filter "status=running" --format "{{.Names}}"`;
+      const checkRunningResult = await this.executeCommand(
+        `${processId}-check-running`,
+        checkRunningCmd,
+        "aider",
         testPath,
         runtime
       );
-      this.addLogEntry(processId, "stdout", `Aider process created for ${testPath} (${runtime})`, /* @__PURE__ */ new Date(), "info");
+      if (checkRunningResult.success && checkRunningResult.stdout && checkRunningResult.stdout.trim() === containerName) {
+        console.log(`[ProcessManager] Aider container ${containerName} is already running, skipping creation`);
+        this.addLogEntry(processId, "stdout", `Aider Docker container already running: ${containerName}`, /* @__PURE__ */ new Date(), "info");
+        const processInfo2 = {
+          promise: Promise.resolve({ stdout: "", stderr: "" }),
+          status: "running",
+          command: "docker container already running",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          type: "docker",
+          category: "aider",
+          testName: testPath,
+          platform: runtime,
+          containerName
+        };
+        this.allProcesses.set(processId, processInfo2);
+        this.aiderProcesses.set(processId, { containerName });
+        return;
+      }
+      const checkAllCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+      const checkAllResult = await this.executeCommand(
+        `${processId}-check-all`,
+        checkAllCmd,
+        "aider",
+        testPath,
+        runtime
+      );
+      if (checkAllResult.success && checkAllResult.stdout && checkAllResult.stdout.trim() === containerName) {
+        console.log(`[ProcessManager] Container ${containerName} exists but is not running, removing...`);
+        const removeResult = await this.executeCommand(
+          `${processId}-remove`,
+          `docker rm -f ${containerName}`,
+          "aider",
+          testPath,
+          runtime
+        );
+        if (!removeResult.success) {
+          console.error(`[ProcessManager] Failed to remove existing container ${containerName}:`, removeResult.error);
+        } else {
+          console.log(`[ProcessManager] Removed existing container ${containerName}`);
+        }
+      }
+      const apiKeys = this.loadAiderApiKeys();
+      const envVars = Object.entries(apiKeys).map(([key, value]) => `-e ${key}=${value}`);
+      const dockerArgs = [
+        "docker",
+        "run",
+        "-d",
+        // Run in detached mode
+        "--name",
+        containerName,
+        "-v",
+        `${process.cwd()}:/workspace`,
+        // Mount the current directory
+        "-w",
+        "/workspace",
+        // Set working directory
+        "--network",
+        "allTests_network",
+        // Use the same network as other services
+        ...envVars,
+        // Add API key environment variables
+        "testeranto-aider:latest",
+        // Pass source files to aider
+        ...sourceFiles.slice(0, 5)
+        // Limit to first 5 files to avoid command line being too long
+      ];
+      const command = dockerArgs.join(" ");
+      const result = await this.executeCommand(
+        processId,
+        command,
+        "aider",
+        testPath,
+        runtime
+      );
+      const processInfo = {
+        promise: Promise.resolve({ stdout: "", stderr: "" }),
+        status: "running",
+        command,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        type: "docker",
+        category: "aider",
+        testName: testPath,
+        platform: runtime,
+        containerName
+      };
+      this.allProcesses.set(processId, processInfo);
+      this.aiderProcesses.set(processId, { containerName });
+      if (result.success) {
+        this.addLogEntry(processId, "stdout", `Aider Docker container started: ${containerName}`, /* @__PURE__ */ new Date(), "info");
+        console.log(`[ProcessManager] Aider Docker container ${containerName} started`);
+        setTimeout(async () => {
+          const logResult = await this.executeCommand(
+            `${processId}-logs`,
+            `docker logs ${containerName}`,
+            "aider",
+            testPath,
+            runtime
+          );
+        }, 2e3);
+      } else {
+        this.addLogEntry(processId, "error", `Failed to start aider Docker container: ${result.error}`, /* @__PURE__ */ new Date(), "error");
+        console.error(`[ProcessManager] Failed to start aider Docker container:`, result.error);
+      }
+      const connectionInfo = `To connect to this aider session, use: docker exec -it ${containerName} /bin/bash`;
+      this.addLogEntry(processId, "stdout", connectionInfo, /* @__PURE__ */ new Date(), "info");
+      const vscodeCommand = `docker exec -it ${containerName} bash -c "aider --yes --dark-mode ${sourceFiles.join(" ")}"`;
+      this.addLogEntry(processId, "stdout", `VS Code terminal command: ${vscodeCommand}`, /* @__PURE__ */ new Date(), "info");
     };
     // Add promise process tracking
     this.addPromiseProcess = (processId, promise, command, category, testName, platform) => {
@@ -2517,6 +2478,20 @@ ${details.join("\n")}`;
     });
   }
   async stop() {
+    for (const [processId, aiderProcess] of this.aiderProcesses.entries()) {
+      try {
+        this.addLogEntry(processId, "stdout", `Stopping aider process ${processId}`, /* @__PURE__ */ new Date(), "info");
+        aiderProcess.kill("SIGTERM");
+        setTimeout(() => {
+          if (!aiderProcess.killed) {
+            aiderProcess.kill("SIGKILL");
+          }
+        }, 2e3);
+      } catch (error) {
+        console.error(`[ProcessManager] Failed to stop aider process ${processId}:`, error);
+      }
+    }
+    this.aiderProcesses.clear();
     if (this.jobQueue) {
       this.jobQueue.end();
       this.jobQueue.stop();
@@ -2525,20 +2500,20 @@ ${details.join("\n")}`;
     await super.stop();
   }
   writeToProcessLogFile(processId, source, message, timestamp) {
-    const logDir = path11.join(
+    const logDir = path10.join(
       process.cwd(),
       "testeranto",
       "reports",
       this.projectName,
       "docker-process-logs"
     );
-    if (!fs8.existsSync(logDir)) {
-      fs8.mkdirSync(logDir, { recursive: true });
+    if (!fs7.existsSync(logDir)) {
+      fs7.mkdirSync(logDir, { recursive: true });
     }
-    const logFile = path11.join(logDir, `${processId}.log`);
+    const logFile = path10.join(logDir, `${processId}.log`);
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}
 `;
-    fs8.appendFileSync(logFile, logEntry);
+    fs7.appendFileSync(logFile, logEntry);
   }
   // Port management methods
   allocatePorts(numPorts, testName) {
@@ -2565,6 +2540,87 @@ ${details.join("\n")}`;
   }
   getPortOwner(port) {
     return this.ports[port] || null;
+  }
+  // Load aider API keys from .aider.conf.yml
+  loadAiderApiKeys() {
+    try {
+      const configPath = path10.join(process.cwd(), ".aider.conf.yml");
+      if (!fs7.existsSync(configPath)) {
+        console.log("[ProcessManager] No .aider.conf.yml file found");
+        return {};
+      }
+      const yaml2 = __require("js-yaml");
+      const config2 = yaml2.load(fs7.readFileSync(configPath, "utf8"));
+      const apiKeys = {};
+      if (config2["openai-api-key"]) {
+        apiKeys["OPENAI_API_KEY"] = config2["openai-api-key"];
+      }
+      if (config2["anthropic-api-key"]) {
+        apiKeys["ANTHROPIC_API_KEY"] = config2["anthropic-api-key"];
+      }
+      if (config2["api-key"]) {
+        if (Array.isArray(config2["api-key"])) {
+          config2["api-key"].forEach((key, index) => {
+            apiKeys[`API_KEY_${index}`] = key;
+          });
+        } else {
+          apiKeys["API_KEY"] = config2["api-key"];
+        }
+      }
+      console.log("[ProcessManager] Loaded API keys from .aider.conf.yml");
+      return apiKeys;
+    } catch (error) {
+      console.error("[ProcessManager] Failed to load API keys from .aider.conf.yml:", error);
+      return {};
+    }
+  }
+  // Build the aider base image if not already built
+  async ensureAiderImage() {
+    const imageName = "testeranto-aider:latest";
+    const checkImageCmd = `docker images -q ${imageName}`;
+    const checkResult = await this.executeCommand(
+      "aider-image-check",
+      checkImageCmd,
+      "aider",
+      "image-check",
+      "node"
+    );
+    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() !== "") {
+      console.log("[ProcessManager] Aider base image already exists");
+      return true;
+    }
+    console.log("[ProcessManager] Building aider base image...");
+    const dockerfileContent = [
+      "FROM python:3.11-slim",
+      "WORKDIR /workspace",
+      "RUN pip install --no-cache-dir aider-chat",
+      "# Create a non-root user for security",
+      "RUN useradd -m -u 1000 aider && chown -R aider:aider /workspace",
+      "USER aider",
+      "# Default command starts aider in interactive mode",
+      'CMD ["aider", "--yes", "--dark-mode"]'
+    ].join("\n");
+    const tempDir = path10.join(process.cwd(), "testeranto", "temp");
+    if (!fs7.existsSync(tempDir)) {
+      fs7.mkdirSync(tempDir, { recursive: true });
+    }
+    const dockerfilePath = path10.join(tempDir, "Dockerfile.aider");
+    fs7.writeFileSync(dockerfilePath, dockerfileContent);
+    const buildCmd = `docker build -t ${imageName} -f ${dockerfilePath} ${tempDir}`;
+    const buildResult = await this.executeCommand(
+      "aider-image-build",
+      buildCmd,
+      "aider",
+      "image-build",
+      "node"
+    );
+    if (buildResult.success) {
+      console.log("[ProcessManager] Aider base image built successfully");
+      return true;
+    } else {
+      console.error("[ProcessManager] Failed to build aider base image:", buildResult.error);
+      return false;
+    }
   }
   async scheduleBddTest(metafile, runtime, entrypoint) {
     console.log(
@@ -2768,12 +2824,12 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
   }
   initializeMetafilePaths() {
     const baseDir = process.cwd();
-    this.metafilePaths = metafiles.map((file) => path12.join(baseDir, file));
+    this.metafilePaths = metafiles.map((file) => path11.join(baseDir, file));
     if (this.configs.src) {
       const srcDir = this.configs.src;
       const runtimes2 = ["golang", "node", "python", "web"];
       runtimes2.forEach((runtime) => {
-        const metafilePath = path12.join(
+        const metafilePath = path11.join(
           baseDir,
           srcDir,
           "testeranto",
@@ -2793,7 +2849,7 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
   async start() {
     console.log(ansiC2.blue(ansiC2.inverse("Starting metafile watchers...")));
     const existingMetafiles = this.metafilePaths.filter((file) => {
-      const exists = fs9.existsSync(file);
+      const exists = fs8.existsSync(file);
       if (!exists) {
         console.log(
           ansiC2.yellow(
@@ -2811,16 +2867,16 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
       );
     }
     const watchDirs = [
-      path12.join(process.cwd(), "testeranto", "metafiles"),
+      path11.join(process.cwd(), "testeranto", "metafiles"),
       ...this.configs.src ? [
-        path12.join(
+        path11.join(
           process.cwd(),
           this.configs.src,
           "testeranto",
           "metafiles"
         )
       ] : []
-    ].filter((dir) => fs9.existsSync(dir));
+    ].filter((dir) => fs8.existsSync(dir));
     if (watchDirs.length === 0) {
       console.log(ansiC2.yellow("No metafile directories found to watch."));
       return;
@@ -2849,7 +2905,7 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
       this.watchers.push(watcher);
     });
     existingMetafiles.forEach((metafile) => {
-      const dir = path12.dirname(metafile);
+      const dir = path11.dirname(metafile);
       const watcher = chokidar.watch(metafile, {
         persistent: true,
         ignoreInitial: true,
@@ -2882,7 +2938,7 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
       return;
     }
     const isMetafile = this.metafilePaths.some(
-      (metafile) => path12.resolve(metafile) === path12.resolve(filePath) || filePath.includes("allTests.json")
+      (metafile) => path11.resolve(metafile) === path11.resolve(filePath) || filePath.includes("allTests.json")
     );
     if (!isMetafile) {
       return;
@@ -2906,13 +2962,13 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
   }
   processMetafileUpdate(metaFileSourcePath) {
     try {
-      if (!fs9.existsSync(metaFileSourcePath)) {
+      if (!fs8.existsSync(metaFileSourcePath)) {
         console.log(
           ansiC2.yellow(`Metafile doesn't exist: ${metaFileSourcePath}`)
         );
         return;
       }
-      const data = fs9.readFileSync(metaFileSourcePath, "utf8");
+      const data = fs8.readFileSync(metaFileSourcePath, "utf8");
       const parsed = JSON.parse(data);
       console.log(ansiC2.cyan(`Parsed metafile keys: ${Object.keys(parsed).join(", ")}`));
       let metafileData = parsed;
@@ -2962,7 +3018,7 @@ var Server_MetafileWatcher = class extends Server_ProcessManager {
     }
   }
   extractRuntimeFromPath(filePath) {
-    const pathParts = filePath.split(path12.sep);
+    const pathParts = filePath.split(path11.sep);
     const metafilesIndex = pathParts.indexOf("metafiles");
     if (metafilesIndex !== -1 && metafilesIndex + 1 < pathParts.length) {
       const runtime = pathParts[metafilesIndex + 1];
@@ -3128,7 +3184,7 @@ if (!process.argv[2]) {
   process.exit(-1);
 }
 var configFilepath = process.argv[2];
-var testsName = path13.basename(configFilepath).split(".").slice(0, -1).join(".");
+var testsName = path12.basename(configFilepath).split(".").slice(0, -1).join(".");
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error(`The 3rd argument should be 'dev' or 'once', not '${mode}'.`);

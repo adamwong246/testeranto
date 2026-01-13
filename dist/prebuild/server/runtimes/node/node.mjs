@@ -4,6 +4,7 @@ import {
   inputFilesPlugin_default,
   rebuildPlugin_default
 } from "../../../chunk-ESDZGA4F.mjs";
+import "../../../chunk-Y6FXYEAI.mjs";
 
 // src/server/runtimes/node/node.ts
 import fs from "fs";

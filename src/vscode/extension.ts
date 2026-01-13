@@ -140,15 +140,39 @@ class TerminalManager {
         return configs;
     }
 
+    // Create a dedicated aider terminal for a test that connects to a Docker container
+    createAiderTerminal(runtime: string, testName: string): vscode.Terminal {
+        const key = this.getTerminalKey(runtime, testName);
+        // Check if terminal already exists
+        let terminal = this.terminals.get(key);
+        if (terminal && terminal.exitStatus === undefined) {
+            // Terminal exists and is still running
+            return terminal;
+        }
+        // Create a new terminal
+        terminal = vscode.window.createTerminal(`Aider: ${testName} (${runtime})`);
+        this.terminals.set(key, terminal);
+        
+        // Don't send any initial text - the aider command will handle it
+        // This prevents showing instructions when we just want to connect
+        
+        return terminal;
+    }
+
     // Create terminals for all tests
+    // These terminals will provide instructions for connecting to Docker containers
     createAllTerminals(): void {
         const configs = this.getAllTestConfigs();
         for (const { runtime, testName } of configs) {
-            const terminal = this.createTerminal(runtime, testName);
-            // Send initial command
-            terminal.sendText(`echo "hello world"`);
-            // Show the terminal (optional)
-            // terminal.show();
+            try {
+                // Create a regular terminal for each test, not an aider terminal
+                // Aider terminals will be created on-demand when the user clicks the Aider button
+                const terminal = this.createTerminal(runtime, testName);
+                // Don't show the terminal immediately to avoid cluttering the interface
+                // It will be shown when the user runs the test or clicks the Aider button
+            } catch (error) {
+                console.error(`Failed to create terminal for ${testName} (${runtime}):`, error);
+            }
         }
     }
 }
@@ -317,12 +341,42 @@ export function activate(context: vscode.ExtensionContext): void {
                 // Show the existing terminal for this test
                 const terminal = terminalManager.showTerminal(runtime, testName);
                 if (terminal) {
-                    // Optionally, you can send additional commands here
-                    // But the terminal is already running with "echo 'hello world'"
                     vscode.window.showInformationMessage(`Terminal for ${testName} is ready`, { modal: false });
                 } else {
                     vscode.window.showWarningMessage(`Terminal for ${testName} not found`);
                 }
+            }
+        }
+    );
+
+    const aiderCommand = vscode.commands.registerCommand(
+        "testeranto.aider",
+        async (item: TestTreeItem) => {
+            if (item.type === TreeItemType.Test) {
+                const { runtime, testName } = item.data;
+                vscode.window.showInformationMessage(`Connecting to aider process for ${testName} (${runtime})...`);
+                
+                // Create or show a dedicated aider terminal
+                const aiderTerminal = terminalManager.createAiderTerminal(runtime, testName);
+                aiderTerminal.show();
+                
+                // Generate container name using the same pattern as createAiderTerminal
+                let processedTestName = testName;
+                processedTestName = processedTestName.replace(/\.[^/.]+$/, "");
+                processedTestName = processedTestName.replace(/^example\//, "");
+                const sanitizedTestName = processedTestName.replace(/[^a-zA-Z0-9]/g, '-');
+                const containerName = `aider-${runtime}-${sanitizedTestName}`;
+                
+                // Clear the terminal first
+                aiderTerminal.sendText("clear");
+                
+                // Wait a bit for the terminal to be ready
+                setTimeout(() => {
+                    aiderTerminal.sendText(`echo "Connecting to aider process in container: ${containerName}"`);
+                    // Attach to the running aider process with interactive mode
+                    // Use docker exec to attach to the aider process with stdin/stdout/stderr
+                    aiderTerminal.sendText(`docker exec -it ${containerName} aider --yes --dark-mode`);
+                }, 500);
             }
         }
     );
@@ -390,6 +444,7 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
         showTestsCommand,
         runTestCommand,
+        aiderCommand,
         openFileCommand,
         openConfigCommand,
         refreshCommand,
