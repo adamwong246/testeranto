@@ -75,7 +75,7 @@ async function startChromeBrowser() {
         "--window-size=1920,1080",
         "--headless=new"
       ],
-      headless: false
+      headless: true
     });
     console.log("Chrome browser started with remote debugging on port 9222");
     console.log(`WebSocket endpoint: ${browser.wsEndpoint()}`);

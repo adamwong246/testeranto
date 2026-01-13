@@ -48,6 +48,12 @@ RUN python -c "import pylint; print(f'pylint version: {pylint.__version__}')" &&
 RUN echo "Python environment ready with pylint and all dependencies"
 `;
 
+
+export const pythonBDDCommand = (port) => {
+  // Python tests might not need JSON argument
+  return `cd /workspace && python -m pytest example/ -v`;
+}
+
 export const pythonDockerComposeFile = (config: IBuiltConfig) => {
   return {
     build: {

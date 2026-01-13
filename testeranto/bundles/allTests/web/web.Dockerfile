@@ -6,9 +6,6 @@ COPY ./tsconfig*.json ./
 COPY ./package.json ./package.json
 COPY ./.yarnrc.yml ./
 
-# Install system dependencies
-RUN apk add --no-cache python3 make g++ libxml2-utils
+RUN apk add --no-cache     --repository dl-cdn.alpinelinux.org     chromium     nss     freetype     harfbuzz     ttf-freefont     python3 make g++ libxml2-utils
 
-# Install dependencies
 RUN yarn install
-

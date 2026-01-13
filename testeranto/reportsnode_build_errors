@@ -3,30 +3,17 @@
     {
       "id": "",
       "location": {
-        "column": 20,
-        "file": "src/lib/tiposkripto/BaseTiposkripto.ts",
-        "length": 5,
-        "line": 264,
-        "lineText": "    const results = await this.testJobs[0].receiveTestResourceConfig(",
+        "column": 7,
+        "file": "example/Calculator.test.ts",
+        "length": 11,
+        "line": 2,
+        "lineText": "import Tiposkripto from \"../src/lib/tiposkripto/Tiposkripto\";",
         "namespace": "",
         "suggestion": ""
       },
-      "notes": [
-        {
-          "location": {
-            "column": 2,
-            "file": "src/lib/tiposkripto/BaseTiposkripto.ts",
-            "length": 0,
-            "line": 43,
-            "lineText": "  constructor(",
-            "namespace": "",
-            "suggestion": "async"
-          },
-          "text": "Consider adding the \"async\" keyword here:"
-        }
-      ],
+      "notes": [],
       "pluginName": "",
-      "text": "\"await\" can only be used inside an \"async\" function"
+      "text": "No matching export in \"src/lib/tiposkripto/Tiposkripto.ts\" for import \"default\""
     }
   ],
   "warnings": [
@@ -36,7 +23,7 @@
         "column": 21,
         "file": "example/Calculator.ts",
         "length": 4,
-        "line": 17,
+        "line": 16,
         "lineText": "      const result = eval(this.display);",
         "namespace": "",
         "suggestion": ""

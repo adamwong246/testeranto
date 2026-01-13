@@ -38,13 +38,10 @@ export default abstract class BaseTiposkripto<
   thenOverrides: Record<string, any>;
   whenOverrides: Record<string, any>;
 
-  abstract writeFileSync({
-    filename,
-    payload,
-  }: {
-    filename: string;
-    payload: any;
-  }): void;
+  abstract writeFileSync(
+    filename: string,
+    payload: string,
+  ): void;
 
   constructor(
     input: I["iinput"],
@@ -198,28 +195,28 @@ export default abstract class BaseTiposkripto<
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
       const suiteRunner =
         (suite: BaseSuite<I, O>) =>
-        async (
-          testResourceConfiguration?: ITestResourceConfiguration
-        ): Promise<BaseSuite<I, O>> => {
-          try {
-            const x = await suite.run(
-              input,
-              testResourceConfiguration || {
-                name: suite.name,
-                fs: process.cwd(),
-                ports: [],
-                timeout: 30000,
-                retries: 3,
-                environment: {},
-              }
-            );
+          async (
+            testResourceConfiguration?: ITestResourceConfiguration
+          ): Promise<BaseSuite<I, O>> => {
+            try {
+              const x = await suite.run(
+                input,
+                testResourceConfiguration || {
+                  name: suite.name,
+                  fs: process.cwd(),
+                  ports: [],
+                  timeout: 30000,
+                  retries: 3,
+                  environment: {},
+                }
+              );
 
-            return x;
-          } catch (e) {
-            console.error(e.stack);
-            throw e;
-          }
-        };
+              return x;
+            } catch (e) {
+              console.error(e.stack);
+              throw e;
+            }
+          };
 
       const runner = suiteRunner(suite);
 
@@ -267,11 +264,13 @@ export default abstract class BaseTiposkripto<
       return testJob;
     });
 
-    const results = this.testJobs[0].receiveTestResourceConfig(
+    (this.testJobs[0].receiveTestResourceConfig(
       testResourceConfiguration
-    );
+    ) as unknown as Promise<IFinalResults>).then((results) => {
+      this.writeFileSync('tests.json', JSON.stringify(results));
+    })
 
-    this.writeFileSync();
+
   }
 
   async receiveTestResourceConfig(

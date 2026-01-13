@@ -12,9 +12,6 @@ RUN mkdir -p /workspace/testeranto/bundles/allTests/golang &&     mkdir -p /work
 # Copy all Go source files for the metafile generator
 COPY src/server/runtimes/golang/ /workspace/src/server/runtimes/golang/
 
-# Debug: List copied files
-RUN echo "=== Listing files in /workspace/src/server/runtimes/golang ===" &&     ls -la /workspace/src/server/runtimes/golang/
-
 # Create a go.mod file for the metafile generator if it doesn't exist
 RUN cd /workspace/src/server/runtimes/golang &&     if [ ! -f go.mod ]; then         go mod init golang-metafile-generator &&         echo "Created new go.mod file";     else         echo "go.mod already exists, skipping initialization";     fi &&     echo "=== Go files present: ===" &&     ls *.go
 
@@ -24,5 +21,4 @@ RUN cd /workspace/src/server/runtimes/golang &&     echo "=== Downloading depend
 # Compile the Go metafile generator (build with all Go files)
 RUN cd /workspace/src/server/runtimes/golang &&     echo "=== Building in directory: $(pwd) ===" &&     go build -buildvcs=false -o /usr/local/bin/golang-main .
 
-# Verify golangci-lint installation
-RUN echo "=== Verifying golangci-lint ===" &&     golangci-lint --version
+

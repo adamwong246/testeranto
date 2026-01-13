@@ -479,10 +479,11 @@ var BaseTiposkripto = class {
       };
       return testJob;
     });
-    const results = this.testJobs[0].receiveTestResourceConfig(
+    this.testJobs[0].receiveTestResourceConfig(
       testResourceConfiguration
-    );
-    this.writeFileSync();
+    ).then((results) => {
+      this.writeFileSync("tests.json", JSON.stringify(results));
+    });
   }
   async receiveTestResourceConfig(testResourceConfig) {
     if (this.testJobs && this.testJobs.length > 0) {
@@ -534,6 +535,7 @@ var BaseTiposkripto = class {
 };
 
 // src/lib/tiposkripto/Web.ts
+var config = { ports: [1111], fs: "testeranto/reports/allTests/example/Calculator.test/web" };
 var WebTiposkripto = class extends BaseTiposkripto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -545,7 +547,8 @@ var WebTiposkripto = class extends BaseTiposkripto {
       testImplementation,
       testResourceRequirement,
       testAdapter,
-      JSON.parse(testResourceConfig)
+      // JSON.parse(testResourceConfig)
+      config
     );
   }
   async writeFileSync({
@@ -553,7 +556,7 @@ var WebTiposkripto = class extends BaseTiposkripto {
     payload
   }) {
     const root = await navigator.storage.getDirectory();
-    const fileHandle = await root.getFileHandle(filename, { create: true });
+    const fileHandle = await root.getFileHandle(`${config.fs}/${filename}`, { create: true });
     const writable = await fileHandle.createWritable();
     await writable.write(JSON.stringify(payload));
     await writable.close();
@@ -568,6 +571,8 @@ var tiposkripto = async (input, testSpecification, testImplementation, testAdapt
       testResourceRequirement,
       testAdapter
     );
+    const root = await navigator.storage.getDirectory();
+    const fileHandle = await root.getFileHandle(`${config.fs}/tests.json`);
     return t;
   } catch (e) {
     console.error(e);

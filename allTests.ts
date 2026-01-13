@@ -28,18 +28,18 @@ const config: ITestconfig = {
   ]),
 
   python: createLangConfig("example/Calculator.pitono.test.py", [
-    (x) => `pylint ${x}`,
+    (x) => `pylint ${x.join(' ')}}`,
   ]),
 
   web: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x}`,
+    (x) => `yarn eslint ${x.join(' ')}`,
     (x) => `yarn tsc --noEmit ${x.join(' ')}`,
-  ]),
+  ], { volumes: ['eslint.config.mjs'] }),
 
   node: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x}`,
+    (x) => `yarn eslint ${x.join(' ')}`,
     (x) => `yarn tsc --noEmit ${x.join(' ')}`,
-  ]),
+  ], { volumes: ['eslint.config.mjs'] }),
 };
 
 export default config;

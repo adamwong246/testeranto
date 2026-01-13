@@ -51,6 +51,9 @@ export type ITestResourceConfiguration = {
   fs: string;
   ports: number[];
   files: string[];
+  timeout?: number;
+  retries?: number;
+  environment?: Record<string, any>;
 };
 
 export type ITTestResourceRequirement = {

@@ -89,13 +89,6 @@ var golangDockerComposeFile = (config2) => {
       context: "/Users/adam/Code/testeranto",
       dockerfile: `testeranto/bundles/allTests/golang/golang.Dockerfile`,
       tags: [`bundles-golang-build:latest`]
-      //   args:
-      //     runtime === "node"
-      //       ? {
-      //           NODE_MJS_HASH: "cab84cac12fc3913ce45e7e53425b8bb",
-      //         }
-      //       : {},
-      // },
     },
     volumes: [
       "/Users/adam/Code/testeranto:/workspace"
@@ -117,82 +110,20 @@ var golangDockerComposeFile = (config2) => {
     command: [
       "sh",
       "-c",
-      `echo 'Starting Go build service...'; 
-       echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
-       
-       # Create necessary directories
-       mkdir -p /workspace/testeranto/bundles/allTests/golang
-       mkdir -p /workspace/testeranto/metafiles/golang
-       
-       # The Go metafile generator should already be built in the Dockerfile
-       echo "Checking for Go metafile generator...";
-       if [ -f /usr/local/bin/golang-main ]; then
-         echo "\u2705 Go metafile generator found at /usr/local/bin/golang-main";
-       else
-         echo "\u274C Go metafile generator not found at /usr/local/bin/golang-main";
-         echo "Trying to build it...";
-         cd /workspace/src/server/runtimes/golang &&          go build -buildvcs=false -o /usr/local/bin/golang-main .
-         if [ $? -eq 0 ]; then
-           echo "\u2705 Go metafile generator built successfully";
-         else
-           echo "\u274C Failed to build Go metafile generator";
-           exit 1
-         fi
-       fi
-       
-       # If example directory exists, download its dependencies
-       if [ -f /workspace/example/go.mod ]; then
-         echo "Example project found, downloading dependencies...";
-         cd /workspace/example && go mod download
-       fi
-       
-       # Check if allTests.json exists
-       if [ -f /workspace/testeranto/allTests.json ]; then
-         echo "Config file found at /workspace/testeranto/allTests.json";
-         echo "Contents of config file (first 200 chars):";
-         head -c 200 /workspace/testeranto/allTests.json;
-         echo "";
-         # Run the Go metafile generator
-         echo "Running Go metafile generator...";
-         set +e
-         /usr/local/bin/golang-main /workspace/testeranto/allTests.json
-         EXIT_CODE=$?
-         set -e
-         
-         echo "Go metafile generator exited with code: $EXIT_CODE";
-         echo "Checking generated metafile:";
-         ls -la /workspace/testeranto/metafiles/golang/ 2>/dev/null || echo "Go metafiles directory not found";
-         if [ -f /workspace/testeranto/metafiles/golang/allTests.json ]; then
-           echo "Metafile exists at /workspace/testeranto/metafiles/golang/allTests.json";
-           echo "Metafile size:";
-           wc -c /workspace/testeranto/metafiles/golang/allTests.json;
-           echo "Metafile contents (first 500 chars):";
-           head -c 500 /workspace/testeranto/metafiles/golang/allTests.json;
-           echo "";
-         else
-           echo "\u274C Metafile not generated!";
-           # Create an empty metafile to satisfy healthcheck
-           echo "Creating empty metafile...";
-           mkdir -p /workspace/testeranto/metafiles/golang
-           echo '{"binaries":[]}' > /workspace/testeranto/metafiles/golang/allTests.json
-         fi
-         echo "Checking generated binaries:";
-         ls -la /workspace/testeranto/bundles/allTests/golang/ 2>/dev/null || echo "Bundles directory not found";
-         echo "Listing all files in bundles directory:";
-         find /workspace/testeranto/bundles/allTests/golang -type f 2>/dev/null || echo "No files found";
-       else
-         echo "Config file NOT found at /workspace/testeranto/allTests.json";
-         echo "Creating empty metafile to satisfy healthcheck...";
-         mkdir -p /workspace/testeranto/metafiles/golang
-         echo '{"binaries":[]}' > /workspace/testeranto/metafiles/golang/allTests.json
-         echo "Searching for config files...";
-         find /workspace -name "allTests.json" -type f 2>/dev/null | head -10;
-       fi
-       
-       echo "Go build service ready. Keeping container alive...";
-       while true; do
-         sleep 3600
-       done`
+      `echo 'Starting Go metafile generator...';
+      
+      cd /workspace/src/server/runtimes/golang;
+      
+      # Build the metafile generator
+      go build -buildvcs=false -o /usr/local/bin/golang-main .;
+      
+      # Run the metafile generator
+      /usr/local/bin/golang-main /workspace/testeranto/allTests.json;
+      
+      echo 'Go metafile generator completed. Keeping container alive...';
+      while true; do
+        sleep 3600
+      done`
     ],
     healthcheck: {
       test: [
@@ -212,6 +143,10 @@ var golangDockerComposeFile = (config2) => {
     }
   };
 };
+var golangBddCommand = (port) => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `cd /workspace/example && go run example/Calculator.golingvu.test.go '${jsonStr}'`;
+};
 var golangDockerFile = `FROM golang:1.21-alpine
 WORKDIR /workspace
 
@@ -226,9 +161,6 @@ RUN mkdir -p /workspace/testeranto/bundles/allTests/golang &&     mkdir -p /work
 # Copy all Go source files for the metafile generator
 COPY src/server/runtimes/golang/ /workspace/src/server/runtimes/golang/
 
-# Debug: List copied files
-RUN echo "=== Listing files in /workspace/src/server/runtimes/golang ===" &&     ls -la /workspace/src/server/runtimes/golang/
-
 # Create a go.mod file for the metafile generator if it doesn't exist
 RUN cd /workspace/src/server/runtimes/golang &&     if [ ! -f go.mod ]; then         go mod init golang-metafile-generator &&         echo "Created new go.mod file";     else         echo "go.mod already exists, skipping initialization";     fi &&     echo "=== Go files present: ===" &&     ls *.go
 
@@ -238,8 +170,7 @@ RUN cd /workspace/src/server/runtimes/golang &&     echo "=== Downloading depend
 # Compile the Go metafile generator (build with all Go files)
 RUN cd /workspace/src/server/runtimes/golang &&     echo "=== Building in directory: $(pwd) ===" &&     go build -buildvcs=false -o /usr/local/bin/golang-main .
 
-# Verify golangci-lint installation
-RUN echo "=== Verifying golangci-lint ===" &&     golangci-lint --version
+
 `;
 
 // src/server/runtimes/node/docker.ts
@@ -275,7 +206,7 @@ var nodeDockerComposeFile = (config2) => {
     command: [
       "sh",
       "-c",
-      `TEST_NAME=allTests WS_PORT=${config2.httpPort} yarn tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";`
+      `TEST_NAME=allTests WS_PORT=${config2.httpPort} yarn tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts '{"ports": [1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";`
     ],
     healthcheck: {
       test: [
@@ -289,6 +220,10 @@ var nodeDockerComposeFile = (config2) => {
     }
   };
 };
+var nodeBddCommand = (port) => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `TEST_NAME=allTests WS_PORT=${port} ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+};
 var nodeDockerFile = `
 FROM node:20.19.4-alpine
 WORKDIR /workspace
@@ -296,11 +231,10 @@ COPY ./tsconfig*.json ./
 COPY ./package.json ./package.json
 COPY ./.yarnrc.yml ./
 
-# Install system dependencies
 RUN apk add --no-cache python3 make g++ libxml2-utils
 
-# Install dependencies
 RUN yarn install
+
 `;
 
 // src/server/runtimes/python/docker.ts
@@ -329,6 +263,9 @@ RUN python -c "import pylint; print(f'pylint version: {pylint.__version__}')" &&
 
 RUN echo "Python environment ready with pylint and all dependencies"
 `;
+var pythonBDDCommand = (port) => {
+  return `cd /workspace && python -m pytest example/ -v`;
+};
 var pythonDockerComposeFile = (config2) => {
   return {
     build: {
@@ -422,9 +359,22 @@ var webDockerCompose = (config2) => {
     command: [
       "sh",
       "-c",
-      `TEST_NAME=allTests WS_PORT=${config2.httpPort} yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";`
+      `TEST_NAME=allTests WS_PORT=${config2.httpPort} yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts '{"ports": [1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";`
     ]
   };
+};
+var webBddCommand = (port) => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `
+    # Wait for chromium to be ready
+    until curl -f http://chromium:9222/json/version >/dev/null 2>&1; do
+      echo "Waiting for chromium to be ready..."
+      sleep 1
+    done
+    
+    # Run the test
+    TEST_NAME=allTests WS_PORT=${port} ENV=web node testeranto/bundles/allTests/web/example/Calculator.test.mjs allTests.ts '${jsonStr}'
+  `;
 };
 var webDockerFile = `
 
@@ -434,12 +384,9 @@ COPY ./tsconfig*.json ./
 COPY ./package.json ./package.json
 COPY ./.yarnrc.yml ./
 
-# Install system dependencies
-RUN apk add --no-cache python3 make g++ libxml2-utils
+RUN apk add --no-cache     --repository dl-cdn.alpinelinux.org     chromium     nss     freetype     harfbuzz     ttf-freefont     python3 make g++ libxml2-utils
 
-# Install dependencies
 RUN yarn install
-
 `;
 
 // src/server/docker/index.ts
@@ -565,8 +512,8 @@ async function generateServices(config2, runtimes2, webSocketPort, log, error) {
 
 // src/server/serverClasees/utils/DockerComposeExecutor.ts
 var DockerComposeExecutor = class {
-  constructor(exec2) {
-    this.exec = exec2;
+  constructor(exec3) {
+    this.exec = exec3;
   }
   async upAll(composeFile, cwd) {
     try {
@@ -1700,7 +1647,8 @@ var createLangConfig = (testFile, checks, options) => {
     externals: options?.externals || [],
     test: options?.testBlocks,
     prod: options?.prodBlocks,
-    checks
+    checks,
+    volumes: options?.volumes
   };
 };
 
@@ -1727,16 +1675,16 @@ var config = {
     (x) => `cd /workspace/example && golangci-lint run ${x.replace("example/", "")}`
   ]),
   python: createLangConfig("example/Calculator.pitono.test.py", [
-    (x) => `pylint ${x}`
+    (x) => `pylint ${x.join(" ")}}`
   ]),
   web: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x}`,
+    (x) => `yarn eslint ${x.join(" ")}`,
     (x) => `yarn tsc --noEmit ${x.join(" ")}`
-  ]),
+  ], { volumes: ["eslint.config.mjs"] }),
   node: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x}`,
+    (x) => `yarn eslint ${x.join(" ")}`,
     (x) => `yarn tsc --noEmit ${x.join(" ")}`
-  ])
+  ], { volumes: ["eslint.config.mjs"] })
 };
 var allTests_default = config;
 
@@ -2079,6 +2027,8 @@ function setupFileSystem(config2, testsName2) {
 }
 
 // src/server/serverClasees/Server_ProcessManager.ts
+var { exec: exec2 } = await import("child_process");
+var { promisify: promisify2 } = await import("util");
 var Server_ProcessManager = class extends Server_FS {
   constructor(configs, testName, mode2) {
     super(configs, testName, mode2);
@@ -2178,13 +2128,11 @@ var Server_ProcessManager = class extends Server_FS {
     };
     // Execute a command and track it as a process
     this.executeCommand = async (processId, command, category, testName, platform, options) => {
-      console.log(`[ProcessManager] ${processId} ${command}`);
+      console.log(`[ProcessManager] executeCommand( ${processId}, ${command} )`);
       if (!processId || typeof processId !== "string") {
         console.error(`[ProcessManager] Invalid processId: ${processId}. Generating fallback ID.`);
         processId = `fallback-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       }
-      const { exec: exec2 } = await import("child_process");
-      const { promisify: promisify2 } = await import("util");
       const execAsync = promisify2(exec2);
       this.addLogEntry(processId, "stdout", `Starting command: ${command}`, /* @__PURE__ */ new Date(), "info");
       const originalPromise = execAsync(command, {
@@ -2500,17 +2448,33 @@ ${details.join("\n")}`;
     await super.stop();
   }
   writeToProcessLogFile(processId, source, message, timestamp) {
+    let runtime = "unknown";
+    if (processId.startsWith("allTests-")) {
+      const parts = processId.split("-");
+      if (parts.length >= 2) {
+        runtime = parts[1];
+      }
+    }
     const logDir = path10.join(
       process.cwd(),
       "testeranto",
       "reports",
       this.projectName,
-      "docker-process-logs"
+      runtime,
+      "example"
     );
     if (!fs7.existsSync(logDir)) {
       fs7.mkdirSync(logDir, { recursive: true });
     }
-    const logFile = path10.join(logDir, `${processId}.log`);
+    let logFileName = processId;
+    if (processId.startsWith("allTests-")) {
+      const withoutPrefix = processId.substring("allTests-".length);
+      const firstDashIndex = withoutPrefix.indexOf("-");
+      if (firstDashIndex !== -1) {
+        logFileName = withoutPrefix.substring(firstDashIndex + 1);
+      }
+    }
+    const logFile = path10.join(logDir, `${logFileName}.log`);
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}
 `;
     fs7.appendFileSync(logFile, logEntry);
@@ -2638,16 +2602,146 @@ ${details.join("\n")}`;
     await this.createAiderProcess(runtime, testPath, metafile);
     const processId = `allTests-${runtime}-${testPath}-bdd`;
     console.log(`[ProcessManager] BDD process ID: ${processId}`);
-    const command = `yarn tsx ${entrypoint}`;
+    let bddCommand = "";
+    if (runtime === "node") {
+      bddCommand = nodeBddCommand(this.configs.httpPort);
+    } else if (runtime === "web") {
+      bddCommand = webBddCommand(this.configs.httpPort);
+    } else if (runtime === "python") {
+      bddCommand = pythonBDDCommand(this.configs.httpPort);
+    } else if (runtime === "golang") {
+      bddCommand = golangBddCommand(this.configs.httpPort);
+    } else {
+      bddCommand = `echo 'not yet implemented'`;
+    }
+    if (runtime === "web") {
+      await this.runWebBddTest(processId, testPath, bddCommand);
+    } else {
+      await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
+    }
+  }
+  async runWebBddTest(processId, testPath, bddCommand) {
+    console.log(`[ProcessManager] Running web BDD test: ${processId}`);
+    const chromiumContainerName = `chromium-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
+    const checkCmd = `docker ps -a --filter "name=${chromiumContainerName}" --format "{{.Names}}"`;
+    const checkResult = await this.executeCommand(
+      `${processId}-check-chromium`,
+      checkCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === chromiumContainerName) {
+      await this.executeCommand(
+        `${processId}-remove-chromium`,
+        `docker rm -f ${chromiumContainerName}`,
+        "bdd-test",
+        testPath,
+        "web"
+      );
+    }
+    const chromiumCmd = `docker run -d       --name ${chromiumContainerName}       --network allTests_network       -p 9222:9222       --shm-size=2g       browserless/chrome:latest       --remote-debugging-port=9222       --remote-debugging-address=0.0.0.0`;
+    console.log(`[ProcessManager] Starting chromium container: ${chromiumCmd}`);
+    const chromiumResult = await this.executeCommand(
+      `${processId}-chromium`,
+      chromiumCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    if (!chromiumResult.success) {
+      console.error(`[ProcessManager] Failed to start chromium: ${chromiumResult.error}`);
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 5e3));
+    const testContainerName = `web-test-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
+    const checkTestCmd = `docker ps -a --filter "name=${testContainerName}" --format "{{.Names}}"`;
+    const checkTestResult = await this.executeCommand(
+      `${processId}-check-test`,
+      checkTestCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    if (checkTestResult.success && checkTestResult.stdout && checkTestResult.stdout.trim() === testContainerName) {
+      await this.executeCommand(
+        `${processId}-remove-test`,
+        `docker rm -f ${testContainerName}`,
+        "bdd-test",
+        testPath,
+        "web"
+      );
+    }
+    const testRunCmd = `docker run --rm       --name ${testContainerName}       --network allTests_network       -v ${process.cwd()}:/workspace       -w /workspace       -e CHROMIUM_URL=http://${chromiumContainerName}:9222       bundles-web-build:latest       sh -c "${bddCommand}"`;
+    console.log(`[ProcessManager] Running web test: ${testRunCmd}`);
+    const testResult = await this.executeCommand(
+      processId,
+      testRunCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    await this.executeCommand(
+      `${processId}-cleanup-chromium`,
+      `docker rm -f ${chromiumContainerName}`,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    if (!testResult.success) {
+      console.log(`[ProcessManager] Web BDD test ${processId} failed:`, testResult.error?.message);
+    } else {
+      console.log(`[ProcessManager] Web BDD test ${processId} completed successfully`);
+    }
+  }
+  async runBddTestInDocker(processId, testPath, runtime, bddCommand) {
+    const containerName = `bdd-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
+    const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+    const checkResult = await this.executeCommand(
+      `${processId}-check`,
+      checkCmd,
+      "bdd-test",
+      testPath,
+      runtime
+    );
+    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+      await this.executeCommand(
+        `${processId}-remove`,
+        `docker rm -f ${containerName}`,
+        "bdd-test",
+        testPath,
+        runtime
+      );
+    }
+    const baseImage = this.getRuntimeImage(runtime);
+    const dockerRunCmd = `docker run --rm       --name ${containerName}       --network allTests_network       -v ${process.cwd()}:/workspace       -w /workspace       ${baseImage}       sh -c "${bddCommand}"`;
+    console.log(`[ProcessManager] Running BDD test in Docker: ${dockerRunCmd}`);
     const result = await this.executeCommand(
       processId,
-      command,
+      dockerRunCmd,
       "bdd-test",
       testPath,
       runtime
     );
     if (!result.success) {
       console.log(`[ProcessManager] BDD test ${processId} failed:`, result.error?.message);
+    } else {
+      console.log(`[ProcessManager] BDD test ${processId} completed successfully`);
+    }
+  }
+  // Helper to get the appropriate Docker image for each runtime
+  getRuntimeImage(runtime) {
+    switch (runtime) {
+      case "node":
+        return "bundles-node-build:latest";
+      case "web":
+        return "bundles-web-build:latest";
+      case "python":
+        return "bundles-python-build:latest";
+      case "golang":
+        return "bundles-golang-build:latest";
+      default:
+        return "alpine:latest";
     }
   }
   async scheduleStaticTests(metafile, runtime, entrypoint, addableFiles) {
@@ -2669,18 +2763,41 @@ ${details.join("\n")}`;
     }
     let checkIndex = 0;
     for (const check of this.configs[runtime].checks) {
-      const processId = `allTests-${runtime}-${testPath}-${checkIndex}`;
+      const processId = `allTests-${runtime}-${testPath}-static-${checkIndex}`;
       console.log(`[ProcessManager] Static process ID: ${processId}`);
-      const command = `${check(addableFiles)}`;
+      const checkCommand = check(addableFiles);
+      const containerName = `static-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}-${checkIndex}`;
+      const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+      const checkResult = await this.executeCommand(
+        `${processId}-check`,
+        checkCmd,
+        "build-time",
+        testPath,
+        runtime
+      );
+      if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+        await this.executeCommand(
+          `${processId}-remove`,
+          `docker rm -f ${containerName}`,
+          "build-time",
+          testPath,
+          runtime
+        );
+      }
+      const baseImage = this.getRuntimeImage(runtime);
+      const dockerRunCmd = `docker run --rm         --name ${containerName}         --network allTests_network         -v ${process.cwd()}:/workspace         -w /workspace         ${baseImage}         sh -c "${checkCommand}"`;
+      console.log(`[ProcessManager] Running static test in Docker: ${dockerRunCmd}`);
       const result = await this.executeCommand(
         processId,
-        command,
+        dockerRunCmd,
         "build-time",
         testPath,
         runtime
       );
       if (!result.success) {
         console.log(`[ProcessManager] Static test ${processId} failed:`, result.error?.message);
+      } else {
+        console.log(`[ProcessManager] Static test ${processId} completed successfully`);
       }
       checkIndex++;
     }
@@ -2729,9 +2846,30 @@ ${details.join("\n")}`;
         details: "Started processing job from queue"
       });
       try {
+        const containerName = `queue-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
+        const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+        const checkResult = await this.executeCommand(
+          `${processId}-check`,
+          checkCmd,
+          "bdd-test",
+          testName,
+          runtime
+        );
+        if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+          await this.executeCommand(
+            `${processId}-remove`,
+            `docker rm -f ${containerName}`,
+            "bdd-test",
+            testName,
+            runtime
+          );
+        }
+        const baseImage = this.getRuntimeImage(runtime);
+        const dockerRunCmd = `docker run --rm           --name ${containerName}           --network allTests_network           -v ${process.cwd()}:/workspace           -w /workspace           ${baseImage}           sh -c "${command}"`;
+        console.log(`[Queue] Running in Docker: ${dockerRunCmd}`);
         await this.executeCommand(
           processId,
-          command,
+          dockerRunCmd,
           "bdd-test",
           testName,
           runtime

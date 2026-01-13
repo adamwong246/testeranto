@@ -373,9 +373,12 @@ export function activate(context: vscode.ExtensionContext): void {
                 // Wait a bit for the terminal to be ready
                 setTimeout(() => {
                     aiderTerminal.sendText(`echo "Connecting to aider process in container: ${containerName}"`);
-                    // Attach to the running aider process with interactive mode
-                    // Use docker exec to attach to the aider process with stdin/stdout/stderr
-                    aiderTerminal.sendText(`docker exec -it ${containerName} aider --yes --dark-mode`);
+                    // Check if the container is running
+                    aiderTerminal.sendText(`docker ps --filter "name=${containerName}" --format "{{.Names}}"`);
+                    // Connect to the running aider process
+                    aiderTerminal.sendText(`docker exec -it ${containerName} /bin/bash`);
+                    // Show a message about how to start aider if needed
+                    aiderTerminal.sendText(`echo "Once inside the container, you can run: aider --yes --dark-mode"`);
                 }, 500);
             }
         }

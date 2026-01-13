@@ -12,6 +12,18 @@ import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,
 } from "./index.js";
+import { argv } from "process";
+
+
+import puppeteer from 'puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js';
+
+const browser = await puppeteer.connect({
+  browserWSEndpoint: '9222',
+});
+
+console.log(`[NodeTiposkripto] ${process.argv}`);
+
+const config = { ports: [1111], fs: 'testeranto/reports/allTests/example/Calculator.test/node' }
 
 export class NodeTiposkripto<
   I extends Ibdd_in_any,
@@ -25,24 +37,26 @@ export class NodeTiposkripto<
     testResourceRequirement: ITTestResourceRequest,
     testAdapter: Partial<ITestAdapter<I>>
   ) {
+    console.log(`[NodeTiposkripto] constructor ${process.argv[3]}`);
+    // const config = JSON.parse(process.argv[3])
+
+
+
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
       testAdapter,
-      JSON.parse(process.argv[3])
+      config
     );
   }
 
-  async writeFileSync({
-    filename,
-    payload,
-  }: {
-    filename: string;
-    payload: any;
-  }) {
-    fs.writeFileSync(filename, payload);
+  async writeFileSync(
+    filename: string,
+    payload: string,
+  ) {
+    fs.writeFileSync(`${config.fs}/${filename}`, payload);
   }
 }
 

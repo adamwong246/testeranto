@@ -1,0 +1,36 @@
+[2026-01-13T04:37:27.384Z] [stdout] Starting command: docker build -t testeranto-aider:latest -f /Users/adam/Code/testeranto/testeranto/temp/Dockerfile.aider /Users/adam/Code/testeranto/testeranto/temp
+[2026-01-13T04:37:31.835Z] [stderr] #0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.aider
+#1 transferring dockerfile: 329B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11-slim
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM docker.io/library/python:3.11-slim@sha256:2b6ff3fa5bbd16430f20e7465ad0c7ef059333f350c8a6e848b5b109789a88e3
+#4 resolve docker.io/library/python:3.11-slim@sha256:2b6ff3fa5bbd16430f20e7465ad0c7ef059333f350c8a6e848b5b109789a88e3 done
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /workspace
+#5 CACHED
+
+#6 [3/4] RUN pip install --no-cache-dir aider-chat
+#6 CACHED
+
+#7 [4/4] RUN useradd -m -u 1000 aider && chown -R aider:aider /workspace
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:6de2a43028ee7f9041738ac1955051505019701774aa7fb6a0916b8dfa1b3799 done
+#8 naming to docker.io/library/testeranto-aider:latest done
+#8 DONE 0.0s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/mwbot54a4zkj8crnk9zke38ak
+
+[2026-01-13T04:37:31.836Z] [stdout] Process aider-image-build completed successfully

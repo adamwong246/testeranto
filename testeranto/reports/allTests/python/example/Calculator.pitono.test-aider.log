@@ -1,0 +1,134 @@
+[2026-01-13T04:37:10.571Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:37:12.232Z] [stdout] 9cf6925a1f41683ae00a353242f182a0254e0703b19f9dff286fedc1e6f0d646
+
+[2026-01-13T04:37:12.232Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:37:12.233Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:37:12.233Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:37:12.233Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:37:12.536Z] [stdout] Aider Docker container already running: aider-python-Calculator-pitono-test
+[2026-01-13T04:37:15.601Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:37:17.046Z] [stdout] d1e43d99096580f04359a790e2fc6c7573dd4db1d56c735ab5ccefe6641906f9
+
+[2026-01-13T04:37:17.046Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:37:17.046Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:37:17.047Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:37:17.047Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:37:20.507Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:37:21.596Z] [stdout] d20e570c65ef64db47ef49f3e5b07ef3b0d82d19c82ad5b14eff81984287ec0b
+
+[2026-01-13T04:37:21.597Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:37:21.597Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:37:21.597Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:37:21.597Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:37:32.094Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:37:33.458Z] [stdout] 48100b7f87e32d81f4aa0ca7553cf97d7337a13171ee255583c3a7a2cfd6af16
+
+[2026-01-13T04:37:33.459Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:37:33.459Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:37:33.459Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:37:33.459Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:37:41.024Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:37:41.919Z] [stdout] 7ee74553e73d5d0d4efaf124a2473286d5aefdc7f63156cc537da3459137ab06
+
+[2026-01-13T04:37:41.919Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:37:41.920Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:37:41.920Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:37:41.920Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:38:06.650Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:38:07.161Z] [stdout] 6a8ce4097d27bb5ad51d79fae18717a28f61ba0a74198d1d8efe49282a8ecac9
+
+[2026-01-13T04:38:07.161Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:38:07.162Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:38:07.162Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:38:07.162Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:38:58.394Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:38:58.809Z] [stdout] 0d152b5de55b0b92766e4cf79d1157c092745062aa9d94d3d89c6bb2a4f8ddea
+
+[2026-01-13T04:38:58.809Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:38:58.810Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:38:58.810Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:38:58.810Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:39:58.761Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:39:59.181Z] [stdout] 9babca74919ea6a87a590b007c6263bd25bc37388562879fff9b709fb751ddb7
+
+[2026-01-13T04:39:59.181Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:39:59.182Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:39:59.182Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:39:59.182Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:40:59.121Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:40:59.635Z] [stdout] 8a8b4eff2d6391a386f5ef6eb8c37203abec508a244dea84c76167cbc144a16e
+
+[2026-01-13T04:40:59.635Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:40:59.636Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:40:59.636Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:40:59.636Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:41:59.399Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:41:59.940Z] [stdout] c5836eae9485ca2e1c38a11557ef158fa9cf9878fa3946bbfa2370c1959cd221
+
+[2026-01-13T04:41:59.940Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:41:59.940Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:41:59.941Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:41:59.941Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:42:59.681Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:43:00.290Z] [stdout] df2921fa76374b1e18af4fef9c86c1866ba95934316d78b36506e801de269f61
+
+[2026-01-13T04:43:00.290Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:43:00.290Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:43:00.291Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:43:00.291Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:43:59.917Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:44:00.170Z] [stdout] e48da35303a1bbdab4c33d2a4bb82e2d009f1be863af566a76040ecf41e88112
+
+[2026-01-13T04:44:00.170Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:44:00.170Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:44:00.171Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:44:00.171Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:45:00.183Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:45:00.671Z] [stdout] 536976b518fb1106e75210062d00ab3b93c18dc08bb7865ed6d4b3fa9b8570cd
+
+[2026-01-13T04:45:00.671Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:45:00.671Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:45:00.671Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:45:00.671Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:46:00.469Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:46:01.287Z] [stdout] 2e2096b5fec708c972a0d54108c1f771a87b876a89e8f36d450867d53cfbacaf
+
+[2026-01-13T04:46:01.287Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:46:01.287Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:46:01.288Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:46:01.288Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:47:00.810Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:47:01.211Z] [stdout] 30d6c9cc2ffa1506f82556c491d193373ff4f1cebc9c20fcd2cbf88868ead07e
+
+[2026-01-13T04:47:01.212Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:47:01.212Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:47:01.212Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:47:01.212Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:48:01.122Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:48:01.680Z] [stdout] 5f289ec77b5de595e64ead11a5db4a747194f71020993addf24bdd454b5d4096
+
+[2026-01-13T04:48:01.680Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:48:01.681Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:48:01.681Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:48:01.681Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:49:01.421Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:49:01.758Z] [stdout] d6615ca889716da21919218e30d7aca9b3262466a86f81a3735de4849288f44f
+
+[2026-01-13T04:49:01.759Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:49:01.759Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:49:01.759Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:49:01.759Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:50:01.681Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:50:02.355Z] [stdout] dd4e739dd6182ef1e972fb9f19864c9f4bbf2e24b8b979aac43597c1557b983e
+
+[2026-01-13T04:50:02.356Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:50:02.356Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:50:02.356Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:50:02.356Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"
+[2026-01-13T04:51:02.008Z] [stdout] Starting command: docker run -d --name aider-python-Calculator-pitono-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest example/Calculator.pitono.test.py example/Calculator.py
+[2026-01-13T04:51:02.356Z] [stdout] 2516b1ddfc38085d4ad988b310295673f7de388783fe5a783a1bafa3f80e0138
+
+[2026-01-13T04:51:02.356Z] [stdout] Process allTests-python-Calculator.pitono.test-aider completed successfully
+[2026-01-13T04:51:02.356Z] [stdout] Aider Docker container started: aider-python-Calculator-pitono-test
+[2026-01-13T04:51:02.356Z] [stdout] To connect to this aider session, use: docker exec -it aider-python-Calculator-pitono-test /bin/bash
+[2026-01-13T04:51:02.356Z] [stdout] VS Code terminal command: docker exec -it aider-python-Calculator-pitono-test bash -c "aider --yes --dark-mode example/Calculator.pitono.test.py example/Calculator.py"

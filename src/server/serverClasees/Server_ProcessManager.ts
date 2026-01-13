@@ -1,6 +1,8 @@
 // This Server manages processes-as-docker-commands. Processes are scheduled in queue.
 // It should also leverage Server_HTTP and SERVER_WS
 
+const { exec } = await import("child_process");
+const { promisify } = await import("util");
 import { default as ansiC } from "ansi-colors";
 import Queue from "queue";
 import fs from "fs";
@@ -14,6 +16,10 @@ import {
   ProcessInfo,
 } from "./utils/Server_ProcessManager";
 import { IMetaFile } from "./utils/types";
+import { nodeBddCommand } from "../runtimes/node/docker";
+import { webBddCommand } from "../runtimes/web/docker";
+import { pythonBDDCommand } from "../runtimes/python/docker";
+import { golangBddCommand } from "../runtimes/golang/docker";
 // ProcessManagerReactApp is bundled separately and served via HTTP
 // We don't need to import it here
 
@@ -205,19 +211,48 @@ export class Server_ProcessManager extends Server_FS {
     message: string,
     timestamp: Date
   ) {
+    // Parse runtime from processId
+    // Process IDs follow pattern: allTests-{runtime}-{testName}-{index}
+    // Example: allTests-node-Calculator.test-0
+    let runtime = "unknown";
+    if (processId.startsWith('allTests-')) {
+      const parts = processId.split('-');
+      if (parts.length >= 2) {
+        runtime = parts[1];
+      }
+    }
+    
+    // All tests are in the 'example' directory
     const logDir = path.join(
       process.cwd(),
       "testeranto",
       "reports",
       this.projectName,
-      "docker-process-logs"
+      runtime,
+      "example"
     );
+    
+    // Ensure the directory exists
     if (!fs.existsSync(logDir)) {
       fs.mkdirSync(logDir, { recursive: true });
     }
 
+    // Extract the filename from processId
+    // allTests-node-Calculator.test-0 -> Calculator.test-0.log
+    let logFileName = processId;
+    if (processId.startsWith('allTests-')) {
+      // Remove 'allTests-'
+      const withoutPrefix = processId.substring('allTests-'.length);
+      // Find the first dash after runtime
+      const firstDashIndex = withoutPrefix.indexOf('-');
+      if (firstDashIndex !== -1) {
+        // Take everything after 'allTests-{runtime}-'
+        logFileName = withoutPrefix.substring(firstDashIndex + 1);
+      }
+    }
+    
     // Create or append to log file
-    const logFile = path.join(logDir, `${processId}.log`);
+    const logFile = path.join(logDir, `${logFileName}.log`);
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}\n`;
 
     fs.appendFileSync(logFile, logEntry);
@@ -267,7 +302,7 @@ export class Server_ProcessManager extends Server_FS {
     options?: any
   ) => {
 
-    console.log(`[ProcessManager] ${processId} ${command}`);
+    console.log(`[ProcessManager] executeCommand( ${processId}, ${command} )`);
     
     // Validate processId
     if (!processId || typeof processId !== 'string') {
@@ -275,8 +310,7 @@ export class Server_ProcessManager extends Server_FS {
       processId = `fallback-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     }
 
-    const { exec } = await import("child_process");
-    const { promisify } = await import("util");
+    
     const execAsync = promisify(exec);
 
     this.addLogEntry(processId, "stdout", `Starting command: ${command}`, new Date(), "info");
@@ -767,13 +801,199 @@ export class Server_ProcessManager extends Server_FS {
     const processId = `allTests-${runtime}-${testPath}-bdd`;
     console.log(`[ProcessManager] BDD process ID: ${processId}`);
     
-    const command = `yarn tsx ${entrypoint}`;
+    // Get the appropriate BDD command for the runtime
+    let bddCommand = "";
+    if (runtime === "node") {
+      bddCommand = nodeBddCommand(this.configs.httpPort);
+    } else if (runtime === "web") {
+      bddCommand = webBddCommand(this.configs.httpPort);
+    } else if (runtime === "python") {
+      bddCommand = pythonBDDCommand(this.configs.httpPort);
+    } else if (runtime === "golang") {
+      bddCommand = golangBddCommand(this.configs.httpPort);
+    } else {
+      bddCommand = `echo 'not yet implemented'`;
+    }
     
-    // Instead of using enqueue, we'll execute directly with proper ID
-    // The executeCommand now returns a safe promise that never rejects
+    // For web tests, we need a different approach to keep chromium running
+    if (runtime === "web") {
+      await this.runWebBddTest(processId, testPath, bddCommand);
+    } else {
+      // Run other BDD tests in Docker containers as before
+      await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
+    }
+  }
+
+  private async runWebBddTest(
+    processId: string,
+    testPath: string,
+    bddCommand: string
+  ): Promise<void> {
+    console.log(`[ProcessManager] Running web BDD test: ${processId}`);
+    
+    // For web tests, we need to:
+    // 1. Start chromium with remote debugging
+    // 2. Run the actual test script that connects to chromium
+    // 3. Ensure chromium stays alive during the test
+    
+    // First, start chromium in the background
+    const chromiumContainerName = `chromium-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
+    
+    // Check if chromium container is already running
+    const checkCmd = `docker ps -a --filter "name=${chromiumContainerName}" --format "{{.Names}}"`;
+    const checkResult = await this.executeCommand(
+      `${processId}-check-chromium`,
+      checkCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    
+    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === chromiumContainerName) {
+      // Container exists, remove it
+      await this.executeCommand(
+        `${processId}-remove-chromium`,
+        `docker rm -f ${chromiumContainerName}`,
+        "bdd-test",
+        testPath,
+        "web"
+      );
+    }
+    
+    // Start chromium container
+    const chromiumCmd = `docker run -d \
+      --name ${chromiumContainerName} \
+      --network allTests_network \
+      -p 9222:9222 \
+      --shm-size=2g \
+      browserless/chrome:latest \
+      --remote-debugging-port=9222 \
+      --remote-debugging-address=0.0.0.0`;
+    
+    console.log(`[ProcessManager] Starting chromium container: ${chromiumCmd}`);
+    
+    const chromiumResult = await this.executeCommand(
+      `${processId}-chromium`,
+      chromiumCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    
+    if (!chromiumResult.success) {
+      console.error(`[ProcessManager] Failed to start chromium: ${chromiumResult.error}`);
+      return;
+    }
+    
+    // Wait for chromium to be ready
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    
+    // Now run the test command which should connect to chromium via remote debugging
+    const testContainerName = `web-test-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
+    
+    // Remove existing test container if any
+    const checkTestCmd = `docker ps -a --filter "name=${testContainerName}" --format "{{.Names}}"`;
+    const checkTestResult = await this.executeCommand(
+      `${processId}-check-test`,
+      checkTestCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    
+    if (checkTestResult.success && checkTestResult.stdout && checkTestResult.stdout.trim() === testContainerName) {
+      await this.executeCommand(
+        `${processId}-remove-test`,
+        `docker rm -f ${testContainerName}`,
+        "bdd-test",
+        testPath,
+        "web"
+      );
+    }
+    
+    // Run the test in a separate container that connects to chromium
+    const testRunCmd = `docker run --rm \
+      --name ${testContainerName} \
+      --network allTests_network \
+      -v ${process.cwd()}:/workspace \
+      -w /workspace \
+      -e CHROMIUM_URL=http://${chromiumContainerName}:9222 \
+      bundles-web-build:latest \
+      sh -c "${bddCommand}"`;
+    
+    console.log(`[ProcessManager] Running web test: ${testRunCmd}`);
+    
+    const testResult = await this.executeCommand(
+      processId,
+      testRunCmd,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    
+    // Clean up chromium container after test
+    await this.executeCommand(
+      `${processId}-cleanup-chromium`,
+      `docker rm -f ${chromiumContainerName}`,
+      "bdd-test",
+      testPath,
+      "web"
+    );
+    
+    // Log the result
+    if (!testResult.success) {
+      console.log(`[ProcessManager] Web BDD test ${processId} failed:`, testResult.error?.message);
+    } else {
+      console.log(`[ProcessManager] Web BDD test ${processId} completed successfully`);
+    }
+  }
+
+  private async runBddTestInDocker(
+    processId: string,
+    testPath: string,
+    runtime: IRunTime,
+    bddCommand: string
+  ): Promise<void> {
+    const containerName = `bdd-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
+    
+    // First, check if container is already running and remove it
+    const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+    const checkResult = await this.executeCommand(
+      `${processId}-check`,
+      checkCmd,
+      "bdd-test",
+      testPath,
+      runtime
+    );
+    
+    if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+      // Container exists, remove it
+      await this.executeCommand(
+        `${processId}-remove`,
+        `docker rm -f ${containerName}`,
+        "bdd-test",
+        testPath,
+        runtime
+      );
+    }
+    
+    // Determine the base image to use
+    const baseImage = this.getRuntimeImage(runtime);
+    
+    // Run the BDD test in a new container
+    const dockerRunCmd = `docker run --rm \
+      --name ${containerName} \
+      --network allTests_network \
+      -v ${process.cwd()}:/workspace \
+      -w /workspace \
+      ${baseImage} \
+      sh -c "${bddCommand}"`;
+    
+    console.log(`[ProcessManager] Running BDD test in Docker: ${dockerRunCmd}`);
+    
     const result = await this.executeCommand(
       processId,
-      command,
+      dockerRunCmd,
       "bdd-test",
       testPath,
       runtime
@@ -782,6 +1002,24 @@ export class Server_ProcessManager extends Server_FS {
     // Log the result for debugging
     if (!result.success) {
       console.log(`[ProcessManager] BDD test ${processId} failed:`, result.error?.message);
+    } else {
+      console.log(`[ProcessManager] BDD test ${processId} completed successfully`);
+    }
+  }
+
+  // Helper to get the appropriate Docker image for each runtime
+  private getRuntimeImage(runtime: IRunTime): string {
+    switch (runtime) {
+      case "node":
+        return "bundles-node-build:latest";
+      case "web":
+        return "bundles-web-build:latest";
+      case "python":
+        return "bundles-python-build:latest";
+      case "golang":
+        return "bundles-golang-build:latest";
+      default:
+        return "alpine:latest";
     }
   }
 
@@ -818,14 +1056,54 @@ export class Server_ProcessManager extends Server_FS {
     
     let checkIndex = 0;
     for (const check of this.configs[runtime].checks) {
-      const processId = `allTests-${runtime}-${testPath}-${checkIndex}`;
+      const processId = `allTests-${runtime}-${testPath}-static-${checkIndex}`;
       console.log(`[ProcessManager] Static process ID: ${processId}`);
       
-      const command = `${check(addableFiles)}`;
+      // Get the check command
+      const checkCommand = check(addableFiles);
+      
+      // Run static test in a Docker container
+      const containerName = `static-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}-${checkIndex}`;
+      
+      // First, check if container is already running and remove it
+      const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+      const checkResult = await this.executeCommand(
+        `${processId}-check`,
+        checkCmd,
+        "build-time",
+        testPath,
+        runtime
+      );
+      
+      if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+        // Container exists, remove it
+        await this.executeCommand(
+          `${processId}-remove`,
+          `docker rm -f ${containerName}`,
+          "build-time",
+          testPath,
+          runtime
+        );
+      }
+      
+      // Determine the base image to use
+      const baseImage = this.getRuntimeImage(runtime);
+      
+      // Run the static test in a new container
+      // Mount the workspace to access source files and built artifacts
+      const dockerRunCmd = `docker run --rm \
+        --name ${containerName} \
+        --network allTests_network \
+        -v ${process.cwd()}:/workspace \
+        -w /workspace \
+        ${baseImage} \
+        sh -c "${checkCommand}"`;
+      
+      console.log(`[ProcessManager] Running static test in Docker: ${dockerRunCmd}`);
       
       const result = await this.executeCommand(
         processId,
-        command,
+        dockerRunCmd,
         "build-time",
         testPath,
         runtime
@@ -834,6 +1112,8 @@ export class Server_ProcessManager extends Server_FS {
       // Log the result for debugging
       if (!result.success) {
         console.log(`[ProcessManager] Static test ${processId} failed:`, result.error?.message);
+      } else {
+        console.log(`[ProcessManager] Static test ${processId} completed successfully`);
       }
       
       checkIndex++;
@@ -939,10 +1219,48 @@ export class Server_ProcessManager extends Server_FS {
       });
 
       try {
-        // Execute the command
+        // Run in a Docker container
+        const containerName = `queue-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, '-')}`;
+        
+        // First, check if container is already running and remove it
+        const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+        const checkResult = await this.executeCommand(
+          `${processId}-check`,
+          checkCmd,
+          "bdd-test",
+          testName,
+          runtime
+        );
+        
+        if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+          // Container exists, remove it
+          await this.executeCommand(
+            `${processId}-remove`,
+            `docker rm -f ${containerName}`,
+            "bdd-test",
+            testName,
+            runtime
+          );
+        }
+        
+        // Determine the base image to use
+        const baseImage = this.getRuntimeImage(runtime);
+        
+        // Run the command in a Docker container
+        const dockerRunCmd = `docker run --rm \
+          --name ${containerName} \
+          --network allTests_network \
+          -v ${process.cwd()}:/workspace \
+          -w /workspace \
+          ${baseImage} \
+          sh -c "${command}"`;
+        
+        console.log(`[Queue] Running in Docker: ${dockerRunCmd}`);
+        
+        // Execute the command in Docker
         await this.executeCommand(
           processId,
-          command,
+          dockerRunCmd,
           "bdd-test",
           testName,
           runtime

@@ -31,7 +31,7 @@ export const nodeDockerComposeFile = (config: IBuiltConfig) => {
     command: [
       "sh",
       "-c",
-      `TEST_NAME=allTests WS_PORT=${config.httpPort} yarn tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";`,
+      `TEST_NAME=allTests WS_PORT=${config.httpPort} yarn tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts '{"ports": [1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";`,
     ],
     healthcheck: {
       test: [
@@ -46,6 +46,12 @@ export const nodeDockerComposeFile = (config: IBuiltConfig) => {
   };
 };
 
+
+export const nodeBddCommand = (port) => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `TEST_NAME=allTests WS_PORT=${port} ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+}
+
 export const nodeDockerFile = `
 FROM node:20.19.4-alpine
 WORKDIR /workspace
@@ -53,11 +59,10 @@ COPY ./tsconfig*.json ./
 COPY ./package.json ./package.json
 COPY ./.yarnrc.yml ./
 
-# Install system dependencies
 RUN apk add --no-cache python3 make g++ libxml2-utils
 
-# Install dependencies
 RUN yarn install
+
 `;
 
 export default nodeDockerFile;

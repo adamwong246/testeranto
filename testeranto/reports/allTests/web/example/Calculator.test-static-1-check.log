@@ -1,0 +1,2 @@
+[2026-01-13T04:37:26.747Z] [stdout] Starting command: docker ps -a --filter "name=static-web-Calculator-test-1" --format "{{.Names}}"
+[2026-01-13T04:37:26.819Z] [stdout] Process allTests-web-Calculator.test-static-1-check completed successfully

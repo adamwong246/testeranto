@@ -1,0 +1,4 @@
+[2026-01-13T04:37:11.473Z] [stdout] Starting command: docker ps -a --filter "name=chromium-Calculator-test" --format "{{.Names}}"
+[2026-01-13T04:37:11.521Z] [stdout] chromium-Calculator-test
+
+[2026-01-13T04:37:11.522Z] [stdout] Process allTests-web-Calculator.test-bdd-check-chromium completed successfully

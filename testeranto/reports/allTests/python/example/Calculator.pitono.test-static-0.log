@@ -1,0 +1,719 @@
+[2026-01-13T04:37:10.410Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:37:13.313Z] [stdout] Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+[2026-01-13T04:37:13.313Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:37:13.313Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:37:13.314Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:37:16.256Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:37:16.259Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:37:16.259Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:37:16.259Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:37:20.615Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:37:20.625Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:37:20.625Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:37:20.625Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:37:24.439Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:37:24.439Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:37:24.439Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:37:27.380Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:37:27.412Z] [stdout] Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+docker: Cannot connect to the Docker daemon at unix:///Users/adam/.docker/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+[2026-01-13T04:37:27.412Z] [stderr] docker: Cannot connect to the Docker daemon at unix:///Users/adam/.docker/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+[2026-01-13T04:37:27.413Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:37:40.867Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:37:43.179Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:37:43.180Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:37:43.180Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:38:06.565Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:38:08.607Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:38:08.607Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:38:08.607Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:38:58.305Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:38:59.657Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:38:59.657Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:38:59.657Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:39:58.678Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:40:00.089Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:40:00.090Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:40:00.090Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:40:58.996Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:41:00.427Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:41:00.428Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:41:00.428Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:41:59.282Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:42:00.932Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:42:00.932Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:42:00.933Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:42:59.571Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:43:01.164Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:43:01.164Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:43:01.164Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:43:59.823Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:44:01.310Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:44:01.311Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:44:01.311Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:45:00.088Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:45:01.411Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:45:01.411Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:45:01.411Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:46:00.336Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:46:02.473Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:46:02.473Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:46:02.473Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:47:00.708Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:47:02.088Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:47:02.088Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:47:02.088Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:48:01.035Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:48:02.374Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:48:02.375Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:48:02.375Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:49:01.306Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:49:02.526Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:49:02.526Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.<anonymous> (node:net:343:12)
+[2026-01-13T04:49:02.526Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:50:01.584Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:50:03.196Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:50:03.197Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:50:03.197Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error
+[2026-01-13T04:51:01.923Z] [stdout] Starting command: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+[2026-01-13T04:51:03.028Z] [stdout] ************* Module example/Calculator.py}
+example/Calculator.py}:1:0: F0001: No module named example/Calculator.py} (fatal)
+************* Module Calculator.pitono.test
+example/Calculator.pitono.test.py:33:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:38:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:43:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:48:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:53:0: C0301: Line too long (101/100) (line-too-long)
+example/Calculator.pitono.test.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:86:0: C0301: Line too long (110/100) (line-too-long)
+example/Calculator.pitono.test.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+example/Calculator.pitono.test.py:13:0: C0413: Import "from Calculator import Calculator" should be placed at the top of the module (wrong-import-position)
+example/Calculator.pitono.test.py:17:0: C0103: Constant name "specification" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:18:0: C0103: Constant name "implementation" doesn't conform to UPPER_CASE naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: C0103: Argument name "Suite" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:32: C0103: Argument name "Given" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:39: C0103: Argument name "When" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:45: C0103: Argument name "Then" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:51: C0103: Argument name "Check" doesn't conform to snake_case naming style (invalid-name)
+example/Calculator.pitono.test.py:20:25: W0613: Unused argument 'Suite' (unused-argument)
+example/Calculator.pitono.test.py:20:51: W0613: Unused argument 'Check' (unused-argument)
+example/Calculator.pitono.test.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+-----------------------------------
+Your code has been rated at 0.00/10
+
+
+[2026-01-13T04:51:03.028Z] [stderr] Error: Command failed: docker run --rm         --name static-python-Calculator-pitono-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-python-build:latest         sh -c "pylint example/Calculator.pitono.test.py example/Calculator.py}"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:51:03.028Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0 completed with non-critical error

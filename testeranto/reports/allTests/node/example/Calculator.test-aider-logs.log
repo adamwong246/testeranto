@@ -1,0 +1,88 @@
+[2026-01-13T04:37:12.741Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:12.917Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:12.917Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:19.415Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:19.466Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:19.467Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:21.394Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:21.445Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:21.445Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:24.747Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:24.789Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:24.790Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:28.504Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:29.764Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:29.765Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:35.796Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:35.826Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:35.826Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:43.461Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:43.528Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:43.528Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:37:58.358Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:37:58.394Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:37:58.394Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:38:24.765Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:38:24.801Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:38:24.801Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:39:16.559Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:39:16.586Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:39:16.586Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:40:17.310Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:40:17.334Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:40:17.334Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:41:18.199Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:41:18.239Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:41:18.239Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:42:18.729Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:42:18.764Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:42:18.764Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:43:19.413Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:43:19.444Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:43:19.444Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:44:20.270Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:44:20.310Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:44:20.310Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:45:20.703Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:45:20.728Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:45:20.728Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:46:21.513Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:46:21.548Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:46:21.548Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:47:22.244Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:47:22.273Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:47:22.273Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:48:23.078Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:48:23.117Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:48:23.118Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:49:23.463Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:49:23.499Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:49:23.500Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:50:24.123Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:50:24.166Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:50:24.166Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully
+[2026-01-13T04:51:24.992Z] [stdout] Starting command: docker logs aider-node-Calculator-test
+[2026-01-13T04:51:25.026Z] [stderr] exec src/lib/tiposkripto/index.ts: permission denied
+
+[2026-01-13T04:51:25.027Z] [stdout] Process allTests-node-Calculator.test-aider-logs completed successfully

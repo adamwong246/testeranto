@@ -1,0 +1,155 @@
+[2026-01-13T04:37:09.667Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:10.739Z] [stdout] 2f8af63d6c900ec7c892171287204899c2cd722c026ff8a17c2f4b10135dea28
+
+[2026-01-13T04:37:10.739Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:10.740Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:10.740Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:10.740Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:11.096Z] [stdout] Aider Docker container already running: aider-node-Calculator-test
+[2026-01-13T04:37:15.579Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:17.414Z] [stdout] 3eb76d513f4ffb29579338f0b0cde12a74f9a77fda1c5a55c9b3ea4c098f4067
+
+[2026-01-13T04:37:17.414Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:17.414Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:17.414Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:17.414Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:18.148Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:19.392Z] [stdout] 7f1e0247d62c9aab45e43244577240242173d79879d1054c067005d86cbdde86
+
+[2026-01-13T04:37:19.393Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:19.393Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:19.393Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:19.393Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:21.528Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:22.745Z] [stdout] f58b53f91c99d92bc2245e5301f7170272d911e742ccb739147d7587d082043e
+
+[2026-01-13T04:37:22.745Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:22.745Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:22.745Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:22.746Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:25.692Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:26.501Z] [stdout] 974fd0adf1e3b9463fa138f7d1a3fbcf231bb3165761c9ac52f6fc36c89efcc6
+
+[2026-01-13T04:37:26.501Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:26.501Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:26.502Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:26.502Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:32.723Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:33.796Z] [stdout] d1f70b3f0a3432c3308efc6882927ec91bd5c25172ae91ed41bd92a7811f82c3
+
+[2026-01-13T04:37:33.796Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:33.796Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:33.796Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:33.796Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:40.388Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:41.459Z] [stdout] fc90500e528bad3419fbbcac28a1f73ebc8fb693c63c779a86d100df7761a232
+
+[2026-01-13T04:37:41.459Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:41.459Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:41.460Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:41.460Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:37:55.708Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:37:56.356Z] [stdout] e02e90b37c04d66eb6c4b3a078ed5809b11dbb09183b4f3486eb31bb5a6ceada
+
+[2026-01-13T04:37:56.357Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:37:56.357Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:37:56.357Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:37:56.357Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:38:22.212Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:38:22.764Z] [stdout] 610d435d030dd3fe498416dcf94535a8d047e63f3303d79992d5343db9b65347
+
+[2026-01-13T04:38:22.764Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:38:22.765Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:38:22.765Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:38:22.765Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:39:14.234Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:39:14.557Z] [stdout] ae9874603a3d2818c82940b770ea01b900556f6c6b89e24c182ac56381d3e190
+
+[2026-01-13T04:39:14.558Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:39:14.558Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:39:14.558Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:39:14.558Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:40:15.023Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:40:15.308Z] [stdout] 9257be39dc17b014cc4272db5d52fe05d2ea176c455cbc1f8777e84bfd15656c
+
+[2026-01-13T04:40:15.308Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:40:15.309Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:40:15.309Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:40:15.309Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:41:15.798Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:41:16.197Z] [stdout] 61ae1e450b34e0a8ff9110c2aef4b7a076695c65f541c074a6aacc897c4288f4
+
+[2026-01-13T04:41:16.197Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:41:16.198Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:41:16.198Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:41:16.198Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:42:16.416Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:42:16.726Z] [stdout] 58cfa38277e6d5bc8274cbfb1a7e0759aceedfa96f149906aae0a4876ef69789
+
+[2026-01-13T04:42:16.727Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:42:16.727Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:42:16.727Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:42:16.728Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:43:17.075Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:43:17.411Z] [stdout] 42593e29a5d1cfcb3857edccc85058f1d636a615dfa64db463a7846becbf8492
+
+[2026-01-13T04:43:17.411Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:43:17.412Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:43:17.412Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:43:17.412Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:44:17.858Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:44:18.269Z] [stdout] f9b86f0b596ddf052c1b5752e93f25d4ef8d514059e58f6c9b203f9bef4654d4
+
+[2026-01-13T04:44:18.269Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:44:18.269Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:44:18.270Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:44:18.270Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:45:18.432Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:45:18.701Z] [stdout] 64c292c1108f8aff2b91f862677a41045c3df7c4e56de893f128b7fbc1ade0c6
+
+[2026-01-13T04:45:18.701Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:45:18.702Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:45:18.702Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:45:18.702Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:46:19.187Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:46:19.511Z] [stdout] 5802ed3c84f5264283e4d56124d0b4d72c2356f5de6fc233541b750b30ebb574
+
+[2026-01-13T04:46:19.511Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:46:19.511Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:46:19.512Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:46:19.512Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:47:19.920Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:47:20.244Z] [stdout] 5aed1d10175a50352e28b1ad3f922a367441e9358ce97e2a345b1c2087d8b2fa
+
+[2026-01-13T04:47:20.244Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:47:20.244Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:47:20.245Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:47:20.245Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:48:20.625Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:48:21.075Z] [stdout] fae4faf87180aa94e884f32b7e7aa229934aa97ce6155b981295e046854ef661
+
+[2026-01-13T04:48:21.075Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:48:21.075Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:48:21.075Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:48:21.075Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:49:21.198Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:49:21.461Z] [stdout] ea43f2d0bcd997c11323cc84825803f20e66595c08746623495b8d8793b05da0
+
+[2026-01-13T04:49:21.461Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:49:21.461Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:49:21.462Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:49:21.462Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:50:21.884Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:50:22.120Z] [stdout] 709f45dacc0a0a28af4ff83b24d0b2fe3b7a4b3454ed12f363d0454416f90ac8
+
+[2026-01-13T04:50:22.121Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:50:22.121Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:50:22.121Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:50:22.121Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"
+[2026-01-13T04:51:22.747Z] [stdout] Starting command: docker run -d --name aider-node-Calculator-test -v /Users/adam/Code/testeranto:/workspace -w /workspace --network allTests_network testeranto-aider:latest src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts
+[2026-01-13T04:51:22.991Z] [stdout] 25bb15d756874f04ba189627ffb87cbcfdb48041695164c5bbf5fed29e227183
+
+[2026-01-13T04:51:22.992Z] [stdout] Process allTests-node-Calculator.test-aider completed successfully
+[2026-01-13T04:51:22.992Z] [stdout] Aider Docker container started: aider-node-Calculator-test
+[2026-01-13T04:51:22.992Z] [stdout] To connect to this aider session, use: docker exec -it aider-node-Calculator-test /bin/bash
+[2026-01-13T04:51:22.992Z] [stdout] VS Code terminal command: docker exec -it aider-node-Calculator-test bash -c "aider --yes --dark-mode src/lib/tiposkripto/index.ts src/lib/tiposkripto/BaseGiven.ts src/lib/tiposkripto/BaseSuite.ts src/lib/tiposkripto/BaseThen.ts src/lib/tiposkripto/BaseWhen.ts src/lib/tiposkripto/BaseTiposkripto.ts src/lib/tiposkripto/Node.ts src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts"

@@ -14,6 +14,15 @@ import {
 } from "../../CoreTypes.js";
 import Tiposkripto from "./BaseTiposkripto.js";
 
+const config = { 
+  name: 'web',
+  fs: 'testeranto/reports/allTests/example/Calculator.test/web',
+  ports: [1111],
+  files: [],
+  timeout: 30000,
+  retries: 3,
+  environment: {}
+}
 export class WebTiposkripto<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any,
@@ -38,30 +47,35 @@ export class WebTiposkripto<
       testImplementation,
       testResourceRequirement,
       testAdapter,
-      JSON.parse(testResourceConfig)
+      // JSON.parse(testResourceConfig)
+      config
     );
   }
 
-  async writeFileSync({
-    filename,
-    payload,
-  }: {
-    filename: string;
-    payload: any;
-  }) {
-    const root = await navigator.storage.getDirectory();
-
-    // 1. Create (or get) a file handle
-    const fileHandle = await root.getFileHandle(filename, { create: true });
-
-    // 2. Create a writable stream
-    const writable = await fileHandle.createWritable();
-
-    // 3. Write data (strings, Blobs, or ArrayBuffers)
-    await writable.write(JSON.stringify(payload));
-
-    // 4. Close the stream to save changes
-    await writable.close();
+  writeFileSync(
+    filename: string,
+    payload: string,
+  ): void {
+    // Store files in a global object that can be accessed via Puppeteer
+    if (!(window as any).__testeranto_files__) {
+      (window as any).__testeranto_files__ = {};
+    }
+    (window as any).__testeranto_files__[filename] = payload;
+    
+    // Also try to use the File System Access API if available
+    if (navigator.storage && navigator.storage.getDirectory) {
+      (async () => {
+        try {
+          const root = await navigator.storage.getDirectory();
+          const fileHandle = await root.getFileHandle(filename, { create: true });
+          const writable = await fileHandle.createWritable();
+          await writable.write(payload);
+          await writable.close();
+        } catch (e) {
+          console.warn('Could not write to browser storage:', e);
+        }
+      })();
+    }
   }
 }
 
@@ -80,7 +94,17 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testResourceRequirement,
       testAdapter
     );
+
+    // const data = navigator.storage.
+    const root = await navigator.storage.getDirectory();
+
+    // 1. Create (or get) a file handle
+    const fileHandle = await root.getFileHandle(`${config.fs}/tests.json`);
+
+
     return t;
+
+
   } catch (e) {
     console.error(e);
     // Dispatch an error event

@@ -27,7 +27,7 @@
         "column": 6,
         "file": "package.json",
         "length": 7,
-        "line": 86,
+        "line": 185,
         "lineText": "      \"types\": \"./src/CoreTypes.d.ts\"",
         "namespace": "",
         "suggestion": ""
@@ -38,7 +38,7 @@
             "column": 6,
             "file": "package.json",
             "length": 8,
-            "line": 84,
+            "line": 183,
             "lineText": "      \"import\": \"./src/CoreTypes.ts\",",
             "namespace": "",
             "suggestion": ""
@@ -50,7 +50,7 @@
             "column": 6,
             "file": "package.json",
             "length": 9,
-            "line": 85,
+            "line": 184,
             "lineText": "      \"require\": \"./src/CoreTypes.ts\",",
             "namespace": "",
             "suggestion": ""
@@ -65,7 +65,7 @@
   "metafile": {
     "inputs": {
       "src/lib/tiposkripto/index.ts": {
-        "bytes": 2589,
+        "bytes": 2666,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -140,7 +140,7 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/BaseTiposkripto.ts": {
-        "bytes": 16325,
+        "bytes": 16423,
         "imports": [
           {
             "path": "type-fest",
@@ -181,7 +181,7 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/Node.ts": {
-        "bytes": 1689,
+        "bytes": 2118,
         "imports": [
           {
             "path": "fs",
@@ -202,25 +202,30 @@
             "path": "src/lib/tiposkripto/index.ts",
             "kind": "import-statement",
             "original": "./index.js"
+          },
+          {
+            "path": "process",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js",
+            "kind": "import-statement",
+            "external": true
           }
         ],
         "format": "esm"
       },
       "src/lib/tiposkripto/Tiposkripto.ts": {
-        "bytes": 1592,
+        "bytes": 1574,
         "imports": [
-          {
-            "path": "../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
           {
             "path": "src/lib/tiposkripto/index.ts",
             "kind": "import-statement",
             "original": "."
           },
           {
-            "path": "./Analyzer",
+            "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
           },
@@ -345,7 +350,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/node/Node-HVH5FCHQ.mjs",
+            "path": "testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -380,7 +385,7 @@
         },
         "bytes": 12171
       },
-      "testeranto/bundles/allTests/node/Node-HVH5FCHQ.mjs": {
+      "testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/node/chunk-GONGMDWG.mjs",
@@ -388,6 +393,11 @@
           },
           {
             "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js",
             "kind": "import-statement",
             "external": true
           }
@@ -399,7 +409,7 @@
         "entryPoint": "src/lib/tiposkripto/Node.ts",
         "inputs": {
           "src/lib/tiposkripto/Node.ts": {
-            "bytesInOutput": 939
+            "bytesInOutput": 1293
           },
           "src/lib/tiposkripto/BaseGiven.ts": {
             "bytesInOutput": 2598
@@ -414,10 +424,10 @@
             "bytesInOutput": 1011
           },
           "src/lib/tiposkripto/BaseTiposkripto.ts": {
-            "bytesInOutput": 6753
+            "bytesInOutput": 6803
           }
         },
-        "bytes": 15949
+        "bytes": 16353
       },
       "testeranto/bundles/allTests/node/chunk-GONGMDWG.mjs": {
         "imports": [],

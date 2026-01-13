@@ -1,0 +1,51 @@
+[2026-01-13T04:37:10.345Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:37:10.409Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:37:12.428Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:37:12.494Z] [stdout] static-python-Calculator-pitono-test-0
+
+[2026-01-13T04:37:12.494Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:37:15.429Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:37:15.486Z] [stdout] static-python-Calculator-pitono-test-0
+
+[2026-01-13T04:37:15.486Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:37:20.246Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:37:20.398Z] [stdout] static-python-Calculator-pitono-test-0
+
+[2026-01-13T04:37:20.399Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:37:27.349Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:37:27.379Z] [stdout] Command failed: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+Cannot connect to the Docker daemon at unix:///Users/adam/.docker/run/docker.sock. Is the docker daemon running?
+
+[2026-01-13T04:37:27.380Z] [stderr] Cannot connect to the Docker daemon at unix:///Users/adam/.docker/run/docker.sock. Is the docker daemon running?
+
+[2026-01-13T04:37:27.380Z] [stderr] Process allTests-python-Calculator.pitono.test-static-0-check completed with non-critical error
+[2026-01-13T04:37:40.695Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:37:40.867Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:38:06.519Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:38:06.565Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:38:58.254Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:38:58.304Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:39:58.651Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:39:58.678Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:40:58.945Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:40:58.995Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:41:59.230Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:41:59.282Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:42:59.506Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:42:59.571Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:43:59.746Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:43:59.823Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:45:00.020Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:45:00.087Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:46:00.248Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:46:00.336Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:47:00.665Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:47:00.707Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:48:00.983Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:48:01.034Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:49:01.256Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:49:01.305Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:50:01.542Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:50:01.583Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully
+[2026-01-13T04:51:01.872Z] [stdout] Starting command: docker ps -a --filter "name=static-python-Calculator-pitono-test-0" --format "{{.Names}}"
+[2026-01-13T04:51:01.923Z] [stdout] Process allTests-python-Calculator.pitono.test-static-0-check completed successfully

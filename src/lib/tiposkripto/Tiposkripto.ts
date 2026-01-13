@@ -1,13 +1,7 @@
-import {
-  Ibdd_in_any,
-  Ibdd_out,
-  ITestSpecification,
-  ITestImplementation,
-  ITestAdapter,
-} from "../CoreTypes";
-import { ITTestResourceRequest, defaultTestResourceRequirement } from ".";
+
+import { ITTestResourceRequest, ITestResourceConfiguration, defaultTestResourceRequirement } from ".";
+import { Ibdd_in_any, Ibdd_out, ITestSpecification, ITestImplementation, ITestAdapter } from "../../CoreTypes";
 import type BaseTiposkripto from "./BaseTiposkripto.js";
-import { Analyzer } from "./Analyzer";
 
 let tpskrt;
 

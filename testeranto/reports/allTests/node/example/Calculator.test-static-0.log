@@ -1,0 +1,404 @@
+[2026-01-13T04:37:09.485Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:11.665Z] [stdout] yarn run v1.22.22
+
+[2026-01-13T04:37:11.666Z] [stderr] Error: Command failed: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at ChildProcess.exithandler (node:child_process:422:12)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+[2026-01-13T04:37:11.666Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:11.669Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:15.954Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+
+[2026-01-13T04:37:15.954Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+[2026-01-13T04:37:15.954Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:15.961Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:18.610Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+
+[2026-01-13T04:37:18.610Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+[2026-01-13T04:37:18.611Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:18.617Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:22.217Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:22.221Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+
+[2026-01-13T04:37:22.221Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+[2026-01-13T04:37:22.221Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:25.871Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+
+[2026-01-13T04:37:25.872Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+[2026-01-13T04:37:25.872Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:25.877Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:33.134Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:33.136Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+
+[2026-01-13T04:37:33.136Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+[2026-01-13T04:37:33.136Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:38.560Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:37:38.561Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:37:38.561Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:40.224Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:46.855Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:37:46.856Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:37:46.856Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:37:55.560Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:37:58.737Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:37:58.738Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:37:58.738Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:38:22.113Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:38:24.493Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:38:24.493Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:38:24.493Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:39:14.141Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:39:16.182Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:39:16.182Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:39:16.182Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:40:14.945Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:40:17.152Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:40:17.153Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:40:17.153Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:41:15.661Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:41:17.832Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:41:17.833Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:41:17.833Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:42:16.336Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:42:18.495Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:42:18.496Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:42:18.496Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:43:16.985Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:43:19.184Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:43:19.184Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:43:19.184Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:44:17.684Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:44:19.789Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:44:19.789Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:44:19.790Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:45:18.340Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:45:20.302Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:45:20.302Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:45:20.303Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:46:19.086Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:46:21.162Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:46:21.162Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:46:21.162Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:47:19.829Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:47:22.185Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:47:22.185Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:47:22.185Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:48:20.535Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:48:22.776Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:48:22.776Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:48:22.777Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:49:21.117Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:49:23.161Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:49:23.162Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:49:23.162Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:50:21.799Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:50:23.782Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:50:23.783Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:50:23.783Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error
+[2026-01-13T04:51:22.587Z] [stdout] Starting command: docker run --rm         --name static-node-Calculator-test-0         --network allTests_network         -v /Users/adam/Code/testeranto:/workspace         -w /workspace         bundles-node-build:latest         sh -c "yarn eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts"
+[2026-01-13T04:51:24.755Z] [stdout] yarn run v1.22.22
+$ /workspace/node_modules/.bin/eslint src/lib/tiposkripto/Tiposkripto.ts example/Calculator.ts example/Calculator.test.adapter.ts example/Calculator.test.implementation.ts example/Calculator.test.specification.ts example/Calculator.test.ts
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+[2026-01-13T04:51:24.756Z] [stderr] warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.1
+
+A configuration object specifies rule "import/no-dynamic-require", but could not find plugin "import".
+
+Common causes of this problem include:
+
+1. The "import" plugin is not defined in your configuration file.
+2. The "import" plugin is not defined within the same configuration object in which the "import/no-dynamic-require" rule is applied.
+
+error Command failed with exit code 2.
+
+[2026-01-13T04:51:24.756Z] [stderr] Process allTests-node-Calculator.test-static-0 completed with non-critical error

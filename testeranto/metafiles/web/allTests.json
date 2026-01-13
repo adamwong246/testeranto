@@ -79,7 +79,7 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/BaseTiposkripto.ts": {
-        "bytes": 16325,
+        "bytes": 16423,
         "imports": [
           {
             "path": "type-fest",
@@ -120,7 +120,7 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/Web.ts": {
-        "bytes": 2388,
+        "bytes": 2739,
         "imports": [
           {
             "path": "src/lib/tiposkripto/index.ts",
@@ -141,20 +141,15 @@
         "format": "esm"
       },
       "src/lib/tiposkripto/Tiposkripto.ts": {
-        "bytes": 1592,
+        "bytes": 1574,
         "imports": [
-          {
-            "path": "../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
           {
             "path": "src/lib/tiposkripto/index.ts",
             "kind": "import-statement",
             "original": "."
           },
           {
-            "path": "./Analyzer",
+            "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
           },
@@ -279,7 +274,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/web/Web-5H5XPUTR.mjs",
+            "path": "testeranto/bundles/allTests/web/Web-5CDOSOX3.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -314,7 +309,7 @@
         },
         "bytes": 12169
       },
-      "testeranto/bundles/allTests/web/Web-5H5XPUTR.mjs": {
+      "testeranto/bundles/allTests/web/Web-5CDOSOX3.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/web/chunk-GONGMDWG.mjs",
@@ -340,13 +335,13 @@
             "bytesInOutput": 1011
           },
           "src/lib/tiposkripto/BaseTiposkripto.ts": {
-            "bytesInOutput": 6753
+            "bytesInOutput": 6803
           },
           "src/lib/tiposkripto/Web.ts": {
-            "bytesInOutput": 1385
+            "bytesInOutput": 1647
           }
         },
-        "bytes": 16360
+        "bytes": 16672
       },
       "testeranto/bundles/allTests/web/chunk-GONGMDWG.mjs": {
         "imports": [],

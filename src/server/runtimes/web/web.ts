@@ -32,7 +32,7 @@ async function startChromeBrowser() {
         "--window-size=1920,1080",
         "--headless=new",
       ],
-      headless: false,
+      headless: true,
     });
 
     console.log("Chrome browser started with remote debugging on port 9222");
@@ -40,6 +40,30 @@ async function startChromeBrowser() {
     return browser;
   } catch (error) {
     throw new Error(`Chrome is not available: ${error.message}`);
+  }
+}
+
+async function extractFilesFromPage(page: puppeteer.Page): Promise<Record<string, string>> {
+  return await page.evaluate(() => {
+    return (window as any).__testeranto_files__ || {};
+  });
+}
+
+async function saveExtractedFiles(files: Record<string, string>, basePath: string) {
+  const fs = require('fs');
+  const path = require('path');
+  
+  for (const [filename, content] of Object.entries(files)) {
+    const fullPath = path.join(basePath, filename);
+    const dir = path.dirname(fullPath);
+    
+    // Ensure directory exists
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    fs.writeFileSync(fullPath, content);
+    console.log(`Saved file: ${fullPath}`);
   }
 }
 
@@ -88,6 +112,9 @@ async function startBundling(config: IBuiltConfig) {
   console.log("WEB BUILDER: Chrome is now hosted and ready for test execution");
   console.log("WEB BUILDER: Metafiles have been generated");
 
+  // Run tests and extract files
+  await runTestsAndExtractFiles(config);
+
   // In dev mode, keep the process alive to host Chrome
   if (mode === "dev") {
     console.log(
@@ -110,6 +137,55 @@ async function startBundling(config: IBuiltConfig) {
     await new Promise(() => {
       // This promise never resolves, keeping the process alive
     });
+  }
+}
+
+async function runTestsAndExtractFiles(config: IBuiltConfig) {
+  try {
+    // Create a new page
+    const page = await browser.newPage();
+    
+    // Navigate to the test page
+    // The test bundle is at a known location
+    const testBundlePath = `file://${process.cwd()}/testeranto/bundles/allTests/web/example/Calculator.test.mjs`;
+    console.log(`Navigating to test bundle: ${testBundlePath}`);
+    await page.goto(testBundlePath);
+    
+    // Wait for tests to complete - give them some time
+    // We'll wait for up to 30 seconds, checking periodically
+    const maxWaitTime = 30000; // 30 seconds
+    const startTime = Date.now();
+    
+    while (Date.now() - startTime < maxWaitTime) {
+      // Check if there are any files written (indicating tests have run)
+      const hasFiles = await page.evaluate(() => {
+        return !!(window as any).__testeranto_files__ && Object.keys((window as any).__testeranto_files__).length > 0;
+      });
+      
+      if (hasFiles) {
+        console.log("Tests have written files, proceeding to extract...");
+        break;
+      }
+      
+      // Wait a bit before checking again
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    console.log("Extracting files...");
+    
+    // Extract files from the page
+    const files = await extractFilesFromPage(page);
+    
+    // Save files to host filesystem
+    const basePath = process.cwd();
+    await saveExtractedFiles(files, basePath);
+    
+    console.log(`Extracted ${Object.keys(files).length} files`);
+    
+    // Close the page
+    await page.close();
+  } catch (error) {
+    console.error("Error running tests and extracting files:", error);
   }
 }
 

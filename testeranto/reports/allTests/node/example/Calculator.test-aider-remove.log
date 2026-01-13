@@ -1,0 +1,88 @@
+[2026-01-13T04:37:09.581Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:09.656Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:09.656Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:15.515Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:15.578Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:15.579Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:18.087Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:18.147Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:18.148Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:21.461Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:21.528Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:21.528Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:25.657Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:25.690Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:25.690Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:32.650Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:32.723Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:32.723Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:40.327Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:40.387Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:40.387Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:37:55.644Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:37:55.707Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:37:55.707Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:38:22.172Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:38:22.212Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:38:22.212Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:39:14.201Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:39:14.233Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:39:14.233Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:40:14.993Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:40:15.022Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:40:15.022Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:41:15.710Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:41:15.797Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:41:15.797Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:42:16.385Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:42:16.415Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:42:16.415Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:43:17.036Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:43:17.074Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:43:17.075Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:44:17.770Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:44:17.857Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:44:17.857Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:45:18.393Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:45:18.431Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:45:18.431Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:46:19.145Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:46:19.186Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:46:19.186Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:47:19.879Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:47:19.919Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:47:19.919Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:48:20.591Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:48:20.624Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:48:20.624Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:49:21.172Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:49:21.197Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:49:21.197Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:50:21.857Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:50:21.882Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:50:21.883Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully
+[2026-01-13T04:51:22.657Z] [stdout] Starting command: docker rm -f aider-node-Calculator-test
+[2026-01-13T04:51:22.746Z] [stdout] aider-node-Calculator-test
+
+[2026-01-13T04:51:22.746Z] [stdout] Process allTests-node-Calculator.test-aider-remove completed successfully

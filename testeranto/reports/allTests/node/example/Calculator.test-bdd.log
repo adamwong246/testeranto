@@ -1,0 +1,449 @@
+[2026-01-13T04:37:10.787Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:11.186Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:11.318Z] [stdout] Command failed: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+docker: Error response from daemon: Conflict. The container name "/bdd-node-Calculator-test" is already in use by container "0912036ecd8cfe8651ea981da75b49b90120b7d8a55ddbe76ae06d030c25002f". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+[2026-01-13T04:37:11.319Z] [stderr] docker: Error response from daemon: Conflict. The container name "/bdd-node-Calculator-test" is already in use by container "0912036ecd8cfe8651ea981da75b49b90120b7d8a55ddbe76ae06d030c25002f". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+[2026-01-13T04:37:11.319Z] [stderr] Process allTests-node-Calculator.test-bdd completed with non-critical error
+[2026-01-13T04:37:14.728Z] [stdout] Build
+
+[2026-01-13T04:37:14.728Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:14.728Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:17.488Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:19.751Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:19.754Z] [stdout] Build
+
+[2026-01-13T04:37:19.754Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:19.754Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:22.561Z] [stdout] Build
+
+[2026-01-13T04:37:22.562Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:22.562Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:22.783Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:24.524Z] [stdout] Build
+
+[2026-01-13T04:37:24.524Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:24.524Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:26.541Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:30.700Z] [stdout] Build
+
+[2026-01-13T04:37:30.700Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:30.700Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:33.831Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:34.932Z] [stdout] Build
+
+[2026-01-13T04:37:34.932Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:34.933Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:41.500Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:42.779Z] [stdout] Build
+
+[2026-01-13T04:37:42.779Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:42.780Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:37:56.412Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:37:57.056Z] [stdout] Build
+
+[2026-01-13T04:37:57.057Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:37:57.057Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:38:22.798Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:38:23.334Z] [stdout] Build
+
+[2026-01-13T04:38:23.334Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:38:23.334Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:39:14.586Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:39:15.069Z] [stdout] Build
+
+[2026-01-13T04:39:15.069Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:39:15.069Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:40:15.343Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:40:15.989Z] [stdout] Build
+
+[2026-01-13T04:40:15.990Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:40:15.990Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:41:16.253Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:41:16.698Z] [stdout] Build
+
+[2026-01-13T04:41:16.698Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:41:16.698Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:42:16.821Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:42:17.282Z] [stdout] Build
+
+[2026-01-13T04:42:17.282Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:42:17.282Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:43:17.445Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:43:18.044Z] [stdout] Build
+
+[2026-01-13T04:43:18.045Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:43:18.045Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:44:18.301Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:44:18.727Z] [stdout] Build
+
+[2026-01-13T04:44:18.727Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:44:18.728Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:45:18.735Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:45:19.166Z] [stdout] Build
+
+[2026-01-13T04:45:19.166Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:45:19.166Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:46:19.550Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:46:20.027Z] [stdout] Build
+
+[2026-01-13T04:46:20.027Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:46:20.027Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:47:20.286Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:47:20.887Z] [stdout] Build
+
+[2026-01-13T04:47:20.888Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:47:20.888Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:48:21.094Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:48:21.583Z] [stdout] Build
+
+[2026-01-13T04:48:21.583Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:48:21.583Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:49:21.491Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:49:21.953Z] [stdout] Build
+
+[2026-01-13T04:49:21.953Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:49:21.954Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:50:22.168Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:50:22.664Z] [stdout] Build
+
+[2026-01-13T04:50:22.664Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:50:22.664Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
+[2026-01-13T04:51:23.031Z] [stdout] Starting command: docker run --rm       --name bdd-node-Calculator-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-node-build:latest       sh -c "TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";"
+[2026-01-13T04:51:23.645Z] [stdout] Build
+
+[2026-01-13T04:51:23.645Z] [stderr] /workspace/node_modules/ws/lib/websocket.js:692
+      throw new SyntaxError(`Invalid URL: ${address}`);
+            ^
+
+SyntaxError: Invalid URL: 9222
+    at initAsClient (/workspace/node_modules/ws/lib/websocket.js:692:13)
+    at new WebSocket (/workspace/node_modules/ws/lib/websocket.js:88:7)
+    at file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:14:24
+    at new Promise (<anonymous>)
+    at NodeWebSocketTransport.create (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/node/NodeWebSocketTransport.js:13:16)
+    at getConnectionTransport (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:47:58)
+    at async _connectToBrowser (file:///workspace/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+    at async file:///workspace/testeranto/bundles/allTests/node/Node-JJJUAC7L.mjs:542:15
+
+Node.js v20.19.4
+
+[2026-01-13T04:51:23.645Z] [stdout] Process allTests-node-Calculator.test-bdd completed successfully
