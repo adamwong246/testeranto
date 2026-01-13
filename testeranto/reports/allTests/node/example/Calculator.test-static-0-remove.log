@@ -22,3 +22,7 @@
 [2026-01-13T04:37:33.133Z] [stdout] static-node-Calculator-test-0
 
 [2026-01-13T04:37:33.134Z] [stdout] Process allTests-node-Calculator.test-static-0-remove completed successfully
+[2026-01-13T11:01:46.972Z] [stdout] Starting command: docker rm -f static-node-Calculator-test-0
+[2026-01-13T11:01:47.194Z] [stdout] static-node-Calculator-test-0
+
+[2026-01-13T11:01:47.194Z] [stdout] Process allTests-node-Calculator.test-static-0-remove completed successfully

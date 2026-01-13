@@ -74,3 +74,11 @@
 [2026-01-13T04:51:04.405Z] [stderr] exec example/Calculator.pitono.test.py: permission denied
 
 [2026-01-13T04:51:04.405Z] [stdout] Process allTests-python-Calculator.pitono.test-aider-logs completed successfully
+[2026-01-13T04:52:04.968Z] [stdout] Starting command: docker logs aider-python-Calculator-pitono-test
+[2026-01-13T04:52:05.021Z] [stderr] exec example/Calculator.pitono.test.py: permission denied
+
+[2026-01-13T04:52:05.021Z] [stdout] Process allTests-python-Calculator.pitono.test-aider-logs completed successfully
+[2026-01-13T04:53:05.176Z] [stdout] Starting command: docker logs aider-python-Calculator-pitono-test
+[2026-01-13T04:53:05.236Z] [stderr] exec example/Calculator.pitono.test.py: permission denied
+
+[2026-01-13T04:53:05.237Z] [stdout] Process allTests-python-Calculator.pitono.test-aider-logs completed successfully

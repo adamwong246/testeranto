@@ -140,3 +140,17 @@ See 'docker run --help'.
 [2026-01-13T04:51:02.664Z] [stderr] /usr/local/bin/python: No module named pytest
 
 [2026-01-13T04:51:02.664Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-13T04:52:02.999Z] [stdout] Starting command: docker run --rm       --name bdd-python-Calculator-pitono-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-python-build:latest       sh -c "cd /workspace && python -m pytest example/ -v"
+[2026-01-13T04:52:03.369Z] [stdout] Command failed: docker run --rm       --name bdd-python-Calculator-pitono-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-python-build:latest       sh -c "cd /workspace && python -m pytest example/ -v"
+/usr/local/bin/python: No module named pytest
+
+[2026-01-13T04:52:03.369Z] [stderr] /usr/local/bin/python: No module named pytest
+
+[2026-01-13T04:52:03.369Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error
+[2026-01-13T04:53:03.213Z] [stdout] Starting command: docker run --rm       --name bdd-python-Calculator-pitono-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-python-build:latest       sh -c "cd /workspace && python -m pytest example/ -v"
+[2026-01-13T04:53:03.488Z] [stdout] Command failed: docker run --rm       --name bdd-python-Calculator-pitono-test       --network allTests_network       -v /Users/adam/Code/testeranto:/workspace       -w /workspace       bundles-python-build:latest       sh -c "cd /workspace && python -m pytest example/ -v"
+/usr/local/bin/python: No module named pytest
+
+[2026-01-13T04:53:03.488Z] [stderr] /usr/local/bin/python: No module named pytest
+
+[2026-01-13T04:53:03.489Z] [stderr] Process allTests-python-Calculator.pitono.test-bdd completed with non-critical error

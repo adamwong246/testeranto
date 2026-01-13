@@ -177,3 +177,1123 @@ Cannot connect to the Docker daemon at unix:///Users/adam/.docker/run/docker.soc
 [2026-01-13T04:51:22.592Z] [stdout] 6de2a43028ee
 
 [2026-01-13T04:51:22.592Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:52:02.252Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:52:02.295Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:52:02.296Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:52:23.218Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:52:23.277Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:52:23.277Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:53:02.618Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:53:02.675Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:53:02.676Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:53:24.069Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:53:24.116Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:53:24.116Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:54:24.804Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:54:24.854Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:54:24.854Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:55:25.497Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:55:25.555Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:55:25.555Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:56:26.220Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:56:26.264Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:56:26.264Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:57:26.966Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:57:27.020Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:57:27.020Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:58:27.687Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:58:27.740Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:58:27.740Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T04:59:28.432Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T04:59:28.483Z] [stdout] 6de2a43028ee
+
+[2026-01-13T04:59:28.484Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:00:29.122Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:00:29.166Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:00:29.167Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:01:30.010Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:01:30.064Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:01:30.064Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:02:30.701Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:02:30.751Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:02:30.751Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:03:31.520Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:03:31.564Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:03:31.565Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:04:32.228Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:04:32.277Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:04:32.277Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:05:32.972Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:05:33.008Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:05:33.008Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:06:33.678Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:06:33.722Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:06:33.722Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:07:34.396Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:07:34.434Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:07:34.434Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:08:35.123Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:08:35.174Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:08:35.175Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:09:35.850Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:09:35.894Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:09:35.895Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:10:36.592Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:10:36.638Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:10:36.638Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:11:37.331Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:11:37.383Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:11:37.383Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:12:38.013Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:12:38.056Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:12:38.056Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:13:38.761Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:13:38.821Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:13:38.821Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:14:39.512Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:14:39.554Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:14:39.554Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:15:40.280Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:15:40.339Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:15:40.339Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:16:40.993Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:16:41.041Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:16:41.041Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:17:41.729Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:17:41.774Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:17:41.774Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:18:42.536Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:18:42.593Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:18:42.593Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:19:43.251Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:19:43.313Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:19:43.313Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:20:44.057Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:20:44.102Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:20:44.102Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:21:44.745Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:21:44.806Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:21:44.806Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:22:45.460Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:22:45.511Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:22:45.511Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:23:46.184Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:23:46.236Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:23:46.236Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:24:46.932Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:24:46.985Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:24:46.985Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:25:47.715Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:25:47.761Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:25:47.761Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:26:48.419Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:26:48.487Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:26:48.487Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:27:49.179Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:27:49.219Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:27:49.219Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:28:49.945Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:28:50.001Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:28:50.001Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:29:50.746Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:29:50.800Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:29:50.800Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:30:51.542Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:30:51.604Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:30:51.604Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:31:52.318Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:31:52.362Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:31:52.362Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:32:53.142Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:32:53.191Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:32:53.191Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:33:53.905Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:33:53.937Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:33:53.937Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:34:54.656Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:34:54.706Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:34:54.706Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:35:55.344Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:35:55.413Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:35:55.413Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:36:56.092Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:36:56.150Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:36:56.150Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:37:56.857Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:37:56.887Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:37:56.887Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:38:57.605Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:38:57.652Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:38:57.652Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:39:58.366Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:39:58.409Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:39:58.410Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:40:59.078Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:40:59.131Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:40:59.131Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:41:59.942Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:41:59.998Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:41:59.998Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:43:00.815Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:43:00.863Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:43:00.863Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:44:01.596Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:44:01.655Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:44:01.655Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:45:02.346Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:45:02.394Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:45:02.394Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:46:03.206Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:46:03.261Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:46:03.261Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:47:04.488Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:47:04.548Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:47:04.548Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:48:05.290Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:48:05.335Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:48:05.335Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:49:06.078Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:49:06.145Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:49:06.145Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:50:06.904Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:50:06.963Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:50:06.963Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:51:07.677Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:51:07.719Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:51:07.720Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:52:08.519Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:52:08.563Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:52:08.563Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:53:09.266Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:53:09.302Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:53:09.302Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:54:10.080Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:54:10.130Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:54:10.131Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:55:10.857Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:55:10.900Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:55:10.900Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:56:11.606Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:56:11.665Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:56:11.665Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:57:12.394Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:57:12.420Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:57:12.420Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:58:13.152Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:58:13.208Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:58:13.208Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T05:59:13.947Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T05:59:13.997Z] [stdout] 6de2a43028ee
+
+[2026-01-13T05:59:13.997Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:00:14.778Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:00:14.836Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:00:14.836Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:01:15.594Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:01:15.651Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:01:15.651Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:02:16.381Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:02:16.419Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:02:16.419Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:03:17.150Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:03:17.208Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:03:17.208Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:04:17.955Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:04:18.001Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:04:18.001Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:05:18.744Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:05:18.800Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:05:18.800Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:06:19.500Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:06:19.558Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:06:19.558Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:07:20.195Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:07:20.303Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:07:20.303Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:08:21.026Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:08:21.070Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:08:21.070Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:09:21.755Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:09:21.805Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:09:21.806Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:10:22.482Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:10:22.503Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:10:22.503Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:11:23.165Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:11:23.209Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:11:23.209Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:12:23.949Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:12:24.031Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:12:24.031Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:13:24.637Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:13:24.682Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:13:24.682Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:14:25.335Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:14:25.382Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:14:25.382Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:15:26.095Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:15:26.157Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:15:26.157Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:16:26.790Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:16:26.855Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:16:26.855Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:17:27.506Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:17:27.562Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:17:27.562Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:18:28.172Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:18:28.218Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:18:28.218Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:19:28.886Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:19:28.933Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:19:28.933Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:20:29.510Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:20:29.568Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:20:29.568Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:21:30.244Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:21:30.299Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:21:30.300Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:22:30.943Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:22:30.989Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:22:30.989Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:23:31.621Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:23:31.678Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:23:31.678Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:24:32.330Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:24:32.373Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:24:32.373Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:25:33.026Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:25:33.066Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:25:33.066Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:26:33.757Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:26:33.803Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:26:33.803Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:27:34.487Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:27:34.534Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:27:34.534Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:28:35.150Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:28:35.232Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:28:35.233Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:29:35.882Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:29:35.928Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:29:35.928Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:30:36.583Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:30:36.637Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:30:36.637Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:31:37.257Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:31:37.309Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:31:37.309Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:32:37.903Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:32:38.000Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:32:38.000Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:33:38.634Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:33:38.679Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:33:38.679Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:34:39.372Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:34:39.416Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:34:39.416Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:35:40.068Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:35:40.117Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:35:40.117Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:36:40.779Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:36:40.821Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:36:40.821Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:37:41.504Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:37:41.548Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:37:41.548Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:38:42.195Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:38:42.242Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:38:42.242Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:39:42.932Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:39:42.979Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:39:42.979Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:40:43.579Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:40:43.626Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:40:43.626Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:41:44.300Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:41:44.347Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:41:44.347Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:42:44.962Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:42:45.004Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:42:45.004Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:43:45.678Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:43:45.731Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:43:45.731Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:44:46.369Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:44:46.428Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:44:46.428Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:45:47.113Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:45:47.170Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:45:47.170Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:46:47.843Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:46:47.884Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:46:47.884Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:47:48.574Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:47:48.609Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:47:48.609Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:48:49.297Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:48:49.341Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:48:49.341Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:49:49.991Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:49:50.050Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:49:50.050Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:50:50.657Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:50:50.706Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:50:50.706Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:51:51.411Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:51:51.464Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:51:51.464Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:52:52.158Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:52:52.209Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:52:52.209Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:53:52.826Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:53:52.875Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:53:52.875Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:54:53.503Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:54:53.551Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:54:53.551Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:55:54.214Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:55:54.257Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:55:54.257Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:56:54.998Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:56:55.051Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:56:55.051Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:57:55.695Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:57:55.747Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:57:55.747Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:58:56.464Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:58:56.516Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:58:56.516Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T06:59:57.200Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T06:59:57.248Z] [stdout] 6de2a43028ee
+
+[2026-01-13T06:59:57.248Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:00:57.904Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:00:57.950Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:00:57.950Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:01:58.617Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:01:58.644Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:01:58.645Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:02:59.326Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:02:59.370Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:02:59.370Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:04:00.130Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:04:00.191Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:04:00.191Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:05:00.974Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:05:01.029Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:05:01.029Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:06:01.744Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:06:01.788Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:06:01.789Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:07:02.553Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:07:02.600Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:07:02.600Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:08:03.334Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:08:03.377Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:08:03.378Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:09:04.149Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:09:04.198Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:09:04.198Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:10:04.988Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:10:05.048Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:10:05.048Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:11:05.691Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:11:05.745Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:11:05.745Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:12:06.534Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:12:06.578Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:12:06.578Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:13:07.362Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:13:07.410Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:13:07.410Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:14:08.100Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:14:08.153Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:14:08.153Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:15:08.868Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:15:08.904Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:15:08.904Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:16:09.655Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:16:09.701Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:16:09.702Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:17:10.537Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:17:10.581Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:17:10.581Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:18:11.310Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:18:11.355Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:18:11.355Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:19:12.102Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:19:12.156Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:19:12.156Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:20:12.860Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:20:12.920Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:20:12.920Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:21:13.589Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:21:13.625Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:21:13.625Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:22:14.431Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:22:14.476Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:22:14.476Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:23:15.166Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:23:15.220Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:23:15.220Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:24:15.944Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:24:15.990Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:24:15.990Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:25:16.702Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:25:16.751Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:25:16.752Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:26:17.451Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:26:17.504Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:26:17.504Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:27:18.191Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:27:18.238Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:27:18.238Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:28:18.936Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:28:18.985Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:28:18.985Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:29:19.712Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:29:19.754Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:29:19.754Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:30:20.523Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:30:20.574Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:30:20.574Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:31:21.307Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:31:21.365Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:31:21.365Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:32:22.077Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:32:22.129Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:32:22.129Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:33:22.807Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:33:22.862Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:33:22.862Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:34:23.611Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:34:23.677Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:34:23.677Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:35:24.371Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:35:24.407Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:35:24.408Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:36:25.153Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:36:25.197Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:36:25.197Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:37:25.972Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:37:26.030Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:37:26.031Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:38:26.721Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:38:26.771Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:38:26.772Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:39:27.470Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:39:27.517Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:39:27.517Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:40:28.249Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:40:28.298Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:40:28.298Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:41:28.990Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:41:29.026Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:41:29.026Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:42:29.705Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:42:29.735Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:42:29.735Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:43:30.429Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:43:30.481Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:43:30.481Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:44:31.191Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:44:31.236Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:44:31.236Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:45:31.949Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:45:31.997Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:45:31.997Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:46:32.734Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:46:32.785Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:46:32.785Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:47:33.560Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:47:33.600Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:47:33.600Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:48:34.329Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:48:34.374Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:48:34.374Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:49:35.120Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:49:35.162Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:49:35.162Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:50:35.905Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:50:35.957Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:50:35.957Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:51:36.616Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:51:36.658Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:51:36.659Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:52:37.370Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:52:37.427Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:52:37.427Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:53:38.151Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:53:38.208Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:53:38.208Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:54:38.904Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:54:38.958Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:54:38.958Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:55:39.652Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:55:39.705Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:55:39.705Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:56:40.401Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:56:40.441Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:56:40.441Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:57:41.172Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:57:41.217Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:57:41.217Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:58:41.936Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:58:41.987Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:58:41.987Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T07:59:42.606Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T07:59:42.660Z] [stdout] 6de2a43028ee
+
+[2026-01-13T07:59:42.660Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:00:43.317Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:00:43.367Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:00:43.367Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:01:44.016Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:01:44.068Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:01:44.068Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:02:44.704Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:02:44.754Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:02:44.755Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:03:45.564Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:03:45.630Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:03:45.630Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:04:46.286Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:04:46.338Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:04:46.338Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:05:46.937Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:05:46.982Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:05:46.983Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:06:47.605Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:06:47.670Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:06:47.670Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:07:48.332Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:07:48.383Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:07:48.383Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:08:49.041Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:08:49.089Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:08:49.089Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:09:49.759Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:09:49.808Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:09:49.808Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:10:50.409Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:10:50.453Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:10:50.453Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:11:51.082Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:11:51.122Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:11:51.122Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:12:51.843Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:12:51.902Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:12:51.902Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:13:52.667Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:13:52.727Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:13:52.727Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:14:53.385Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:14:53.435Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:14:53.435Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:15:54.108Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:15:54.153Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:15:54.153Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:16:54.788Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:16:54.833Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:16:54.834Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:17:55.479Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:17:55.513Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:17:55.513Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:18:56.212Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:18:56.259Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:18:56.260Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:19:56.930Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:19:57.007Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:19:57.007Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:20:57.593Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:20:57.655Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:20:57.655Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:21:58.312Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:21:58.361Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:21:58.361Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:22:59.051Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:22:59.114Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:22:59.114Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:23:59.791Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:23:59.849Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:23:59.849Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:25:00.654Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:25:00.696Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:25:00.696Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:26:01.463Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:26:01.516Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:26:01.516Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:27:02.140Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:27:02.194Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:27:02.194Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:28:02.923Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:28:02.992Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:28:02.992Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:29:04.094Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:29:04.132Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:29:04.132Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:30:04.420Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:30:04.475Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:30:04.475Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:31:05.275Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:31:05.328Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:31:05.328Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:32:05.990Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:32:06.037Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:32:06.037Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:33:06.761Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:33:06.815Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:33:06.815Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:34:07.509Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:34:07.565Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:34:07.566Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:35:08.272Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:35:08.316Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:35:08.316Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:36:09.046Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:36:09.103Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:36:09.103Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:37:09.822Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:37:09.887Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:37:09.887Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:38:10.570Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:38:10.612Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:38:10.613Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:39:11.325Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:39:11.374Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:39:11.375Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:40:12.093Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:40:12.137Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:40:12.137Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:41:12.849Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:41:12.896Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:41:12.897Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:42:13.575Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:42:13.629Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:42:13.630Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:43:14.338Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:43:14.375Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:43:14.375Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:44:15.091Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:44:15.142Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:44:15.142Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:45:15.865Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:45:15.894Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:45:15.894Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:46:16.692Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:46:16.734Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:46:16.735Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:47:17.506Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:47:17.559Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:47:17.559Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:48:18.325Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:48:18.372Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:48:18.372Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:49:19.090Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:49:19.132Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:49:19.133Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:50:19.845Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:50:19.900Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:50:19.900Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:51:20.592Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:51:20.635Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:51:20.635Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:52:21.297Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:52:21.335Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:52:21.335Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T08:53:22.036Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T08:53:22.082Z] [stdout] 6de2a43028ee
+
+[2026-01-13T08:53:22.083Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T09:00:03.720Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T09:00:03.784Z] [stdout] 6de2a43028ee
+
+[2026-01-13T09:00:03.784Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T09:17:20.187Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T09:17:20.262Z] [stdout] 6de2a43028ee
+
+[2026-01-13T09:17:20.262Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T09:18:20.923Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T09:18:20.985Z] [stdout] 6de2a43028ee
+
+[2026-01-13T09:18:20.985Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T09:19:21.595Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T09:19:21.654Z] [stdout] 6de2a43028ee
+
+[2026-01-13T09:19:21.654Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T09:51:50.109Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T09:51:50.273Z] [stdout] 6de2a43028ee
+
+[2026-01-13T09:51:50.273Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T09:52:50.997Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T09:52:51.045Z] [stdout] 6de2a43028ee
+
+[2026-01-13T09:52:51.045Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T10:01:42.947Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T10:01:42.999Z] [stdout] 6de2a43028ee
+
+[2026-01-13T10:01:42.999Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T10:19:48.112Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T10:19:48.169Z] [stdout] 6de2a43028ee
+
+[2026-01-13T10:19:48.169Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T10:20:48.839Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T10:20:48.895Z] [stdout] 6de2a43028ee
+
+[2026-01-13T10:20:48.895Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T10:54:40.476Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T10:54:40.527Z] [stdout] 6de2a43028ee
+
+[2026-01-13T10:54:40.528Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:01:45.916Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:01:45.969Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:01:45.970Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:01:46.940Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:01:46.975Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:01:46.976Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:19:29.163Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:19:29.214Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:19:29.214Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:20:29.914Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:20:29.965Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:20:29.965Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:36:30.473Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:36:30.526Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:36:30.526Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:37:31.199Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:37:31.252Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:37:31.252Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:38:31.897Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:38:31.944Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:38:31.944Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:39:32.552Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:39:32.599Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:39:32.600Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:55:43.459Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:55:43.511Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:55:43.511Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T11:56:44.170Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T11:56:44.215Z] [stdout] 6de2a43028ee
+
+[2026-01-13T11:56:44.215Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:03:21.503Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:03:21.543Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:03:21.543Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:04:22.181Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:04:22.230Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:04:22.230Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:05:22.838Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:05:22.885Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:05:22.885Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:21:48.052Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:21:48.105Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:21:48.105Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:22:48.854Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:22:48.880Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:22:48.880Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:26:39.944Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:26:39.989Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:26:39.989Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:27:40.881Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:27:40.939Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:27:40.939Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:43:49.039Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:43:49.085Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:43:49.085Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:44:49.770Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:44:49.828Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:44:49.828Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T12:45:50.456Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T12:45:50.545Z] [stdout] 6de2a43028ee
+
+[2026-01-13T12:45:50.546Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:02:12.427Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:02:12.490Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:02:12.490Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:03:13.129Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:03:13.173Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:03:13.173Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:20:39.295Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:20:39.347Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:20:39.347Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:21:40.013Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:21:40.059Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:21:40.060Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:22:40.759Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:22:40.805Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:22:40.805Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:41:19.905Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:41:19.958Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:41:19.958Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:42:20.622Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:42:20.659Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:42:20.660Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:43:21.334Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:43:21.380Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:43:21.380Z] [stdout] Process aider-image-check completed successfully
+[2026-01-13T13:50:41.192Z] [stdout] Starting command: docker images -q testeranto-aider:latest
+[2026-01-13T13:50:41.239Z] [stdout] 6de2a43028ee
+
+[2026-01-13T13:50:41.240Z] [stdout] Process aider-image-check completed successfully
