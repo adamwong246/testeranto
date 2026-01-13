@@ -488,8 +488,8 @@ async function generateServices(config2, runtimes2, webSocketPort, log, error) {
 
 // src/server/serverClasees/utils/DockerComposeExecutor.ts
 var DockerComposeExecutor = class {
-  constructor(exec3) {
-    this.exec = exec3;
+  constructor(exec2) {
+    this.exec = exec2;
   }
   async upAll(composeFile, cwd) {
     try {
@@ -1246,6 +1246,15 @@ var Server_WS = class extends Server_DockerCompose {
           timestamp: (/* @__PURE__ */ new Date()).toISOString()
         }));
         break;
+      case "sourceFilesUpdated":
+        this.handleSourceFilesUpdated(ws, message.data);
+        break;
+      case "getBuildListenerState":
+        this.handleGetBuildListenerState(ws);
+        break;
+      case "getBuildEvents":
+        this.handleGetBuildEvents(ws);
+        break;
       default:
         console.log("[WebSocket] Unknown message type:", message.type);
         ws.send(JSON.stringify({
@@ -1271,24 +1280,6 @@ var Server_WS = class extends Server_DockerCompose {
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }));
     }
-  }
-  handleSubscribeToLogs(ws, data) {
-    const { processId } = data || {};
-    if (!processId) {
-      ws.send(JSON.stringify({
-        type: "logSubscription",
-        status: "error",
-        message: "Missing processId",
-        timestamp: (/* @__PURE__ */ new Date()).toISOString()
-      }));
-      return;
-    }
-    ws.send(JSON.stringify({
-      type: "logSubscription",
-      status: "subscribed",
-      processId,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    }));
   }
   handleGetLogs(ws, data) {
     const { processId } = data || {};
@@ -1340,6 +1331,123 @@ var Server_WS = class extends Server_DockerCompose {
         type: "logs",
         processId,
         logs: [],
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      }));
+    }
+  }
+  handleSubscribeToLogs(ws, data) {
+    const { processId } = data || {};
+    if (!processId) {
+      ws.send(JSON.stringify({
+        type: "logSubscription",
+        status: "error",
+        message: "Missing processId",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      }));
+      return;
+    }
+    ws.send(JSON.stringify({
+      type: "logSubscription",
+      status: "subscribed",
+      processId,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    }));
+  }
+  handleSourceFilesUpdated(ws, data) {
+    const { testName, hash, files } = data || {};
+    if (!testName || !hash || !files) {
+      ws.send(JSON.stringify({
+        type: "sourceFilesUpdated",
+        status: "error",
+        message: "Missing required fields: testName, hash, or files",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      }));
+      return;
+    }
+    console.log(`[WebSocket] Forwarding source files update to build listener for test: ${testName}`);
+    if (typeof this.sourceFilesUpdated === "function") {
+      try {
+        this.sourceFilesUpdated(testName, hash, files);
+        ws.send(JSON.stringify({
+          type: "sourceFilesUpdated",
+          status: "success",
+          testName,
+          message: "Build update processed successfully",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error processing source files update:", error);
+        ws.send(JSON.stringify({
+          type: "sourceFilesUpdated",
+          status: "error",
+          testName,
+          message: `Error processing build update: ${error}`,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      }
+    } else {
+      console.warn("[WebSocket] sourceFilesUpdated method not available on this instance");
+      ws.send(JSON.stringify({
+        type: "sourceFilesUpdated",
+        status: "error",
+        testName,
+        message: "Build listener functionality not available",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      }));
+    }
+  }
+  handleGetBuildListenerState(ws) {
+    console.log("[WebSocket] Handling getBuildListenerState request");
+    if (typeof this.getBuildListenerState === "function") {
+      try {
+        const state = this.getBuildListenerState();
+        ws.send(JSON.stringify({
+          type: "buildListenerState",
+          data: state,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error getting build listener state:", error);
+        ws.send(JSON.stringify({
+          type: "buildListenerState",
+          status: "error",
+          message: `Error getting build listener state: ${error}`,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      }
+    } else {
+      ws.send(JSON.stringify({
+        type: "buildListenerState",
+        status: "error",
+        message: "Build listener state not available",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      }));
+    }
+  }
+  handleGetBuildEvents(ws) {
+    console.log("[WebSocket] Handling getBuildEvents request");
+    if (typeof this.getBuildEvents === "function") {
+      try {
+        const events = this.getBuildEvents();
+        ws.send(JSON.stringify({
+          type: "buildEvents",
+          events,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error getting build events:", error);
+        ws.send(JSON.stringify({
+          type: "buildEvents",
+          status: "error",
+          message: `Error getting build events: ${error}`,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      }
+    } else {
+      ws.send(JSON.stringify({
+        type: "buildEvents",
+        status: "error",
+        message: "Build events not available",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }));
     }
@@ -1432,6 +1540,7 @@ var Server_HTTP = class extends Server_WS {
     const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
     const routeName = urlPath.slice(3);
     const routes = this._routes;
+    console.log(`[HTTP] routing ${routeName} of ${JSON.stringify(routes)}`);
     if (!routes || !routes[routeName]) {
       res.writeHead(404, { "Content-Type": "text/html" });
       res.end(`<h1>Route not found: /~/${routeName}</h1>`);
@@ -1446,17 +1555,44 @@ var Server_HTTP = class extends Server_WS {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Process Manager</title>
-            <link href="/dist/prebuild/ProcessManger.css" rel="stylesheet">
+            <link href="/dist/prebuild/style.css" rel="stylesheet">
             
           </head>
           <body>
             <div id="root"></div>
-            <script src="/dist/prebuild/ProcessManagerReactApp.js"></script>
+            <script src="/dist/prebuild/server/serverClasees/ProcessManagerReactApp.js"></script>
             <script>
               // The bundled script automatically calls initApp when loaded
               // Ensure the root element exists
               if (!document.getElementById('root').innerHTML) {
                 document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Process Manager...</p></div>';
+              }
+            </script>
+          </body>
+        </html>
+      `);
+      return;
+    }
+    if (routeName === "build_listener") {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(`
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Build Listener</title>
+            <link href="/dist/prebuild/style.css" rel="stylesheet">
+            
+          </head>
+          <body>
+            <div id="root"></div>
+            <script src="/dist/prebuild/server/serverClasees/BuildListenerReactApp.js"></script>
+            <script>
+              // The bundled script automatically calls initApp when loaded
+              // Ensure the root element exists
+              if (!document.getElementById('root').innerHTML) {
+                document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Build Listener...</p></div>';
               }
             </script>
           </body>
@@ -1739,7 +1875,7 @@ var generateHtmlContent = (params) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Report: ${sourceFileNameMinusExtension}</title>
 
-    <link rel="stylesheet" href="${relativeReportCssUrl}" />
+    <link rel="stylesheet" href="/dist/prebuild/style.css" />
 
     <style>
         body {
@@ -1752,7 +1888,7 @@ var generateHtmlContent = (params) => {
             margin: 0 auto;
         }
     </style>
-    <script src="${relativeReportJsUrl}"></script>
+    <script src="/dist/prebuild/frontend/Report.js"></script>
 </head>
 <body>
     <div id="react-report-root"></div>
@@ -1823,7 +1959,7 @@ var makeHtmlReportFile = (testsName2, config2) => {
         process.cwd(),
         "dist",
         "prebuild",
-        "Report.css"
+        "style.css"
       );
       const relativeReportCssPath = path7.relative(htmlDir, reportCssPath);
       const relativeReportCssUrl = relativeReportCssPath.split(path7.sep).join("/");
@@ -2003,8 +2139,6 @@ function setupFileSystem(config2, testsName2) {
 }
 
 // src/server/serverClasees/Server_ProcessManager.ts
-var { exec: exec2 } = await import("child_process");
-var { promisify: promisify2 } = await import("util");
 var Server_ProcessManager = class extends Server_FS {
   constructor(configs, testName, mode2) {
     super(configs, testName, mode2);
@@ -2013,8 +2147,6 @@ var Server_ProcessManager = class extends Server_FS {
     this.allProcesses = /* @__PURE__ */ new Map();
     this.processLogs = /* @__PURE__ */ new Map();
     this.runningProcesses = /* @__PURE__ */ new Map();
-    this.aiderProcesses = /* @__PURE__ */ new Map();
-    // Store actual aider processes
     this.queuedItems = [];
     this.getProcessSummary = () => {
       const processes = [];
@@ -2132,19 +2264,6 @@ var Server_ProcessManager = class extends Server_FS {
         platform
       );
     };
-    // Create aider process for a specific test as a background command
-    this.createAiderProcess = async (runtime, testPath, metafile) => {
-      if (!this.aiderProcessManager) {
-        const { AiderProcessManager } = await import("./AiderProcessManager-25VHFOXA.mjs");
-        this.aiderProcessManager = new AiderProcessManager(
-          this.executeCommand,
-          this.addLogEntry,
-          this.allProcesses,
-          this.aiderProcesses
-        );
-      }
-      return this.aiderProcessManager.createAiderProcess(runtime, testPath, metafile);
-    };
     this.addPromiseProcess = async (processId, promise, command, category, testName, platform) => {
       const actualPromise = promise || Promise.resolve({ stdout: "", stderr: "" });
       await this.addPromiseProcessAndGetSafePromise(
@@ -2192,20 +2311,6 @@ var Server_ProcessManager = class extends Server_FS {
     });
   }
   async stop() {
-    for (const [processId, aiderProcess] of this.aiderProcesses.entries()) {
-      try {
-        this.addLogEntry(processId, "stdout", `Stopping aider process ${processId}`, /* @__PURE__ */ new Date(), "info");
-        aiderProcess.kill("SIGTERM");
-        setTimeout(() => {
-          if (!aiderProcess.killed) {
-            aiderProcess.kill("SIGKILL");
-          }
-        }, 2e3);
-      } catch (error) {
-        console.error(`[ProcessManager] Failed to stop aider process ${processId}:`, error);
-      }
-    }
-    this.aiderProcesses.clear();
     if (this.jobQueue) {
       this.jobQueue.end();
       this.jobQueue.stop();
@@ -2267,35 +2372,6 @@ var Server_ProcessManager = class extends Server_FS {
   getPortOwner(port) {
     return this.ports[port] || null;
   }
-  async scheduleBddTest(metafile, runtime, entrypoint) {
-    console.log(
-      `[ProcessManager] Scheduling BDD test for ${entrypoint} (${runtime})`
-    );
-    if (!entrypoint || typeof entrypoint !== "string") {
-      console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
-      return;
-    }
-    const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
-    if (!testPath || testPath.trim() === "") {
-      console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
-      return;
-    }
-    await this.createAiderProcess(runtime, testPath, metafile);
-    const processId = `allTests-${runtime}-${testPath}-bdd`;
-    let bddCommand = "";
-    if (runtime === "node") {
-      bddCommand = nodeBddCommand(this.configs.httpPort);
-    } else if (runtime === "web") {
-      bddCommand = webBddCommand(this.configs.httpPort);
-    } else if (runtime === "python") {
-      bddCommand = pythonBDDCommand(this.configs.httpPort);
-    } else if (runtime === "golang") {
-      bddCommand = golangBddCommand(this.configs.httpPort);
-    } else {
-      bddCommand = `echo 'not yet implemented'`;
-    }
-    await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
-  }
   async runBddTestInDocker(processId, testPath, runtime, bddCommand) {
     const containerName = `bdd-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}`;
     const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
@@ -2342,59 +2418,6 @@ var Server_ProcessManager = class extends Server_FS {
         return "bundles-golang-build:latest";
       default:
         return "alpine:latest";
-    }
-  }
-  async scheduleStaticTests(metafile, runtime, entrypoint, addableFiles) {
-    if (!entrypoint || typeof entrypoint !== "string") {
-      console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
-      return;
-    }
-    const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
-    if (!testPath || testPath.trim() === "") {
-      console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
-      return;
-    }
-    if (!this.configs[runtime] || !Array.isArray(this.configs[runtime].checks)) {
-      console.error(`[ProcessManager] No checks configured for runtime: ${runtime}`);
-      return;
-    }
-    let checkIndex = 0;
-    for (const check of this.configs[runtime].checks) {
-      const processId = `allTests-${runtime}-${testPath}-static-${checkIndex}`;
-      const checkCommand = check(addableFiles);
-      const containerName = `static-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}-${checkIndex}`;
-      const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
-      const checkResult = await this.executeCommand(
-        `${processId}-check`,
-        checkCmd,
-        "build-time",
-        testPath,
-        runtime
-      );
-      if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
-        await this.executeCommand(
-          `${processId}-remove`,
-          `docker rm -f ${containerName}`,
-          "build-time",
-          testPath,
-          runtime
-        );
-      }
-      const baseImage = this.getRuntimeImage(runtime);
-      const dockerRunCmd = `docker run --rm         --name ${containerName}         --network allTests_network         -v ${process.cwd()}:/workspace         -w /workspace         ${baseImage}         sh -c "${checkCommand}"`;
-      const result = await this.executeCommand(
-        processId,
-        dockerRunCmd,
-        "build-time",
-        testPath,
-        runtime
-      );
-      if (!result.success) {
-        console.log(`[ProcessManager] Static test ${processId} failed:`, result.error?.message);
-      } else {
-        console.log(`[ProcessManager] Static test ${processId} completed successfully`);
-      }
-      checkIndex++;
     }
   }
   shouldShutdown(summary, queueLength, hasRunningProcesses, mode2) {
@@ -2531,10 +2554,238 @@ var Server_ProcessManager = class extends Server_FS {
   }
 };
 
+// src/server/serverClasees/Server_Aider.ts
+var Server_Aider = class extends Server_ProcessManager {
+  constructor() {
+    super(...arguments);
+    this.aiderProcesses = /* @__PURE__ */ new Map();
+    // Create aider process for a specific test as a background command
+    this.createAiderProcess = async (runtime, testPath, metafile) => {
+      if (!this.aiderProcessManager) {
+        const { AiderProcessManager } = await import("./AiderProcessManager-25VHFOXA.mjs");
+        this.aiderProcessManager = new AiderProcessManager(
+          this.executeCommand,
+          this.addLogEntry,
+          this.allProcesses,
+          this.aiderProcesses
+        );
+      }
+      return this.aiderProcessManager.createAiderProcess(runtime, testPath, metafile);
+    };
+  }
+  // Store actual aider processes
+  async stop() {
+    for (const [processId, aiderProcess] of this.aiderProcesses.entries()) {
+      try {
+        this.addLogEntry(processId, "stdout", `Stopping aider process ${processId}`, /* @__PURE__ */ new Date(), "info");
+        aiderProcess.kill("SIGTERM");
+        setTimeout(() => {
+          if (!aiderProcess.killed) {
+            aiderProcess.kill("SIGKILL");
+          }
+        }, 2e3);
+      } catch (error) {
+        console.error(`[ProcessManager] Failed to stop aider process ${processId}:`, error);
+      }
+    }
+    this.aiderProcesses.clear();
+    await super.stop();
+  }
+};
+
+// src/server/serverClasees/Server_Scheduler.ts
+var Server_Scheduler = class extends Server_Aider {
+  async scheduleBddTest(metafile, runtime, entrypoint) {
+    console.log(
+      `[ProcessManager] Scheduling BDD test for ${entrypoint} (${runtime})`
+    );
+    if (!entrypoint || typeof entrypoint !== "string") {
+      console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
+      return;
+    }
+    const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
+    if (!testPath || testPath.trim() === "") {
+      console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
+      return;
+    }
+    await this.createAiderProcess(runtime, testPath, metafile);
+    const processId = `allTests-${runtime}-${testPath}-bdd`;
+    let bddCommand = "";
+    if (runtime === "node") {
+      bddCommand = nodeBddCommand(this.configs.httpPort);
+    } else if (runtime === "web") {
+      bddCommand = webBddCommand(this.configs.httpPort);
+    } else if (runtime === "python") {
+      bddCommand = pythonBDDCommand(this.configs.httpPort);
+    } else if (runtime === "golang") {
+      bddCommand = golangBddCommand(this.configs.httpPort);
+    } else {
+      bddCommand = `echo 'not yet implemented'`;
+    }
+    await this.runBddTestInDocker(processId, testPath, runtime, bddCommand);
+  }
+  async scheduleStaticTests(metafile, runtime, entrypoint, addableFiles) {
+    if (!entrypoint || typeof entrypoint !== "string") {
+      console.error(`[ProcessManager] Invalid entrypoint: ${entrypoint}`);
+      return;
+    }
+    const testPath = entrypoint.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
+    if (!testPath || testPath.trim() === "") {
+      console.error(`[ProcessManager] Invalid testPath derived from entrypoint: ${entrypoint}`);
+      return;
+    }
+    if (!this.configs[runtime] || !Array.isArray(this.configs[runtime].checks)) {
+      console.error(`[ProcessManager] No checks configured for runtime: ${runtime}`);
+      return;
+    }
+    let checkIndex = 0;
+    for (const check of this.configs[runtime].checks) {
+      const processId = `allTests-${runtime}-${testPath}-static-${checkIndex}`;
+      const checkCommand = check(addableFiles);
+      const containerName = `static-${runtime}-${testPath.replace(/[^a-zA-Z0-9]/g, "-")}-${checkIndex}`;
+      const checkCmd = `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`;
+      const checkResult = await this.executeCommand(
+        `${processId}-check`,
+        checkCmd,
+        "build-time",
+        testPath,
+        runtime
+      );
+      if (checkResult.success && checkResult.stdout && checkResult.stdout.trim() === containerName) {
+        await this.executeCommand(
+          `${processId}-remove`,
+          `docker rm -f ${containerName}`,
+          "build-time",
+          testPath,
+          runtime
+        );
+      }
+      const baseImage = this.getRuntimeImage(runtime);
+      const dockerRunCmd = `docker run --rm           --name ${containerName}           --network allTests_network           -v ${process.cwd()}:/workspace           -w /workspace           ${baseImage}           sh -c "${checkCommand}"`;
+      const result = await this.executeCommand(
+        processId,
+        dockerRunCmd,
+        "build-time",
+        testPath,
+        runtime
+      );
+      if (!result.success) {
+        console.log(`[ProcessManager] Static test ${processId} failed:`, result.error?.message);
+      } else {
+        console.log(`[ProcessManager] Static test ${processId} completed successfully`);
+      }
+      checkIndex++;
+    }
+  }
+};
+
+// src/server/serverClasees/Server_BuildListener.ts
+var Server_BuildListener = class extends Server_Scheduler {
+  constructor(configs, name, mode2) {
+    super(configs, name, mode2);
+    // Map test name to IHashes
+    this.hashes = /* @__PURE__ */ new Map();
+    // Store build events for UI
+    this.buildEvents = [];
+    // Maximum number of events to keep
+    this.maxEvents = 100;
+  }
+  sourceFilesUpdated(testName, hash, files) {
+    console.log(`[BuildListener] Source files updated for test: ${testName}, hash: ${hash}`);
+    const previousHash = this.hashes.has(testName) ? this.hashes.get(testName)?.hash : null;
+    this.hashes.set(testName, { hash, files });
+    const event = {
+      id: `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      testName,
+      hash,
+      files,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+      status: "pending",
+      message: `Build update received for ${testName}`
+    };
+    this.addBuildEvent(event);
+    if (previousHash !== hash) {
+      console.log(`[BuildListener] Hash changed for ${testName}. Scheduling tests...`);
+      event.status = "processing";
+      event.message = `Hash changed for ${testName}. Scheduling tests...`;
+      this.updateBuildEvent(event);
+      this.scheduleTest(testName, files);
+      event.status = "scheduled";
+      event.message = `Test ${testName} scheduled for execution`;
+      this.updateBuildEvent(event);
+      this.broadcastBuildUpdate(testName, hash, files);
+    } else {
+      console.log(`[BuildListener] Hash unchanged for ${testName}. No action needed.`);
+      event.status = "completed";
+      event.message = `Hash unchanged for ${testName}. No action needed.`;
+      this.updateBuildEvent(event);
+    }
+  }
+  addBuildEvent(event) {
+    this.buildEvents.unshift(event);
+    if (this.buildEvents.length > this.maxEvents) {
+      this.buildEvents.pop();
+    }
+    this.broadcastBuildEvents();
+  }
+  updateBuildEvent(updatedEvent) {
+    const index = this.buildEvents.findIndex((e) => e.id === updatedEvent.id);
+    if (index !== -1) {
+      this.buildEvents[index] = updatedEvent;
+      this.broadcastBuildEvents();
+    }
+  }
+  scheduleTest(testName, files) {
+    console.log(`[BuildListener] Scheduling test: ${testName}`);
+  }
+  broadcastBuildUpdate(testName, hash, files) {
+    if (typeof this.broadcast === "function") {
+      this.broadcast({
+        type: "buildUpdate",
+        testName,
+        hash,
+        files,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      });
+    }
+  }
+  broadcastBuildEvents() {
+    if (typeof this.broadcast === "function") {
+      this.broadcast({
+        type: "buildEvents",
+        events: this.buildEvents,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      });
+    }
+  }
+  getBuildEvents() {
+    return this.buildEvents;
+  }
+  getBuildListenerState() {
+    return {
+      hashes: Array.from(this.hashes.entries()).map(([testName, data]) => ({
+        testName,
+        hash: data.hash,
+        fileCount: data.files.length
+      })),
+      recentEvents: this.buildEvents.slice(0, 10),
+      // Last 10 events
+      totalEvents: this.buildEvents.length,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+  routes(routes) {
+    super.routes({
+      build_listener: {},
+      ...routes
+    });
+  }
+};
+
 // src/server/serverClasees/Server.ts
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
-var Server = class extends Server_ProcessManager {
+var Server = class extends Server_BuildListener {
   constructor(configs, testName, mode2) {
     super(configs, testName, mode2);
     console.log(ansiC2.inverse("Press 'q' to initiate a graceful shutdown."));

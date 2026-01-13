@@ -66,6 +66,7 @@ export abstract class Server_HTTP extends Server_WS {
   routes(
     routes: Record<string, React.ComponentType<any> | React.ReactElement>
   ) {
+
     // Store routes for later use in request handling
     (this as any)._routes = routes;
   }
@@ -101,6 +102,8 @@ export abstract class Server_HTTP extends Server_WS {
       | Record<string, React.ComponentType<any> | React.ReactElement>
       | undefined;
 
+    console.log(`[HTTP] routing ${routeName} of ${JSON.stringify(routes)}`)
+
     if (!routes || !routes[routeName]) {
       res.writeHead(404, { "Content-Type": "text/html" });
       res.end(`<h1>Route not found: /~/${routeName}</h1>`);
@@ -117,17 +120,45 @@ export abstract class Server_HTTP extends Server_WS {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Process Manager</title>
-            <link href="/dist/prebuild/ProcessManger.css" rel="stylesheet">
+            <link href="/dist/prebuild/style.css" rel="stylesheet">
             
           </head>
           <body>
             <div id="root"></div>
-            <script src="/dist/prebuild/ProcessManagerReactApp.js"></script>
+            <script src="/dist/prebuild/server/serverClasees/ProcessManagerReactApp.js"></script>
             <script>
               // The bundled script automatically calls initApp when loaded
               // Ensure the root element exists
               if (!document.getElementById('root').innerHTML) {
                 document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Process Manager...</p></div>';
+              }
+            </script>
+          </body>
+        </html>
+      `);
+      return;
+    }
+
+    if (routeName === "build_listener") {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(`
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Build Listener</title>
+            <link href="/dist/prebuild/style.css" rel="stylesheet">
+            
+          </head>
+          <body>
+            <div id="root"></div>
+            <script src="/dist/prebuild/server/serverClasees/BuildListenerReactApp.js"></script>
+            <script>
+              // The bundled script automatically calls initApp when loaded
+              // Ensure the root element exists
+              if (!document.getElementById('root').innerHTML) {
+                document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Build Listener...</p></div>';
               }
             </script>
           </body>

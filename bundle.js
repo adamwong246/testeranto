@@ -78,6 +78,9 @@ for (const file of mediaFiles) {
 await esbuild.build({
   entryPoints: [
     'src/server/serverClasees/ProcessManagerReactApp.tsx',
+    'src/server/serverClasees/BuildListenerReactApp.tsx',
+    'src/style.scss',
+    'src/frontend/Report.tsx'
   ],
   bundle: true,
   format: "iife",

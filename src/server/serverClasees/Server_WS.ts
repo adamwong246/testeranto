@@ -133,6 +133,15 @@ export class Server_WS extends Server_DockerCompose {
           timestamp: new Date().toISOString()
         }));
         break;
+      case "sourceFilesUpdated":
+        this.handleSourceFilesUpdated(ws, message.data);
+        break;
+      case "getBuildListenerState":
+        this.handleGetBuildListenerState(ws);
+        break;
+      case "getBuildEvents":
+        this.handleGetBuildEvents(ws);
+        break;
       default:
         console.log("[WebSocket] Unknown message type:", message.type);
         ws.send(JSON.stringify({
@@ -160,28 +169,6 @@ export class Server_WS extends Server_DockerCompose {
         timestamp: new Date().toISOString()
       }));
     }
-  }
-
-  private handleSubscribeToLogs(ws: WebSocket, data: any): void {
-    const { processId } = data || {};
-    if (!processId) {
-      ws.send(JSON.stringify({
-        type: "logSubscription",
-        status: "error",
-        message: "Missing processId",
-        timestamp: new Date().toISOString()
-      }));
-      return;
-    }
-
-    // In a real implementation, we would set up log streaming for this process
-    // For now, just acknowledge the subscription
-    ws.send(JSON.stringify({
-      type: "logSubscription",
-      status: "subscribed",
-      processId,
-      timestamp: new Date().toISOString()
-    }));
   }
 
   private handleGetLogs(ws: WebSocket, data: any): void {
@@ -244,6 +231,136 @@ export class Server_WS extends Server_DockerCompose {
         type: "logs",
         processId,
         logs: [],
+        timestamp: new Date().toISOString()
+      }));
+    }
+  }
+
+  private handleSubscribeToLogs(ws: WebSocket, data: any): void {
+    const { processId } = data || {};
+    if (!processId) {
+      ws.send(JSON.stringify({
+        type: "logSubscription",
+        status: "error",
+        message: "Missing processId",
+        timestamp: new Date().toISOString()
+      }));
+      return;
+    }
+
+    // In a real implementation, we would set up log streaming for this process
+    // For now, just acknowledge the subscription
+    ws.send(JSON.stringify({
+      type: "logSubscription",
+      status: "subscribed",
+      processId,
+      timestamp: new Date().toISOString()
+    }));
+  }
+
+  private handleSourceFilesUpdated(ws: WebSocket, data: any): void {
+    const { testName, hash, files } = data || {};
+    
+    if (!testName || !hash || !files) {
+      ws.send(JSON.stringify({
+        type: "sourceFilesUpdated",
+        status: "error",
+        message: "Missing required fields: testName, hash, or files",
+        timestamp: new Date().toISOString()
+      }));
+      return;
+    }
+
+    console.log(`[WebSocket] Forwarding source files update to build listener for test: ${testName}`);
+    
+    // Check if this instance has sourceFilesUpdated method (inherited from Server_BuildListener)
+    if (typeof (this as any).sourceFilesUpdated === 'function') {
+      try {
+        (this as any).sourceFilesUpdated(testName, hash, files);
+        ws.send(JSON.stringify({
+          type: "sourceFilesUpdated",
+          status: "success",
+          testName,
+          message: "Build update processed successfully",
+          timestamp: new Date().toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error processing source files update:", error);
+        ws.send(JSON.stringify({
+          type: "sourceFilesUpdated",
+          status: "error",
+          testName,
+          message: `Error processing build update: ${error}`,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    } else {
+      console.warn("[WebSocket] sourceFilesUpdated method not available on this instance");
+      ws.send(JSON.stringify({
+        type: "sourceFilesUpdated",
+        status: "error",
+        testName,
+        message: "Build listener functionality not available",
+        timestamp: new Date().toISOString()
+      }));
+    }
+  }
+
+  private handleGetBuildListenerState(ws: WebSocket): void {
+    console.log("[WebSocket] Handling getBuildListenerState request");
+    
+    if (typeof (this as any).getBuildListenerState === 'function') {
+      try {
+        const state = (this as any).getBuildListenerState();
+        ws.send(JSON.stringify({
+          type: "buildListenerState",
+          data: state,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error getting build listener state:", error);
+        ws.send(JSON.stringify({
+          type: "buildListenerState",
+          status: "error",
+          message: `Error getting build listener state: ${error}`,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    } else {
+      ws.send(JSON.stringify({
+        type: "buildListenerState",
+        status: "error",
+        message: "Build listener state not available",
+        timestamp: new Date().toISOString()
+      }));
+    }
+  }
+
+  private handleGetBuildEvents(ws: WebSocket): void {
+    console.log("[WebSocket] Handling getBuildEvents request");
+    
+    if (typeof (this as any).getBuildEvents === 'function') {
+      try {
+        const events = (this as any).getBuildEvents();
+        ws.send(JSON.stringify({
+          type: "buildEvents",
+          events: events,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error getting build events:", error);
+        ws.send(JSON.stringify({
+          type: "buildEvents",
+          status: "error",
+          message: `Error getting build events: ${error}`,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    } else {
+      ws.send(JSON.stringify({
+        type: "buildEvents",
+        status: "error",
+        message: "Build events not available",
         timestamp: new Date().toISOString()
       }));
     }

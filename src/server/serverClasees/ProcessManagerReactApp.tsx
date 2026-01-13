@@ -9,8 +9,6 @@ import { ConnectionStatus } from './components/ConnectionStatus';
 import { EventLog, Event } from './components/EventLog';
 import { ResizableColumns } from './components/ResizableColumns';
 
-import style from "../../style.scss";
-
 export const ProcessManagerReactApp: React.FC = () => {
   return (
     <Container fluid className="py-3">

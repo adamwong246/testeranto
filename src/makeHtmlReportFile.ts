@@ -54,7 +54,7 @@ export const makeHtmlReportFile = (testsName: string, config: IBuiltConfig) => {
         process.cwd(),
         "dist",
         "prebuild",
-        "Report.css"
+        "style.css"
       );
       const relativeReportCssPath = path.relative(htmlDir, reportCssPath);
       const relativeReportCssUrl = relativeReportCssPath
