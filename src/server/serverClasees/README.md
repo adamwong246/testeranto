@@ -35,11 +35,16 @@ Each image/process should be associated with a websocket connection to a test, e
   - for each static analysis, we can write files directly to the reports folder via the volume
 
 # processes
+The Process Manager models processes as docker containers. "Process" in this context refers to a running docker contianer, not a host machine process.
 
-The Process manager needs to account for processes of the following "shape"
+The Process manager needs to account for docker container "processes" of the following "shape"
 
 - The System process
 - The BDD process for each test. id: `allTests-${runtime}-${pathToTest}-bdd`
-- The Static Test processes for each test. id: `allTests-${runtime}-${pathToTest}-${N}`
+- The Static Test processes for each test. id: `allTests-${runtime}-${pathToTest}-static-${N}`
 - The aider process for each test. id: `allTests-${runtime}-${pathToTest}-aider`
 - The builder process for each runtime. id `allTests-${runtime}-${pathToTest}-builder`
+
+The aider and builder processes will run indefintely.
+
+The BDD and static tests are should be triggered by a sourceFilesUpdated ws message. This will enqueue 1 bdd test and zero or more static tests aka checks. These docker container-processes need to remain until there are supercedded by an test with identical ids.

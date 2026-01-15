@@ -77,8 +77,9 @@ for (const file of mediaFiles) {
 // Build React app for webviews
 await esbuild.build({
   entryPoints: [
-    'src/server/serverClasees/ProcessManagerReactApp.tsx',
-    'src/server/serverClasees/BuildListenerReactApp.tsx',
+    'src/server/serverPages/ProcessManagerReactApp.tsx',
+    'src/server/serverPages/BuildListenerReactApp.tsx',
+    'src/server/serverPages/WebsocketsReactApp.tsx',
     'src/style.scss',
     'src/frontend/Report.tsx'
   ],

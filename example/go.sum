@@ -1,2 +1,3 @@
 github.com/adamwong246/testeranto/src/golingvu v0.0.0-20251009224308-c2fde1410839 h1:cUedNz9+P09Zr64JgE/pR2IBXQAAwOQTz5+Y/pwbHsg=
 github.com/adamwong246/testeranto/src/golingvu v0.0.0-20251009224308-c2fde1410839/go.mod h1:AbfGhZiV/wrGmLg7N4NjH8duxc2Rc3on5WPOGEdGddY=
+github.com/golangci/golangci-lint v1.60.3/go.mod h1:J4vOpcjzRI+lDL2DKNGBZVB3EQSBfCBCMpaydWLtJNo=

@@ -5,122 +5,28 @@ import { default as ansiC } from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
+import { ProcessCategory, getRuntimeImage } from "../serverManagers/ProcessManager";
+import { TestManager } from "../serverManagers/TestManager";
 import { IMode } from "../types";
-import { Server_WS } from "./Server_WS";
-import { generateReactAppHtml } from "../htmlTemplate";
-import { ProcessCategory, getRuntimeImage, ProcessManager } from "../serverManagers/ProcessManager";
+import { Server_BuildManager } from "./Server_BuildManager";
 
-export class Server_ProcessManager extends Server_WS {
+export class Server_TestManager extends Server_BuildManager {
 
-  processManager: ProcessManager
+  testManger: TestManager;
 
   constructor(configs: IBuiltConfig, testName: string, mode: IMode, routes) {
-    super(configs, testName, mode, {
-      'process_manager': (req, res) => {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(generateReactAppHtml("Process Manager",
-          "ProcessManagerReactApp",
-          "Process Manager"));
-      },
-      'process_manager/:runtime/:testname.xml': (req, res) => {
-        // Get parameters from the pattern matching
-        const params = (req as any).params;
-        if (!params) {
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({
-            error: "Route parameters not found"
-          }));
-          return;
-        }
-
-        const runtime = params.runtime;
-        const testname = params.testname;
-
-        if (!runtime || !testname) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({
-            error: "Missing runtime or testname parameters"
-          }));
-          return;
-        }
-
-        // This route always returns XML, so process testname directly
-        // testname already has .xml removed by the pattern matching logic
-        const testnameWithoutXml = testname;
-
-        // Get process summary and find matching process
-        const summary = this.getProcessSummary();
-        const processes = summary.processes || [];
-
-        // Find process that matches runtime and testnameWithoutXml
-        // Process IDs use format: allTests-{runtime}-{testPath}-...
-        const normalizedTest = testnameWithoutXml.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
-
-        const matchingProcess = processes.find((p: any) => {
-          const processId = p.id || '';
-          const processTestName = p.testName || '';
-
-          // Check if process ID contains the runtime and normalized test
-          if (processId.includes(`allTests-${runtime}-${normalizedTest}`)) {
-            return true;
-          }
-
-          // Check if testName matches
-          if (processTestName === testnameWithoutXml || processTestName === normalizedTest) {
-            return true;
-          }
-
-          // Check if process ID contains any part of the test path
-          const testWithoutExample = testnameWithoutXml.replace(/^example\//, '');
-          const testWithoutExt = testWithoutExample.replace(/\.[^/.]+$/, '');
-
-          if (processId.includes(testWithoutExt)) {
-            return true;
-          }
-
-          return false;
-        });
-
-        if (matchingProcess) {
-          res.writeHead(200, { "Content-Type": "text/xml" });
-          res.end(`
-            <process>
-              <id>${this.escapeXml(matchingProcess.id)}</id>
-              <command>${this.escapeXml(matchingProcess.command)}</command>
-              <status>${this.escapeXml(matchingProcess.status)}</status>
-              <timestamp>${this.escapeXml(matchingProcess.timestamp)}</timestamp>
-              <testName>${this.escapeXml(matchingProcess.testName)}</testName>
-              <platform>${this.escapeXml(matchingProcess.platform)}</platform>
-              <category>${this.escapeXml(matchingProcess.category)}</category>
-            </process>
-          `);
-        } else {
-          // For debugging, list all process IDs
-          const processIds = processes.map((p: any) => p.id).join(', ');
-          res.writeHead(404, { "Content-Type": "text/xml" });
-          res.end(`
-            <error>
-              Process not found for runtime: ${runtime}, test: ${testnameWithoutXml}
-              Normalized test: ${normalizedTest}
-              Available process IDs: ${processIds}
-            </error>
-          `);
-        }
-      },
-      ...routes,
-    });
-    this.processManager = new ProcessManager()
+    super(configs, testName, mode, routes);
+    this.testManger = new TestManager()
   }
 
   async start() {
-    console.log(`[Server_ProcessManager] start()`)
-    await super.start();
+    console.log(`[Server_TestManager] start()`)
+    super.start()
   }
 
   async stop() {
-    console.log(`[Server_ProcessManager] stop()`)
-    Object.values(this.processManager.logStreams || {}).forEach((logs) => logs.closeAll());
-    await super.stop();
+    console.log(`[Server_TestManager] stop()`)
+    super.stop()
   }
 
   executeCommand = async (
@@ -133,7 +39,7 @@ export class Server_ProcessManager extends Server_WS {
   ) => {
     console.log(`[ProcessManager] executeCommand called: ${processId}, ${category}, ${testName}, ${platform}`);
     console.log(`[ProcessManager] Command: ${command}`);
-    console.log(`[ProcessManager] allProcesses size before: ${this.queueLength}`);
+
 
     // Validate and format processId according to the specification
     let formattedProcessId = processId;
@@ -154,7 +60,7 @@ export class Server_ProcessManager extends Server_WS {
             break;
           default:
             // For static tests, we need to handle them differently
-            if (category === 'other' && processId.includes('-static-')) {
+            if (category === 'static' && processId.includes('-static-')) {
               // Keep the static test ID as is
               formattedProcessId = processId;
             } else {
@@ -286,9 +192,9 @@ export class Server_ProcessManager extends Server_WS {
         break;
       default:
         // For static tests, we need a unique number
-        if (category === 'other') {
+        if (category === 'static') {
           // Count existing static tests for this test
-          const staticCount = Array.from(this.jobSet.keys()).filter(id =>
+          const staticCount = Array.from(this.testManger.jobSet.keys()).filter(id =>
             id.startsWith(`allTests-${runtime}-${testPath}-static-`)
           ).length;
           processId = `allTests-${runtime}-${testPath}-static-${staticCount}`;
@@ -310,7 +216,7 @@ export class Server_ProcessManager extends Server_WS {
         testPath,
         addableFiles,
         timestamp: new Date().toISOString(),
-        queueLength: this.jobQueue.length + 1, // +1 because we're about to add this job
+        queueLength: this.testManger.jobQueue.length + 1, // +1 because we're about to add this job
       });
     } else {
       console.log(`[ProcessManager] broadcast method not available`);
@@ -428,13 +334,12 @@ export class Server_ProcessManager extends Server_WS {
     }
   }
 
-
   getProcessSummary = () => {
     console.log('[ProcessManager] getProcessSummary called');
 
     const processes = [];
 
-    for (const [id, info] of this.jobQueue.entries()) {
+    for (const [id, info] of this.testManger.jobQueue.entries()) {
       console.log(`[ProcessManager] Processing process ${id}:`, info);
 
       if (!id) {
@@ -477,7 +382,7 @@ export class Server_ProcessManager extends Server_WS {
   };
 
   getProcessLogs = (processId: string): string[] => {
-    return this.processLogs.get(processId) || [];
+    return this.testManger.processLogs.get(processId) || [];
   };
 
   addLogEntry = (
@@ -487,8 +392,8 @@ export class Server_ProcessManager extends Server_WS {
     timestamp: Date = new Date(),
     level?: string
   ) => {
-    if (!this.processManager.processLogs.has(processId)) {
-      this.processManager.processLogs.set(processId, []);
+    if (!this.testManger.processLogs.has(processId)) {
+      this.testManger.processLogs.set(processId, []);
     }
 
     let logLevel = level;
@@ -507,7 +412,7 @@ export class Server_ProcessManager extends Server_WS {
     }
 
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}`;
-    this.processManager.processLogs.get(processId)!.push(logEntry);
+    this.testManger.processLogs.get(processId)!.push(logEntry);
 
     this.writeToProcessLogFile(processId, source, message, timestamp);
 
@@ -601,14 +506,14 @@ export class Server_ProcessManager extends Server_WS {
   }
 
   allocatePorts(numPorts: number, testName: string): number[] | null {
-    const openPorts = Object.entries(this.processManager.ports)
+    const openPorts = Object.entries(this.testManger.ports)
       .filter(([, status]) => status === "")
       .map(([port]) => parseInt(port));
 
     if (openPorts.length >= numPorts) {
       const allocatedPorts = openPorts.slice(0, numPorts);
       allocatedPorts.forEach((port) => {
-        this.ports[port] = testName;
+        this.testManger.ports[port] = testName;
       });
       return allocatedPorts;
     }
@@ -617,8 +522,20 @@ export class Server_ProcessManager extends Server_WS {
 
   releasePorts(ports: number[]) {
     ports.forEach((port) => {
-      this.ports[port] = "";
+      this.testManger.ports[port] = "";
     });
+  }
+
+  getPortStatus() {
+    return { ...this.testManger.ports };
+  }
+
+  isPortAvailable(port: number): boolean {
+    return this.testManger.ports[port] === "";
+  }
+
+  getPortOwner(port: number): string | null {
+    return this.testManger.ports[port] || null;
   }
 
   shouldShutdown(
@@ -645,7 +562,7 @@ export class Server_ProcessManager extends Server_WS {
     console.log(
       ansiC.inverse(
         `The following jobs are awaiting resources: ${JSON.stringify(
-          this.getAllQueueItems()
+          this.testManger.getAllQueueItems()
         )}`
       )
     );
@@ -734,7 +651,7 @@ export class Server_ProcessManager extends Server_WS {
       testPath,
       runtime,
       command,
-      "other"
+      "static"
     );
   }
 

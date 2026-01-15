@@ -11,13 +11,17 @@ const absoluteBundlesDir = (c: ITestconfig): string => {
 
 export default (
   config: ITestconfig,
-  // entryPoints: string[],
   testName: string
-  // bundlesDir: string
 ): BuildOptions => {
-  // const entrypoints: string[] = [];
-
-  const entrypoints = ["./example/Calculator.test.ts"]; //Object.keys(config.node.tests);
+  // Get entry points from config, or use a default
+  let entrypoints: string[] = [];
+  if (config.node?.tests) {
+    entrypoints = Object.keys(config.node.tests);
+  } else {
+    // Fallback to a reasonable default
+    entrypoints = ["./example/Calculator.test.ts"];
+    console.warn(`No node.tests found in config, using default entry point: ${entrypoints[0]}`);
+  }
 
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "node",
@@ -26,8 +30,6 @@ export default (
 
   return {
     ...baseEsBuildConfig(config),
-
-    // splitting: false, // Disable splitting since each entry point is separate
 
     outdir: absoluteBundlesDir(config),
     outbase: ".", // Preserve directory structure relative to outdir
@@ -47,7 +49,6 @@ export default (
     absWorkingDir: process.cwd(),
     platform: "node",
 
-    // external: ["react", ...config.node.externals],
     packages: "external",
 
     entryPoints: entrypoints,
@@ -55,7 +56,7 @@ export default (
       featuresPlugin,
       inputFilesPluginFactory,
       rebuildPlugin("node"),
-      ...(config.node.plugins.map((p) => p(register, entrypoints)) || []),
+      ...(config.node?.plugins?.map((p) => p(register, entrypoints)) || []),
     ],
   };
 };

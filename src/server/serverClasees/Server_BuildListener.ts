@@ -3,6 +3,8 @@
 // 1) a super-hash of all files
 // 2) a list of input files
 // The Build listener should maintain a Map of tests to internal hashes. If this hash changes, we can schedule that test.
+import { IRunTime } from "../../Types";
+import { generateReactAppHtml } from "../htmlTemplate";
 import { Server_Scheduler } from "./Server_Scheduler";
 
 type BuildEvent = {
@@ -13,6 +15,7 @@ type BuildEvent = {
   timestamp: string;
   status: 'pending' | 'processing' | 'scheduled' | 'completed' | 'error';
   message?: string;
+  runtime?: string;
 };
 
 export class Server_BuildListener extends Server_Scheduler {
@@ -24,18 +27,33 @@ export class Server_BuildListener extends Server_Scheduler {
   private maxEvents = 100;
 
   constructor(configs: any, name: string, mode: any) {
-    super(configs, name, mode);
+    super(configs, name, mode, {
+      build_listener: (req, res) => {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(generateReactAppHtml("Build Listener",
+          "BuildListenerReactApp",
+          "Build Listener"));
+      },
+    });
   }
 
-  sourceFilesUpdated(testName: string, hash: string, files: string[]): void {
-    console.log(`[BuildListener] Source files updated for test: ${testName}, hash: ${hash}`);
+  sourceFilesUpdated(testName: string, hash: string, files: string[], runtime: IRunTime): void {
+    // Create a unique key that combines runtime and testName
+    // If runtime is not provided, we can't properly track the test
+    if (!runtime) {
+      console.error(`[BuildListener] No runtime provided for test: ${testName}. Cannot track or schedule tests.`);
+      return;
+    }
+
+    const testKey = `${runtime}:${testName}`;
+    console.log(`[BuildListener] Source files updated for test: ${testKey}, hash: ${hash}`);
 
     // Check if we have a previous hash for this test
-    const previousHash = this.hashes.has(testName) ?
-      this.hashes.get(testName)?.hash : null;
+    const previousHash = this.hashes.has(testKey) ?
+      this.hashes.get(testKey)?.hash : null;
 
     // Store the hash and files
-    this.hashes.set(testName, { hash, files });
+    this.hashes.set(testKey, { hash, files });
 
     // Create a new build event
     const event: BuildEvent = {
@@ -45,38 +63,39 @@ export class Server_BuildListener extends Server_Scheduler {
       files,
       timestamp: new Date().toISOString(),
       status: 'pending',
-      message: `Build update received for ${testName}`
+      message: `Build update received for ${testKey}`,
+      runtime
     };
-    
+
     this.addBuildEvent(event);
 
     // If hash has changed, schedule tests
     if (previousHash !== hash) {
-      console.log(`[BuildListener] Hash changed for ${testName}. Scheduling tests...`);
-      
+      console.log(`[BuildListener] Hash changed for ${testKey}. Scheduling tests...`);
+
       // Update event status
       event.status = 'processing';
-      event.message = `Hash changed for ${testName}. Scheduling tests...`;
+      event.message = `Hash changed for ${testKey}. Scheduling tests...`;
       this.updateBuildEvent(event);
 
-      // Extract test runtime from testName or files
-      // For now, we'll assume all tests need to be scheduled
-      this.scheduleTest(testName, files);
+      this.scheduleBddTest(testName, runtime, files)
+      this.scheduleStaticTests(testName, runtime, files)
 
       // Update event status
       event.status = 'scheduled';
-      event.message = `Test ${testName} scheduled for execution`;
+      event.message = `Test ${testKey} scheduled for execution`;
       this.updateBuildEvent(event);
 
       // Broadcast to WebSocket clients
-      this.broadcastBuildUpdate(testName, hash, files);
+      this.broadcastBuildUpdate(testName, hash, files, runtime);
     } else {
-      console.log(`[BuildListener] Hash unchanged for ${testName}. No action needed.`);
+      console.log(`[BuildListener] Hash unchanged for ${testKey}. No action needed.`);
       event.status = 'completed';
-      event.message = `Hash unchanged for ${testName}. No action needed.`;
+      event.message = `Hash unchanged for ${testKey}. No action needed.`;
       this.updateBuildEvent(event);
     }
   }
+
 
   private addBuildEvent(event: BuildEvent): void {
     this.buildEvents.unshift(event); // Add to beginning for chronological order (newest first)
@@ -94,21 +113,17 @@ export class Server_BuildListener extends Server_Scheduler {
     }
   }
 
-  private scheduleTest(testName: string, files: string[]): void {
-    console.log(`[BuildListener] Scheduling test: ${testName}`);
-    // Here we would implement the actual scheduling logic
-    // For now, just log
-    // In a real implementation, this would queue the test for execution
-  }
-
-  private broadcastBuildUpdate(testName: string, hash: string, files: string[]): void {
+  private broadcastBuildUpdate(testName: string, hash: string, files: string[], runtime?: string): void {
     // Check if we have a broadcast method (from Server_WS)
     if (typeof (this as any).broadcast === 'function') {
+      const testKey = runtime ? `${runtime}:${testName}` : testName;
       (this as any).broadcast({
         type: 'buildUpdate',
+        testKey,
         testName,
         hash,
         files,
+        runtime,
         timestamp: new Date().toISOString()
       });
     }
@@ -130,23 +145,30 @@ export class Server_BuildListener extends Server_Scheduler {
 
   public getBuildListenerState(): any {
     return {
-      hashes: Array.from(this.hashes.entries()).map(([testName, data]) => ({
-        testName,
-        hash: data.hash,
-        fileCount: data.files.length
-      })),
+      hashes: Array.from(this.hashes.entries()).map(([testKey, data]) => {
+        // Split the key back into runtime and testName
+        const [runtime, testName] = testKey.split(':', 2);
+        return {
+          testKey,
+          runtime,
+          testName,
+          hash: data.hash,
+          fileCount: data.files.length
+        };
+      }),
       recentEvents: this.buildEvents.slice(0, 10), // Last 10 events
       totalEvents: this.buildEvents.length,
       timestamp: new Date().toISOString()
     };
   }
 
-  routes(
-    routes: Record<string, React.ComponentType<any> | React.ReactElement>
-  ) {
-    super.routes({
-      build_listener: {} as React.ComponentType<any>,
-      ...routes,
-    });
+  async start() {
+    console.log(`[Server_BuildListener] start()`)
+    super.start()
+  }
+
+  async stop() {
+    console.log(`[Server_BuildListener] stop()`)
+    super.stop()
   }
 }

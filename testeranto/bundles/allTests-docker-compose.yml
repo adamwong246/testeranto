@@ -1,162 +1,197 @@
-version: '3.8'
 services:
   node-builder:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/bundles/allTests/node/node.Dockerfile
-      tags:
-        - bundles-node-build:latest
-      args:
-        NODE_MJS_HASH: cab84cac12fc3913ce45e7e563425b8bb
+      dockerfile: node.Dockerfile
+    container_name: node-builder-allTests
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
     volumes:
-      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
       - /Users/adam/Code/testeranto/src:/workspace/src
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
-      - /Users/adam/Code/testeranto/allTests.ts:/workspace/allTests.ts
-      - /Users/adam/Code/testeranto/allTestsUtils.ts:/workspace/allTestsUtils.ts
-    image: bundles-node-build:latest
-    restart: unless-stopped
+    command: sh -c "pwd; ls -al; yarn tsx dist/prebuild/server/runtimes/node/node.mjs /workspace/allTests.ts"
+    networks:
+      - default
+  node-example_calculator-test-ts-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: node.Dockerfile
+    container_name: node-example_calculator-test-ts-static-0
     environment:
-      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/node
-      METAFILES_DIR: /workspace/testeranto/metafiles/node
-      IN_DOCKER: 'true'
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    command:
-      - sh
-      - '-c'
-      - 'TEST_NAME=allTests WS_PORT=3456 yarn tsx dist/prebuild/server/runtimes/node/node.mjs allTests.ts ''{"ports": [1111]}'' || echo "Build process exited with code $?, but keeping container alive for health checks";'
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - '[ -f /workspace/testeranto/metafiles/node/allTests.json ] && echo "healthy" || exit 1'
-      interval: 10s
-      timeout: 30s
-      retries: 10
-      start_period: 60s
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  node-example_calculator-test-ts-static-1:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: node.Dockerfile
+    container_name: node-example_calculator-test-ts-static-1
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  node-example_calculator-test-ts-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: node.Dockerfile
+    container_name: node-example_calculator-test-ts-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  node-example_calculator-test-ts-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: node-example_calculator-test-ts-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
   web-builder:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/bundles/allTests/web/web.Dockerfile
-      tags:
-        - bundles-web-build:latest
+      dockerfile: web.Dockerfile
+    container_name: web-builder-allTests
+    working_dir: /workspace
     volumes:
-      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-      - /Users/adam/Code/testeranto/src:/workspace/src
-      - /Users/adam/Code/testeranto/example:/workspace/example
-      - /Users/adam/Code/testeranto/dist:/workspace/dist
-      - /Users/adam/Code/testeranto/allTests.ts:/workspace/allTests.ts
-      - /Users/adam/Code/testeranto/allTestsUtils.ts:/workspace/allTestsUtils.ts
-    image: bundles-web-build:latest
-    restart: 'no'
+      - /Users/adam/Code/testeranto:/workspace
+    networks:
+      - default
+  web-example_calculator-test-ts-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: web.Dockerfile
+    container_name: web-example_calculator-test-ts-static-0
     environment:
-      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/web
-      METAFILES_DIR: /workspace/testeranto/metafiles/web
-      ESBUILD_SERVE_PORT: '0'
-      IN_DOCKER: 'true'
-      CHROMIUM_PATH: /usr/bin/chromium-browser
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    ports:
-      - '9222:9222'
-    command:
-      - sh
-      - '-c'
-      - 'TEST_NAME=allTests WS_PORT=3456 yarn tsx dist/prebuild/server/runtimes/web/web.mjs allTests.ts ''{"ports": [1111]}'' || echo "Build process exited with code $?, but keeping container alive for health checks";'
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  web-example_calculator-test-ts-static-1:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: web.Dockerfile
+    container_name: web-example_calculator-test-ts-static-1
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  web-example_calculator-test-ts-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: web.Dockerfile
+    container_name: web-example_calculator-test-ts-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  web-example_calculator-test-ts-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: web-example_calculator-test-ts-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
   golang-builder:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/bundles/allTests/golang/golang.Dockerfile
-      tags:
-        - bundles-golang-build:latest
+      dockerfile: golang.Dockerfile
+    container_name: golang-builder-allTests
+    environment: {}
+    working_dir: /workspace
     volumes:
       - /Users/adam/Code/testeranto:/workspace
-    image: bundles-golang-build:latest
-    restart: unless-stopped
+    networks:
+      - default
+  golang-example_calculator-golingvu-test-go-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: golang.Dockerfile
+    container_name: golang-example_calculator-golingvu-test-go-static-0
     environment:
-      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/golang
-      METAFILES_DIR: /workspace/testeranto/metafiles/golang
-      ESBUILD_SERVE_PORT: '0'
-      IN_DOCKER: 'true'
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    command:
-      - sh
-      - '-c'
-      - |-
-        echo 'Starting Go metafile generator...';
-              
-              cd /workspace/src/server/runtimes/golang;
-              
-              # Build the metafile generator
-              go build -buildvcs=false -o /usr/local/bin/golang-main .;
-              
-              # Run the metafile generator
-              /usr/local/bin/golang-main /workspace/testeranto/allTests.json;
-              
-              echo 'Go metafile generator completed. Keeping container alive...';
-              while true; do
-                sleep 3600
-              done
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - |-
-          if [ -f /workspace/testeranto/metafiles/golang/allTests.json ]; then
-                     echo "healthy - metafile exists"
-                     exit 0
-                   else
-                     echo "unhealthy - no metafile found"
-                     exit 1
-                   fi
-      interval: 10s
-      timeout: 30s
-      retries: 10
-      start_period: 60s
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  golang-example_calculator-golingvu-test-go-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: golang.Dockerfile
+    container_name: golang-example_calculator-golingvu-test-go-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  golang-example_calculator-golingvu-test-go-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: golang-example_calculator-golingvu-test-go-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
   python-builder:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/bundles/allTests/python/python.Dockerfile
-      tags:
-        - bundles-python-build:latest
-      args:
-        BUILD_TIMESTAMP: ${BUILD_TIMESTAMP:-${CURRENT_TIMESTAMP}}
+      dockerfile: python.Dockerfile
+    container_name: python-builder-allTests
+    environment:
+      PYTHONUNBUFFERED: '1'
     volumes:
       - /Users/adam/Code/testeranto:/workspace
-    image: bundles-python-build:latest
-    restart: unless-stopped
+    working_dir: /workspace
+    command: python main.py
+    networks:
+      - default
+  python-example_calculator-pitono-test-py-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: python.Dockerfile
+    container_name: python-example_calculator-pitono-test-py-static-0
     environment:
-      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/python
-      METAFILES_DIR: /workspace/testeranto/metafiles/python
-      ESBUILD_SERVE_PORT: '0'
-      IN_DOCKER: 'true'
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    command:
-      - sh
-      - '-c'
-      - |2-
-
-               
-               # Run the pitono.py script with the allTests.json config
-               cd /workspace && python src/server/runtimes/python/pitono.py /workspace/testeranto/allTests.json;
-               
-               echo "Checking if metafile was generated:";
-               ls -la /workspace/testeranto/metafiles/python/ || echo "Python metafiles directory not found";
-               echo "Checking if bundles were generated:";
-               ls -la /workspace/testeranto/bundles/allTests/python/ || echo "Python bundles directory not found";
-               echo "Checking for generated text files:";
-               find /workspace/testeranto/bundles/allTests/python/ -name "*.txt" -type f | head -10;
-               echo 'Python bundle generation completed';
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - python -c "import pylint; import sys; sys.exit(0)" || exit 1
-      interval: 10s
-      timeout: 30s
-      retries: 10
-      start_period: 60s
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  python-example_calculator-pitono-test-py-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: python.Dockerfile
+    container_name: python-example_calculator-pitono-test-py-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    networks:
+      - default
+  python-example_calculator-pitono-test-py-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: python-example_calculator-pitono-test-py-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
 volumes:
   node_modules:
     driver: local

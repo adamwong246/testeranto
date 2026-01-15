@@ -1,126 +1,29 @@
-// This Server manages processes-as-docker-commands. Processes are scheduled in queue.
-// It should also leverage BuildSet, TestsQueue and TestsMap
-
 import { default as ansiC } from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { IMode } from "../types";
-import { Server_WS } from "./Server_WS";
+import { Server_ProcessManager } from "./Server_ProcessManager";
 import { generateReactAppHtml } from "../htmlTemplate";
-import { ProcessCategory, getRuntimeImage, ProcessManager } from "../serverManagers/ProcessManager";
+import { createLogStreams, ProcessCategory, getRuntimeImage } from "../serverManagers/ProcessManager";
+import { BuildManager } from "../serverManagers/BuildManager";
 
-export class Server_ProcessManager extends Server_WS {
-
-  processManager: ProcessManager
+export class Server_BuildManager extends Server_ProcessManager {
+  buildManager: BuildManager
 
   constructor(configs: IBuiltConfig, testName: string, mode: IMode, routes) {
-    super(configs, testName, mode, {
-      'process_manager': (req, res) => {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(generateReactAppHtml("Process Manager",
-          "ProcessManagerReactApp",
-          "Process Manager"));
-      },
-      'process_manager/:runtime/:testname.xml': (req, res) => {
-        // Get parameters from the pattern matching
-        const params = (req as any).params;
-        if (!params) {
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({
-            error: "Route parameters not found"
-          }));
-          return;
-        }
-
-        const runtime = params.runtime;
-        const testname = params.testname;
-
-        if (!runtime || !testname) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({
-            error: "Missing runtime or testname parameters"
-          }));
-          return;
-        }
-
-        // This route always returns XML, so process testname directly
-        // testname already has .xml removed by the pattern matching logic
-        const testnameWithoutXml = testname;
-
-        // Get process summary and find matching process
-        const summary = this.getProcessSummary();
-        const processes = summary.processes || [];
-
-        // Find process that matches runtime and testnameWithoutXml
-        // Process IDs use format: allTests-{runtime}-{testPath}-...
-        const normalizedTest = testnameWithoutXml.replace(/\.[^/.]+$/, "").replace(/^example\//, "");
-
-        const matchingProcess = processes.find((p: any) => {
-          const processId = p.id || '';
-          const processTestName = p.testName || '';
-
-          // Check if process ID contains the runtime and normalized test
-          if (processId.includes(`allTests-${runtime}-${normalizedTest}`)) {
-            return true;
-          }
-
-          // Check if testName matches
-          if (processTestName === testnameWithoutXml || processTestName === normalizedTest) {
-            return true;
-          }
-
-          // Check if process ID contains any part of the test path
-          const testWithoutExample = testnameWithoutXml.replace(/^example\//, '');
-          const testWithoutExt = testWithoutExample.replace(/\.[^/.]+$/, '');
-
-          if (processId.includes(testWithoutExt)) {
-            return true;
-          }
-
-          return false;
-        });
-
-        if (matchingProcess) {
-          res.writeHead(200, { "Content-Type": "text/xml" });
-          res.end(`
-            <process>
-              <id>${this.escapeXml(matchingProcess.id)}</id>
-              <command>${this.escapeXml(matchingProcess.command)}</command>
-              <status>${this.escapeXml(matchingProcess.status)}</status>
-              <timestamp>${this.escapeXml(matchingProcess.timestamp)}</timestamp>
-              <testName>${this.escapeXml(matchingProcess.testName)}</testName>
-              <platform>${this.escapeXml(matchingProcess.platform)}</platform>
-              <category>${this.escapeXml(matchingProcess.category)}</category>
-            </process>
-          `);
-        } else {
-          // For debugging, list all process IDs
-          const processIds = processes.map((p: any) => p.id).join(', ');
-          res.writeHead(404, { "Content-Type": "text/xml" });
-          res.end(`
-            <error>
-              Process not found for runtime: ${runtime}, test: ${testnameWithoutXml}
-              Normalized test: ${normalizedTest}
-              Available process IDs: ${processIds}
-            </error>
-          `);
-        }
-      },
-      ...routes,
-    });
-    this.processManager = new ProcessManager()
+    super(configs, testName, mode, routes);
   }
 
+
   async start() {
-    console.log(`[Server_ProcessManager] start()`)
-    await super.start();
+    console.log(`[Server_BuildManager] start()`)
+    super.start()
   }
 
   async stop() {
-    console.log(`[Server_ProcessManager] stop()`)
-    Object.values(this.processManager.logStreams || {}).forEach((logs) => logs.closeAll());
-    await super.stop();
+    console.log(`[Server_BuildManager] stop()`)
+    super.stop()
   }
 
   executeCommand = async (
@@ -154,7 +57,7 @@ export class Server_ProcessManager extends Server_WS {
             break;
           default:
             // For static tests, we need to handle them differently
-            if (category === 'other' && processId.includes('-static-')) {
+            if (category === 'static' && processId.includes('-static-')) {
               // Keep the static test ID as is
               formattedProcessId = processId;
             } else {
@@ -222,20 +125,21 @@ export class Server_ProcessManager extends Server_WS {
       );
     }
 
-    const baseImage = getRuntimeImage(runtime);
+
 
     // Determine if the process should run indefinitely or once
-    const runOptions = (category === 'aider' || category === 'build-time') ? '-d' : '--rm';
+    // const runOptions = (category === 'aider' || category === 'build-time') ? '-d' : '--rm';
 
-    const dockerRunCmd = `docker run ${runOptions} \
-      --name ${containerName} \
-      --network allTests_network \
-      -v ${process.cwd()}:/workspace \
-      -w /workspace \
-      ${baseImage} \
-      sh -c "${command}"`;
+    // const dockerRunCmd = `docker run ${runOptions} \
+    //   --name ${containerName} \
+    //   --network allTests_network \
+    //   -v ${process.cwd()}:/workspace \
+    //   -w /workspace \
+    //   ${baseImage} \
+    //   sh -c "${command}"`;
 
-    console.log(`[ProcessManager] Running docker command: ${dockerRunCmd}`);
+    const dockerRunCmd = this.buildManager.dockerRunCmd(category, command, runtime);
+
     await this.executeCommand(
       formattedProcessId,
       dockerRunCmd,
@@ -286,7 +190,7 @@ export class Server_ProcessManager extends Server_WS {
         break;
       default:
         // For static tests, we need a unique number
-        if (category === 'other') {
+        if (category === 'static') {
           // Count existing static tests for this test
           const staticCount = Array.from(this.jobSet.keys()).filter(id =>
             id.startsWith(`allTests-${runtime}-${testPath}-static-`)
@@ -428,7 +332,6 @@ export class Server_ProcessManager extends Server_WS {
     }
   }
 
-
   getProcessSummary = () => {
     console.log('[ProcessManager] getProcessSummary called');
 
@@ -487,8 +390,8 @@ export class Server_ProcessManager extends Server_WS {
     timestamp: Date = new Date(),
     level?: string
   ) => {
-    if (!this.processManager.processLogs.has(processId)) {
-      this.processManager.processLogs.set(processId, []);
+    if (!this.processLogs.has(processId)) {
+      this.processLogs.set(processId, []);
     }
 
     let logLevel = level;
@@ -507,7 +410,7 @@ export class Server_ProcessManager extends Server_WS {
     }
 
     const logEntry = `[${timestamp.toISOString()}] [${source}] ${message}`;
-    this.processManager.processLogs.get(processId)!.push(logEntry);
+    this.processLogs.get(processId)!.push(logEntry);
 
     this.writeToProcessLogFile(processId, source, message, timestamp);
 
@@ -600,27 +503,6 @@ export class Server_ProcessManager extends Server_WS {
     }
   }
 
-  allocatePorts(numPorts: number, testName: string): number[] | null {
-    const openPorts = Object.entries(this.processManager.ports)
-      .filter(([, status]) => status === "")
-      .map(([port]) => parseInt(port));
-
-    if (openPorts.length >= numPorts) {
-      const allocatedPorts = openPorts.slice(0, numPorts);
-      allocatedPorts.forEach((port) => {
-        this.ports[port] = testName;
-      });
-      return allocatedPorts;
-    }
-    return null;
-  }
-
-  releasePorts(ports: number[]) {
-    ports.forEach((port) => {
-      this.ports[port] = "";
-    });
-  }
-
   shouldShutdown(
     summary: Record<string, any>,
     queueLength: number,
@@ -665,17 +547,12 @@ export class Server_ProcessManager extends Server_WS {
     }
   };
 
-
-
-
-
   async startAiderProcess(
     testPath: string,
     runtime: IRunTime,
     command: string
   ): Promise<void> {
     const processId = `allTests-${runtime}-${testPath}-aider`;
-    console.log(`[ProcessManager] Starting aider process: ${processId}`);
 
     await this.runTestInDocker(
       processId,
@@ -692,7 +569,6 @@ export class Server_ProcessManager extends Server_WS {
   ): Promise<void> {
     const testPath = "builder"; // Builder is per runtime, not per test
     const processId = `allTests-${runtime}-${testPath}-builder`;
-    console.log(`[ProcessManager] Starting builder process: ${processId}`);
 
     await this.runTestInDocker(
       processId,
@@ -709,8 +585,6 @@ export class Server_ProcessManager extends Server_WS {
     command: string
   ): Promise<void> {
     const processId = `allTests-${runtime}-${testPath}-bdd`;
-    console.log(`[ProcessManager] Starting BDD test process: ${processId}`);
-
     await this.runTestInDocker(
       processId,
       testPath,
@@ -727,14 +601,12 @@ export class Server_ProcessManager extends Server_WS {
     index: number
   ): Promise<void> {
     const processId = `allTests-${runtime}-${testPath}-static-${index}`;
-    console.log(`[ProcessManager] Starting static test process: ${processId}`);
-
     await this.runTestInDocker(
       processId,
       testPath,
       runtime,
       command,
-      "other"
+      "static"
     );
   }
 

@@ -1,13 +1,18 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // Package struct maps the fields we need from 'go list'
@@ -54,8 +59,80 @@ type InputDetail struct {
 	BytesInOutput int `json:"bytesInOutput"`
 }
 
+func computeFilesHash(files []string) (string, error) {
+	hash := md5.New()
+	for _, file := range files {
+		absPath := filepath.Join("/workspace", file)
+		// Add file path to hash
+		hash.Write([]byte(file))
+		
+		// Add file stats to hash
+		info, err := os.Stat(absPath)
+		if err == nil {
+			hash.Write([]byte(info.ModTime().String()))
+			hash.Write([]byte(fmt.Sprintf("%d", info.Size())))
+		} else {
+			hash.Write([]byte("missing"))
+		}
+	}
+	return hex.EncodeToString(hash.Sum(nil)), nil
+}
+
+func sendSourceFilesUpdatedForTest(testName string, hash string, files []string, runtime string) error {
+	// Get HTTP port from environment
+	httpPort := os.Getenv("WS_PORT")
+	if httpPort == "" {
+		httpPort = "3000" // Default port
+	}
+	
+	// Use HTTP POST to send the message since WebSocket in Go requires external dependencies
+	// The server's WebSocket handler should also accept HTTP POST at /ws/sourceFilesUpdated
+	url := fmt.Sprintf("http://host.docker.internal:%s/ws/sourceFilesUpdated", httpPort)
+	
+	// Prepare the request body
+	requestBody := map[string]interface{}{
+		"type": "sourceFilesUpdated",
+		"data": map[string]interface{}{
+			"testName": testName,
+			"hash":     hash,
+			"files":    files,
+			"runtime":  runtime,
+		},
+	}
+	
+	jsonBody, err := json.Marshal(requestBody)
+	if err != nil {
+		fmt.Printf("[Go Builder] Error marshaling request: %v\n", err)
+		return err
+	}
+	
+	// Send HTTP POST request
+	resp, err := http.Post(url, "application/json", strings.NewReader(string(jsonBody)))
+	if err != nil {
+		fmt.Printf("[Go Builder] Error sending HTTP POST: %v\n", err)
+		return err
+	}
+	defer resp.Body.Close()
+	
+	body, _ := io.ReadAll(resp.Body)
+	fmt.Printf("[Go Builder] HTTP POST response status: %s, body: %s\n", resp.Status, string(body))
+	
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		fmt.Printf("[Go Builder] Successfully sent sourceFilesUpdated for %s\n", testName)
+		return nil
+	} else {
+		return fmt.Errorf("HTTP POST failed with status: %s", resp.Status)
+	}
+}
+
 func main() {
 	fmt.Println("🚀 Starting Go metafile generator...")
+	
+	// Get test name from environment
+	testName := os.Getenv("TEST_NAME")
+	if testName == "" {
+		testName = "allTests"
+	}
 	
 	// Load configuration
 	configPath := findConfig()
@@ -75,6 +152,9 @@ func main() {
 		Inputs:  make(map[string]InputEntry),
 		Outputs: make(map[string]OutputEntry),
 	}
+	
+	// Track all input files for hash calculation
+	allInputFiles := make([]string, 0)
 	
 	// Process each test
 	for testName, testConfig := range config.Golang.Tests {
@@ -134,6 +214,7 @@ func main() {
 					relToWorkspace = absPath
 				}
 				inputs = append(inputs, relToWorkspace)
+				allInputFiles = append(allInputFiles, relToWorkspace)
 				
 				// Add to metafile inputs
 				fileInfo, err := os.Stat(absPath)
@@ -178,6 +259,24 @@ func main() {
 		os.Chdir("/workspace")
 	}
 	
+	// Compute hash for all input files
+	hash, err := computeFilesHash(allInputFiles)
+	if err != nil {
+		fmt.Printf("⚠️  Failed to compute hash: %v\n", err)
+		hash = ""
+	}
+	
+	// Send sourceFilesUpdated message for each test
+	for testName, testConfig := range config.Golang.Tests {
+		// For each test, we need to compute its specific hash
+		// For now, send with the overall hash, but in a real implementation,
+		// we should compute per-test hash
+		fmt.Printf("[Go Builder] Sending sourceFilesUpdated for test: %s\n", testName)
+		if err := sendSourceFilesUpdatedForTest(testName, hash, allInputFiles, "golang"); err != nil {
+			fmt.Printf("⚠️  Failed to send sourceFilesUpdated for %s: %v\n", testName, err)
+		}
+	}
+	
 	// Write metafile
 	metafilePath := "/workspace/testeranto/metafiles/golang/allTests.json"
 	
@@ -204,6 +303,7 @@ func main() {
 	
 	fmt.Printf("\n✅ Metafile created at: %s\n", metafilePath)
 	fmt.Printf("📊 Metafile contains %d inputs and %d outputs\n", len(metafile.Inputs), len(metafile.Outputs))
+	fmt.Printf("🔑 Computed hash: %s\n", hash)
 	
 	fmt.Println("🎉 Go metafile generator completed!")
 }

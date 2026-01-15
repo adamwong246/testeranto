@@ -27,11 +27,11 @@ export type SuiteSpecification<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["suites"]]: (
-    name: string,
-    givens: IGivens<I>
-  ) => BaseSuite<I, O>;
-};
+    [K in keyof O["suites"]]: (
+      name: string,
+      givens: IGivens<I>
+    ) => BaseSuite<I, O>;
+  };
 
 // Simplified test result summary
 export type TestSummary = {
@@ -106,13 +106,13 @@ export type GivenSpecification<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["givens"]]: (
-    features: string[],
-    whens: BaseWhen<I>[],
-    thens: BaseThen<I>[],
-    ...xtrasB: O["givens"][K]
-  ) => BaseGiven<I>;
-};
+    [K in keyof O["givens"]]: (
+      features: string[],
+      whens: BaseWhen<I>[],
+      thens: BaseThen<I>[],
+      ...xtrasB: O["givens"][K]
+    ) => BaseGiven<I>;
+  };
 
 export type WhenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
   [K in keyof O["whens"]]: (...xtrasC: O["whens"][K]) => BaseWhen<I>;
@@ -133,29 +133,29 @@ export type TestGivenImplementation<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
-};
+    [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+  };
 
 export type TestWhenImplementation<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["whens"]]: (
-    ...Iw: O["whens"][K]
-  ) => (
-    zel: I["iselection"],
-    tr: ITestResourceConfiguration
-  ) => Promise<I["when"]>;
-};
+    [K in keyof O["whens"]]: (
+      ...Iw: O["whens"][K]
+    ) => (
+      zel: I["iselection"],
+      tr: ITestResourceConfiguration
+    ) => Promise<I["when"]>;
+  };
 
 export type TestThenImplementation<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["thens"]]: (
-    ...It: O["thens"][K]
-  ) => (ssel: I["iselection"]) => I["then"];
-};
+    [K in keyof O["thens"]]: (
+      ...It: O["thens"][K]
+    ) => (ssel: I["iselection"]) => I["then"];
+  };
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -177,7 +177,7 @@ export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
 
 export type ITestconfig = {
   httpPort: number;
-  chromiumPort: number;
+
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
   ports: string[];
@@ -189,6 +189,7 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     checks: IChecks;
+    dockerfile: string,
   };
 
   python: {
@@ -196,6 +197,7 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     checks: IChecks;
+    dockerfile: string;
   };
 
   node: {
@@ -204,6 +206,7 @@ export type ITestconfig = {
     loaders: Record<string, string>;
     externals: string[];
     checks: IChecks;
+    dockerfile: string;
   };
 
   web: {
@@ -212,6 +215,7 @@ export type ITestconfig = {
     loaders: Record<string, string>;
     externals: string[];
     checks: IChecks;
+    dockerfile: string;
   };
 };
 

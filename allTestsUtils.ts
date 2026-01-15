@@ -3,6 +3,7 @@ import { IChecks, IDockerSteps } from "./src/Types";
 export const createLangConfig = (
   testFile: string,
   checks: IChecks,
+  dockerfile: string,
   options?: {
     plugins?: any[];
     loaders?: Record<string, string>;
@@ -20,6 +21,7 @@ export const createLangConfig = (
     test: options?.testBlocks,
     prod: options?.prodBlocks,
     checks,
-    volumes: options?.volumes
+    volumes: options?.volumes,
+    dockerfile,
   };
 };

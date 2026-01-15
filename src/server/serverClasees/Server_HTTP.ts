@@ -9,66 +9,49 @@ import fs from "fs";
 import http from "http";
 import path from "path";
 import { IMode } from "../types";
-import { CONTENT_TYPES, SERVER_CONSTANTS } from "./utils/Server_TCP_constants";
-import { Server_WS } from "./Server_WS";
-import { getContentType } from "./utils/Server_TCP_utils";
+import { Server_Docker } from "./Server_Docker";
+import { CONTENT_TYPES, getContentType } from "../serverManagers/tcp";
+import { HttpManager } from "../serverManagers/HttpManager";
 
-export abstract class Server_HTTP extends Server_WS {
+export abstract class Server_HTTP extends Server_Docker {
+
+  http: HttpManager;
   protected httpServer: http.Server;
+  routes: any;
 
-  constructor(configs: any, name: string, mode: IMode) {
+  constructor(configs: any, name: string, mode: IMode, routes: any) {
     super(configs, name, mode);
-
+    this.http = new HttpManager();
     this.httpServer = http.createServer();
-
-    // Use the configured httpPort from configs, fallback to environment variables or default
-    const httpPort =
-      configs.httpPort ||
-      Number(process.env.HTTP_PORT) ||
-      Number(process.env.WS_PORT) ||
-      3456;
-    console.log(
-      `[Server_TCP] Starting HTTP server on port ${httpPort}, host ${SERVER_CONSTANTS.HOST}`
-    );
-    this.httpServer.listen(httpPort, SERVER_CONSTANTS.HOST, () => {
-      const addr = this.httpServer.address();
-      console.log(
-        `[Server_TCP] HTTP server running on http://localhost:${httpPort}`
-      );
-    });
-
-    const address = this.httpServer.address();
-    console.log(`[HTTP] HTTP server address:`, address);
-
-    // Listen for server listening event
-    this.httpServer.on("listening", () => {
-      const addr = this.httpServer.address();
-      console.log(`[HTTP] HTTP server is now listening on port ${addr.port}`);
-    });
-
-    // Listen for errors
     this.httpServer.on("error", (error) => {
-      console.error(`[HTTP] HTTP server error:`, error);
-    });
-
-    // Listen for close
-    this.httpServer.on("close", () => {
-      console.log(`[HTTP] HTTP server closed`);
+      console.error(`[HTTP] error:`, error);
     });
 
     this.httpServer.on("request", this.handleHttpRequest.bind(this));
-    console.log(`[HTTP] HTTP request handler attached`);
+    this.routes = routes;
 
-    // Set up WebSocket upgrade handling
-    this.setupWebSocketUpgrade();
+    // Note: WebSocket upgrade handling will be set up by child classes if needed
+    // Do not call setupWebSocketUpgrade() here
   }
 
-  routes(
-    routes: Record<string, React.ComponentType<any> | React.ReactElement>
-  ) {
+  async start(): Promise<void> {
+    console.log(`[Server_HTTP] start()`)
+    super.start()
+    return new Promise((resolve) => {
+      this.httpServer.on("listening", () => {
+        const addr = this.httpServer.address();
+        console.log(`[HTTP] HTTP server is now listening on port ${3456}`);
+        resolve()
+      });
+    });
+  }
 
-    // Store routes for later use in request handling
-    (this as any)._routes = routes;
+  async stop() {
+    console.log(`[Server_HTTP] stop()`)
+    this.httpServer.close(() => {
+      console.log("[HTTP] HTTP server closed");
+    });
+    await super.stop();
   }
 
   protected handleHttpRequest(
@@ -77,6 +60,9 @@ export abstract class Server_HTTP extends Server_WS {
       req: http.IncomingMessage;
     }
   ): void {
+
+    console.log(`[Server_HTTP] handleHttpRequest(${req.url})`)
+
     // Check if this is a route request (starts with /~/)
     if (req.url && req.url.startsWith("/~/")) {
       this.handleRouteRequest(req, res);
@@ -92,97 +78,29 @@ export abstract class Server_HTTP extends Server_WS {
       req: http.IncomingMessage;
     }
   ): void {
-    const urlPath = new URL(req.url!, `http://${req.headers.host}`).pathname;
+    console.log(`[Server_HTTP] handleRouteRequest(${req.url})`);
 
-    // Extract route name (remove /~/ prefix)
-    const routeName = urlPath.slice(3); // Remove '/~/'
+    const routeName = this.http.routeName(req);
+    console.log(`[HTTP] Handling route: /~/${routeName}`);
 
-    // Get routes from instance
-    const routes = (this as any)._routes as
-      | Record<string, React.ComponentType<any> | React.ReactElement>
-      | undefined;
-
-    console.log(`[HTTP] routing ${routeName} of ${JSON.stringify(routes)}`)
-
-    if (!routes || !routes[routeName]) {
-      res.writeHead(404, { "Content-Type": "text/html" });
-      res.end(`<h1>Route not found: /~/${routeName}</h1>`);
+    // Use HttpManager to match the route
+    const match = this.http.matchRoute(routeName, this.routes);
+    if (match) {
+      // Add params to request object for handler to use
+      (req as any).params = match.params;
+      try {
+        match.handler(req, res);
+      } catch (error) {
+        console.error(`[HTTP] Error in route handler for /~/${routeName}:`, error);
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end(`Internal Server Error: ${error}`);
+      }
       return;
     }
 
-    // Serve the process manager React app
-    if (routeName === "process_manager") {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(`
-        <!DOCTYPE html>
-        <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Process Manager</title>
-            <link href="/dist/prebuild/style.css" rel="stylesheet">
-            
-          </head>
-          <body>
-            <div id="root"></div>
-            <script src="/dist/prebuild/server/serverClasees/ProcessManagerReactApp.js"></script>
-            <script>
-              // The bundled script automatically calls initApp when loaded
-              // Ensure the root element exists
-              if (!document.getElementById('root').innerHTML) {
-                document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Process Manager...</p></div>';
-              }
-            </script>
-          </body>
-        </html>
-      `);
-      return;
-    }
-
-    if (routeName === "build_listener") {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(`
-        <!DOCTYPE html>
-        <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Build Listener</title>
-            <link href="/dist/prebuild/style.css" rel="stylesheet">
-            
-          </head>
-          <body>
-            <div id="root"></div>
-            <script src="/dist/prebuild/server/serverClasees/BuildListenerReactApp.js"></script>
-            <script>
-              // The bundled script automatically calls initApp when loaded
-              // Ensure the root element exists
-              if (!document.getElementById('root').innerHTML) {
-                document.getElementById('root').innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading Build Listener...</p></div>';
-              }
-            </script>
-          </body>
-        </html>
-      `);
-      return;
-    }
-
-    // Fallback for other routes (should not happen)
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>${routeName}</title>
-        </head>
-        <body>
-          <div id="root"></div>
-          <script>
-            document.getElementById('root').innerHTML = '<h1>${routeName}</h1><p>Component not fully implemented.</p>';
-          </script>
-        </body>
-      </html>
-    `);
+    // No route found
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end(`Route not found: /~/${routeName}`);
   }
 
   private serveStaticFile(
@@ -191,22 +109,17 @@ export abstract class Server_HTTP extends Server_WS {
       req: http.IncomingMessage;
     }
   ): void {
+
+    console.log(`[Server_HTTP] serveStaticFile(${req.url})`)
+
     if (!req.url) {
       res.writeHead(400);
       res.end("Bad Request");
       return;
     }
 
-    // Remove query parameters
-    const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
+    const normalizedPath = this.http.decodedPath(req);
 
-    // Prevent directory traversal attacks
-    const decodedPath = decodeURIComponent(urlPath);
-    // Remove leading slash to make it relative
-    const relativePath = decodedPath.startsWith("/")
-      ? decodedPath.slice(1)
-      : decodedPath;
-    const normalizedPath = path.normalize(relativePath);
 
     // Check for any remaining '..' components
     if (normalizedPath.includes("..")) {
@@ -231,7 +144,7 @@ export abstract class Server_HTTP extends Server_WS {
       if (err) {
         if (err.code === "ENOENT") {
           res.writeHead(404);
-          res.end(`File not found: ${urlPath}`);
+          res.end(`File not found: ${normalizedPath}`);
           return;
         } else {
           res.writeHead(500);
@@ -256,13 +169,13 @@ export abstract class Server_HTTP extends Server_WS {
                 const isDir = stat.isDirectory();
                 const slash = isDir ? "/" : "";
                 return `<li><a href="${path.join(
-                  urlPath,
+                  normalizedPath,
                   file
                 )}${slash}">${file}${slash}</a></li>`;
               } catch {
                 // If we can't stat the file, still show it as a link without slash
                 return `<li><a href="${path.join(
-                  urlPath,
+                  normalizedPath,
                   file
                 )}">${file}</a></li>`;
               }
@@ -273,9 +186,9 @@ export abstract class Server_HTTP extends Server_WS {
           res.end(`
             <!DOCTYPE html>
             <html>
-            <head><title>Directory listing for ${urlPath}</title></head>
+            <head><title>Directory listing for ${normalizedPath}</title></head>
             <body>
-              <h1>Directory listing for ${urlPath}</h1>
+              <h1>Directory listing for ${normalizedPath}</h1>
               <ul>
                 ${items}
               </ul>
@@ -295,6 +208,8 @@ export abstract class Server_HTTP extends Server_WS {
       req: http.IncomingMessage;
     }
   ): void {
+    console.log(`[Server_HTTP] serveFile(${filePath})`)
+
     const contentType = getContentType(filePath) || CONTENT_TYPES.OCTET_STREAM;
 
     fs.readFile(filePath, (err, data) => {
@@ -314,26 +229,15 @@ export abstract class Server_HTTP extends Server_WS {
     });
   }
 
-  protected setupWebSocketUpgrade(): void {
-    console.log("[HTTP] Setting up WebSocket upgrade handler");
-    // Attach WebSocket upgrade handler using the parent class method
-    if (this.ws) {
-      console.log("[HTTP] WebSocket server is available, attaching to HTTP server");
-      this.attachWebSocketToHttpServer(this.httpServer);
-    } else {
-      console.error("[HTTP] WebSocket server not available");
-    }
+
+  // The route method is no longer abstract since we're using the routes() method
+  // This is kept for backward compatibility
+  router(a: any): any {
+    // Default implementation does nothing
+    // Inheriting classes can override if needed
+    return a;
   }
 
-  async stop() {
-    // Safely close HTTP server if it exists
-    if (this.httpServer) {
-      this.httpServer.close(() => {
-        console.log("HTTP server closed");
-      });
-    }
-    await super.stop();
-  }
 
-  abstract route(a: any): any;
+
 }

@@ -1,5 +1,4 @@
 import readline from "readline";
-import { default as ansiC } from "ansi-colors";
 import { IMode } from "../types";
 import { IBuiltConfig } from "../../Types";
 import { Server_BuildListener } from "./Server_BuildListener";
@@ -10,12 +9,8 @@ if (process.stdin.isTTY) process.stdin.setRawMode(true);
 export class Server extends Server_BuildListener {
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
-
-    console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
-    console.log(ansiC.inverse("Press 'CTRL + c' to quit forcefully."));
-    console.log(
-      ansiC.inverse("Note: In raw mode, use 'CTRL + c' to force quit.")
-    );
+    console.log(("[Server] Press 'q' to initiate a graceful shutdown."));
+    console.log(("[Server] Press 'CTRL + c' to quit forcefully."));
 
     process.stdin.on("keypress", async (str, key) => {
       if (key.name === "q") {
@@ -39,11 +34,12 @@ export class Server extends Server_BuildListener {
   }
 
   async start(): Promise<void> {
-    console.log(ansiC.blue(ansiC.inverse("Starting Server...")));
-
-    // Call parent's start method to start metafile watching
+    console.log(`[Server] start()`)
     await super.start();
+  }
 
-    console.log(ansiC.green(ansiC.inverse("Server started successfully")));
+  async stop(): Promise<void> {
+    console.log(`[Server] stop()`)
+    await super.stop();
   }
 }

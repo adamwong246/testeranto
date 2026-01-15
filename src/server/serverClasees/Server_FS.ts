@@ -2,20 +2,21 @@ import fs from "fs";
 import path from "path";
 import { IMode } from "../types";
 import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
-import { Server_HTTP } from "./Server_HTTP";
 import { makeHtmlTestFiles } from "../../makeHtmlTestFiles";
 import { makeHtmlReportFile } from "../../makeHtmlReportFile";
-import { getRunnables } from "./utils/getRunnables";
-import { ProcessMangerHtml, IndexHtml } from "./utils/Server_FS";
+import { Server_WS } from "./Server_WS";
+import { getRunnables } from "../getRunnables";
+import { ProcessMangerHtml, IndexHtml } from "../serverManagers/fs";
 
-export class Server_FS extends Server_HTTP {
+
+export class Server_FS extends Server_WS {
   summary: ISummary = {};
 
   currentBuildResolve: (() => void) | null = null;
   currentBuildReject: ((error: any) => void) | null = null;
 
-  constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
-    super(configs, testName, mode);
+  constructor(configs: IBuiltConfig, testName: string, mode: IMode, routes) {
+    super(configs, testName, mode, routes);
 
     fs.writeFileSync(
       path.join(process.cwd(), "testeranto", `${testName}.json`),

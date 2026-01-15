@@ -2,27 +2,97 @@
 
 import { WebSocketServer, WebSocket } from "ws";
 import { IMode } from "../types";
-import { Server_DockerCompose } from "./Server_DockerCompose";
+import { Server_HTTP } from "./Server_HTTP";
+import { generateReactAppHtml } from "../htmlTemplate";
+import { WsManager } from "../serverManagers/WsManager";
 
-
-export class Server_WS extends Server_DockerCompose {
+export class Server_WS extends Server_HTTP {
   protected ws: WebSocketServer;
   protected wsClients: Set<WebSocket> = new Set();
+  wsManager: WsManager
 
-  constructor(configs: any, name: string, mode: IMode) {
-    super(configs, name, mode);
+  constructor(configs: any, name: string, mode: IMode, routes) {
+    super(configs, name, mode, {
+      websockets: (req, res) => {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(generateReactAppHtml("Websockets",
+          "WebsocketsReactApp",
+          "Websockets"));
+      },
+      ...routes,
+    });
 
-    // Create WebSocket server
     this.ws = new WebSocketServer({
       noServer: true,
     });
 
-    // Set up WebSocket event handlers
-    this.setupWebSocketHandlers();
+    this.wsManager = new WsManager()
 
-    // Note: The upgrade handler will be attached by Server_HTTP
-    // to avoid duplicate attachment
+    this.setupWebSocketHandlers();
   }
+
+  async start(): Promise<void> {
+    console.log(`[Server_WS] start()`)
+    await super.start();
+    this.attachWebSocketToHttpServer(this.httpServer);
+  }
+
+  async stop() {
+    console.log(`[Server_WS] stop()`)
+
+    this.wsClients.forEach((client) => {
+      client.close();
+    });
+    this.wsClients.clear();
+
+    // Close the WebSocket server
+    this.ws.close(() => {
+      console.log("[WebSocket] Server closed");
+    });
+
+    await super.stop();
+  }
+
+
+  escapeXml(unsafe: string): string {
+    return this.wsManager.escapeXml(unsafe)
+  }
+
+  public attachWebSocketToHttpServer(httpServer: any): void {
+
+    httpServer.on("upgrade", (request: any, socket: any, head: any) => {
+      const pathname = new URL(request.url || "", `http://${request.headers.host}`).pathname;
+
+      // Handle WebSocket connections at /ws
+      if (pathname === "/ws") {
+        console.log("[WebSocket] Upgrade request for /ws");
+        this.ws.handleUpgrade(request, socket, head, (ws) => {
+          this.ws.emit("connection", ws, request);
+        });
+      } else {
+        // Close connection for non-WebSocket paths
+        socket.destroy();
+      }
+    });
+
+  }
+
+  public broadcast(message: any): void {
+    const data = typeof message === "string" ? message : JSON.stringify(message);
+    console.log(`[WebSocket] Broadcasting to ${this.wsClients.size} clients:`, message.type || message);
+
+    let sentCount = 0;
+    this.wsClients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data);
+        sentCount++;
+      } else {
+        console.log(`[WebSocket] Client not open, state: ${client.readyState}`);
+      }
+    });
+    console.log(`[WebSocket] Sent to ${sentCount} clients`);
+  }
+
 
   private setupWebSocketHandlers(): void {
     this.ws.on("connection", (ws: WebSocket, request: any) => {
@@ -36,21 +106,14 @@ export class Server_WS extends Server_DockerCompose {
         timestamp: new Date().toISOString()
       }));
 
-      // Send a test enqueue event to verify the connection
-      setTimeout(() => {
-        const testEvent = {
-          type: 'enqueue',
-          processId: 'test-process-123',
-          runtime: 'node',
-          command: 'yarn test example/Calculator.test.ts',
-          testName: 'Calculator.test',
-          testPath: 'Calculator.test',
-          timestamp: new Date().toISOString(),
-          details: 'Test event to verify WebSocket connection'
-        };
-        ws.send(JSON.stringify(testEvent));
-        console.log('[WebSocket] Sent test enqueue event to new client');
-      }, 1000);
+      // Immediately send current processes
+      // Note: handleGetProcesses needs to be implemented or handled differently
+      // For now, we'll send a placeholder
+      ws.send(JSON.stringify({
+        type: "processes",
+        data: this.getProcessSummary ? this.getProcessSummary() : { processes: [] },
+        timestamp: new Date().toISOString()
+      }));
 
       // Handle messages from clients
       ws.on("message", (data: Buffer) => {
@@ -85,230 +148,108 @@ export class Server_WS extends Server_DockerCompose {
     });
 
     this.ws.on("close", () => {
-      console.log("[WebSocket] Server closed");
+      console.log("[WebSocket] Server closing...");
       this.wsClients.clear();
     });
   }
 
-  // This method is called by Server_HTTP to attach the WebSocket upgrade handler
-  public attachWebSocketToHttpServer(httpServer: any): void {
-    if (!httpServer) {
-      console.error("[WebSocket] HTTP server not available for WebSocket attachment");
-      return;
-    }
 
-    httpServer.on("upgrade", (request: any, socket: any, head: any) => {
-      const pathname = new URL(request.url || "", `http://${request.headers.host}`).pathname;
-
-      // Handle WebSocket connections at /ws
-      if (pathname === "/ws") {
-        console.log("[WebSocket] Upgrade request for /ws");
-        this.ws.handleUpgrade(request, socket, head, (ws) => {
-          this.ws.emit("connection", ws, request);
-        });
-      } else {
-        // Close connection for non-WebSocket paths
-        socket.destroy();
-      }
-    });
-    console.log("[HTTP] WebSocket upgrade handler attached");
-  }
 
   private handleWebSocketMessage(ws: WebSocket, message: any): void {
     console.log("[WebSocket] Received message:", message.type);
 
+    // Use WsManager to process the message
+    const response = this.wsManager.processMessage(
+      message.type,
+      message.data,
+      () => this.getProcessSummary(),
+      (processId: string) => {
+        const processManager = this as any;
+        if (typeof processManager.getProcessLogs === "function") {
+          return processManager.getProcessLogs(processId);
+        }
+        return [];
+      }
+    );
+
+    // Send the response
+    ws.send(JSON.stringify(response));
+
+    // For certain message types, we need to perform additional server-side actions
+    // These are side effects that can't be handled by WsManager alone
     switch (message.type) {
-      case "getProcesses":
-        this.handleGetProcesses(ws);
-        break;
-      case "subscribeToLogs":
-        this.handleSubscribeToLogs(ws, message.data);
-        break;
-      case "getLogs":
-        this.handleGetLogs(ws, message.data);
-        break;
-      case "ping":
-        ws.send(JSON.stringify({
-          type: "pong",
-          timestamp: new Date().toISOString()
-        }));
-        break;
       case "sourceFilesUpdated":
-        this.handleSourceFilesUpdated(ws, message.data);
+        this.handleSourceFilesUpdatedSideEffects(ws, message.data, response);
         break;
       case "getBuildListenerState":
-        this.handleGetBuildListenerState(ws);
+        this.handleGetBuildListenerStateSideEffects(ws);
         break;
       case "getBuildEvents":
-        this.handleGetBuildEvents(ws);
+        this.handleGetBuildEventsSideEffects(ws);
         break;
-      default:
-        console.log("[WebSocket] Unknown message type:", message.type);
-        ws.send(JSON.stringify({
-          type: "error",
-          message: `Unknown message type: ${message.type}`,
-          timestamp: new Date().toISOString()
-        }));
     }
   }
 
-  private handleGetProcesses(ws: WebSocket): void {
-    // Get process summary from ProcessManager
-    const processManager = this as any;
-    if (typeof processManager.getProcessSummary === "function") {
-      const summary = processManager.getProcessSummary();
-      ws.send(JSON.stringify({
-        type: "processes",
-        data: summary,
-        timestamp: new Date().toISOString()
-      }));
-    } else {
-      ws.send(JSON.stringify({
-        type: "processes",
-        data: { processes: [], totalProcesses: 0, running: 0 },
-        timestamp: new Date().toISOString()
-      }));
-    }
-  }
+  private handleSourceFilesUpdatedSideEffects(ws: WebSocket, data: any, response: any): void {
+    const { testName, hash, files, runtime } = data || {};
 
-  private handleGetLogs(ws: WebSocket, data: any): void {
-    const { processId } = data || {};
-    if (!processId) {
-      ws.send(JSON.stringify({
-        type: "logs",
-        status: "error",
-        message: "Missing processId",
-        timestamp: new Date().toISOString()
-      }));
+    if (!testName || !hash || !files || !runtime) {
       return;
     }
 
-    // Get logs from ProcessManager
-    const processManager = this as any;
-    if (typeof processManager.getProcessLogs === "function") {
-      const logs = processManager.getProcessLogs(processId);
-      ws.send(JSON.stringify({
-        type: "logs",
-        processId,
-        logs: logs.map((log: string) => {
-          // Parse the log entry to extract level
-          // Log format is: [timestamp] [source] message
-          // We need to extract level from source or message
-          let level = "info";
-          let source = "process";
-          let message = log;
+    console.log(`[WebSocket] Forwarding source files update to build listener for test: ${testName} (runtime: ${runtime})`);
 
-          // Try to parse the log format
-          const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
-          if (match) {
-            const timestamp = match[1];
-            source = match[2];
-            message = match[3];
-
-            // Map source to level
-            if (source === "stderr" || source === "error") {
-              level = "error";
-            } else if (source === "warn") {
-              level = "warn";
-            } else if (source === "debug") {
-              level = "debug";
-            } else {
-              level = "info";
-            }
-          }
-
-          return {
-            timestamp: new Date().toISOString(),
-            level: level,
-            message: message,
-            source: source
-          };
-        }),
-        timestamp: new Date().toISOString()
-      }));
-    } else {
-      ws.send(JSON.stringify({
-        type: "logs",
-        processId,
-        logs: [],
-        timestamp: new Date().toISOString()
-      }));
-    }
-  }
-
-  private handleSubscribeToLogs(ws: WebSocket, data: any): void {
-    const { processId } = data || {};
-    if (!processId) {
-      ws.send(JSON.stringify({
-        type: "logSubscription",
-        status: "error",
-        message: "Missing processId",
-        timestamp: new Date().toISOString()
-      }));
-      return;
-    }
-
-    // In a real implementation, we would set up log streaming for this process
-    // For now, just acknowledge the subscription
-    ws.send(JSON.stringify({
-      type: "logSubscription",
-      status: "subscribed",
-      processId,
-      timestamp: new Date().toISOString()
-    }));
-  }
-
-  private handleSourceFilesUpdated(ws: WebSocket, data: any): void {
-    const { testName, hash, files } = data || {};
-    
-    if (!testName || !hash || !files) {
-      ws.send(JSON.stringify({
-        type: "sourceFilesUpdated",
-        status: "error",
-        message: "Missing required fields: testName, hash, or files",
-        timestamp: new Date().toISOString()
-      }));
-      return;
-    }
-
-    console.log(`[WebSocket] Forwarding source files update to build listener for test: ${testName}`);
-    
     // Check if this instance has sourceFilesUpdated method (inherited from Server_BuildListener)
     if (typeof (this as any).sourceFilesUpdated === 'function') {
+      console.log(`[WebSocket] sourceFilesUpdated method found, calling it`);
       try {
-        (this as any).sourceFilesUpdated(testName, hash, files);
-        ws.send(JSON.stringify({
+        (this as any).sourceFilesUpdated(testName, hash, files, runtime);
+        console.log(`[WebSocket] sourceFilesUpdated called successfully`);
+
+        // Broadcast to all clients
+        this.broadcast({
           type: "sourceFilesUpdated",
-          status: "success",
           testName,
-          message: "Build update processed successfully",
-          timestamp: new Date().toISOString()
-        }));
+          hash,
+          files,
+          runtime,
+          status: "processed",
+          timestamp: new Date().toISOString(),
+          message: "Source files update processed successfully"
+        });
+
+        // Update the response if successful
+        if (response.status === "success") {
+          // Response is already sent, but we can send an additional update
+          ws.send(JSON.stringify({
+            type: "sourceFilesUpdated",
+            status: "processed",
+            testName,
+            runtime,
+            message: "Build update processed and broadcasted successfully",
+            timestamp: new Date().toISOString()
+          }));
+        }
       } catch (error) {
         console.error("[WebSocket] Error processing source files update:", error);
+        // Send error update
         ws.send(JSON.stringify({
           type: "sourceFilesUpdated",
           status: "error",
           testName,
+          runtime,
           message: `Error processing build update: ${error}`,
           timestamp: new Date().toISOString()
         }));
       }
     } else {
       console.warn("[WebSocket] sourceFilesUpdated method not available on this instance");
-      ws.send(JSON.stringify({
-        type: "sourceFilesUpdated",
-        status: "error",
-        testName,
-        message: "Build listener functionality not available",
-        timestamp: new Date().toISOString()
-      }));
     }
   }
 
-  private handleGetBuildListenerState(ws: WebSocket): void {
+  private handleGetBuildListenerStateSideEffects(ws: WebSocket): void {
     console.log("[WebSocket] Handling getBuildListenerState request");
-    
+
     if (typeof (this as any).getBuildListenerState === 'function') {
       try {
         const state = (this as any).getBuildListenerState();
@@ -326,19 +267,12 @@ export class Server_WS extends Server_DockerCompose {
           timestamp: new Date().toISOString()
         }));
       }
-    } else {
-      ws.send(JSON.stringify({
-        type: "buildListenerState",
-        status: "error",
-        message: "Build listener state not available",
-        timestamp: new Date().toISOString()
-      }));
     }
   }
 
-  private handleGetBuildEvents(ws: WebSocket): void {
+  private handleGetBuildEventsSideEffects(ws: WebSocket): void {
     console.log("[WebSocket] Handling getBuildEvents request");
-    
+
     if (typeof (this as any).getBuildEvents === 'function') {
       try {
         const events = (this as any).getBuildEvents();
@@ -356,45 +290,27 @@ export class Server_WS extends Server_DockerCompose {
           timestamp: new Date().toISOString()
         }));
       }
+    }
+  }
+
+  private handleGetProcesses(ws: WebSocket): void {
+    if (typeof (this as any).getProcessSummary === 'function') {
+      const summary = (this as any).getProcessSummary();
+      ws.send(JSON.stringify({
+        type: "processes",
+        data: summary,
+        timestamp: new Date().toISOString()
+      }));
     } else {
       ws.send(JSON.stringify({
-        type: "buildEvents",
-        status: "error",
-        message: "Build events not available",
+        type: "processes",
+        data: { processes: [], message: "getProcessSummary not available" },
         timestamp: new Date().toISOString()
       }));
     }
   }
 
   // Broadcast a message to all connected WebSocket clients
-  public broadcast(message: any): void {
-    const data = typeof message === "string" ? message : JSON.stringify(message);
-    console.log(`[WebSocket] Broadcasting to ${this.wsClients.size} clients:`, message.type || message);
 
-    let sentCount = 0;
-    this.wsClients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(data);
-        sentCount++;
-      } else {
-        console.log(`[WebSocket] Client not open, state: ${client.readyState}`);
-      }
-    });
-    console.log(`[WebSocket] Sent to ${sentCount} clients`);
-  }
 
-  async stop() {
-    // Close all client connections
-    this.wsClients.forEach((client) => {
-      client.close();
-    });
-    this.wsClients.clear();
-
-    // Close the WebSocket server
-    this.ws.close(() => {
-      console.log("[WebSocket] Server closed");
-    });
-
-    await super.stop();
-  }
 }

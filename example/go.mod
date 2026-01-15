@@ -1,6 +1,6 @@
 module example
 
-go 1.19
+go 1.22
 
 replace github.com/adamwong246/testeranto => ../
 
