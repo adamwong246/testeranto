@@ -234,22 +234,22 @@ def bundle_python_files(entry_point: str, output_dir: str) -> str:
     text_path = os.path.join(output_dir, text_filename)
     print(f"=== Text file path: {text_path}")
     
-    # Write dummy content to text file
-    dummy_content = f"""This is a dummy text file to prove text file generation works.
-Entry point: {entry_point}
-Timestamp: {hashlib.md5(str(os.getpid()).encode()).hexdigest()[:8]}
-"""
-    try:
-        with open(text_path, 'w', encoding='utf-8') as f:
-            f.write(dummy_content)
-        print(f"=== SUCCESS: Wrote dummy text file to {text_path}")
-        print(f"=== File exists after write: {os.path.exists(text_path)}")
-        if os.path.exists(text_path):
-            with open(text_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-            print(f"=== File content preview: {content[:100]}")
-    except Exception as e:
-        print(f"=== ERROR writing text file: {e}")
+#     # Write dummy content to text file
+#     dummy_content = f"""This is a dummy text file to prove text file generation works.
+# Entry point: {entry_point}
+# Timestamp: {hashlib.md5(str(os.getpid()).encode()).hexdigest()[:8]}
+# """
+#     try:
+#         with open(text_path, 'w', encoding='utf-8') as f:
+#             f.write(dummy_content)
+#         print(f"=== SUCCESS: Wrote dummy text file to {text_path}")
+#         print(f"=== File exists after write: {os.path.exists(text_path)}")
+#         if os.path.exists(text_path):
+#             with open(text_path, 'r', encoding='utf-8') as f:
+#                 content = f.read()
+#             print(f"=== File content preview: {content[:100]}")
+#     except Exception as e:
+#         print(f"=== ERROR writing text file: {e}")
     
     # Try to collect dependencies, but if it fails, still create a minimal JSON bundle
     try:
@@ -291,7 +291,12 @@ Timestamp: {hashlib.md5(str(os.getpid()).encode()).hexdigest()[:8]}
             print(f"=== ERROR updating text file: {e}")
         
         # Create JSON bundle
-        output_filename_json = f"{entry_name}.bundle.json"
+        # The path should be under testeranto/bundles/allTests/python/
+        # entry name should be "testeranto/bundles/allTests/python/example/Calculator.test.py-inputFiles.json"
+        # Ensure the example directory exists
+        example_dir = os.path.join(output_dir, "example")
+        os.makedirs(example_dir, exist_ok=True)
+        output_filename_json = f"example/{entry_name}.py-inputFiles.json"
         output_path_json = os.path.join(output_dir, output_filename_json)
         print(f"=== JSON bundle path: {output_path_json}")
         
@@ -305,6 +310,23 @@ Timestamp: {hashlib.md5(str(os.getpid()).encode()).hexdigest()[:8]}
             json.dump(bundle_content, f, indent=2)
         
         print(f"=== Generated JSON bundle: {output_path_json}")
+        
+        # Create a minimal Python bundle file as requested in the TODO
+        python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
+        python_bundle_content = f'''#!/usr/bin/env python3
+"""
+Python test bundle for: {entry_point}
+Hash: {combined_hash_hex}
+This is a minimal bundle file for an interpreted language.
+The actual test is at: {entry_point}
+"""
+# This file acts as a bundle placeholder
+BUNDLE_HASH = "{combined_hash_hex}"
+'''
+        with open(python_bundle_path, 'w', encoding='utf-8') as f:
+            f.write(python_bundle_content)
+        print(f"=== Generated Python bundle: {python_bundle_path}")
+        
         return output_path_json
         
     except Exception as e:
@@ -326,6 +348,22 @@ Timestamp: {hashlib.md5(str(os.getpid()).encode()).hexdigest()[:8]}
             json.dump(bundle_content, f, indent=2)
         
         print(f"=== Generated minimal JSON bundle due to error: {output_path_json}")
+        
+        # Also create a minimal Python bundle even on error
+        python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
+        python_bundle_content = f'''#!/usr/bin/env python3
+"""
+Python test bundle for: {entry_point}
+Hash: error
+This is a minimal bundle file for an interpreted language.
+Error during generation: {e}
+"""
+BUNDLE_HASH = "error"
+'''
+        with open(python_bundle_path, 'w', encoding='utf-8') as f:
+            f.write(python_bundle_content)
+        print(f"=== Generated Python bundle (error): {python_bundle_path}")
+        
         return output_path_json
 
 def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
@@ -540,6 +578,12 @@ def main():
                     print(f"    Error reading file: {e}")
     else:
         print(f"Bundles directory does not exist: {bundles_dir}")    
+    
+    # TODO
+    # Write an nearly empty python file to act as a "bundle". 
+    # it should include the hash as a comment and mmerely link back to the test
+    # as there is no sense in "building" an interpreted langugaes
+    
 
 def compute_files_hash(files: List[str]) -> str:
     """Compute a hash from file paths and contents, consistent with Node/Web runtimes."""

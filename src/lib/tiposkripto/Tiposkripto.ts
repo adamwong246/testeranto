@@ -20,7 +20,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
   testAdapter: Partial<ITestAdapter<I>>,
-  testResourceRequirement: ITestResourceRequest = defaultTestResourceRequirement,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
   testResourceConfiguration?: ITestResourceConfiguration
 ): Promise<BaseTiposkripto<I, O, M>> => {
   return (

@@ -45,7 +45,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
-    command: TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";
+    command: node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";
     networks:
       - default
   node-example_calculator-test-ts-aider:

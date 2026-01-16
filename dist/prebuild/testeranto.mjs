@@ -62,7 +62,7 @@ var nodeBuildCommand = (port) => {
 };
 var nodeBddCommand = (port) => {
   const jsonStr = JSON.stringify({ ports: [1111] });
-  return `TEST_NAME=allTests WS_PORT=${port} ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+  return `node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
 };
 
 // src/server/runtimes/python/docker.ts
@@ -1088,6 +1088,46 @@ var Server_Docker = class extends Server_WS {
         await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${serviceName}`);
       } catch (error) {
         console.error(`[Server_Docker] Failed to start ${serviceName}: ${error.message}`);
+      }
+    }
+    for (const runtime of runtimes) {
+      const aiderServiceName = `${runtime}-aider`;
+      console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
+      try {
+        await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
+      } catch (error) {
+        console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
+      }
+    }
+    for (const runtime of runtimes) {
+      const tests = this.configs[runtime]?.tests;
+      if (!tests) continue;
+      for (const testName in tests) {
+        const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
+        const bddServiceName = `${uid}-bdd`;
+        console.log(`[Server_Docker] Starting BDD service: ${bddServiceName}`);
+        try {
+          await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${bddServiceName}`);
+        } catch (error) {
+          console.error(`[Server_Docker] Failed to start ${bddServiceName}: ${error.message}`);
+        }
+      }
+    }
+    for (const runtime of runtimes) {
+      const tests = this.configs[runtime]?.tests;
+      if (!tests) continue;
+      for (const testName in tests) {
+        const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
+        const checks = this.configs[runtime]?.checks || [];
+        for (let i = 0; i < checks.length; i++) {
+          const staticServiceName = `${uid}-static-${i}`;
+          console.log(`[Server_Docker] Starting static test service: ${staticServiceName}`);
+          try {
+            await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${staticServiceName}`);
+          } catch (error) {
+            console.error(`[Server_Docker] Failed to start ${staticServiceName}: ${error.message}`);
+          }
+        }
       }
     }
   }

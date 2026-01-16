@@ -29,5 +29,5 @@ export const nodeBuildCommand = (port) => {
 
 export const nodeBddCommand = (port) => {
   const jsonStr = JSON.stringify({ ports: [1111] });
-  return `TEST_NAME=allTests WS_PORT=${port} ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+  return `node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
 }

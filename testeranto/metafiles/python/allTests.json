@@ -47,7 +47,7 @@
         },
         "bytes": 9635,
         "signature": "084a4054e0321a412fc9ad9e6538c423",
-        "bundlePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.json",
+        "bundlePath": "/workspace/testeranto/bundles/allTests/python/example/Calculator.pitono.test.py-inputFiles.json",
         "bundleSize": 204,
         "combinedHash": "2e56dab370fe3ddf8a7941480410cf0e",
         "inputFiles": [

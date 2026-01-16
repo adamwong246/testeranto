@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // Package struct maps the fields we need from 'go list'
@@ -181,13 +182,7 @@ func main() {
 		
 		fmt.Printf("  Found %d input files\n", len(inputs))
 		
-		// Create bundles directory for this test
-		bundlesDir := filepath.Join("/workspace", "testeranto/bundles/allTests/golang", testName)
-		if err := os.MkdirAll(bundlesDir, 0755); err != nil {
-			log.Printf("⚠️  Failed to create bundles directory: %v", err)
-			os.Chdir("/workspace")
-			continue
-		}
+		
 		
 		// Compute hash for this test's input files
 		testHash, err := computeFilesHash(inputs)
@@ -196,24 +191,42 @@ func main() {
 			testHash = "error"
 		}
 		
-		// Write inputFiles.txt
-		inputFilesPath := filepath.Join(bundlesDir, "inputFiles.txt")
-		inputFilesContent := fmt.Sprintf("Hash: %s\nEntry point: %s\nFiles:\n", testHash, testConfig.Path)
-		for _, input := range inputs {
-			inputFilesContent += fmt.Sprintf("  %s\n", input)
+		// Hardcode the path to match the requirement
+		// Create directory: testeranto/bundles/allTests/golang/example
+		artifactsDir := filepath.Join("/workspace", "testeranto/bundles/allTests/golang", "example")
+		if err := os.MkdirAll(artifactsDir, 0755); err != nil {
+			log.Printf("⚠️  Failed to create artifacts directory %s: %v", artifactsDir, err)
+			os.Chdir("/workspace")
+			continue
 		}
 		
-		if err := os.WriteFile(inputFilesPath, []byte(inputFilesContent), 0644); err != nil {
-			log.Printf("⚠️  Failed to write inputFiles.txt: %v", err)
+		// Create inputFiles.json path
+		inputFilesPath := filepath.Join(artifactsDir, "Calculator.test.go-inputFiles.json")
+		
+		// Create inputFiles.json content
+		inputFilesData := map[string]interface{}{
+			"hash":        testHash,
+			"entry_point": testConfig.Path,
+			"files":       inputs,
+		}
+		
+		inputFilesJSON, err := json.MarshalIndent(inputFilesData, "", "  ")
+		if err != nil {
+			log.Printf("⚠️  Failed to marshal inputFiles.json: %v", err)
 		} else {
-			fmt.Printf("  ✅ Created inputFiles.txt at %s (hash: %s)\n", inputFilesPath, testHash)
+			if err := os.WriteFile(inputFilesPath, inputFilesJSON, 0644); err != nil {
+				log.Printf("⚠️  Failed to write inputFiles.json: %v", err)
+			} else {
+				fmt.Printf("  ✅ Created inputFiles.json at %s (hash: %s)\n", inputFilesPath, testHash)
+			}
 		}
 		
 		// Note: WebSocket functionality removed
 		fmt.Printf("[Go Builder] Processed test: %s\n", testName)
 		
 		// Compile the test into an executable
-		outputExePath := filepath.Join(bundlesDir, "test.exe")
+		// Use the artifacts directory for the executable
+		outputExePath := filepath.Join(artifactsDir, "Calculator.test.exe")
 		buildCmd := exec.Command("go", "build", "-o", outputExePath, "./"+relPath)
 		buildCmd.Stdout = os.Stdout
 		buildCmd.Stderr = os.Stderr
@@ -223,15 +236,19 @@ func main() {
 			log.Printf("⚠️  Failed to compile test: %v", err)
 			// Continue even if compilation fails
 		} else {
-			fmt.Printf("  ✅ Successfully compiled test\n")
+			fmt.Printf("  ✅ Successfully compiled test to %s\n", outputExePath)
+			// Also create a simple artifact marker file
+			artifactMarkerPath := filepath.Join(artifactsDir, "artifact.txt")
+			artifactContent := fmt.Sprintf("Executable: %s\nCompiled at: %s\nTest: %s\n", 
+				outputExePath, time.Now().Format(time.RFC3339), testName)
+			if err := os.WriteFile(artifactMarkerPath, []byte(artifactContent), 0644); err != nil {
+				log.Printf("⚠️  Failed to write artifact marker: %v", err)
+			}
 		}
 		
 		// Change back to workspace root
 		os.Chdir("/workspace")
 	}
-	
-	// Note: WebSocket functionality removed
-	fmt.Printf("[Go Builder] Processed all tests\n")
 	
 	fmt.Println("🎉 Go builder completed!")
 }
