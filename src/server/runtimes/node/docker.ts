@@ -16,15 +16,18 @@ export const nodeDockerComposeFile = (config: IBuiltConfig, projectName: string)
       `${process.cwd()}/src:/workspace/src`,
       `${process.cwd()}/example:/workspace/example`,
       `${process.cwd()}/dist:/workspace/dist`,
+      `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: `sh -c "pwd; ls -al; yarn tsx dist/prebuild/server/runtimes/node/node.mjs /workspace/allTests.ts"`,
-    // command: `sh -c "ls -al"`,
+    command: nodeBuildCommand(config.httpPort || 3456),
   }
 
 };
 
+export const nodeBuildCommand = (port) => {
+  return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.js`;
+}
 
 export const nodeBddCommand = (port) => {
   const jsonStr = JSON.stringify({ ports: [1111] });
-  return `TEST_NAME=allTests WS_PORT=${port} ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs allTests.ts '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+  return `TEST_NAME=allTests WS_PORT=${port} ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
 }

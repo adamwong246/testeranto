@@ -11,16 +11,8 @@ export class Server_WS extends Server_HTTP {
   protected wsClients: Set<WebSocket> = new Set();
   wsManager: WsManager
 
-  constructor(configs: any, name: string, mode: IMode, routes) {
-    super(configs, name, mode, {
-      websockets: (req, res) => {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(generateReactAppHtml("Websockets",
-          "WebsocketsReactApp",
-          "Websockets"));
-      },
-      ...routes,
-    });
+  constructor(configs: any, name: string, mode: IMode) {
+    super(configs, name, mode);
 
     this.ws = new WebSocketServer({
       noServer: true,

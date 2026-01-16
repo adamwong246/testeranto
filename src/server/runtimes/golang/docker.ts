@@ -14,21 +14,26 @@ export const golangDockerComposeFile = (config: IBuiltConfig, projectName: strin
     volumes: [
       `${process.cwd()}:/workspace`,
     ],
+    command: golangBuildCommand(),
   }
 
 };
 
+export const golangBuildCommand = () => {
+  return "sh -c 'echo \"GOLANG BUILDER STARTING\"; cd /workspace && echo \"Running main.go directly with go run...\"; go run src/server/runtimes/golang/main.go 2>&1'";
+}
+
+// this image "builds" test bundles. it is not a "docker build" thing
 export const golangBddCommand = () => {
   const jsonStr = JSON.stringify({ ports: [1111] });
   return `go run example/Calculator.golingvu.test.go '${jsonStr}'`;
 }
 
-export const golangTestCommand = (config: IBuiltConfig, inputfiles: string[],) => {
+export const golangTestCommand = (config: IBuiltConfig, inputfiles: string[]) => {
   return `
-${config.golang.checks.map((c) => {
+${config.golang.checks?.map((c) => {
     return c(inputfiles);
-  }).join('\n')
-    }
+  }).join('\n') || ''}
 
     ${golangBddCommand()}
   `;

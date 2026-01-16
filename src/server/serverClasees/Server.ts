@@ -1,12 +1,13 @@
+import fs from "fs";
 import readline from "readline";
-import { IMode } from "../types";
 import { IBuiltConfig } from "../../Types";
-import { Server_BuildListener } from "./Server_BuildListener";
+import { IMode } from "../types";
+import { Server_Docker } from "./Server_Docker";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-export class Server extends Server_BuildListener {
+export class Server extends Server_Docker {
   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
     console.log(("[Server] Press 'q' to initiate a graceful shutdown."));
@@ -34,7 +35,10 @@ export class Server extends Server_BuildListener {
   }
 
   async start(): Promise<void> {
-    console.log(`[Server] start()`)
+    console.log(`[Server] start()`);
+
+    const runtimesDir = `testeranto/runtimes/`;
+    fs.mkdirSync(runtimesDir, { recursive: true });
     await super.start();
   }
 

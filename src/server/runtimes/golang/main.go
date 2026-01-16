@@ -5,14 +5,11 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
-	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
 // Package struct maps the fields we need from 'go list'
@@ -78,83 +75,48 @@ func computeFilesHash(files []string) (string, error) {
 	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
-func sendSourceFilesUpdatedForTest(testName string, hash string, files []string, runtime string) error {
-	// Get HTTP port from environment
-	httpPort := os.Getenv("WS_PORT")
-	if httpPort == "" {
-		httpPort = "3000" // Default port
-	}
-	
-	// Use HTTP POST to send the message since WebSocket in Go requires external dependencies
-	// The server's WebSocket handler should also accept HTTP POST at /ws/sourceFilesUpdated
-	url := fmt.Sprintf("http://host.docker.internal:%s/ws/sourceFilesUpdated", httpPort)
-	
-	// Prepare the request body
-	requestBody := map[string]interface{}{
-		"type": "sourceFilesUpdated",
-		"data": map[string]interface{}{
-			"testName": testName,
-			"hash":     hash,
-			"files":    files,
-			"runtime":  runtime,
-		},
-	}
-	
-	jsonBody, err := json.Marshal(requestBody)
-	if err != nil {
-		fmt.Printf("[Go Builder] Error marshaling request: %v\n", err)
-		return err
-	}
-	
-	// Send HTTP POST request
-	resp, err := http.Post(url, "application/json", strings.NewReader(string(jsonBody)))
-	if err != nil {
-		fmt.Printf("[Go Builder] Error sending HTTP POST: %v\n", err)
-		return err
-	}
-	defer resp.Body.Close()
-	
-	body, _ := io.ReadAll(resp.Body)
-	fmt.Printf("[Go Builder] HTTP POST response status: %s, body: %s\n", resp.Status, string(body))
-	
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		fmt.Printf("[Go Builder] Successfully sent sourceFilesUpdated for %s\n", testName)
-		return nil
-	} else {
-		return fmt.Errorf("HTTP POST failed with status: %s", resp.Status)
-	}
-}
 
 func main() {
-	fmt.Println("🚀 Starting Go metafile generator...")
+	// Force output to be visible
+	fmt.Fprintln(os.Stdout, "🚀 Go builder starting...")
+	fmt.Fprintln(os.Stderr, "🚀 Go builder starting (stderr)...")
+	os.Stdout.Sync()
+	os.Stderr.Sync()
+	
+	// Print environment info
+	fmt.Println("Environment:")
+	fmt.Println("  TEST_NAME:", os.Getenv("TEST_NAME"))
+	fmt.Println("  PWD:", os.Getenv("PWD"))
+	fmt.Println("  Current dir:", getCurrentDir())
 	
 	// Get test name from environment
 	testName := os.Getenv("TEST_NAME")
+	fmt.Fprintf(os.Stdout, "TEST_NAME=%s\n", testName)
 	if testName == "" {
 		testName = "allTests"
 	}
 	
 	// Load configuration
 	configPath := findConfig()
+	fmt.Fprintf(os.Stdout, "Config path: %s\n", configPath)
 	if configPath == "" {
-		log.Fatal("❌ Config file not found")
+		fmt.Fprintln(os.Stderr, "❌ Config file not found")
+		os.Exit(1)
+	}
+	
+	// Check if config file exists
+	if _, err := os.Stat(configPath); err != nil {
+		fmt.Fprintf(os.Stderr, "❌ Config file does not exist: %v\n", err)
+		os.Exit(1)
 	}
 	
 	config, err := loadConfig(configPath)
 	if err != nil {
-		log.Fatalf("❌ Failed to load config: %v", err)
+		fmt.Fprintf(os.Stderr, "❌ Failed to load config: %v\n", err)
+		os.Exit(1)
 	}
 	
-	fmt.Printf("✅ Loaded config with %d Go test(s)\n", len(config.Golang.Tests))
-	
-	// Initialize metafile
-	metafile := Metafile{
-		Inputs:  make(map[string]InputEntry),
-		Outputs: make(map[string]OutputEntry),
-	}
-	
-	// Track all input files for hash calculation
-	allInputFiles := make([]string, 0)
+	fmt.Fprintf(os.Stdout, "✅ Loaded config with %d Go test(s)\n", len(config.Golang.Tests))
 	
 	// Process each test
 	for testName, testConfig := range config.Golang.Tests {
@@ -214,100 +176,79 @@ func main() {
 					relToWorkspace = absPath
 				}
 				inputs = append(inputs, relToWorkspace)
-				allInputFiles = append(allInputFiles, relToWorkspace)
-				
-				// Add to metafile inputs
-				fileInfo, err := os.Stat(absPath)
-				if err == nil {
-					// For now, we don't track imports at file level in Go
-					metafile.Inputs[relToWorkspace] = InputEntry{
-						Bytes:   int(fileInfo.Size()),
-						Imports: []string{},
-					}
-				}
 			}
 		}
 		
 		fmt.Printf("  Found %d input files\n", len(inputs))
 		
-		// Create output entry
-		outputPath := filepath.Join("testeranto/bundles/allTests/golang", testName+".json")
-		outputEntry := OutputEntry{
-			Imports:    []string{},
-			Exports:    []string{},
-			EntryPoint: testConfig.Path,
-			Inputs:     make(map[string]InputDetail),
-			Bytes:      0, // We don't generate actual output files
+		// Create bundles directory for this test
+		bundlesDir := filepath.Join("/workspace", "testeranto/bundles/allTests/golang", testName)
+		if err := os.MkdirAll(bundlesDir, 0755); err != nil {
+			log.Printf("⚠️  Failed to create bundles directory: %v", err)
+			os.Chdir("/workspace")
+			continue
 		}
 		
-		// Add all inputs to the output entry
+		// Compute hash for this test's input files
+		testHash, err := computeFilesHash(inputs)
+		if err != nil {
+			fmt.Printf("  ⚠️  Failed to compute hash: %v\n", err)
+			testHash = "error"
+		}
+		
+		// Write inputFiles.txt
+		inputFilesPath := filepath.Join(bundlesDir, "inputFiles.txt")
+		inputFilesContent := fmt.Sprintf("Hash: %s\nEntry point: %s\nFiles:\n", testHash, testConfig.Path)
 		for _, input := range inputs {
-			// Get file size for bytesInOutput
-			absPath := filepath.Join("/workspace", input)
-			fileInfo, err := os.Stat(absPath)
-			if err == nil {
-				outputEntry.Inputs[input] = InputDetail{
-					BytesInOutput: int(fileInfo.Size()),
-				}
-				outputEntry.Bytes += int(fileInfo.Size())
-			}
+			inputFilesContent += fmt.Sprintf("  %s\n", input)
 		}
 		
-		metafile.Outputs[outputPath] = outputEntry
+		if err := os.WriteFile(inputFilesPath, []byte(inputFilesContent), 0644); err != nil {
+			log.Printf("⚠️  Failed to write inputFiles.txt: %v", err)
+		} else {
+			fmt.Printf("  ✅ Created inputFiles.txt at %s (hash: %s)\n", inputFilesPath, testHash)
+		}
+		
+		// Note: WebSocket functionality removed
+		fmt.Printf("[Go Builder] Processed test: %s\n", testName)
+		
+		// Compile the test into an executable
+		outputExePath := filepath.Join(bundlesDir, "test.exe")
+		buildCmd := exec.Command("go", "build", "-o", outputExePath, "./"+relPath)
+		buildCmd.Stdout = os.Stdout
+		buildCmd.Stderr = os.Stderr
+		
+		fmt.Printf("  🔨 Compiling test to %s...\n", outputExePath)
+		if err := buildCmd.Run(); err != nil {
+			log.Printf("⚠️  Failed to compile test: %v", err)
+			// Continue even if compilation fails
+		} else {
+			fmt.Printf("  ✅ Successfully compiled test\n")
+		}
 		
 		// Change back to workspace root
 		os.Chdir("/workspace")
 	}
 	
-	// Compute hash for all input files
-	hash, err := computeFilesHash(allInputFiles)
-	if err != nil {
-		fmt.Printf("⚠️  Failed to compute hash: %v\n", err)
-		hash = ""
-	}
+	// Note: WebSocket functionality removed
+	fmt.Printf("[Go Builder] Processed all tests\n")
 	
-	// Send sourceFilesUpdated message for each test
-	for testName, testConfig := range config.Golang.Tests {
-		// For each test, we need to compute its specific hash
-		// For now, send with the overall hash, but in a real implementation,
-		// we should compute per-test hash
-		fmt.Printf("[Go Builder] Sending sourceFilesUpdated for test: %s\n", testName)
-		if err := sendSourceFilesUpdatedForTest(testName, hash, allInputFiles, "golang"); err != nil {
-			fmt.Printf("⚠️  Failed to send sourceFilesUpdated for %s: %v\n", testName, err)
-		}
-	}
-	
-	// Write metafile
-	metafilePath := "/workspace/testeranto/metafiles/golang/allTests.json"
-	
-	// Ensure directory exists
-	if err := os.MkdirAll(filepath.Dir(metafilePath), 0755); err != nil {
-		log.Fatalf("❌ Failed to create metafile directory: %v", err)
-	}
-	
-	// Wrap metafile in the same format as esbuild
-	wrappedMetafile := map[string]interface{}{
-		"errors":   []interface{}{},
-		"warnings": []interface{}{},
-		"metafile": metafile,
-	}
-	
-	metafileData, err := json.MarshalIndent(wrappedMetafile, "", "  ")
-	if err != nil {
-		log.Fatalf("❌ Failed to marshal metafile: %v", err)
-	}
-	
-	if err := os.WriteFile(metafilePath, metafileData, 0644); err != nil {
-		log.Fatalf("❌ Failed to write metafile: %v", err)
-	}
-	
-	fmt.Printf("\n✅ Metafile created at: %s\n", metafilePath)
-	fmt.Printf("📊 Metafile contains %d inputs and %d outputs\n", len(metafile.Inputs), len(metafile.Outputs))
-	fmt.Printf("🔑 Computed hash: %s\n", hash)
-	
-	fmt.Println("🎉 Go metafile generator completed!")
+	fmt.Println("🎉 Go builder completed!")
 }
 
+func getCurrentDir() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		return fmt.Sprintf("Error: %v", err)
+	}
+	return dir
+}
+
+func findConfig() string {
+	return "/workspace/testeranto/runtimes/golang/golang.go"
+}
+
+// loadConfig is defined in config.go
 // findModuleRoot walks up from dir to find a directory containing go.mod
 func findModuleRoot(dir string) string {
 	current := dir
@@ -323,4 +264,50 @@ func findModuleRoot(dir string) string {
 		current = parent
 	}
 	return ""
+}
+
+// Dummy implementation to satisfy compiler
+func sendSourceFilesUpdatedForTest(testName, hash string, files []string, runtime string) error {
+	return nil
+}
+
+
+// TestConfig represents configuration for a single test
+type TestConfig struct {
+	Path  string `json:"path"`
+	Ports int    `json:"ports"`
+}
+
+// GolangConfig represents the Go-specific configuration
+type GolangConfig struct {
+	Tests map[string]TestConfig `json:"tests"`
+}
+
+// Config represents the overall configuration
+type Config struct {
+	Golang GolangConfig `json:"golang"`
+}
+
+
+func loadConfig(path string) (*Config, error) {
+	fmt.Printf("[INFO] Loading config from: %s\n", path)
+	
+	// Run the Go file to get JSON output
+	cmd := exec.Command("go", "run", path)
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("failed to run config program: %w", err)
+	}
+	
+	var config Config
+	if err := json.Unmarshal(output, &config); err != nil {
+		return nil, fmt.Errorf("failed to decode config JSON: %w", err)
+	}
+	
+	fmt.Printf("[INFO] Loaded config with %d Go test(s)\n", len(config.Golang.Tests))
+	for testName, testConfig := range config.Golang.Tests {
+		fmt.Printf("[INFO]   - %s (path: %s, ports: %d)\n", testName, testConfig.Path, testConfig.Ports)
+	}
+	
+	return &config, nil
 }

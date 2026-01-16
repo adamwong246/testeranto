@@ -91,10 +91,7 @@ export function extractInputFilesFromMetafile(metafile: any): string[] {
   return files;
 }
 
-// Process metafile and send sourceFilesUpdated messages for each output
-// processMetafileAndSendUpdates should find every output which has an associated entrypoint
-// for each of these, gather the input files and create a super hash from that
-export async function processMetafileAndSendUpdates(
+export async function processMetafile(
   config: IBuiltConfig,
   metafile: any,
   runtime: 'node' | 'web'
@@ -103,20 +100,18 @@ export async function processMetafileAndSendUpdates(
     return;
   }
 
-  const promises: Promise<void>[] = [];
-  
   for (const [outputFile, outputInfo] of Object.entries(metafile.outputs)) {
     const outputInfoTyped = outputInfo as any;
-    
+
     // Only process outputs that have an associated entryPoint
     if (!outputInfoTyped.entryPoint) {
       console.log(`[${runtime} Builder] Skipping output without entryPoint: ${outputFile}`);
       continue;
     }
-    
+
     // Get the entry point path
     const entryPoint = outputInfoTyped.entryPoint;
-    
+
     // Only process test files (files ending with .test.ts, .test.js, .spec.ts, .spec.js)
     // Also, exclude library files like src/lib/tiposkripto/Web.ts and src/lib/tiposkripto/Node.ts
     const isTestFile = /\.(test|spec)\.(ts|js)$/.test(entryPoint);
@@ -124,27 +119,15 @@ export async function processMetafileAndSendUpdates(
       console.log(`[${runtime} Builder] Skipping non-test entryPoint: ${entryPoint}`);
       continue;
     }
-    
+
     // Get input files for this output and convert to absolute paths
     const inputFiles = Object.keys(outputInfoTyped.inputs || {}).map(file =>
       path.isAbsolute(file) ? file : path.resolve(process.cwd(), file)
     );
-    
-    // Create a promise for this output
-    const promise = (async () => {
-      // Compute hash for these input files
-      const superHash = await computeFilesHash(inputFiles);
-      
-      // Use the entryPoint as the test name
-      const testName = entryPoint;
-      
-      // Send sourceFilesUpdated message
-      await sendSourceFilesUpdated(config, superHash, inputFiles, testName, runtime);
-    })();
-    
-    promises.push(promise);
+    fs.writeFileSync(`testeranto/bundles/allTests/${runtime}/${entryPoint.split('.').slice(0, -1).concat('mjs').join('.')}-inputFiles.json`, JSON.stringify(inputFiles, null, 2));
+
+    console.log("markl!")
+
   }
-  
-  // Wait for all messages to be sent
-  await Promise.all(promises);
+
 }

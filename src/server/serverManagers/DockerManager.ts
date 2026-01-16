@@ -2,7 +2,7 @@
 
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { golangDockerComposeFile } from "../runtimes/golang/docker";
-import { nodeDockerComposeFile } from "../runtimes/node/docker";
+import { nodeDockerComposeFile, nodeBddCommand } from "../runtimes/node/docker";
 import { pythonDockerComposeFile } from "../runtimes/python/docker";
 import { webDockerComposeFile } from "../runtimes/web/docker";
 
@@ -53,7 +53,7 @@ export class DockerManager {
     };
   }
 
-  staticTestDockerComposeFile(config: IBuiltConfig, runtime: IRunTime, container_name: string) {
+  staticTestDockerComposeFile(config: IBuiltConfig, runtime: IRunTime, container_name: string, command: string) {
     return {
       build: {
         context: process.cwd(),
@@ -65,11 +65,12 @@ export class DockerManager {
         ...config.env,
       },
       working_dir: "/workspace",
+      command: command,
     }
 
   };
 
-  bddTestDockerComposeFile(config: IBuiltConfig, runtime: IRunTime, container_name: string) {
+  bddTestDockerComposeFile(config: IBuiltConfig, runtime: IRunTime, container_name: string, command: string) {
     return {
       build: {
         context: process.cwd(),
@@ -81,6 +82,7 @@ export class DockerManager {
         ...config.env,
       },
       working_dir: "/workspace",
+      command: command,
     }
 
   };
@@ -121,18 +123,34 @@ export class DockerManager {
         throw `unknown runtime ${runtime}`;
       }
       for (const test in config[runtime].tests) {
-
-
         const uid =
           `${runtime}-${test.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`
 
+        // Static tests
         for (const [index, check] of config[runtime].checks.entries()) {
           const tuid = `${uid}-static-${index}`
+          // Convert check function to command string
+          // The check function takes a test name and returns a command
+          const checkCommand = typeof check === 'function' ? check(test) : check;
           services[tuid] =
-            this.staticTestDockerComposeFile(config, runtime, tuid);
-
+            this.staticTestDockerComposeFile(config, runtime, tuid, checkCommand);
         }
-        services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`);
+        
+        // BDD test
+        let bddCommand = '';
+        if (runtime === 'node') {
+          bddCommand = nodeBddCommand(config.httpPort || 3456);
+        } else if (runtime === 'web') {
+          // TODO: Import webBddCommand when available
+          bddCommand = 'echo "BDD command not implemented for web"';
+        } else if (runtime === 'golang') {
+          bddCommand = 'echo "BDD command not implemented for golang"';
+        } else if (runtime === 'python') {
+          bddCommand = 'echo "BDD command not implemented for python"';
+        }
+        services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
+        
+        // Aider service (keep without command to use Dockerfile's CMD)
         services[`${uid}-aider`] = this.aiderDockerComposeFile(config, runtime, `${uid}-aider`);
       }
     }

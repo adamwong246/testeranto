@@ -8,8 +8,9 @@ import { DockerManager, IDockerComposeResult, IService } from "../serverManagers
 import { IMode } from "../types";
 import { Server_Base } from "./Server_Base";
 import ansiColors from "ansi-colors";
+import { Server_WS } from "./Server_WS";
 
-export class Server_Docker extends Server_Base {
+export class Server_Docker extends Server_WS {
 
   dockerManager: DockerManager;
 
@@ -74,10 +75,61 @@ export class Server_Docker extends Server_Base {
       // Ignore errors
     }
 
-    await this.DC_build();
-    await this.DC_upAll();
+    // v0
+    // await this.DC_build();
 
-    // No log capture - output streams directly to terminal via spawn
+    // // v1 implemented
+    // Runtime files from testeranto/runtimes/ are copied into builder images via Dockerfile
+    // This includes node.js, web.js, golang.go, and python.py configuration files
+
+    // Start builder services
+    const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
+    for (const runtime of runtimes) {
+      const serviceName = `${runtime}-builder`;
+      console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
+      try {
+        await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${serviceName}`);
+      } catch (error: any) {
+        console.error(`[Server_Docker] Failed to start ${serviceName}: ${error.message}`);
+      }
+    }
+
+    // // Start BDD test services
+    // for (const runtime of runtimes) {
+    //   const tests = this.configs[runtime]?.tests;
+    //   if (!tests) continue;
+
+    //   for (const testName in tests) {
+    //     const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
+    //     const bddServiceName = `${uid}-bdd`;
+    //     console.log(`[Server_Docker] Starting BDD service: ${bddServiceName}`);
+    //     try {
+    //       await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${bddServiceName}`);
+    //     } catch (error: any) {
+    //       console.error(`[Server_Docker] Failed to start ${bddServiceName}: ${error.message}`);
+    //     }
+    //   }
+    // }
+
+    // // Start static test services
+    // for (const runtime of runtimes) {
+    //   const tests = this.configs[runtime]?.tests;
+    //   if (!tests) continue;
+
+    //   for (const testName in tests) {
+    //     const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
+    //     const checks = this.configs[runtime]?.checks || [];
+    //     for (let i = 0; i < checks.length; i++) {
+    //       const staticServiceName = `${uid}-static-${i}`;
+    //       console.log(`[Server_Docker] Starting static test service: ${staticServiceName}`);
+    //       try {
+    //         await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${staticServiceName}`);
+    //       } catch (error: any) {
+    //         console.error(`[Server_Docker] Failed to start ${staticServiceName}: ${error.message}`);
+    //       }
+    //     }
+    //   }
+    // }
   }
 
 

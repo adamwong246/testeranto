@@ -11,7 +11,8 @@ services:
       - /Users/adam/Code/testeranto/src:/workspace/src
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
-    command: sh -c "pwd; ls -al; yarn tsx dist/prebuild/server/runtimes/node/node.mjs /workspace/allTests.ts"
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.js
     networks:
       - default
   node-example_calculator-test-ts-static-0:
@@ -22,6 +23,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: yarn eslint }
     networks:
       - default
   node-example_calculator-test-ts-static-1:
@@ -32,6 +34,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: yarn tsc --noEmit }
     networks:
       - default
   node-example_calculator-test-ts-bdd:
@@ -42,6 +45,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: TEST_NAME=allTests WS_PORT=3456 ENV=node  node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";
     networks:
       - default
   node-example_calculator-test-ts-aider:
@@ -60,9 +64,15 @@ services:
       context: /Users/adam/Code/testeranto
       dockerfile: web.Dockerfile
     container_name: web-builder-allTests
+    environment:
+      NODE_ENV: production
     working_dir: /workspace
     volumes:
-      - /Users/adam/Code/testeranto:/workspace
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: yarn tsx src/server/runtimes/web/web.ts /workspace/testeranto/runtimes/web/web.js
     networks:
       - default
   web-example_calculator-test-ts-static-0:
@@ -73,6 +83,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: yarn eslint}
     networks:
       - default
   web-example_calculator-test-ts-static-1:
@@ -83,6 +94,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: yarn tsc --noEmit }
     networks:
       - default
   web-example_calculator-test-ts-bdd:
@@ -93,6 +105,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: echo "BDD command not implemented for web"
     networks:
       - default
   web-example_calculator-test-ts-aider:
@@ -115,6 +128,7 @@ services:
     working_dir: /workspace
     volumes:
       - /Users/adam/Code/testeranto:/workspace
+    command: sh -c 'echo "GOLANG BUILDER STARTING"; cd /workspace && echo "Running main.go directly with go run..."; go run src/server/runtimes/golang/main.go 2>&1'
     networks:
       - default
   golang-example_calculator-golingvu-test-go-static-0:
@@ -125,6 +139,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: cd /workspace/example && golangci-lint run }
     networks:
       - default
   golang-example_calculator-golingvu-test-go-bdd:
@@ -135,6 +150,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: echo "BDD command not implemented for golang"
     networks:
       - default
   golang-example_calculator-golingvu-test-go-aider:
@@ -154,11 +170,14 @@ services:
       dockerfile: python.Dockerfile
     container_name: python-builder-allTests
     environment:
-      PYTHONUNBUFFERED: '1'
-    volumes:
-      - /Users/adam/Code/testeranto:/workspace
+      NODE_ENV: production
     working_dir: /workspace
-    command: python main.py
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: python src/server/runtimes/python/pitono.py
     networks:
       - default
   python-example_calculator-pitono-test-py-static-0:
@@ -169,6 +188,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: pylint }
     networks:
       - default
   python-example_calculator-pitono-test-py-bdd:
@@ -179,6 +199,7 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    command: echo "BDD command not implemented for python"
     networks:
       - default
   python-example_calculator-pitono-test-py-aider:

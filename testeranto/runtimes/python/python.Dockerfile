@@ -11,8 +11,4 @@ RUN apk add --no-cache     \
   cargo \
   git     && rm -rf /var/cache/apk/*
 
-# Copy example directory to access requirements.txt
-COPY example /workspace/example
-
-# Install Python dependencies
 RUN pip install -r example/requirements.txt

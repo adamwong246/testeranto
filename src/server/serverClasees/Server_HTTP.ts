@@ -12,14 +12,15 @@ import { IMode } from "../types";
 import { Server_Docker } from "./Server_Docker";
 import { CONTENT_TYPES, getContentType } from "../serverManagers/tcp";
 import { HttpManager } from "../serverManagers/HttpManager";
+import { Server_Base } from "./Server_Base";
 
-export abstract class Server_HTTP extends Server_Docker {
+export abstract class Server_HTTP extends Server_Base {
 
   http: HttpManager;
   protected httpServer: http.Server;
   routes: any;
 
-  constructor(configs: any, name: string, mode: IMode, routes: any) {
+  constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
     this.http = new HttpManager();
     this.httpServer = http.createServer();
@@ -28,7 +29,6 @@ export abstract class Server_HTTP extends Server_Docker {
     });
 
     this.httpServer.on("request", this.handleHttpRequest.bind(this));
-    this.routes = routes;
 
     // Note: WebSocket upgrade handling will be set up by child classes if needed
     // Do not call setupWebSocketUpgrade() here

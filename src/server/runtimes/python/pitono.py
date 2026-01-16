@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Pitono runtime for Python tests.
-This file is executed by the Python Docker container.
-It reads allTests.json to generate a Python metafile similar to esbuild's metafile.
-"""
 
 import sys
 import json
@@ -12,7 +7,7 @@ import ast
 from typing import Dict, List, Set, Any
 import hashlib
 import asyncio
-import websockets
+
 import time
 
 def resolve_python_import(import_path: str, current_file: str) -> str | None:
@@ -465,21 +460,23 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
 def main():
     # Determine config path
     # First, check command line argument
-    if len(sys.argv) > 1:
-        config_path = sys.argv[1]
-    else:
-        # Try common locations
-        possible_paths = [
-            'testeranto/allTests.json'
-        ]
-        config_path = None
-        for path in possible_paths:
-            if os.path.exists(path):
-                config_path = path
-                break
-        if not config_path:
-            print("Error: allTests.json not found")
-            sys.exit(1)
+    # if len(sys.argv) > 1:
+    #     config_path = sys.argv[1]
+    # else:
+    #     # Try common locations
+    #     possible_paths = [
+    #         'testeranto/allTests.json'
+    #     ]
+    #     config_path = None
+    #     for path in possible_paths:
+    #         if os.path.exists(path):
+    #             config_path = path
+    #             break
+    #     if not config_path:
+    #         print("Error: allTests.json not found")
+    #         sys.exit(1)
+
+    config_path = "testeranto/runtimes/python/python.py"
     
     print(f"Reading config from {config_path}")
     
@@ -542,42 +539,7 @@ def main():
                 except Exception as e:
                     print(f"    Error reading file: {e}")
     else:
-        print(f"Bundles directory does not exist: {bundles_dir}")
-
-async def send_source_files_updated(test_name: str, hash_value: str, files: List[str], runtime: str = "python"):
-    """Send sourceFilesUpdated message via WebSocket."""
-    http_port = os.environ.get('WS_PORT', '3000')
-    ws_url = f"ws://host.docker.internal:{http_port}/ws"
-    
-    print(f"[Python Builder] Connecting to WebSocket at {ws_url}")
-    
-    try:
-        async with websockets.connect(ws_url) as websocket:
-            message = {
-                'type': 'sourceFilesUpdated',
-                'data': {
-                    'testName': test_name,
-                    'hash': hash_value,
-                    'files': files,
-                    'runtime': runtime
-                }
-            }
-            await websocket.send(json.dumps(message))
-            print(f"[Python Builder] Sent sourceFilesUpdated for {test_name}")
-            
-            # Wait for acknowledgment or timeout
-            try:
-                # Wait for a response for up to 2 seconds
-                response = await asyncio.wait_for(websocket.recv(), timeout=2.0)
-                print(f"[Python Builder] Received response: {response}")
-            except asyncio.TimeoutError:
-                print(f"[Python Builder] No response received, continuing...")
-            except Exception as e:
-                print(f"[Python Builder] Error receiving response: {e}")
-            
-    except Exception as e:
-        print(f"[Python Builder] WebSocket error: {e}")
-        
+        print(f"Bundles directory does not exist: {bundles_dir}")    
 
 def compute_files_hash(files: List[str]) -> str:
     """Compute a hash from file paths and contents, consistent with Node/Web runtimes."""

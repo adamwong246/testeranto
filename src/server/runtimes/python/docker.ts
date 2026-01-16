@@ -1,26 +1,34 @@
-import { IBuiltConfig, IRunTime } from "../../../Types";
-
-export const pythonBDDCommand = (port) => {
-  return `cd /workspace && python -m example/xyz -v`;
-}
+import { IBuiltConfig } from "../../../Types";
 
 export const pythonDockerComposeFile = (config: IBuiltConfig, projectName: string) => {
   return {
     build: {
-      context: process.cwd(),  // Project root (where docker-compose is run from)
+      context: process.cwd(),
       dockerfile: config.python.dockerfile,
     },
     container_name: `python-builder-${projectName}`,
     environment: {
-      PYTHONUNBUFFERED: "1",
+      NODE_ENV: "production",
       ...config.env,
     },
-    volumes: [
-      `${process.cwd()}:/workspace`,
-    ],
-
     working_dir: "/workspace",
-    command: "python main.py",
+    volumes: [
+      `${process.cwd()}/src:/workspace/src`,
+      `${process.cwd()}/example:/workspace/example`,
+      `${process.cwd()}/dist:/workspace/dist`,
+      `${process.cwd()}/testeranto:/workspace/testeranto`,
+    ],
+    command: pythonBuildCommand(),
   }
 
 };
+
+export const pythonBuildCommand = () => {
+  return `python src/server/runtimes/python/pitono.py`;
+}
+
+
+export const pythonBDDCommand = (port) => {
+  return `python Calculator.test.py`;
+}
+

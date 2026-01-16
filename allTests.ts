@@ -12,22 +12,22 @@ const config: ITestconfig = {
   src: "",
 
   golang: createLangConfig("example/Calculator.golingvu.test.go", [
-    (x) => `cd /workspace/example && golangci-lint run ${x.replace("example/", "")}`,
+    (x) => `cd /workspace/example && golangci-lint run }`,
   ], `golang.Dockerfile`
   ),
 
   python: createLangConfig("example/Calculator.pitono.test.py", [
-    (x) => `pylint ${x.join(' ')}`,
+    (x) => `pylint }`,
   ], `python.Dockerfile`),
 
   web: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x.join(' ')}`,
-    (x) => `yarn tsc --noEmit ${x.join(' ')}`,
+    (x) => `yarn eslint}`,
+    (x) => `yarn tsc --noEmit }`,
   ], `web.Dockerfile`, { volumes: ['eslint.config.mjs'] }),
 
   node: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x.join(' ')}`,
-    (x) => `yarn tsc --noEmit ${x.join(' ')}`,
+    (x) => `yarn eslint }`,
+    (x) => `yarn tsc --noEmit }`,
   ], `node.Dockerfile`, { volumes: ['eslint.config.mjs'] }),
   check: ""
 };

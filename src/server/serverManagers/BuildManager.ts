@@ -1,35 +1,35 @@
-// Do not allow imports from outside the project
+// // Do not allow imports from outside the project
 
-import { IBuiltConfig } from "../../Types"
-import { IMode } from "../types"
+// import { IBuiltConfig } from "../../Types"
+// import { IMode } from "../types"
 
-export class BuildManager {
-  buildSet: Set<string>
+// export class BuildManager {
+//   buildSet: Set<string>
 
-  constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
-    this.buildSet = new Set()
-  }
+//   constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
+//     this.buildSet = new Set()
+//   }
 
-  add(pid: string, executor: (resolve: (value: unknown) => void, reject: (reason?: any) => void) => void) {
-    this.buildSet[pid] = new Promise(executor)
-  }
+//   add(pid: string, executor: (resolve: (value: unknown) => void, reject: (reason?: any) => void) => void) {
+//     this.buildSet[pid] = new Promise(executor)
+//   }
 
-  get entries() {
-    return this.buildSet.entries()
-  }
+//   get entries() {
+//     return this.buildSet.entries()
+//   }
 
-  dockerRunCmd(category, containerName, runtime): string {
+//   dockerRunCmd(category, containerName, runtime): string {
 
-    const baseImage = getRuntimeImage(runtime);
+//     const baseImage = getRuntimeImage(runtime);
 
-    const runOptions = (category === 'aider' || category === 'build-time') ? '-d' : '--rm';
+//     const runOptions = (category === 'aider' || category === 'build-time') ? '-d' : '--rm';
 
-    return `docker run ${runOptions} \
-      --name ${containerName} \
-      --network allTests_network \
-      -v ${process.cwd()}:/workspace \
-      -w /workspace \
-      ${baseImage} \
-      sh -c "${command}"`;
-  }
-}
+//     return `docker run ${runOptions} \
+//       --name ${containerName} \
+//       --network allTests_network \
+//       -v ${process.cwd()}:/workspace \
+//       -w /workspace \
+//       ${baseImage} \
+//       sh -c "${command}"`;
+//   }
+// }
