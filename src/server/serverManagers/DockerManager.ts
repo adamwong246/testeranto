@@ -1,7 +1,7 @@
 // Do not allow imports from outside the project (fs, exec, ws, etc)
 
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { golangDockerComposeFile } from "../runtimes/golang/docker";
+import { golangBddCommand, golangDockerComposeFile } from "../runtimes/golang/docker";
 import { nodeDockerComposeFile, nodeBddCommand } from "../runtimes/node/docker";
 import { pythonBDDCommand, pythonDockerComposeFile } from "../runtimes/python/docker";
 import { webDockerComposeFile } from "../runtimes/web/docker";
@@ -153,7 +153,7 @@ export class DockerManager {
           // TODO: Import webBddCommand when available
           bddCommand = 'echo "BDD command not implemented for web"';
         } else if (runtime === 'golang') {
-          bddCommand = 'echo "BDD command not implemented for golang"';
+          bddCommand = golangBddCommand();  //'echo "BDD command not implemented for golang"';
         } else if (runtime === 'python') {
           bddCommand = pythonBDDCommand(0);  //'echo "BDD command not implemented for python"';
         }

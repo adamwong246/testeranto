@@ -44,6 +44,7 @@ export default abstract class BaseTiposkripto<
   ): void;
 
   constructor(
+    webOrNode: "web" | "node",
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M> & {
@@ -267,7 +268,10 @@ export default abstract class BaseTiposkripto<
     (this.testJobs[0].receiveTestResourceConfig(
       testResourceConfiguration
     ) as unknown as Promise<IFinalResults>).then((results) => {
-      this.writeFileSync('tests.json', JSON.stringify(results));
+      // The actual path is determined by the concrete implementation (Node.ts or Web.ts)
+      // They will write to the correct pattern: testeranto/reports/allTests/example/${runtime}.Calculator.test.ts.json
+      // We just pass a placeholder filename webOrNode
+      this.writeFileSync(`testeranto/reports/allTests/example/${webOrNode}.Calculator.test.ts.json`, JSON.stringify(results));
     })
 
 

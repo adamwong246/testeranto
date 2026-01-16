@@ -34,6 +34,10 @@ var golangDockerComposeFile = (config, projectName) => {
 var golangBuildCommand = () => {
   return `sh -c 'echo "GOLANG BUILDER STARTING"; cd /workspace && echo "Running main.go directly with go run..."; go run src/server/runtimes/golang/main.go 2>&1'`;
 };
+var golangBddCommand = () => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `go run example/Calculator.golingvu.test.go '${jsonStr}'`;
+};
 
 // src/server/runtimes/node/docker.ts
 var nodeDockerComposeFile = (config, projectName) => {
@@ -232,7 +236,7 @@ var DockerManager = class {
         } else if (runtime === "web") {
           bddCommand = 'echo "BDD command not implemented for web"';
         } else if (runtime === "golang") {
-          bddCommand = 'echo "BDD command not implemented for golang"';
+          bddCommand = golangBddCommand();
         } else if (runtime === "python") {
           bddCommand = pythonBDDCommand(0);
         }

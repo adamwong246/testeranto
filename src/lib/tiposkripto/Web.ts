@@ -14,7 +14,7 @@ import {
 } from "../../CoreTypes.js";
 import Tiposkripto from "./BaseTiposkripto.js";
 
-const config = { 
+const config = {
   name: 'web',
   fs: 'testeranto/reports/allTests/example/Calculator.test/web',
   ports: [1111],
@@ -42,6 +42,7 @@ export class WebTiposkripto<
       : "{}";
 
     super(
+      "web",
       input,
       testSpecification,
       testImplementation,
@@ -61,7 +62,7 @@ export class WebTiposkripto<
       (window as any).__testeranto_files__ = {};
     }
     (window as any).__testeranto_files__[filename] = payload;
-    
+
     // Also try to use the File System Access API if available
     if (navigator.storage && navigator.storage.getDirectory) {
       (async () => {

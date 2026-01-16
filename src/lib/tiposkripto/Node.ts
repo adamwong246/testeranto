@@ -32,9 +32,8 @@ export class NodeTiposkripto<
     console.log(`[NodeTiposkripto] constructor ${process.argv[3]}`);
     // const config = JSON.parse(process.argv[3])
 
-
-
     super(
+      "node",
       input,
       testSpecification,
       testImplementation,
@@ -44,14 +43,17 @@ export class NodeTiposkripto<
     );
   }
 
-  async writeFileSync(
+  writeFileSync(
     filename: string,
     payload: string,
   ) {
-
-    const x = "testeranto/reports/allTests/example/Calculator.test.json"
-    console.log("mark11", x, filename)
-    fs.writeFileSync(x, payload);
+    // Ensure the directory exists
+    const dir = "testeranto/reports/allTests/example";
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    // Write to the exact filename provided
+    fs.writeFileSync(filename, payload);
   }
 }
 

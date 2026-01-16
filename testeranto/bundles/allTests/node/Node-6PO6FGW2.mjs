@@ -3,6 +3,9 @@ import {
   defaultTestResourceRequirement
 } from "./chunk-GONGMDWG.mjs";
 
+// src/lib/tiposkripto/Node.ts
+import fs from "fs";
+
 // src/lib/tiposkripto/BaseGiven.ts
 var BaseGiven = class {
   constructor(features, whens, thens, givenCB, initialValues) {
@@ -317,7 +320,7 @@ ${this.error.stack}` : null,
 
 // src/lib/tiposkripto/BaseTiposkripto.ts
 var BaseTiposkripto = class {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter = {}, testResourceConfiguration, wsPort = "3456", wsHost = "localhost") {
+  constructor(webOrNode, input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter = {}, testResourceConfiguration, wsPort = "3456", wsHost = "localhost") {
     this.totalTests = 0;
     this.artifacts = [];
     this.testResourceConfiguration = testResourceConfiguration;
@@ -482,7 +485,7 @@ var BaseTiposkripto = class {
     this.testJobs[0].receiveTestResourceConfig(
       testResourceConfiguration
     ).then((results) => {
-      this.writeFileSync("tests.json", JSON.stringify(results));
+      this.writeFileSync(`testeranto/reports/allTests/example/${webOrNode}.Calculator.test.ts.json`, JSON.stringify(results));
     });
   }
   async receiveTestResourceConfig(testResourceConfig) {
@@ -534,72 +537,48 @@ var BaseTiposkripto = class {
   }
 };
 
-// src/lib/tiposkripto/Web.ts
-var config = {
-  name: "web",
-  fs: "testeranto/reports/allTests/example/Calculator.test/web",
-  ports: [1111],
-  files: [],
-  timeout: 3e4,
-  retries: 3,
-  environment: {}
-};
-var WebTiposkripto = class extends BaseTiposkripto {
+// src/lib/tiposkripto/Node.ts
+console.log(`[NodeTiposkripto] ${process.argv}`);
+var config = { ports: [1111], fs: "testeranto/reports/allTests/example/Calculator.test/node" };
+var NodeTiposkripto = class extends BaseTiposkripto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const encodedConfig = urlParams.get("config");
-    const testResourceConfig = encodedConfig ? decodeURIComponent(encodedConfig) : "{}";
+    console.log(`[NodeTiposkripto] constructor ${process.argv[3]}`);
     super(
+      "node",
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
       testAdapter,
-      // JSON.parse(testResourceConfig)
       config
     );
   }
   writeFileSync(filename, payload) {
-    if (!window.__testeranto_files__) {
-      window.__testeranto_files__ = {};
+    const dir = "testeranto/reports/allTests/example";
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
     }
-    window.__testeranto_files__[filename] = payload;
-    if (navigator.storage && navigator.storage.getDirectory) {
-      (async () => {
-        try {
-          const root = await navigator.storage.getDirectory();
-          const fileHandle = await root.getFileHandle(filename, { create: true });
-          const writable = await fileHandle.createWritable();
-          await writable.write(payload);
-          await writable.close();
-        } catch (e) {
-          console.warn("Could not write to browser storage:", e);
-        }
-      })();
-    }
+    fs.writeFileSync(filename, payload);
   }
 };
 var tiposkripto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
   try {
-    const t = new WebTiposkripto(
+    const t = new NodeTiposkripto(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
       testAdapter
     );
-    const root = await navigator.storage.getDirectory();
-    const fileHandle = await root.getFileHandle(`${config.fs}/tests.json`);
     return t;
   } catch (e) {
-    console.error(e);
-    const errorEvent = new CustomEvent("test-error", { detail: e });
-    window.dispatchEvent(errorEvent);
-    throw e;
+    console.error(`[Node] Error creating Tiposkripto:`, e);
+    console.error(e.stack);
+    process.exit(-1);
   }
 };
-var Web_default = tiposkripto;
+var Node_default = tiposkripto;
 export {
-  WebTiposkripto,
-  Web_default as default
+  NodeTiposkripto,
+  Node_default as default
 };

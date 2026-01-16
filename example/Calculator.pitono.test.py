@@ -94,19 +94,19 @@ if __name__ == "__main__":
         # Run in standalone mode for debugging
         print("Running in standalone mode...")
         
-        # Create a simple test resource configuration
-        test_resource_config = {
-            "name": "local-test",
-            "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py",
-            "ports": [8080],
-            "browser_ws_endpoint": None,
-            "timeout": 30000,
-            "retries": 0,
-            "environment": {}
-        }
+        # # Create a simple test resource configuration
+        # test_resource_config = {
+        #     "name": "local-test",
+        #     "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py",
+        #     "ports": [8080],
+        #     "browser_ws_endpoint": None,
+        #     "timeout": 30000,
+        #     "retries": 0,
+        #     "environment": {}
+        # }
         
-        # Ensure the directory exists
-        os.makedirs(test_resource_config["fs"], exist_ok=True)
+        # # Ensure the directory exists
+        # os.makedirs(test_resource_config["fs"], exist_ok=True)
         
         # # Create a simple IPC file path
         # ipc_file = os.path.join(test_resource_config["fs"], "ipc.txt")
@@ -119,7 +119,18 @@ if __name__ == "__main__":
         
         # Run the test with the configuration
         # The main() function expects sys.argv[1] to be the partialTestResource (a string)
-        # and sys.argv[2] to be the websocket port
+        
+        # Create a simple test resource configuration
+        test_resource_config = {
+            "name": "local-test",
+            "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py",
+            "ports": [8080],
+            "browser_ws_endpoint": None,
+            "timeout": 30000,
+            "retries": 0,
+            "environment": {}
+        }
+        
         import json
         config_json = json.dumps(test_resource_config)
         # Keep the original sys.argv[0] as the script name

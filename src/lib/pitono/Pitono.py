@@ -532,11 +532,13 @@ class PitonoClass:
                 "artifacts": all_artifacts
             }
             
-            # Write to file
-            tests_json_path = f"{test_resource_config['fs']}/tests.json"
-            # Ensure the directory exists
+            # Write to the correct path: testeranto/reports/allTests/example/python.Calculator.test.ts.json
             import os
-            os.makedirs(os.path.dirname(tests_json_path), exist_ok=True)
+            # Create the directory if it doesn't exist
+            dir_path = "../testeranto/reports/allTests/example"
+            os.makedirs(dir_path, exist_ok=True)
+            # The filename is fixed for this runtime
+            tests_json_path = "../testeranto/reports/allTests/example/python.Calculator.test.ts.json"
             with open(tests_json_path, 'w') as f:
                 json.dump(tests_data, f, indent=2)
             print(f"tests.json written to: {tests_json_path}")

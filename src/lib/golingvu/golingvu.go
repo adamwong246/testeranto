@@ -45,8 +45,15 @@ func (pm *PM_Golang) WriteFileSync(
 	data string,
 	tr string,
 ) (bool, error) {
-	fullPath := pm.testResourceConfiguration.Fs + "/" + filename
-	result, err := pm.send("writeFileSync", fullPath, data, tr)
+	// Ensure the directory exists
+	dir := filepath.Dir(filename)
+	if dir != "" && dir != "." {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return false, err
+		}
+	}
+	// Write directly to the filename (relative to current working directory)
+	result, err := pm.send("writeFileSync", filename, data, tr)
 	if err != nil {
 		return false, err
 	}
@@ -548,7 +555,20 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 		}, fmt.Errorf("failed to marshal tests.json: %v", err)
 	}
 
-	_, err = pmGolang.WriteFileSync("tests.json", string(data), "test")
+	// Write to the correct path: testeranto/reports/allTests/example/golang.Calculator.test.ts.json
+	// The pattern is: testeranto/reports/allTests/example/${runtime}.Calculator.test.ts.json
+	// For Go, runtime is 'golang'
+	// Create the directory if it doesn't exist
+	dirPath := "testeranto/reports/allTests/example"
+	// Ensure the directory exists
+	os.MkdirAll(dirPath, 0755)
+	// The filename is fixed for this runtime
+
+	filePath := "testeranto/reports/allTests/example/golang.Calculator.test.ts.json"
+
+	fmt.Printf("writing tests.json to ->: %s\n", filePath)
+
+	_, err = pmGolang.WriteFileSync(filePath, string(data), "test")
 	if err != nil {
 		return IFinalResults{
 			Failed:       true,
@@ -671,22 +691,22 @@ func (gv *Golingvu) executeTest(key string, given *BaseGiven) (map[string]interf
 		Fs:    "./",
 		Ports: []int{},
 	}
-	
+
 	// Create initial subject using BeforeAll
 	store := gv.testAdapter.BeforeAll(nil, testResource, nil)
-	
+
 	// Process whens - execute each when step
 	for _, when := range given.Whens {
 		var whenError error = nil
 		var whenName string = when.Key
-		
+
 		// Execute the when callback using the adapter's AndWhen
 		// The adapter's AndWhen will handle calling the actual whenCB
 		newStore := gv.testAdapter.AndWhen(store, when.WhenCB, testResource, nil)
 		if newStore != nil {
 			store = newStore
 		}
-		
+
 		// Check for errors (if the whenCB panicked, it would have been caught by uberCatcher)
 		// For now, assume no error
 
@@ -710,7 +730,7 @@ func (gv *Golingvu) executeTest(key string, given *BaseGiven) (map[string]interf
 
 		// Execute the then callback using the adapter's ButThen
 		result := gv.testAdapter.ButThen(store, then.ThenCB, testResource, nil)
-		
+
 		// Check the result
 		// The adapter's AssertThis can be used to validate
 		success := gv.testAdapter.AssertThis(result)

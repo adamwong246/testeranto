@@ -165,7 +165,7 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: echo "BDD command not implemented for golang"
+    command: go run example/Calculator.golingvu.test.go '{"ports":[1111]}'
     networks:
       - default
   golang-example_calculator-golingvu-test-go-aider:

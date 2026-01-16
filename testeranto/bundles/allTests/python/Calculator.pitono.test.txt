@@ -1,4 +1,4 @@
-Combined signature: 43ea64700d7108ffe011fa3e894bcf6b
+Combined signature: 653d78d79bb435ab2159a5d42498be18
 
 Input files:
 1. example/Calculator.pitono.test.py
