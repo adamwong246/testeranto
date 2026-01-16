@@ -1,8 +1,15 @@
 [
-  "/workspace/src/lib/tiposkripto/Tiposkripto.ts",
-  "/workspace/example/Calculator.ts",
-  "/workspace/example/Calculator.test.adapter.ts",
-  "/workspace/example/Calculator.test.implementation.ts",
-  "/workspace/example/Calculator.test.specification.ts",
-  "/workspace/example/Calculator.test.ts"
+  "/src/lib/tiposkripto/Tiposkripto.ts",
+  "/src/lib/tiposkripto/index.ts",
+  "/src/lib/tiposkripto/Web.ts",
+  "/src/lib/tiposkripto/BaseTiposkripto.ts",
+  "/src/lib/tiposkripto/BaseGiven.ts",
+  "/src/lib/tiposkripto/BaseSuite.ts",
+  "/src/lib/tiposkripto/BaseThen.ts",
+  "/src/lib/tiposkripto/BaseWhen.ts",
+  "/example/Calculator.ts",
+  "/example/Calculator.test.adapter.ts",
+  "/example/Calculator.test.implementation.ts",
+  "/example/Calculator.test.specification.ts",
+  "/example/Calculator.test.ts"
 ]

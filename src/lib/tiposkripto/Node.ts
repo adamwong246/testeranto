@@ -12,14 +12,6 @@ import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,
 } from "./index.js";
-import { argv } from "process";
-
-
-import puppeteer from 'puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js';
-
-const browser = await puppeteer.connect({
-  browserWSEndpoint: '9222',
-});
 
 console.log(`[NodeTiposkripto] ${process.argv}`);
 
@@ -56,7 +48,10 @@ export class NodeTiposkripto<
     filename: string,
     payload: string,
   ) {
-    fs.writeFileSync(`${config.fs}/${filename}`, payload);
+
+    const x = "testeranto/reports/allTests/example/Calculator.test.json"
+    console.log("mark11", x, filename)
+    fs.writeFileSync(x, payload);
   }
 }
 

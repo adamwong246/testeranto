@@ -1,4 +1,3 @@
-import { Analyzer } from "../src/lib/tiposkripto/Analyzer";
 import Tiposkripto from "../src/lib/tiposkripto/Tiposkripto";
 import { Calculator } from "./Calculator";
 import { adapter } from "./Calculator.test.adapter";

@@ -1,8 +1,4 @@
-{
-  "combined_hash": "2e56dab370fe3ddf8a7941480410cf0e",
-  "input_files": [
-    "example/Calculator.pitono.test.py",
-    "example/Calculator.py"
-  ],
-  "entry_point": "example/Calculator.pitono.test.py"
-}
+[
+  "/example/Calculator.pitono.test.py",
+  "/example/Calculator.py"
+]

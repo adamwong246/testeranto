@@ -1,5 +1,5 @@
-import type { Ibdd_in_any } from "../CoreTypes";
 import { ITestArtifactory, ITestResourceConfiguration } from ".";
+import { Ibdd_in_any } from "../../CoreTypes";
 
 /**
  * Represents a collection of Given conditions keyed by their names.

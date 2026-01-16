@@ -14,9 +14,15 @@ class SimpleTestAdapter(ITestAdapter):
         return store
     
     def and_when(self, store, when_cb, test_resource, pm):
+        # Call the when_cb with the store to get the modified store
+        if callable(when_cb):
+            return when_cb(store)
         return store
     
     def but_then(self, store, then_cb, test_resource, pm):
+        # Call the then_cb with the store to perform assertions
+        if callable(then_cb):
+            return then_cb(store)
         return store
     
     def assert_this(self, t):

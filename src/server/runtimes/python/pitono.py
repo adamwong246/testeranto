@@ -6,7 +6,6 @@ import os
 import ast
 from typing import Dict, List, Set, Any
 import hashlib
-import asyncio
 
 import time
 
@@ -290,7 +289,7 @@ def bundle_python_files(entry_point: str, output_dir: str) -> str:
         except Exception as e:
             print(f"=== ERROR updating text file: {e}")
         
-        # Create JSON bundle
+        # Create JSON bundle - match Node implementation format (array of file paths)
         # The path should be under testeranto/bundles/allTests/python/
         # entry name should be "testeranto/bundles/allTests/python/example/Calculator.test.py-inputFiles.json"
         # Ensure the example directory exists
@@ -300,82 +299,99 @@ def bundle_python_files(entry_point: str, output_dir: str) -> str:
         output_path_json = os.path.join(output_dir, output_filename_json)
         print(f"=== JSON bundle path: {output_path_json}")
         
-        bundle_content = {
-            'combined_hash': combined_hash_hex,
-            'input_files': sorted_deps,
-            'entry_point': entry_point
-        }
+        # Convert paths to be relative to /workspace, matching Node implementation
+        workspace_root = '/workspace'
+        relative_files = []
+        for dep in sorted_deps:
+            abs_path = os.path.abspath(dep)
+            if abs_path.startswith(workspace_root):
+                # Make path relative to workspace root, but keep leading slash
+                rel_path = abs_path[len(workspace_root):]
+                # Ensure it starts with /
+                if not rel_path.startswith('/'):
+                    rel_path = '/' + rel_path
+                relative_files.append(rel_path)
+            else:
+                # If not under workspace, use relative path from current directory
+                rel_path = os.path.relpath(abs_path, os.getcwd())
+                relative_files.append(rel_path)
         
+        # Write as an array, matching Node implementation
         with open(output_path_json, 'w', encoding='utf-8') as f:
-            json.dump(bundle_content, f, indent=2)
+            json.dump(relative_files, f, indent=2)
         
-        print(f"=== Generated JSON bundle: {output_path_json}")
+        print(f"=== Generated JSON bundle (array format): {output_path_json}")
         
-        # Create a Python bundle file that executes the original test
+        # Create a Python bundle file that acts like a symlink to the original test
         python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
         
+        # Get absolute paths
+        original_test_abs = os.path.abspath(entry_point)
+        bundle_abs = os.path.abspath(python_bundle_path)
+        
+        # Create a bundle that directly executes the original file
+        # This approach preserves the exact execution environment
         python_bundle_content = f'''#!/usr/bin/env python3
 """
 Python test bundle for: {entry_point}
 Hash: {combined_hash_hex}
-This bundle executes the original test file.
+This bundle directly executes the original test file.
 """
 import sys
 import os
-import traceback
+import runpy
 
 # Cache invalidation hash
 BUNDLE_HASH = "{combined_hash_hex}"
 
 def main():
     # Get the absolute path to the original test file
-    original_test = r"{entry_point}"
+    original_test = r"{original_test_abs}"
     
     if not os.path.exists(original_test):
         print(f"ERROR: Original test file not found: {{original_test}}")
         return 1
     
     try:
-        # Add the directory containing the original test to sys.path
-        original_dir = os.path.dirname(os.path.abspath(original_test))
+        # Change to the directory containing the original test file
+        # This ensures relative imports work correctly
+        original_dir = os.path.dirname(original_test)
+        os.chdir(original_dir)
+        
+        # Add the directory to sys.path if not already there
         if original_dir not in sys.path:
             sys.path.insert(0, original_dir)
         
-        # Also add the workspace root (where example/ is located)
-        workspace_root = os.environ.get('WORKSPACE_ROOT', '/workspace')
-        if workspace_root not in sys.path:
-            sys.path.insert(0, workspace_root)
+        # Use runpy to run the module, which properly handles __name__ == "__main__"
+        # We need to use the module name relative to the workspace
+        # First, let's try to find the module path relative to sys.path
+        for path in sys.path:
+            if path and original_test.startswith(path):
+                # Calculate relative module path
+                rel_path = os.path.relpath(original_test, path)
+                if rel_path.endswith('.py'):
+                    rel_path = rel_path[:-3]
+                # Convert path separators to dots
+                module_name = rel_path.replace(os.sep, '.')
+                try:
+                    # Run the module as __main__
+                    runpy.run_module(module_name, run_name='__main__', alter_sys=True)
+                    return 0
+                except ImportError:
+                    # If module import fails, fall back to run_path
+                    pass
         
-        # Read and execute the original test file
-        with open(original_test, 'r', encoding='utf-8') as f:
-            code = f.read()
+        # Fallback: use run_path which executes the file directly
+        # This preserves __name__ == "__main__" behavior
+        runpy.run_path(original_test, run_name='__main__')
+        return 0
         
-        # Execute in a dedicated namespace
-        namespace = {{}}
-        # Set __file__ to the original test file path so imports work correctly
-        namespace['__file__'] = original_test
-        # Also set __name__ to '__main__' if not defined
-        if '__name__' not in namespace:
-            namespace['__name__'] = '__main__'
-        
-        exec(code, namespace, namespace)
-        
-        # If the test has a main function, call it
-        if 'main' in namespace and callable(namespace['main']):
-            return namespace['main']()
-        # If the test has a test_main function, call it
-        elif 'test_main' in namespace and callable(namespace['test_main']):
-            return namespace['test_main']()
-        # Otherwise, assume success
-        else:
-            print(f"INFO: Test file executed successfully: {{original_test}}")
-            return 0
-            
     except SystemExit as e:
         # Propagate the exit code
-        return e.code
+        return e.code if isinstance(e.code, int) else 0
     except Exception as e:
         print(f"ERROR executing test {{original_test}}:")
+        import traceback
         traceback.print_exc()
         return 1
 
@@ -384,6 +400,13 @@ if __name__ == "__main__":
 '''
         with open(python_bundle_path, 'w', encoding='utf-8') as f:
             f.write(python_bundle_content)
+        
+        # Make the bundle executable
+        try:
+            os.chmod(python_bundle_path, 0o755)
+        except:
+            pass
+            
         print(f"=== Generated Python bundle: {python_bundle_path}")
         
         return output_path_json
@@ -392,24 +415,26 @@ if __name__ == "__main__":
         print(f"=== Error during bundle generation: {e}")
         print("=== Creating minimal JSON bundle with error information")
         
-        # Create a minimal JSON bundle
-        output_filename_json = f"{entry_name}.bundle.json"
-        output_path_json = os.path.join(output_dir, output_filename_json)
+        # Create a minimal JSON bundle - match Node implementation format (empty array)
+        # Determine appropriate path
+        if 'example' in entry_point:
+            example_dir = os.path.join(output_dir, "example")
+            os.makedirs(example_dir, exist_ok=True)
+            output_filename_json = f"example/{entry_name}.py-inputFiles.json"
+            output_path_json = os.path.join(output_dir, output_filename_json)
+        else:
+            output_filename_json = f"{entry_name}.py-inputFiles.json"
+            output_path_json = os.path.join(output_dir, output_filename_json)
         
-        bundle_content = {
-            'combined_hash': 'error',
-            'input_files': [],
-            'entry_point': entry_point,
-            'error': str(e)
-        }
-        
+        # Write empty array to match Node implementation
         with open(output_path_json, 'w', encoding='utf-8') as f:
-            json.dump(bundle_content, f, indent=2)
+            json.dump([], f, indent=2)
         
-        print(f"=== Generated minimal JSON bundle due to error: {output_path_json}")
+        print(f"=== Generated minimal JSON bundle (empty array) due to error: {output_path_json}")
         
         # Create a Python bundle file even on error (but it will report the error)
         python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
+        original_test_abs = os.path.abspath(entry_point)
         python_bundle_content = f'''#!/usr/bin/env python3
 """
 Python test bundle for: {entry_point}
@@ -418,20 +443,64 @@ Error during bundle generation: {e}
 """
 import sys
 import os
+import runpy
 
 BUNDLE_HASH = "error"
 
 def main():
-    print("ERROR: Bundle generation failed")
-    print(f"Original test: {entry_point}")
-    print(f"Error: {e}")
-    return 1
+    # Get the absolute path to the original test file
+    original_test = r"{original_test_abs}"
+    
+    if not os.path.exists(original_test):
+        print(f"ERROR: Original test file not found: {{original_test}}")
+        return 1
+    
+    try:
+        # Change to the directory containing the original test file
+        original_dir = os.path.dirname(original_test)
+        os.chdir(original_dir)
+        
+        # Add the directory to sys.path if not already there
+        if original_dir not in sys.path:
+            sys.path.insert(0, original_dir)
+        
+        # Try to run the module
+        for path in sys.path:
+            if path and original_test.startswith(path):
+                rel_path = os.path.relpath(original_test, path)
+                if rel_path.endswith('.py'):
+                    rel_path = rel_path[:-3]
+                module_name = rel_path.replace(os.sep, '.')
+                try:
+                    runpy.run_module(module_name, run_name='__main__', alter_sys=True)
+                    return 0
+                except ImportError:
+                    pass
+        
+        # Fallback
+        runpy.run_path(original_test, run_name='__main__')
+        return 0
+        
+    except SystemExit as e:
+        return e.code if isinstance(e.code, int) else 0
+    except Exception as e:
+        print(f"ERROR executing test {{original_test}}:")
+        import traceback
+        traceback.print_exc()
+        return 1
 
 if __name__ == "__main__":
     sys.exit(main())
 '''
         with open(python_bundle_path, 'w', encoding='utf-8') as f:
             f.write(python_bundle_content)
+        
+        # Make the bundle executable
+        try:
+            os.chmod(python_bundle_path, 0o755)
+        except:
+            pass
+            
         print(f"=== Generated Python bundle (error): {python_bundle_path}")
         
         return output_path_json
@@ -532,13 +601,10 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
         except OSError:
             bundle_size = 0
         
-        # Read the bundle content to get the combined hash
-        try:
-            with open(bundle_path, 'r', encoding='utf-8') as f:
-                bundle_data = json.load(f)
-            combined_hash = bundle_data.get('combined_hash', '')
-        except Exception:
-            combined_hash = ''
+        # Since we're now writing an array instead of an object with combined_hash,
+        # we need to compute the hash differently
+        # Use the signature we already computed
+        combined_hash = signature
         
         outputs[output_key] = {
             'imports': [],
@@ -563,97 +629,6 @@ def generate_metafile(entry_points: List[str]) -> Dict[str, Any]:
             'outputs': outputs
         }
     }
-
-
-def main():
-    # Determine config path
-    # First, check command line argument
-    # if len(sys.argv) > 1:
-    #     config_path = sys.argv[1]
-    # else:
-    #     # Try common locations
-    #     possible_paths = [
-    #         'testeranto/allTests.json'
-    #     ]
-    #     config_path = None
-    #     for path in possible_paths:
-    #         if os.path.exists(path):
-    #             config_path = path
-    #             break
-    #     if not config_path:
-    #         print("Error: allTests.json not found")
-    #         sys.exit(1)
-
-    config_path = "testeranto/runtimes/python/python.py"
-    
-    print(f"Reading config from {config_path}")
-    
-    try:
-        with open(config_path, 'r') as f:
-            config = json.load(f)
-    except Exception as e:
-        print(f"Error loading config: {e}")
-        sys.exit(1)
-    
-    # Get Python test entry points
-    python_config = config.get('python', {})
-    tests = python_config.get('tests', {})
-    entry_points = list(tests.keys())
-    
-    if not entry_points:
-        print("No Python tests found in config")
-        # Still generate an empty metafile
-        entry_points = []
-    
-    print(f"Found {len(entry_points)} Python test(s)")
-    
-    # Generate metafile (which also generates bundles)
-    metafile = generate_metafile(entry_points)
-    
-    # Write metafile
-    metafiles_dir = os.environ.get('METAFILES_DIR', '/workspace/testeranto/metafiles/python')
-    os.makedirs(metafiles_dir, exist_ok=True)
-    
-    metafile_path = os.path.join(metafiles_dir, 'allTests.json')
-    print(f"Writing metafile to: {metafile_path}")
-    with open(metafile_path, 'w') as f:
-        json.dump(metafile, f, indent=2)
-    print(f"Metafile written successfully")
-    
-    print(f"Python metafile written to {metafile_path}")
-    
-    # Print bundle information
-    bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')
-    print(f"Python bundles written to {bundles_dir}")
-    
-    # Print summary
-    num_inputs = len(metafile['metafile']['inputs'])
-    num_outputs = len(metafile['metafile']['outputs'])
-    print(f"Metafile contains {num_inputs} input files and {num_outputs} output bundles")
-    
-    # List all text files in bundles directory
-    print(f"\n=== Checking for generated text files in {bundles_dir} ===")
-    if os.path.exists(bundles_dir):
-        text_files = [f for f in os.listdir(bundles_dir) if f.endswith('.txt')]
-        print(f"Found {len(text_files)} text files:")
-        for tf in text_files:
-            tf_path = os.path.join(bundles_dir, tf)
-            print(f"  - {tf_path}")
-            if os.path.exists(tf_path):
-                try:
-                    with open(tf_path, 'r', encoding='utf-8') as f:
-                        content = f.read()
-                    print(f"    Content preview: {content[:200]}")
-                except Exception as e:
-                    print(f"    Error reading file: {e}")
-    else:
-        print(f"Bundles directory does not exist: {bundles_dir}")    
-    
-    # TODO
-    # Write an nearly empty python file to act as a "bundle". 
-    # it should include the hash as a comment and mmerely link back to the test
-    # as there is no sense in "building" an interpreted langugaes
-    
 
 def compute_files_hash(files: List[str]) -> str:
     """Compute a hash from file paths and contents, consistent with Node/Web runtimes."""
@@ -773,16 +748,8 @@ def main():
     print(f"[Python Builder] Computed hash: {hash_value}")
     print(f"[Python Builder] Found {len(all_input_files)} input files")
     
-    # Send sourceFilesUpdated message for each test
-    for entry_point in entry_points:
-        # Use the entry point as the test name
-        test_name_for_msg = entry_point
-        print(f"[Python Builder] Sending sourceFilesUpdated for test: {test_name_for_msg}")
-        try:
-            asyncio.run(send_source_files_updated(test_name_for_msg, hash_value, all_input_files, "python"))
-        except Exception as e:
-            print(f"[Python Builder] Failed to send sourceFilesUpdated for {test_name_for_msg}: {e}")
-            # Don't fail the build, but log the error
+    # WebSocket feature removed - dead feature
+    print(f"[Python Builder] WebSocket feature removed - not sending sourceFilesUpdated messages")
     
     # Generate metafile (which also generates bundles)
     metafile = generate_metafile(entry_points)

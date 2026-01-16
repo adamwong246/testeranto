@@ -2,7 +2,6 @@ import esbuild from "esbuild";
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
-import { WebSocket } from "ws";
 import { IBuiltConfig } from "../../Types";
 
 export interface BuildOptions {
@@ -33,7 +32,7 @@ export async function computeFilesHash(files: string[]): Promise<string> {
   return hash.digest('hex');
 }
 
-// Connect to WebSocket server and send sourceFilesUpdated message
+// WebSocket functionality removed - dead feature
 export async function sendSourceFilesUpdated(
   config: IBuiltConfig,
   hash: string,
@@ -41,54 +40,55 @@ export async function sendSourceFilesUpdated(
   testName: string,
   runtime: 'node' | 'web'
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const wsUrl = `ws://host.docker.internal:${config.httpPort}/ws`;
-    console.log(`[${runtime} Builder] Connecting to WebSocket at ${wsUrl}`);
-
-    const ws = new WebSocket(wsUrl);
-
-    ws.on('open', () => {
-      console.log(`[${runtime} Builder] WebSocket connected, sending sourceFilesUpdated for ${testName}`);
-      ws.send(JSON.stringify({
-        type: 'sourceFilesUpdated',
-        data: {
-          testName,
-          hash,
-          files,
-          runtime
-        }
-      }));
-
-      // Wait a moment for the message to be sent before closing
-      setTimeout(() => {
-        ws.close();
-        resolve();
-      }, 1000);
-    });
-
-    ws.on('error', (error) => {
-      console.error(`[${runtime} Builder] WebSocket error:`, error);
-      reject(error);
-    });
-
-    ws.on('close', () => {
-      console.log(`[${runtime} Builder] WebSocket connection closed`);
-    });
-  });
+  console.log(`[${runtime} Builder] WebSocket feature removed - not sending sourceFilesUpdated for ${testName}`);
+  return Promise.resolve();
 }
 
-// Extract input files from metafile
+// Extract input files from metafile recursively
 export function extractInputFilesFromMetafile(metafile: any): string[] {
-  const files: string[] = [];
+  const files: Set<string> = new Set();
+  
+  if (!metafile || !metafile.inputs) {
+    return Array.from(files);
+  }
 
-  if (metafile && metafile.inputs) {
-    for (const inputPath of Object.keys(metafile.inputs)) {
-      // Convert to absolute path if needed
-      files.push(path.resolve(process.cwd(), inputPath));
+  // Function to recursively collect all dependencies
+  function collectDependencies(filePath: string) {
+    if (files.has(filePath)) {
+      return;
+    }
+    
+    // Add the current file
+    files.add(filePath);
+    
+    // Get file info from metafile
+    const fileInfo = metafile.inputs[filePath];
+    if (!fileInfo) {
+      return;
+    }
+    
+    // Recursively process each import
+    if (fileInfo.imports) {
+      for (const importInfo of fileInfo.imports) {
+        const importPath = importInfo.path;
+        // Only process if it's in the inputs (should be)
+        if (metafile.inputs[importPath]) {
+          collectDependencies(importPath);
+        }
+      }
     }
   }
 
-  return files;
+  // Start from ALL files in inputs, not just entry points
+  // This ensures we get all transitive dependencies
+  for (const filePath of Object.keys(metafile.inputs)) {
+    collectDependencies(filePath);
+  }
+
+  // Convert to absolute paths
+  return Array.from(files).map(filePath => 
+    path.isAbsolute(filePath) ? filePath : path.resolve(process.cwd(), filePath)
+  );
 }
 
 export async function processMetafile(
@@ -120,14 +120,55 @@ export async function processMetafile(
       continue;
     }
 
-    // Get input files for this output and convert to absolute paths
-    const inputFiles = Object.keys(outputInfoTyped.inputs || {}).map(file =>
-      path.isAbsolute(file) ? file : path.resolve(process.cwd(), file)
+    // Get input files for this specific output
+    const outputInputs = outputInfoTyped.inputs || {};
+    
+    // Function to recursively collect dependencies for a file
+    const collectedFiles = new Set<string>();
+    function collectFileDependencies(filePath: string) {
+      if (collectedFiles.has(filePath)) {
+        return;
+      }
+      collectedFiles.add(filePath);
+      
+      const fileInfo = metafile.inputs?.[filePath];
+      if (fileInfo?.imports) {
+        for (const importInfo of fileInfo.imports) {
+          const importPath = importInfo.path;
+          if (metafile.inputs?.[importPath]) {
+            collectFileDependencies(importPath);
+          }
+        }
+      }
+    }
+    
+    // Start from all files listed in this output's inputs
+    for (const inputFile of Object.keys(outputInputs)) {
+      collectFileDependencies(inputFile);
+    }
+    
+    // Convert to absolute paths
+    const allInputFiles = Array.from(collectedFiles).map(filePath => 
+      path.isAbsolute(filePath) ? filePath : path.resolve(process.cwd(), filePath)
     );
-    fs.writeFileSync(`testeranto/bundles/allTests/${runtime}/${entryPoint.split('.').slice(0, -1).concat('mjs').join('.')}-inputFiles.json`, JSON.stringify(inputFiles, null, 2));
-
-    console.log("markl!")
-
+    
+    // Convert to relative paths from workspace root
+    const workspaceRoot = '/workspace';
+    const relativeFiles = allInputFiles.map(file => {
+      const absolutePath = path.isAbsolute(file) ? file : path.resolve(process.cwd(), file);
+      // Make path relative to workspace root
+      if (absolutePath.startsWith(workspaceRoot)) {
+        return absolutePath.slice(workspaceRoot.length);
+      }
+      // If not under workspace, use relative path from current directory
+      return path.relative(process.cwd(), absolutePath);
+    }).filter(Boolean);
+    
+    // Write to file
+    const outputBaseName = entryPoint.split('.').slice(0, -1).join('.');
+    const inputFilesPath = `testeranto/bundles/allTests/${runtime}/${outputBaseName}.mjs-inputFiles.json`;
+    
+    fs.writeFileSync(inputFilesPath, JSON.stringify(relativeFiles, null, 2));
+    console.log(`[${runtime} Builder] Wrote ${relativeFiles.length} input files to ${inputFilesPath}`);
   }
-
 }

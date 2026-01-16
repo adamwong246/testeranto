@@ -1057,6 +1057,13 @@ var Server_Docker = class extends Server_WS {
     console.log(`[Server_Docker] start()`);
     super.start();
     await this.setupDockerCompose(this.configs, this.projectName);
+    const baseReportsDir = path2.join(process.cwd(), "testeranto", "reports");
+    try {
+      fs2.mkdirSync(baseReportsDir, { recursive: true });
+      console.log(`[Server_Docker] Created base reports directory: ${baseReportsDir}`);
+    } catch (error) {
+      console.error(`[Server_Docker] Failed to create base reports directory ${baseReportsDir}: ${error.message}`);
+    }
     console.log(`[Server_Docker] Dropping everything...`);
     try {
       const downCmd = `docker compose -f "${this.dockerManager.composeFile}" down -v --remove-orphans`;
@@ -1114,6 +1121,14 @@ var Server_Docker = class extends Server_WS {
       for (const testName in tests) {
         const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
         const bddServiceName = `${uid}-bdd`;
+        const testNameParts = testName.split("/");
+        const reportDir = "testeranto/reports/allTests/example/";
+        try {
+          fs2.mkdirSync(reportDir, { recursive: true });
+          console.log(`[Server_Docker] Created report directory: ${reportDir} for test ${testName} and runtime ${runtime}`);
+        } catch (error) {
+          console.error(`[Server_Docker] Failed to create report directory ${reportDir}: ${error.message}`);
+        }
         console.log(`[Server_Docker] Starting BDD service: ${bddServiceName}`);
         try {
           await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${bddServiceName}`);

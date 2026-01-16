@@ -4,17 +4,6 @@ import asyncio
 from typing import Any, List, Dict, Optional
 from ..types import ITTestResourceConfiguration
 
-# Try to import websockets
-try:
-    import websockets
-    HAS_WEBSOCKETS = True
-except ImportError:
-    HAS_WEBSOCKETS = False
-    print("ERROR: websockets module is not installed.")
-    print("WebSocket communication is essential for the test infrastructure.")
-    print("Please install it with: pip install websockets>=12.0")
-    # Don't exit here, let the calling code handle it
-
 class PM_Python:
     def __init__(self, t: ITTestResourceConfiguration, websocket_port: str):
         # Don't print the port to reduce noise in test output
@@ -23,39 +12,13 @@ class PM_Python:
         self.websocket = None
         self.connected = False
     
-    async def connect(self):
-        """Connect to WebSocket server"""
-        if not self.connected:
-            if not HAS_WEBSOCKETS:
-                # Don't raise an error, just set connected to False
-                # This allows tests to run without WebSocket functionality
-                self.connected = False
-                return
-            try:
-                uri = f"ws://localhost:{self.websocket_port}"
-                # Suppress any output from websockets library
-                import sys, io
-                old_stderr = sys.stderr
-                sys.stderr = io.StringIO()
-                try:
-                    self.websocket = await websockets.connect(uri)
-                finally:
-                    sys.stderr = old_stderr
-                self.connected = True
-                # Only print success message if we really want to see it
-                # print(f"PM_Python: Connected to WebSocket at {uri}")
-            except Exception:
-                # Don't print error message to avoid cluttering test output
-                # The send() method will handle disconnected state gracefully
-                self.connected = False
-    
     def start(self) -> None:
         raise Exception("DEPRECATED")
     
-    async def stop(self) -> None:
-        if self.websocket:
-            await self.websocket.close()
-            self.connected = False
+    # async def stop(self) -> None:
+    #     if self.websocket:
+    #         await self.websocket.close()
+            # self.connected = False
     
     async def send(self, command: str, *args) -> Any:
         # Ensure we're connected

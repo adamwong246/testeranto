@@ -139,9 +139,9 @@ class BaseGiven:
                     self.store = await when_step.test(
                         self.store,
                         test_resource_configuration,
-                        t_log,
-                        pm,
-                        f"suite-{suite_ndx}/given-{key}/when/{when_ndx}"
+                        # t_log,  # Removed to match TypeScript BaseWhen.test signature
+                        # pm,     # Removed
+                        # f"suite-{suite_ndx}/given-{key}/when/{when_ndx}"  # Removed
                     )
                 except Exception as e:
                     self.failed = True
@@ -154,9 +154,9 @@ class BaseGiven:
                     result = await then_step.test(
                         self.store,
                         test_resource_configuration,
-                        t_log,
-                        pm,
-                        f"suite-{suite_ndx}/given-{key}/then-{then_ndx}"
+                        # t_log,  # Removed to match TypeScript BaseThen.test signature
+                        # pm,     # Removed
+                        # f"suite-{suite_ndx}/given-{key}/then-{then_ndx}"  # Removed
                     )
                     # Test the result
                     if not tester(result):

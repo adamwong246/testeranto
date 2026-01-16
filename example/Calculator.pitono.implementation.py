@@ -1,5 +1,13 @@
 from typing import Any, Callable, Dict
-from ..Calculator import Calculator
+import os
+import sys
+
+# Add the current directory to sys.path to find Calculator
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
+
+# Import Calculator using absolute import
+from Calculator import Calculator
 
 class Implementation:
     def __init__(self):

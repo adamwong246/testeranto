@@ -1,67 +1,58 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Callable, Optional
 
 class BaseWhen:
-    def __init__(self, key: str, when_cb: Any):
-        self.key = key
+    def __init__(self, name: str, when_cb: Callable[[Any], Any]):
+        self.name = name
         self.when_cb = when_cb
+        self.error: Optional[Exception] = None
         self.artifacts: List[str] = []
-        self.error: Any = None
-    
-    async def and_when(
-        self,
-        store: Any,
-        when_cb: Any,
-        test_resource: Any,
-        pm: Any
-    ) -> Any:
-        # Execute the when callback which should modify the store
-        # The when_cb is typically a function that takes the store and returns the modified store
-        if callable(when_cb):
-            return when_cb(store)
-        return store
+        self.status: Optional[bool] = None
     
     def add_artifact(self, path: str) -> None:
+        if not isinstance(path, str):
+            raise TypeError(
+                f"[ARTIFACT ERROR] Expected string, got {type(path)}: {path}"
+            )
         normalized_path = path.replace('\\', '/')
         self.artifacts.append(normalized_path)
     
-    def to_obj(self) -> Dict[str, Any]:
-        return {
-            'name': self.key,
-            'status': self.error is None,
-            'error': str(self.error) if self.error else None,
-            'artifacts': self.artifacts
-        }
-    
     async def and_when(
         self,
         store: Any,
-        when_cb: Any,
-        test_resource: Any,
-        pm: Any
+        when_cb: Callable[[Any], Any],
+        test_resource_configuration: Any
     ) -> Any:
-        # Default implementation - can be overridden by subclasses
-        return store
+        # This should be implemented by subclasses
+        raise NotImplementedError("and_when must be implemented by subclasses")
+    
+    def to_obj(self) -> Dict[str, Any]:
+        error_str = None
+        if self.error:
+            error_str = f"{type(self.error).__name__}: {str(self.error)}"
+        return {
+            'name': self.name,
+            'status': self.status,
+            'error': error_str,
+            'artifacts': self.artifacts
+        }
     
     async def test(
         self,
         store: Any,
-        test_resource_configuration,
-        t_log: Any,
-        pm: Any,
-        filepath: str
+        test_resource_configuration: Any,
+        # t_log: Any,  # Removed to match TypeScript
+        # pm: Any,     # Removed to match TypeScript
+        # filepath: str # Removed to match TypeScript
     ) -> Any:
         try:
-            # Ensure add_artifact is properly bound to 'this'
-            add_artifact = self.add_artifact
-            # In Python, we can just pass self.add_artifact directly
-            # For now, we'll implement a simple version
             result = await self.and_when(
                 store,
                 self.when_cb,
-                test_resource_configuration,
-                pm
+                test_resource_configuration
             )
+            self.status = True
             return result
         except Exception as e:
+            self.status = False
             self.error = e
             raise e

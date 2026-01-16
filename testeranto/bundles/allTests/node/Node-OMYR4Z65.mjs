@@ -538,10 +538,6 @@ var BaseTiposkripto = class {
 };
 
 // src/lib/tiposkripto/Node.ts
-import puppeteer from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js";
-var browser = await puppeteer.connect({
-  browserWSEndpoint: "9222"
-});
 console.log(`[NodeTiposkripto] ${process.argv}`);
 var config = { ports: [1111], fs: "testeranto/reports/allTests/example/Calculator.test/node" };
 var NodeTiposkripto = class extends BaseTiposkripto {
@@ -557,7 +553,9 @@ var NodeTiposkripto = class extends BaseTiposkripto {
     );
   }
   async writeFileSync(filename, payload) {
-    fs.writeFileSync(`${config.fs}/${filename}`, payload);
+    const x = "testeranto/reports/allTests/example/Calculator.test.json";
+    console.log("mark11", x, filename);
+    fs.writeFileSync(x, payload);
   }
 };
 var tiposkripto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {

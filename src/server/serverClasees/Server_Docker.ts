@@ -37,7 +37,17 @@ export class Server_Docker extends Server_WS {
     super.start();
     await this.setupDockerCompose(this.configs, this.projectName);
 
+    // Ensure base reports directory exists
+    const baseReportsDir = path.join(process.cwd(), "testeranto", "reports");
+    try {
+      fs.mkdirSync(baseReportsDir, { recursive: true });
+      console.log(`[Server_Docker] Created base reports directory: ${baseReportsDir}`);
+    } catch (error: any) {
+      console.error(`[Server_Docker] Failed to create base reports directory ${baseReportsDir}: ${error.message}`);
+    }
+
     // Aggressively clean up everything before starting
+    ///////////////////////////////////////////
     console.log(`[Server_Docker] Dropping everything...`);
 
     // 1. Stop and remove all containers, networks, and volumes defined in the compose file
@@ -81,11 +91,8 @@ export class Server_Docker extends Server_WS {
     } catch (error: any) {
       // Ignore errors
     }
+    ///////////////////////////////////////////
 
-    // v0
-    // await this.DC_build();
-
-    // // v1 implemented
     // Runtime files from testeranto/runtimes/ are copied into builder images via Dockerfile
     // This includes node.js, web.js, golang.go, and python.py configuration files
 
@@ -123,6 +130,33 @@ export class Server_Docker extends Server_WS {
       for (const testName in tests) {
         const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
         const bddServiceName = `${uid}-bdd`;
+
+        // Create directory in pattern that matches where the BDD service writes:
+        // testeranto/reports/allTests/{testName}/{runtime}/tests.json
+        // Based on error: testeranto/reports/allTests/example/Calculator.test/node/tests.json
+        // So testName is "example/Calculator.test", runtime is "node"
+        // We need to create directory up to {testName}/{runtime}
+        const testNameParts = testName.split('/');
+        // The testName may or may not have .ts extension, but the BDD service uses it as-is
+        // Create the full directory path
+        // const reportDir = path.join(
+        //   process.cwd(),
+        //   "testeranto",
+        //   "reports",
+        //   "allTests",
+        //   runtime,
+        //   ...testNameParts,
+        // );
+
+        const reportDir = "testeranto/reports/allTests/example/"
+
+        try {
+          fs.mkdirSync(reportDir, { recursive: true });
+          console.log(`[Server_Docker] Created report directory: ${reportDir} for test ${testName} and runtime ${runtime}`);
+        } catch (error: any) {
+          console.error(`[Server_Docker] Failed to create report directory ${reportDir}: ${error.message}`);
+        }
+
         console.log(`[Server_Docker] Starting BDD service: ${bddServiceName}`);
         try {
           await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${bddServiceName}`);
