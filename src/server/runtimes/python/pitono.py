@@ -311,17 +311,76 @@ def bundle_python_files(entry_point: str, output_dir: str) -> str:
         
         print(f"=== Generated JSON bundle: {output_path_json}")
         
-        # Create a minimal Python bundle file as requested in the TODO
+        # Create a Python bundle file that executes the original test
         python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
+        
         python_bundle_content = f'''#!/usr/bin/env python3
 """
 Python test bundle for: {entry_point}
 Hash: {combined_hash_hex}
-This is a minimal bundle file for an interpreted language.
-The actual test is at: {entry_point}
+This bundle executes the original test file.
 """
-# This file acts as a bundle placeholder
+import sys
+import os
+import traceback
+
+# Cache invalidation hash
 BUNDLE_HASH = "{combined_hash_hex}"
+
+def main():
+    # Get the absolute path to the original test file
+    original_test = r"{entry_point}"
+    
+    if not os.path.exists(original_test):
+        print(f"ERROR: Original test file not found: {{original_test}}")
+        return 1
+    
+    try:
+        # Add the directory containing the original test to sys.path
+        original_dir = os.path.dirname(os.path.abspath(original_test))
+        if original_dir not in sys.path:
+            sys.path.insert(0, original_dir)
+        
+        # Also add the workspace root (where example/ is located)
+        workspace_root = os.environ.get('WORKSPACE_ROOT', '/workspace')
+        if workspace_root not in sys.path:
+            sys.path.insert(0, workspace_root)
+        
+        # Read and execute the original test file
+        with open(original_test, 'r', encoding='utf-8') as f:
+            code = f.read()
+        
+        # Execute in a dedicated namespace
+        namespace = {{}}
+        # Set __file__ to the original test file path so imports work correctly
+        namespace['__file__'] = original_test
+        # Also set __name__ to '__main__' if not defined
+        if '__name__' not in namespace:
+            namespace['__name__'] = '__main__'
+        
+        exec(code, namespace, namespace)
+        
+        # If the test has a main function, call it
+        if 'main' in namespace and callable(namespace['main']):
+            return namespace['main']()
+        # If the test has a test_main function, call it
+        elif 'test_main' in namespace and callable(namespace['test_main']):
+            return namespace['test_main']()
+        # Otherwise, assume success
+        else:
+            print(f"INFO: Test file executed successfully: {{original_test}}")
+            return 0
+            
+    except SystemExit as e:
+        # Propagate the exit code
+        return e.code
+    except Exception as e:
+        print(f"ERROR executing test {{original_test}}:")
+        traceback.print_exc()
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main())
 '''
         with open(python_bundle_path, 'w', encoding='utf-8') as f:
             f.write(python_bundle_content)
@@ -349,16 +408,27 @@ BUNDLE_HASH = "{combined_hash_hex}"
         
         print(f"=== Generated minimal JSON bundle due to error: {output_path_json}")
         
-        # Also create a minimal Python bundle even on error
+        # Create a Python bundle file even on error (but it will report the error)
         python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
         python_bundle_content = f'''#!/usr/bin/env python3
 """
 Python test bundle for: {entry_point}
 Hash: error
-This is a minimal bundle file for an interpreted language.
-Error during generation: {e}
+Error during bundle generation: {e}
 """
+import sys
+import os
+
 BUNDLE_HASH = "error"
+
+def main():
+    print("ERROR: Bundle generation failed")
+    print(f"Original test: {entry_point}")
+    print(f"Error: {e}")
+    return 1
+
+if __name__ == "__main__":
+    sys.exit(main())
 '''
         with open(python_bundle_path, 'w', encoding='utf-8') as f:
             f.write(python_bundle_content)

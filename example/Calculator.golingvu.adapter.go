@@ -53,7 +53,7 @@ func (a *SimpleTestAdapter) AssertThis(t interface{}) bool {
 // BeforeAll implements golingvu.ITestAdapter.
 func (a *SimpleTestAdapter) BeforeAll(input interface{}, tr golingvu.ITTestResourceConfiguration, pm interface{}) interface{} {
 	// Initialize before all tests - create a new calculator
-	return &Calculator{}
+	return NewCalculator()
 }
 
 // BeforeEach implements golingvu.ITestAdapter.

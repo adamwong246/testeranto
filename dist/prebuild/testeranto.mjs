@@ -90,6 +90,9 @@ var pythonDockerComposeFile = (config, projectName) => {
 var pythonBuildCommand = () => {
   return `python src/server/runtimes/python/pitono.py`;
 };
+var pythonBDDCommand = (port) => {
+  return `python /workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py`;
+};
 
 // src/server/runtimes/web/docker.ts
 var webDockerComposeFile = (config, projectName) => {
@@ -178,6 +181,12 @@ var DockerManager = class {
         ...config.env
       },
       working_dir: "/workspace",
+      volumes: [
+        `${process.cwd()}/src:/workspace/src`,
+        `${process.cwd()}/example:/workspace/example`,
+        `${process.cwd()}/dist:/workspace/dist`,
+        `${process.cwd()}/testeranto:/workspace/testeranto`
+      ],
       command
     };
   }
@@ -225,7 +234,7 @@ var DockerManager = class {
         } else if (runtime === "golang") {
           bddCommand = 'echo "BDD command not implemented for golang"';
         } else if (runtime === "python") {
-          bddCommand = 'echo "BDD command not implemented for python"';
+          bddCommand = pythonBDDCommand(0);
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
         services[`${uid}-aider`] = this.aiderDockerComposeFile(config, runtime, `${uid}-aider`);

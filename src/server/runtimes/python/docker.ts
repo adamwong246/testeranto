@@ -29,6 +29,6 @@ export const pythonBuildCommand = () => {
 
 
 export const pythonBDDCommand = (port) => {
-  return `python Calculator.test.py`;
+  return `python /workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py`;
 }
 

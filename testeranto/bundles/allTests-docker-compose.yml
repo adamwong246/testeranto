@@ -45,6 +45,11 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '{"ports":[1111]}' || echo "Build process exited with code $?, but keeping container alive for health checks";
     networks:
       - default
@@ -105,6 +110,11 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: echo "BDD command not implemented for web"
     networks:
       - default
@@ -150,6 +160,11 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: echo "BDD command not implemented for golang"
     networks:
       - default
@@ -199,7 +214,12 @@ services:
     environment:
       NODE_ENV: production
     working_dir: /workspace
-    command: echo "BDD command not implemented for python"
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: python /workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py
     networks:
       - default
   python-example_calculator-pitono-test-py-aider:

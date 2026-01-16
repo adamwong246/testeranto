@@ -141,76 +141,39 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 			// Add more test cases here following the same pattern
 		},
 		Whens: map[string]interface{}{
-			"press": func(button string) func(*Calculator) error {
-				return func(calc *Calculator) error {
-					calc.press(button)
-					return nil
+			"press": func(button string) func(interface{}) error {
+				return func(calc interface{}) error {
+					if c, ok := calc.(*Calculator); ok {
+						c.press(button)
+						return nil
+					}
+					return fmt.Errorf("not a Calculator")
 				}
 			},
-			"enter": func() func(*Calculator) error {
-				return func(calc *Calculator) error {
+			"enter": func() func(interface{}) error {
+				return func(calc interface{}) error {
 					// Handle enter press if needed
-					return nil
+					if c, ok := calc.(*Calculator); ok {
+						c.Enter()
+						return nil
+					}
+					return fmt.Errorf("not a Calculator")
 				}
 			},
 		},
 		Thens: map[string]interface{}{
-			"result": func(expected string) func(*Calculator) error {
-				return func(calc *Calculator) error {
-					if calc.display != expected {
-						return fmt.Errorf("expected %s, got %s", expected, calc.display)
+			"result": func(expected string) func(interface{}) error {
+				return func(calc interface{}) error {
+					if c, ok := calc.(*Calculator); ok {
+						if c.display != expected {
+							return fmt.Errorf("expected %s, got %s", expected, c.display)
+						}
+						return nil
 					}
-					return nil
+					return fmt.Errorf("not a Calculator")
 				}
 			},
 		},
 	}
 }
 
-// CalculatorSpecification defines the test specification
-func CalculatorSpecification(suites, givens, whens, thens interface{}) interface{} {
-	suite := suites.(map[string]interface{})["CalculatorSuite"].(func(string, map[string]*golingvu.BaseGiven) *golingvu.BaseSuite)
-
-	// Create the when and then functions
-	press := whens.(map[string]interface{})["press"].(func(string) func(*Calculator) error)
-	enter := whens.(map[string]interface{})["enter"].(func() func(*Calculator) error)
-	result := thens.(map[string]interface{})["result"].(func(string) func(*Calculator) error)
-
-	// Create the test suite
-	return []interface{}{
-		suite("Testing Calculator operations", map[string]*golingvu.BaseGiven{
-			"testEmptyDisplay": givens.(map[string]interface{})["testEmptyDisplay"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)(
-				"testEmptyDisplay",
-				[]string{"pressing nothing, the display is empty"},
-				[]*golingvu.BaseWhen{},
-				[]*golingvu.BaseThen{
-					&golingvu.BaseThen{
-						Key:    "result: ",
-						ThenCB: result(""),
-					},
-				},
-				nil,
-				nil,
-			),
-			"testSingleDigit": givens.(map[string]interface{})["testSingleDigit"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)(
-				"testSingleDigit",
-				[]string{"entering a number puts it on the display"},
-				[]*golingvu.BaseWhen{
-					&golingvu.BaseWhen{
-						Key:    "press: 2",
-						WhenCB: press("2"),
-					},
-				},
-				[]*golingvu.BaseThen{
-					&golingvu.BaseThen{
-						Key:    "result: 2",
-						ThenCB: result("2"),
-					},
-				},
-				nil,
-				nil,
-			),
-			// Add more test cases here following the same pattern
-		}),
-	}
-}

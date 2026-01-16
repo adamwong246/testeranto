@@ -25,6 +25,8 @@ var CalculatorSpecification golingvu.ITestSpecification = func(
 	pressFunc := whensMap["press"].(func(interface{}) *golingvu.BaseWhen)
 	enterFunc := whensMap["enter"].(func(interface{}) *golingvu.BaseWhen)
 	resultFunc := thensMap["result"].(func(interface{}) *golingvu.BaseThen)
+	_ = enterFunc // Mark as used to avoid compiler error
+	_ = enterFunc // Mark as used to avoid compiler error
 
 	// Helper to create a given
 	createGiven := func(name string, description string, pressButtons []string, useEnter bool, expected string) *golingvu.BaseGiven {

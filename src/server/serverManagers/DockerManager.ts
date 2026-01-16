@@ -3,7 +3,7 @@
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { golangDockerComposeFile } from "../runtimes/golang/docker";
 import { nodeDockerComposeFile, nodeBddCommand } from "../runtimes/node/docker";
-import { pythonDockerComposeFile } from "../runtimes/python/docker";
+import { pythonBDDCommand, pythonDockerComposeFile } from "../runtimes/python/docker";
 import { webDockerComposeFile } from "../runtimes/web/docker";
 
 export type IService = any;
@@ -82,6 +82,15 @@ export class DockerManager {
         ...config.env,
       },
       working_dir: "/workspace",
+
+      volumes: [
+        `${process.cwd()}/src:/workspace/src`,
+        `${process.cwd()}/example:/workspace/example`,
+        `${process.cwd()}/dist:/workspace/dist`,
+        `${process.cwd()}/testeranto:/workspace/testeranto`,
+      ],
+
+
       command: command,
     }
 
@@ -135,7 +144,7 @@ export class DockerManager {
           services[tuid] =
             this.staticTestDockerComposeFile(config, runtime, tuid, checkCommand);
         }
-        
+
         // BDD test
         let bddCommand = '';
         if (runtime === 'node') {
@@ -146,10 +155,10 @@ export class DockerManager {
         } else if (runtime === 'golang') {
           bddCommand = 'echo "BDD command not implemented for golang"';
         } else if (runtime === 'python') {
-          bddCommand = 'echo "BDD command not implemented for python"';
+          bddCommand = pythonBDDCommand(0);  //'echo "BDD command not implemented for python"';
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
-        
+
         // Aider service (keep without command to use Dockerfile's CMD)
         services[`${uid}-aider`] = this.aiderDockerComposeFile(config, runtime, `${uid}-aider`);
       }
