@@ -96,7 +96,7 @@ export function activate(context: vscode.ExtensionContext): void {
         "testeranto.openFile",
         async (item: TestTreeItem) => {
             if (item.type === TreeItemType.File) {
-                const fileName = item.label;
+                const fileName = item.data?.fileName || item.label;
                 const uri = vscode.Uri.file(fileName);
                 try {
                     const doc = await vscode.workspace.openTextDocument(uri);
