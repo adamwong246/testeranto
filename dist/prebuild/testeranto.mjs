@@ -356,7 +356,230 @@ ${x}
 };
 
 // src/server/serverClasees/Server_WS.ts
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocket, WebSocketServer } from "ws";
+
+// src/server/serverManagers/WsManager.ts
+var WsManager = class {
+  constructor() {
+  }
+  escapeXml(unsafe) {
+    if (!unsafe) return "";
+    return unsafe.replace(/[<>&'"]/g, (c) => {
+      switch (c) {
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case "&":
+          return "&amp;";
+        case "'":
+          return "&apos;";
+        case '"':
+          return "&quot;";
+        default:
+          return c;
+      }
+    });
+  }
+  // Process message and return response data
+  processMessage(type, data, getProcessSummary, getProcessLogs) {
+    console.log("[WsManager] Processing message:", type);
+    switch (type) {
+      case "ping":
+        return {
+          type: "pong",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+      case "getProcesses":
+        if (getProcessSummary) {
+          const summary = getProcessSummary();
+          return {
+            type: "processes",
+            data: summary,
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        } else {
+          return {
+            type: "processes",
+            data: { processes: [], totalProcesses: 0, running: 0 },
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        }
+      case "getLogs":
+        const { processId } = data || {};
+        if (!processId) {
+          return {
+            type: "logs",
+            status: "error",
+            message: "Missing processId",
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        }
+        if (getProcessLogs) {
+          const logs = getProcessLogs(processId);
+          return {
+            type: "logs",
+            processId,
+            logs: logs.map((log) => {
+              let level = "info";
+              let source = "process";
+              let message = log;
+              const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
+              if (match) {
+                const timestamp = match[1];
+                source = match[2];
+                message = match[3];
+                if (source === "stderr" || source === "error") {
+                  level = "error";
+                } else if (source === "warn") {
+                  level = "warn";
+                } else if (source === "debug") {
+                  level = "debug";
+                } else {
+                  level = "info";
+                }
+              }
+              return {
+                timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                level,
+                message,
+                source
+              };
+            }),
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        } else {
+          return {
+            type: "logs",
+            processId,
+            logs: [],
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        }
+      case "subscribeToLogs":
+        const { processId: subProcessId } = data || {};
+        if (!subProcessId) {
+          return {
+            type: "logSubscription",
+            status: "error",
+            message: "Missing processId",
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        }
+        return {
+          type: "logSubscription",
+          status: "subscribed",
+          processId: subProcessId,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+      case "sourceFilesUpdated":
+        const { testName, hash, files, runtime } = data || {};
+        if (!testName || !hash || !files || !runtime) {
+          return {
+            type: "sourceFilesUpdated",
+            status: "error",
+            message: "Missing required fields: testName, hash, files, or runtime",
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          };
+        }
+        return {
+          type: "sourceFilesUpdated",
+          status: "success",
+          testName,
+          runtime,
+          message: "Build update processed successfully",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+      case "getBuildListenerState":
+        return {
+          type: "buildListenerState",
+          status: "error",
+          message: "Build listener state not available",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+      case "getBuildEvents":
+        return {
+          type: "buildEvents",
+          status: "error",
+          message: "Build events not available",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+      default:
+        return {
+          type: "error",
+          message: `Unknown message type: ${type}`,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+    }
+  }
+  // Helper methods for specific message types
+  getProcessesResponse(processSummary) {
+    return {
+      type: "processes",
+      data: processSummary,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+  getLogsResponse(processId, logs) {
+    return {
+      type: "logs",
+      processId,
+      logs: logs.map((log) => {
+        let level = "info";
+        let source = "process";
+        let message = log;
+        const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
+        if (match) {
+          const timestamp = match[1];
+          source = match[2];
+          message = match[3];
+          if (source === "stderr" || source === "error") {
+            level = "error";
+          } else if (source === "warn") {
+            level = "warn";
+          } else if (source === "debug") {
+            level = "debug";
+          } else {
+            level = "info";
+          }
+        }
+        return {
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          level,
+          message,
+          source
+        };
+      }),
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+  getSourceFilesUpdatedResponse(testName, runtime, status, message) {
+    return {
+      type: "sourceFilesUpdated",
+      status,
+      testName,
+      runtime,
+      message: message || "Build update processed successfully",
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+  getErrorResponse(type, errorMessage) {
+    return {
+      type,
+      status: "error",
+      message: errorMessage,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+  getSuccessResponse(type, data) {
+    return {
+      type,
+      status: "success",
+      data,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+};
 
 // src/server/serverClasees/Server_HTTP.ts
 import fs from "fs";
@@ -662,229 +885,6 @@ var Server_HTTP = class extends Server_Base {
   }
 };
 
-// src/server/serverManagers/WsManager.ts
-var WsManager = class {
-  constructor() {
-  }
-  escapeXml(unsafe) {
-    if (!unsafe) return "";
-    return unsafe.replace(/[<>&'"]/g, (c) => {
-      switch (c) {
-        case "<":
-          return "&lt;";
-        case ">":
-          return "&gt;";
-        case "&":
-          return "&amp;";
-        case "'":
-          return "&apos;";
-        case '"':
-          return "&quot;";
-        default:
-          return c;
-      }
-    });
-  }
-  // Process message and return response data
-  processMessage(type, data, getProcessSummary, getProcessLogs) {
-    console.log("[WsManager] Processing message:", type);
-    switch (type) {
-      case "ping":
-        return {
-          type: "pong",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-      case "getProcesses":
-        if (getProcessSummary) {
-          const summary = getProcessSummary();
-          return {
-            type: "processes",
-            data: summary,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        } else {
-          return {
-            type: "processes",
-            data: { processes: [], totalProcesses: 0, running: 0 },
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        }
-      case "getLogs":
-        const { processId } = data || {};
-        if (!processId) {
-          return {
-            type: "logs",
-            status: "error",
-            message: "Missing processId",
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        }
-        if (getProcessLogs) {
-          const logs = getProcessLogs(processId);
-          return {
-            type: "logs",
-            processId,
-            logs: logs.map((log) => {
-              let level = "info";
-              let source = "process";
-              let message = log;
-              const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
-              if (match) {
-                const timestamp = match[1];
-                source = match[2];
-                message = match[3];
-                if (source === "stderr" || source === "error") {
-                  level = "error";
-                } else if (source === "warn") {
-                  level = "warn";
-                } else if (source === "debug") {
-                  level = "debug";
-                } else {
-                  level = "info";
-                }
-              }
-              return {
-                timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                level,
-                message,
-                source
-              };
-            }),
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        } else {
-          return {
-            type: "logs",
-            processId,
-            logs: [],
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        }
-      case "subscribeToLogs":
-        const { processId: subProcessId } = data || {};
-        if (!subProcessId) {
-          return {
-            type: "logSubscription",
-            status: "error",
-            message: "Missing processId",
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        }
-        return {
-          type: "logSubscription",
-          status: "subscribed",
-          processId: subProcessId,
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-      case "sourceFilesUpdated":
-        const { testName, hash, files, runtime } = data || {};
-        if (!testName || !hash || !files || !runtime) {
-          return {
-            type: "sourceFilesUpdated",
-            status: "error",
-            message: "Missing required fields: testName, hash, files, or runtime",
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          };
-        }
-        return {
-          type: "sourceFilesUpdated",
-          status: "success",
-          testName,
-          runtime,
-          message: "Build update processed successfully",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-      case "getBuildListenerState":
-        return {
-          type: "buildListenerState",
-          status: "error",
-          message: "Build listener state not available",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-      case "getBuildEvents":
-        return {
-          type: "buildEvents",
-          status: "error",
-          message: "Build events not available",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-      default:
-        return {
-          type: "error",
-          message: `Unknown message type: ${type}`,
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-    }
-  }
-  // Helper methods for specific message types
-  getProcessesResponse(processSummary) {
-    return {
-      type: "processes",
-      data: processSummary,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    };
-  }
-  getLogsResponse(processId, logs) {
-    return {
-      type: "logs",
-      processId,
-      logs: logs.map((log) => {
-        let level = "info";
-        let source = "process";
-        let message = log;
-        const match = log.match(/\[(.*?)\] \[(.*?)\] (.*)/);
-        if (match) {
-          const timestamp = match[1];
-          source = match[2];
-          message = match[3];
-          if (source === "stderr" || source === "error") {
-            level = "error";
-          } else if (source === "warn") {
-            level = "warn";
-          } else if (source === "debug") {
-            level = "debug";
-          } else {
-            level = "info";
-          }
-        }
-        return {
-          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          level,
-          message,
-          source
-        };
-      }),
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    };
-  }
-  getSourceFilesUpdatedResponse(testName, runtime, status, message) {
-    return {
-      type: "sourceFilesUpdated",
-      status,
-      testName,
-      runtime,
-      message: message || "Build update processed successfully",
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    };
-  }
-  getErrorResponse(type, errorMessage) {
-    return {
-      type,
-      status: "error",
-      message: errorMessage,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    };
-  }
-  getSuccessResponse(type, data) {
-    return {
-      type,
-      status: "success",
-      data,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    };
-  }
-};
-
 // src/server/serverClasees/Server_WS.ts
 var Server_WS = class extends Server_HTTP {
   constructor(configs, name, mode2) {
@@ -1168,6 +1168,27 @@ var Server_Docker = class extends Server_WS {
     }
     console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
     await this.waitForContainerHealthy("browser-allTests", 6e4);
+    for (const runtime of runtimes) {
+      let ext = "";
+      if (runtime === "node") {
+        ext = "ts";
+      } else if (runtime === "web") {
+        ext = "ts";
+      } else if (runtime === "golang") {
+        ext = "go";
+      } else if (runtime === "python") {
+        ext = "py";
+      } else if (runtime === "ruby") {
+        ext = "rb";
+      }
+      const aiderServiceName = `${runtime}-example_calculator-test-${ext}-aider`;
+      console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
+      try {
+        await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
+      } catch (error) {
+        console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
+      }
+    }
     for (const runtime of runtimes) {
       const tests = this.configs[runtime]?.tests;
       if (!tests) continue;

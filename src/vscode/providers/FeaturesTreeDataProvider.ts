@@ -2,6 +2,23 @@
 // It first breaksdown matching the file structure.
 // tests.json are further broken done via given-when-then
 // features are also spread into the tree
+// example: "testeranto/reports/allTests/example/node.Calculator.test.ts.json"
+// the tree should spread to "example/Calculator.test.ts"
+// then the json file is spread from there
+//  • example(folder)
+//     • Calculator.test.ts(file)
+//        • node(runtime - specific results)
+//           • Overall status
+//           • Features
+//           • Test Scenarios
+//              • Scenario 1: ...
+//                 • GIVEN: ...
+//                 • Features
+//                 • WHEN Steps
+//                 • THEN Assertions
+//        • python(runtime - specific results)
+//           • ...
+
 import * as vscode from 'vscode';
 import { TestTreeItem } from '../TestTreeItem';
 import { TreeItemType, TreeItemData } from '../types';
@@ -47,19 +64,10 @@ export class FeaturesTreeDataProvider implements vscode.TreeDataProvider<TestTre
         } else {
             const data = element.data;
             if (data?.sourcePath) {
-                // Check if this is a file or directory
-                // If it's a file (test result JSON), show test results
-                // If it's a directory, show its children
-                if (data.isFile === true) {
-                    // This is a test file, show test results
-                    return Promise.resolve(this.getTestResults(data.testFile));
-                } else {
-                    // This is a directory, show its children
-                    return Promise.resolve(this.getSourceChildren(data.sourcePath));
-                }
+                // Always get children for the source path
+                return Promise.resolve(this.getSourceChildren(data.sourcePath));
             } else if (data?.testFile && data.testResultIndex === undefined) {
                 // This handles the case when we're showing test results
-                // But we already handle this above
                 return Promise.resolve(this.getTestResults(data.testFile));
             } else if (data?.testResultIndex !== undefined) {
                 return Promise.resolve(this.getTestDetails(data.testFile, data.testResultIndex));
@@ -104,35 +112,34 @@ export class FeaturesTreeDataProvider implements vscode.TreeDataProvider<TestTre
         }
 
         // Build a tree structure based on file paths
+        // First level: 'example' directory
         const treeRoot: any = { name: '', children: new Map(), fullPath: '', isFile: false };
 
+        // Add 'example' node
+        const exampleNode = {
+            name: 'example',
+            children: new Map(),
+            fullPath: 'example',
+            isFile: false
+        };
+        treeRoot.children.set('example', exampleNode);
+
         for (const file of files) {
-            // Create a path-like structure: runtime/testName.json
-            // Extract runtime from filename (e.g., "node.Calculator.test.ts.json" -> "node")
-            const match = file.match(/^(\w+)\.(.+)\.json$/);
+            // Extract test name from filename (e.g., "node.Calculator.test.ts.json" -> "Calculator.test.ts")
+            // Remove runtime prefix and .json extension
+            const match = file.match(/^\w+\.(.+)\.json$/);
             if (match) {
-                const runtime = match[1];
-                const testName = match[2];
+                const testFileName = match[1]; // e.g., "Calculator.test.ts"
 
-                // Build path: runtime/testName
-                const parts = [runtime, testName];
-                let currentNode = treeRoot;
-
-                for (let i = 0; i < parts.length; i++) {
-                    const part = parts[i];
-                    const isLast = i === parts.length - 1;
-
-                    if (!currentNode.children.has(part)) {
-                        currentNode.children.set(part, {
-                            name: part,
-                            children: new Map(),
-                            fullPath: parts.slice(0, i + 1).join('/'),
-                            isFile: isLast,
-                            // Store the actual filename for leaf nodes
-                            fileName: isLast ? file : undefined
-                        });
-                    }
-                    currentNode = currentNode.children.get(part);
+                // Add test file under 'example'
+                if (!exampleNode.children.has(testFileName)) {
+                    exampleNode.children.set(testFileName, {
+                        name: testFileName,
+                        children: new Map(),
+                        fullPath: `example/${testFileName}`,
+                        isFile: true,
+                        fileName: file
+                    });
                 }
             }
         }
@@ -185,48 +192,149 @@ export class FeaturesTreeDataProvider implements vscode.TreeDataProvider<TestTre
 
         // Get all JSON files in the results directory
         const files = fs.readdirSync(this.resultsDir).filter(file => file.endsWith('.json'));
-        
+
         // Split sourcePath into parts
         const parts = sourcePath.split('/').filter(p => p.length > 0);
-        
-        // If we're at the root level, show runtimes
+
+        // If we're at the root level, show 'example' directory
         if (parts.length === 0) {
-            // This shouldn't happen, but handle it
-            return [];
-        }
-        
-        // If we're at the runtime level (e.g., "node"), show test files for that runtime
-        if (parts.length === 1) {
-            const runtime = parts[0];
-            // Filter files for this runtime
-            const runtimeFiles = files.filter(file => {
-                const match = file.match(/^(\w+)\.(.+)\.json$/);
-                return match && match[1] === runtime;
-            });
-            
-            return runtimeFiles.map(file => {
-                const match = file.match(/^(\w+)\.(.+)\.json$/);
-                const testName = match ? match[2] : file;
-                
-                return new TestTreeItem(
-                    testName,
+            return [
+                new TestTreeItem(
+                    'example',
                     TreeItemType.File,
                     vscode.TreeItemCollapsibleState.Collapsed,
                     {
-                        sourcePath: `${runtime}/${testName}`,
-                        testFile: file,
-                        fileName: file
+                        sourcePath: 'example',
+                        isFile: false
                     },
                     undefined,
-                    new vscode.ThemeIcon("file-code")
-                );
-            });
+                    new vscode.ThemeIcon('folder')
+                )
+            ];
         }
-        
-        // If we're at the test file level (e.g., "node/Calculator.test.ts"), show test results
-        if (parts.length === 2) {
-            const runtime = parts[0];
+
+        // If we're at the 'example' level, show test files
+        if (parts.length === 1 && parts[0] === 'example') {
+            // Group files by test name (without runtime prefix)
+            const testFiles = new Map<string, string[]>(); // testName -> list of runtime files
+
+            for (const file of files) {
+                const match = file.match(/^(\w+)\.(.+)\.json$/);
+                if (match) {
+                    const runtime = match[1];
+                    const testName = match[2];
+
+                    if (!testFiles.has(testName)) {
+                        testFiles.set(testName, []);
+                    }
+                    testFiles.get(testName)!.push(file);
+                }
+            }
+
+            // Create test file items
+            const items: TestTreeItem[] = [];
+            for (const [testName, runtimeFiles] of testFiles) {
+                // Count passed/failed for this test across all runtimes
+                let passedCount = 0;
+                let failedCount = 0;
+
+                for (const file of runtimeFiles) {
+                    try {
+                        const filePath = path.join(this.resultsDir, file);
+                        const content = fs.readFileSync(filePath, 'utf-8');
+                        const result = JSON.parse(content) as TestResult;
+                        if (result.status === true || result.failed === false) {
+                            passedCount++;
+                        } else {
+                            failedCount++;
+                        }
+                    } catch {
+                        // Skip if can't parse
+                    }
+                }
+
+                const total = runtimeFiles.length;
+                const description = `${passedCount} passed, ${failedCount} failed`;
+
+                items.push(
+                    new TestTreeItem(
+                        testName,
+                        TreeItemType.File,
+                        vscode.TreeItemCollapsibleState.Collapsed,
+                        {
+                            sourcePath: `example/${testName}`,
+                            testName: testName,
+                            isFile: true,
+                            description: description
+                        },
+                        undefined,
+                        failedCount === 0 ?
+                            new vscode.ThemeIcon('file-code', new vscode.ThemeColor('testing.iconPassed')) :
+                            new vscode.ThemeIcon('file-code', new vscode.ThemeColor('testing.iconFailed'))
+                    )
+                );
+            }
+
+            return items.sort((a, b) => a.label!.localeCompare(b.label!));
+        }
+
+        // If we're at the test file level (e.g., "example/Calculator.test.ts"), show runtime-specific results
+        if (parts.length === 2 && parts[0] === 'example') {
             const testName = parts[1];
+
+            // Find all runtime files for this test
+            const runtimeFiles = files.filter(file => {
+                const match = file.match(/^(\w+)\.(.+)\.json$/);
+                return match && match[2] === testName;
+            });
+
+            return runtimeFiles.map(file => {
+                const match = file.match(/^(\w+)\.(.+)\.json$/);
+                const runtime = match ? match[1] : 'unknown';
+
+                // Read the file to get status
+                let icon = new vscode.ThemeIcon('file-code');
+                let description = '';
+
+                try {
+                    const filePath = path.join(this.resultsDir, file);
+                    const content = fs.readFileSync(filePath, 'utf-8');
+                    const result = JSON.parse(content) as TestResult;
+
+                    if (result.status === true || result.failed === false) {
+                        icon = new vscode.ThemeIcon('check', new vscode.ThemeColor('testing.iconPassed'));
+                        description = 'PASSED';
+                    } else {
+                        icon = new vscode.ThemeIcon('error', new vscode.ThemeColor('testing.iconFailed'));
+                        description = `FAILED: ${result.fails || 0} failures`;
+                    }
+                } catch {
+                    description = 'Error reading file';
+                    icon = new vscode.ThemeIcon('warning');
+                }
+
+                return new TestTreeItem(
+                    runtime,
+                    TreeItemType.File,
+                    vscode.TreeItemCollapsibleState.Collapsed,
+                    {
+                        sourcePath: `example/${testName}/${runtime}`,
+                        testFile: file,
+                        fileName: file,
+                        isFile: true,
+                        description: description
+                    },
+                    undefined,
+                    icon
+                );
+            }).sort((a, b) => a.label!.localeCompare(b.label!));
+        }
+
+        // If we're at the runtime level under a test file (e.g., "example/Calculator.test.ts/node"), show test results
+        if (parts.length === 3 && parts[0] === 'example') {
+            const testName = parts[1];
+            const runtime = parts[2];
+
             // Find the actual file
             const fileName = `${runtime}.${testName}.json`;
             if (files.includes(fileName)) {
@@ -234,7 +342,7 @@ export class FeaturesTreeDataProvider implements vscode.TreeDataProvider<TestTre
                 return this.getTestResults(fileName);
             }
         }
-        
+
         return [];
     }
 

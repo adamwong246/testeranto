@@ -74,16 +74,30 @@ export class Server_Docker extends Server_WS {
     console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
     await this.waitForContainerHealthy('browser-allTests', 60000); // 60 seconds max
 
-    // // Start aider services
-    // for (const runtime of runtimes) {
-    //   const aiderServiceName = `${runtime}-aider`;
-    //   console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
-    //   try {
-    //     await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
-    //   } catch (error: any) {
-    //     console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
-    //   }
-    // }
+    // Start aider services
+    for (const runtime of runtimes) {
+
+      let ext = "";
+      if (runtime === "node") {
+        ext = "ts";
+      } else if (runtime === "web") {
+        ext = "ts"
+      } else if (runtime === "golang") {
+        ext = "go"
+      } else if (runtime === "python") {
+        ext = "py"
+      } else if (runtime === "ruby") {
+        ext = "rb"
+      }
+      const aiderServiceName = `${runtime}-example_calculator-test-${ext}-aider`; //`${runtime}-aider`;
+
+      console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
+      try {
+        await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
+      } catch (error: any) {
+        console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
+      }
+    }
 
     // Start BDD test services
     for (const runtime of runtimes) {
@@ -430,11 +444,11 @@ export class Server_Docker extends Server_WS {
 
   public getProcessSummary(): any {
     console.log(`[Server_Docker] getProcessSummary called`);
-    
+
     try {
       // Use execSync to get docker ps output with more details
       const output = execSync('docker ps --format "{{.Names}}|{{.Image}}|{{.Status}}|{{.Ports}}|{{.State}}|{{.Command}}"').toString();
-      
+
       const processes = output.trim().split('\n').filter(line => line.trim()).map(line => {
         const parts = line.split('|');
         const [name, image, status, ports, state, command] = parts;
@@ -451,7 +465,7 @@ export class Server_Docker extends Server_WS {
           health: 'unknown' // We could add health check status here
         };
       });
-      
+
       return {
         processes: processes,
         total: processes.length,
