@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Python test bundle for: example/Calculator.pitono.test.py
-Hash: 653d78d79bb435ab2159a5d42498be18
+Hash: 2599c3f508cf88e7c0a2665888b59203
 This bundle directly executes the original test file.
 """
 import sys
@@ -9,7 +9,7 @@ import os
 import runpy
 
 # Cache invalidation hash
-BUNDLE_HASH = "653d78d79bb435ab2159a5d42498be18"
+BUNDLE_HASH = "2599c3f508cf88e7c0a2665888b59203"
 
 def main():
     # Get the absolute path to the original test file

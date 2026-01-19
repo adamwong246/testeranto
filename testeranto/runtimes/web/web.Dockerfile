@@ -11,6 +11,10 @@ RUN apk add --no-cache \
     freetype \
     harfbuzz \
     ttf-freefont \
-    python3 make g++ libxml2-utils
+    python3 make g++ libxml2-utils \
+    net-tools curl
 
 RUN yarn install
+
+# Expose port for Chrome remote debugging
+EXPOSE 9222

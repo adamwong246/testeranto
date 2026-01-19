@@ -1,8 +1,0 @@
-[
-  "example/Calculator.go",
-  "example/Calculator.golingvu.implementation.go",
-  "example/Calculator.golingvu.specification.go",
-  "example/Calculator.golingvu.test.go",
-  "example/go.mod",
-  "example/go.sum"
-]

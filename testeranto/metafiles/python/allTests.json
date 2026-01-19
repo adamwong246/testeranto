@@ -4,7 +4,7 @@
   "metafile": {
     "inputs": {
       "example/Calculator.pitono.test.py": {
-        "bytes": 5217,
+        "bytes": 3916,
         "imports": [
           {
             "path": "sys",
@@ -57,7 +57,7 @@
             "external": true
           }
         ],
-        "hash": "5f0a4417e886f4d6016c2d27faa2816a"
+        "hash": "4b5f9987534d2dc8fca026db274d7ba2"
       },
       "example/Calculator.py": {
         "bytes": 3550,
@@ -72,19 +72,19 @@
         "entryPoint": "example/Calculator.pitono.test.py",
         "inputs": {
           "example/Calculator.pitono.test.py": {
-            "bytesInOutput": 5217,
-            "hash": "5f0a4417e886f4d6016c2d27faa2816a"
+            "bytesInOutput": 3916,
+            "hash": "4b5f9987534d2dc8fca026db274d7ba2"
           },
           "example/Calculator.py": {
             "bytesInOutput": 3550,
             "hash": "8d2bc5521bf8e1f1a81502c94cf6bc8b"
           }
         },
-        "bytes": 8767,
-        "signature": "efea5ad5342bec63913ae484f4c9bbcd",
+        "bytes": 7466,
+        "signature": "09efc349b487d141a5b91dbc197b7a6d",
         "bundlePath": "/workspace/testeranto/bundles/allTests/python/example/Calculator.pitono.test.py-inputFiles.json",
         "bundleSize": 70,
-        "combinedHash": "efea5ad5342bec63913ae484f4c9bbcd",
+        "combinedHash": "09efc349b487d141a5b91dbc197b7a6d",
         "inputFiles": [
           "example/Calculator.pitono.test.py",
           "example/Calculator.py"

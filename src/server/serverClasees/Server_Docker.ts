@@ -46,11 +46,8 @@ export class Server_Docker extends Server_WS {
       console.error(`[Server_Docker] Failed to create base reports directory ${baseReportsDir}: ${error.message}`);
     }
 
-    // Aggressively clean up everything before starting
-    ///////////////////////////////////////////
-    console.log(`[Server_Docker] Dropping everything...`);
 
-    // 1. Stop and remove all containers, networks, and volumes defined in the compose file
+    console.log(`[Server_Docker] Dropping everything...`);
     try {
       const downCmd = `docker compose -f "${this.dockerManager.composeFile}" down -v --remove-orphans`;
       console.log(`[Server_Docker] Running: ${downCmd}`);
@@ -59,42 +56,6 @@ export class Server_Docker extends Server_WS {
     } catch (error: any) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
-
-    // 2. Remove any container that might have been created outside docker compose
-    // but has a name matching our project pattern
-    try {
-      // Get all container names
-      const listCmd = `docker ps -a --format "{{.Names}}"`;
-      const execAsync = promisify(exec);
-      const { stdout } = await execAsync(listCmd, { cwd: this.dockerManager.cwd });
-      const containerNames = stdout.trim().split('\n').filter(name => name.trim());
-
-      // Remove containers that contain our project name or test patterns
-      for (const name of containerNames) {
-        if (name.includes(this.projectName) || name.includes('example/Calculator')) {
-          console.log(`[Server_Docker] Removing stray container: ${name}`);
-          try {
-            await this.spawnPromise(`docker rm -f ${name}`);
-          } catch (rmError) {
-            console.log(`[Server_Docker] Could not remove container ${name}: ${rmError.message}`);
-          }
-        }
-      }
-    } catch (error: any) {
-      console.log(`[Server_Docker] Stray container cleanup noted: ${error.message}`);
-    }
-
-    // 3. Remove any network that might be left over
-    try {
-      const networkName = "allTests_network";
-      await this.spawnPromise(`docker network rm ${networkName} 2>/dev/null || true`);
-    } catch (error: any) {
-      // Ignore errors
-    }
-    ///////////////////////////////////////////
-
-    // Runtime files from testeranto/runtimes/ are copied into builder images via Dockerfile
-    // This includes node.js, web.js, golang.go, and python.py configuration files
 
     const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
 
@@ -109,6 +70,18 @@ export class Server_Docker extends Server_WS {
       }
     }
 
+    // Start browser service
+    console.log(`[Server_Docker] Starting browser service...`);
+    try {
+      await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d browser`);
+    } catch (error: any) {
+      console.error(`[Server_Docker] Failed to start browser service: ${error.message}`);
+    }
+
+    // Wait for browser service to be healthy before starting web BDD services
+    console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
+    await this.waitForContainerHealthy('browser-allTests', 60000); // 60 seconds max
+
     // Start aider services
     for (const runtime of runtimes) {
       const aiderServiceName = `${runtime}-aider`;
@@ -120,8 +93,6 @@ export class Server_Docker extends Server_WS {
       }
     }
 
-
-
     // Start BDD test services
     for (const runtime of runtimes) {
       const tests = this.configs[runtime]?.tests;
@@ -130,23 +101,6 @@ export class Server_Docker extends Server_WS {
       for (const testName in tests) {
         const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
         const bddServiceName = `${uid}-bdd`;
-
-        // Create directory in pattern that matches where the BDD service writes:
-        // testeranto/reports/allTests/{testName}/{runtime}/tests.json
-        // Based on error: testeranto/reports/allTests/example/Calculator.test/node/tests.json
-        // So testName is "example/Calculator.test", runtime is "node"
-        // We need to create directory up to {testName}/{runtime}
-        const testNameParts = testName.split('/');
-        // The testName may or may not have .ts extension, but the BDD service uses it as-is
-        // Create the full directory path
-        // const reportDir = path.join(
-        //   process.cwd(),
-        //   "testeranto",
-        //   "reports",
-        //   "allTests",
-        //   runtime,
-        //   ...testNameParts,
-        // );
 
         const reportDir = "testeranto/reports/allTests/example/"
 
@@ -185,6 +139,41 @@ export class Server_Docker extends Server_WS {
         }
       }
     }
+  }
+
+  private async waitForContainerHealthy(containerName: string, timeoutMs: number): Promise<void> {
+    const startTime = Date.now();
+    const checkInterval = 2000; // Check every 2 seconds
+
+    // while (Date.now() - startTime < timeoutMs) {
+    //   try {
+    //     // Use docker inspect to check container health status
+    //     const cmd = `docker inspect --format="{{.State.Health.Status}}" ${containerName}`;
+    //     const { exec } = require('child_process');
+    //     const { promisify } = require('util');
+    //     const execAsync = promisify(exec);
+
+    //     const { stdout, stderr } = await execAsync(cmd);
+    //     const healthStatus = stdout.trim();
+
+    //     if (healthStatus === 'healthy') {
+    //       console.log(`[Server_Docker] Container ${containerName} is healthy`);
+    //       return;
+    //     } else if (healthStatus === 'unhealthy') {
+    //       throw new Error(`Container ${containerName} is unhealthy`);
+    //     } else {
+    //       console.log(`[Server_Docker] Container ${containerName} health status: ${healthStatus}`);
+    //     }
+    //   } catch (error: any) {
+    //     // Container might not exist yet or command failed
+    //     console.log(`[Server_Docker] Waiting for container ${containerName} to be healthy...`);
+    //   }
+
+    //   // Wait before checking again
+    //   await new Promise(resolve => setTimeout(resolve, checkInterval));
+    // }
+
+    // throw new Error(`Timeout waiting for container ${containerName} to become healthy`);
   }
 
 

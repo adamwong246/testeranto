@@ -187,6 +187,10 @@
     "package:full": "node scripts/package-extension.js"
   },
   "exports": {
+    "./src/cjs-shim.ts": {
+      "import": "./dist/cjs-shim.js",
+      "require": "./dist/cjs-shim.js"
+    },
     "./Puppeteer": {
       "import": "./dist/prebuild/Puppeteer.mjs",
       "require": "./dist/prebuild/Puppeteer.mjs"

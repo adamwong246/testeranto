@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/adamwong246/testeranto/src/golingvu"
+	calculatorlib "example/goLib"
 )
 
 // Implementation for Calculator tests
@@ -245,7 +246,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 			return &golingvu.BaseWhen{
 				Key: "press",
 				WhenCB: func(store, testResource, pm interface{}) (interface{}, error) {
-					if calc, ok := store.(*Calculator); ok {
+					if calc, ok := store.(*calculatorlib.Calculator); ok {
 						calc.Press(button)
 						return calc, nil
 					}
@@ -257,7 +258,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 			return &golingvu.BaseWhen{
 				Key: "enter",
 				WhenCB: func(store, testResource, pm interface{}) (interface{}, error) {
-					if calc, ok := store.(*Calculator); ok {
+					if calc, ok := store.(*calculatorlib.Calculator); ok {
 						calc.Enter()
 						return calc, nil
 					}
@@ -273,7 +274,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 			return &golingvu.BaseThen{
 				Key: "result",
 				ThenCB: func(store, testResource, pm interface{}) (interface{}, error) {
-					if calc, ok := store.(*Calculator); ok {
+					if calc, ok := store.(*calculatorlib.Calculator); ok {
 						actual := calc.GetDisplay()
 						if actual != expected {
 							return nil, fmt.Errorf("expected %s, got %s", expected, actual)
@@ -293,42 +294,3 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 		Thens:  impl.ThensMap,
 	}
 }
-
-// // CalculatorSpecification defines the test specification
-// func CalculatorSpecification(suites, givens, whens, thens interface{}) interface{} {
-// 	suite := suites.(map[string]interface{})["CalculatorSuite"].(func(string, map[string]*golingvu.BaseGiven) *golingvu.BaseSuite)
-
-// 	// Create the when and then functions
-// 	press := whens.(map[string]interface{})["press"].(func(interface{}) *golingvu.BaseWhen)
-// 	enter := whens.(map[string]interface{})["enter"].(func(interface{}) *golingvu.BaseWhen)
-// 	result := thens.(map[string]interface{})["result"].(func(interface{}) *golingvu.BaseThen)
-
-// 	// Create the test suite
-// 	return []interface{}{
-// 		suite("Testing Calculator operations", map[string]*golingvu.BaseGiven{
-// 			"testEmptyDisplay": givens.(map[string]interface{})["testEmptyDisplay"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)(
-// 				"testEmptyDisplay",
-// 				[]string{"pressing nothing, the display is empty"},
-// 				[]*golingvu.BaseWhen{},
-// 				[]*golingvu.BaseThen{
-// 					result(""),
-// 				},
-// 				nil,
-// 				nil,
-// 			),
-// 			"testSingleDigit": givens.(map[string]interface{})["testSingleDigit"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)(
-// 				"testSingleDigit",
-// 				[]string{"entering a number puts it on the display"},
-// 				[]*golingvu.BaseWhen{
-// 					press("2"),
-// 				},
-// 				[]*golingvu.BaseThen{
-// 					result("2"),
-// 				},
-// 				nil,
-// 				nil,
-// 			),
-// 			// Add more test cases here following the same pattern
-// 		}),
-// 	}
-// }

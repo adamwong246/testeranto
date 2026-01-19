@@ -12,6 +12,7 @@ await esbuild.build({
     'src/server/runtimes/node/node.ts',
     'src/server/runtimes/web/web.ts',
     'src/testeranto.ts',
+    'src/server/runtimes/web/hoist.ts'
   ],
   bundle: true,
   format: "esm",

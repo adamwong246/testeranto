@@ -17,26 +17,29 @@ var golangDockerComposeFile = (config, projectName) => {
   return {
     build: {
       context: process.cwd(),
-      // Use the project root as build context
       dockerfile: config.golang.dockerfile
     },
     container_name: `golang-builder-${projectName}`,
     environment: {
+      NODE_ENV: "production",
       ...config.env
     },
     working_dir: "/workspace",
     volumes: [
-      `${process.cwd()}:/workspace`
+      `${process.cwd()}/src:/workspace/src`,
+      `${process.cwd()}/example:/workspace/example`,
+      `${process.cwd()}/dist:/workspace/dist`,
+      `${process.cwd()}/testeranto:/workspace/testeranto`
     ],
     command: golangBuildCommand()
   };
 };
 var golangBuildCommand = () => {
-  return `sh -c 'echo "GOLANG BUILDER STARTING"; cd /workspace && echo "Running main.go directly with go run..."; go run src/server/runtimes/golang/main.go 2>&1'`;
+  return "go run src/server/runtimes/golang/main.go";
 };
 var golangBddCommand = () => {
   const jsonStr = JSON.stringify({ ports: [1111] });
-  return `go run example/Calculator.golingvu.test.go '${jsonStr}'`;
+  return `go run example/cmd/calculator-test`;
 };
 
 // src/server/runtimes/node/docker.ts
@@ -100,7 +103,7 @@ var pythonBDDCommand = (port) => {
 
 // src/server/runtimes/web/docker.ts
 var webDockerComposeFile = (config, projectName) => {
-  return {
+  const service = {
     build: {
       context: process.cwd(),
       dockerfile: config.web.dockerfile
@@ -108,6 +111,8 @@ var webDockerComposeFile = (config, projectName) => {
     container_name: `web-builder-${projectName}`,
     environment: {
       NODE_ENV: "production",
+      DOCKER_ENV: "true",
+      // CHROME_HOST: `web-builder`,
       ...config.env
     },
     working_dir: "/workspace",
@@ -117,11 +122,19 @@ var webDockerComposeFile = (config, projectName) => {
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`
     ],
-    command: webBuildCommand(config.httpPort || 3456)
+    // Expose port 9222 for Chrome DevTools Protocol
+    // This allows other containers to connect to Chrome
+    // Use 'expose' to make the port available to linked containers
+    // and 'ports' to also expose to the host for debugging
+    command: webBuildCommand()
   };
+  return service;
 };
-var webBuildCommand = (port) => {
-  return `yarn tsx src/server/runtimes/web/web.ts /workspace/testeranto/runtimes/web/web.js`;
+var webBuildCommand = () => {
+  return `yarn tsx src/server/runtimes/web/web.ts testeranto/runtimes/web/web.js`;
+};
+var webBddCommand = () => {
+  return `yarn tsx  src/server/runtimes/web/hoist.ts testeranto/bundles/allTests/web/example/Calculator.test.mjs`;
 };
 
 // src/server/serverManagers/DockerManager.ts
@@ -174,7 +187,7 @@ var DockerManager = class {
     };
   }
   bddTestDockerComposeFile(config, runtime, container_name, command) {
-    return {
+    const service = {
       build: {
         context: process.cwd(),
         dockerfile: `${config[runtime].dockerfile}`
@@ -191,8 +204,12 @@ var DockerManager = class {
         `${process.cwd()}/dist:/workspace/dist`,
         `${process.cwd()}/testeranto:/workspace/testeranto`
       ],
+      // ports: [
+      //   "9222:9222"
+      // ],
       command
     };
+    return service;
   }
   aiderDockerComposeFile(config, runtime, container_name) {
     return {
@@ -211,6 +228,28 @@ var DockerManager = class {
   }
   generateServices(config, runtimes) {
     const services = {};
+    services["browser"] = {
+      image: "browserless/chrome:latest",
+      container_name: "browser-allTests",
+      environment: {
+        CONNECTION_TIMEOUT: "60000",
+        MAX_CONCURRENT_SESSIONS: "10",
+        ENABLE_CORS: "true",
+        TOKEN: ""
+      },
+      ports: [
+        "3000:3000",
+        "9222:9222"
+      ],
+      networks: ["default"]
+      // healthcheck: {
+      //   test: ["CMD", "curl", "-f", "http://localhost:3000h"],
+      //   interval: "30s",
+      //   timeout: "10s",
+      //   retries: 3,
+      //   start_period: "40s"
+      // }
+    };
     for (const runtime of runtimes) {
       if (runtime === "node") {
         services[`${runtime}-builder`] = nodeDockerComposeFile(config, "allTests");
@@ -234,7 +273,7 @@ var DockerManager = class {
         if (runtime === "node") {
           bddCommand = nodeBddCommand(config.httpPort || 3456);
         } else if (runtime === "web") {
-          bddCommand = 'echo "BDD command not implemented for web"';
+          bddCommand = webBddCommand();
         } else if (runtime === "golang") {
           bddCommand = golangBddCommand();
         } else if (runtime === "python") {
@@ -245,8 +284,11 @@ var DockerManager = class {
       }
     }
     for (const serviceName in services) {
-      services[serviceName].networks = ["default"];
+      if (!services[serviceName].networks) {
+        services[serviceName].networks = ["default"];
+      }
     }
+    console.log(JSON.stringify(services, null, 2));
     return services;
   }
   autogenerateStamp(x) {
@@ -1077,29 +1119,6 @@ var Server_Docker = class extends Server_WS {
     } catch (error) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
-    try {
-      const listCmd = `docker ps -a --format "{{.Names}}"`;
-      const execAsync = promisify(exec);
-      const { stdout } = await execAsync(listCmd, { cwd: this.dockerManager.cwd });
-      const containerNames = stdout.trim().split("\n").filter((name) => name.trim());
-      for (const name of containerNames) {
-        if (name.includes(this.projectName) || name.includes("example/Calculator")) {
-          console.log(`[Server_Docker] Removing stray container: ${name}`);
-          try {
-            await this.spawnPromise(`docker rm -f ${name}`);
-          } catch (rmError) {
-            console.log(`[Server_Docker] Could not remove container ${name}: ${rmError.message}`);
-          }
-        }
-      }
-    } catch (error) {
-      console.log(`[Server_Docker] Stray container cleanup noted: ${error.message}`);
-    }
-    try {
-      const networkName = "allTests_network";
-      await this.spawnPromise(`docker network rm ${networkName} 2>/dev/null || true`);
-    } catch (error) {
-    }
     const runtimes = ["node", "web", "golang", "python"];
     for (const runtime of runtimes) {
       const serviceName = `${runtime}-builder`;
@@ -1110,6 +1129,14 @@ var Server_Docker = class extends Server_WS {
         console.error(`[Server_Docker] Failed to start ${serviceName}: ${error.message}`);
       }
     }
+    console.log(`[Server_Docker] Starting browser service...`);
+    try {
+      await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d browser`);
+    } catch (error) {
+      console.error(`[Server_Docker] Failed to start browser service: ${error.message}`);
+    }
+    console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
+    await this.waitForContainerHealthy("browser-allTests", 6e4);
     for (const runtime of runtimes) {
       const aiderServiceName = `${runtime}-aider`;
       console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
@@ -1125,7 +1152,6 @@ var Server_Docker = class extends Server_WS {
       for (const testName in tests) {
         const uid = `${runtime}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
         const bddServiceName = `${uid}-bdd`;
-        const testNameParts = testName.split("/");
         const reportDir = "testeranto/reports/allTests/example/";
         try {
           fs2.mkdirSync(reportDir, { recursive: true });
@@ -1158,6 +1184,10 @@ var Server_Docker = class extends Server_WS {
         }
       }
     }
+  }
+  async waitForContainerHealthy(containerName, timeoutMs) {
+    const startTime = Date.now();
+    const checkInterval = 2e3;
   }
   async stop() {
     console.log(`[Server_Docker] stop()`);

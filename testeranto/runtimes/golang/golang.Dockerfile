@@ -1,4 +1,5 @@
 FROM golang:1.22
-WORKDIR /workspace/example
+WORKDIR /workspace
 
-RUN go mod download
+# RUN go mod download && go mod tidy
+RUN ls -al; 

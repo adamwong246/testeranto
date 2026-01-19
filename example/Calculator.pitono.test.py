@@ -84,42 +84,12 @@ except Exception as e:
 if __name__ == "__main__":
     print("Starting Calculator tests...")
     
-    # Check if we're being run with test resource configuration
-    # This is typically provided by the test runner
     if len(sys.argv) >= 3:
-        # Run with provided arguments (test resource config and IPC file)
-        print(f"Running with arguments: {sys.argv[1:]}")
         asyncio.run(main())
     else:
         # Run in standalone mode for debugging
         print("Running in standalone mode...")
-        
-        # # Create a simple test resource configuration
-        # test_resource_config = {
-        #     "name": "local-test",
-        #     "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py",
-        #     "ports": [8080],
-        #     "browser_ws_endpoint": None,
-        #     "timeout": 30000,
-        #     "retries": 0,
-        #     "environment": {}
-        # }
-        
-        # # Ensure the directory exists
-        # os.makedirs(test_resource_config["fs"], exist_ok=True)
-        
-        # # Create a simple IPC file path
-        # ipc_file = os.path.join(test_resource_config["fs"], "ipc.txt")
-        
-        # # Write the test resource config to a file
-        # import json
-        # config_file = os.path.join(test_resource_config["fs"], "config.json")
-        # with open(config_file, 'w') as f:
-        #     json.dump(test_resource_config, f)
-        
-        # Run the test with the configuration
-        # The main() function expects sys.argv[1] to be the partialTestResource (a string)
-        
+
         # Create a simple test resource configuration
         test_resource_config = {
             "name": "local-test",

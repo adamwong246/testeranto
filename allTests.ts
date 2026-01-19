@@ -11,9 +11,9 @@ const config: ITestconfig = {
   ports: ["3333", "3334"],
   src: "",
 
-  golang: createLangConfig("example/Calculator.golingvu.test.go", [
-    (x) => `cd /workspace/example && golangci-lint run }`,
-  ], `golang.Dockerfile`
+  golang: createLangConfig("example/cmd/calculator-test/main.go", [
+    (x) => `golangci-lint run }`,
+  ], `testeranto/runtimes/golang/golang.Dockerfile`
   ),
 
   python: createLangConfig("example/Calculator.pitono.test.py", [

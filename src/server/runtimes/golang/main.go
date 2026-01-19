@@ -10,25 +10,24 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
 // Package struct maps the fields we need from 'go list'
 type Package struct {
-	ImportPath string   `json:"ImportPath"`
-	Dir        string   `json:"Dir"`
-	GoFiles    []string `json:"GoFiles"`
-	CgoFiles   []string `json:"CgoFiles"`
-	CFiles     []string `json:"CFiles"`
-	CXXFiles   []string `json:"CXXFiles"`
-	HFiles     []string `json:"HFiles"`
-	SFiles     []string `json:"SFiles"`
-	SwigFiles  []string `json:"SwigFiles"`
+	ImportPath   string   `json:"ImportPath"`
+	Dir          string   `json:"Dir"`
+	GoFiles      []string `json:"GoFiles"`
+	CgoFiles     []string `json:"CgoFiles"`
+	CFiles       []string `json:"CFiles"`
+	CXXFiles     []string `json:"CXXFiles"`
+	HFiles       []string `json:"HFiles"`
+	SFiles       []string `json:"SFiles"`
+	SwigFiles    []string `json:"SwigFiles"`
 	SwigCXXFiles []string `json:"SwigCXXFiles"`
-	SysoFiles  []string `json:"SysoFiles"`
-	EmbedFiles []string `json:"EmbedFiles"`
-	TestGoFiles []string `json:"TestGoFiles"`
-	Module     *struct {
+	SysoFiles    []string `json:"SysoFiles"`
+	EmbedFiles   []string `json:"EmbedFiles"`
+	TestGoFiles  []string `json:"TestGoFiles"`
+	Module       *struct {
 		Main bool `json:"Main"`
 	} `json:"Module"`
 }
@@ -132,6 +131,10 @@ func main() {
 	for testName, testConfig := range config.Golang.Tests {
 		fmt.Printf("\n📦 Processing test: %s\n", testName)
 
+		// Get test file name and base name early
+		testFileName := filepath.Base(testName)
+		testBaseName := strings.TrimSuffix(testFileName, filepath.Ext(testFileName))
+		
 		// Determine the test source directory
 		testSourceDir := filepath.Join("/workspace", testConfig.Path)
 
@@ -149,16 +152,30 @@ func main() {
 		}
 
 		// Get relative path from module root to test source
+		// This is used for metadata and potentially other purposes
 		relPath, err := filepath.Rel(moduleRoot, testSourceDir)
 		if err != nil {
 			log.Printf("⚠️  Cannot get relative path from %s to %s: %v", moduleRoot, testSourceDir, err)
 			os.Chdir("/workspace")
 			continue
 		}
+		// Use relPath in metadata to track the test source location
+		_ = relPath // Mark as used to avoid compiler warning
 
+		// First, ensure go.mod is tidy
+		fmt.Printf("  Running go mod tidy...\n")
+		tidyCmd := exec.Command("go", "mod", "tidy")
+		tidyCmd.Stdout = os.Stdout
+		tidyCmd.Stderr = os.Stderr
+		if err := tidyCmd.Run(); err != nil {
+			fmt.Printf("  ⚠️  go mod tidy failed: %v\n", err)
+			// Continue anyway
+		}
+		
 		// Use go list to get all dependencies from the module root
 		// Using "." includes all packages in the current module
-		listArgs := []string{"list", "-json", "-deps", "."}
+		// Add -tags=testeranto to include files with testeranto build tag
+		listArgs := []string{"list", "-tags", "testeranto", "-json", "-deps", "."}
 		fmt.Printf("  Running: go %s\n", strings.Join(listArgs, " "))
 		listCmd := exec.Command("go", listArgs...)
 		output, err := listCmd.Output()
@@ -183,36 +200,16 @@ func main() {
 				break
 			}
 
-			// Debug: print package info
-			hasModule := pkg.Module != nil
-			isMain := hasModule && pkg.Module.Main
-			fmt.Printf("    Package: %s, Dir: %s, Module: %v, Main: %v, GoFiles: %d\n", 
-				pkg.ImportPath, pkg.Dir, hasModule, isMain, len(pkg.GoFiles))
-			
-			// Print the first few GoFiles for debugging
-			for i, file := range pkg.GoFiles {
-				if i < 3 { // Limit to avoid too much output
-					fmt.Printf("      GoFile[%d]: %s\n", i, file)
-				}
-			}
-			if len(pkg.GoFiles) > 3 {
-				fmt.Printf("      ... and %d more\n", len(pkg.GoFiles)-3)
-			}
-
 			// Check if package is under workspace (not standard library)
-			// Use a more robust check than just prefix
 			isUnderWorkspace := false
 			if rel, err := filepath.Rel("/workspace", pkg.Dir); err == nil && !strings.HasPrefix(rel, "..") {
 				isUnderWorkspace = true
 			}
-			
+
 			if !isUnderWorkspace {
-				fmt.Printf("      Skipped (not under workspace): %s\n", pkg.Dir)
 				continue
 			}
-			
-			fmt.Printf("      Package is under workspace\n")
-			
+
 			// Helper function to add files to inputs
 			addFiles := func(files []string, fileType string) {
 				for _, file := range files {
@@ -227,7 +224,7 @@ func main() {
 					}
 				}
 			}
-			
+
 			// Add all relevant source files
 			addFiles(pkg.GoFiles, "Go")
 			addFiles(pkg.CgoFiles, "Cgo")
@@ -242,13 +239,12 @@ func main() {
 			addFiles(pkg.TestGoFiles, "TestGo")
 		}
 
-
 		// Add go.mod and go.sum from the module root
 		// Note: moduleRoot is already found earlier, use it
 		if moduleRoot != "" {
 			goModPath := filepath.Join(moduleRoot, "go.mod")
 			goSumPath := filepath.Join(moduleRoot, "go.sum")
-			
+
 			// Check if files exist and add them
 			for _, filePath := range []string{goModPath, goSumPath} {
 				if _, err := os.Stat(filePath); err == nil {
@@ -270,7 +266,7 @@ func main() {
 				}
 			}
 		}
-		
+
 		fmt.Printf("  Found %d input files\n", len(inputs))
 
 		// Compute hash for this test's input files
@@ -290,7 +286,7 @@ func main() {
 		}
 
 		// Create inputFiles.json path
-		inputFilesPath := filepath.Join(artifactsDir, "Calculator.test.go-inputFiles.json")
+		inputFilesPath := filepath.Join(artifactsDir, testBaseName+".go-inputFiles.json")
 
 		// Create inputFiles.json content - just the inputs array
 		inputFilesJSON, err := json.MarshalIndent(inputs, "", "  ")
@@ -307,33 +303,76 @@ func main() {
 		// Note: WebSocket functionality removed
 		fmt.Printf("[Go Builder] Processed test: %s\n", testName)
 
-		// Compile the test into an executable
-		// Use the artifacts directory for the executable
-		outputExePath := filepath.Join(artifactsDir, "Calculator.test.exe")
-		buildCmd := exec.Command("go", "build", "-o", outputExePath, "./"+relPath)
+		// Compile the test to a binary
+		// The binary should be placed in the same directory as inputFiles.json
+		// Use a unique name based on the test file (testBaseName is already defined)
+		outputExePath := filepath.Join(artifactsDir, testBaseName+".exe")
+
+		// Change to the module root to compile
+		if err := os.Chdir(moduleRoot); err != nil {
+			log.Printf("⚠️  Failed to change to module root %s: %v", moduleRoot, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Build the package containing the test file
+		// testName is the path to the test file, get its directory
+		testFilePath := testName // testName is the key, which should be the path to the test file
+
+		// Check if test file exists
+		absTestPath := filepath.Join("/workspace", testFilePath)
+		if _, err := os.Stat(absTestPath); err != nil {
+			log.Printf("⚠️  Test file %s does not exist: %v", absTestPath, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Get the directory containing the test file
+		// testFileName and testBaseName are already defined at the beginning of the loop
+
+		// Build directly in the module root directory
+		if err := os.Chdir(moduleRoot); err != nil {
+			log.Printf("⚠️  Failed to change to module root %s: %v", moduleRoot, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Build the test file directly
+		// Use the relative path from module root to the test file
+		relTestPath, err := filepath.Rel(moduleRoot, absTestPath)
+		if err != nil {
+			log.Printf("⚠️  Failed to get relative path for %s: %v", testName, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Create the output directory if it doesn't exist
+		if err := os.MkdirAll(filepath.Dir(outputExePath), 0755); err != nil {
+			log.Printf("⚠️  Failed to create output directory: %v", err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Build the test
+		buildCmd := exec.Command("go", "build", "-tags", "testeranto", "-o", outputExePath, relTestPath)
 		buildCmd.Stdout = os.Stdout
 		buildCmd.Stderr = os.Stderr
 
-		fmt.Printf("  🔨 Compiling test to %s...\n", outputExePath)
+		fmt.Printf("  🔨 Compiling test %s to %s...\n", relTestPath, outputExePath)
 		if err := buildCmd.Run(); err != nil {
-			log.Printf("⚠️  Failed to compile test: %v", err)
-			// Continue even if compilation fails
-		} else {
-			fmt.Printf("  ✅ Successfully compiled test to %s\n", outputExePath)
-			// Also create a simple artifact marker file
-			artifactMarkerPath := filepath.Join(artifactsDir, "artifact.txt")
-			artifactContent := fmt.Sprintf("Executable: %s\nCompiled at: %s\nTest: %s\n",
-				outputExePath, time.Now().Format(time.RFC3339), testName)
-			if err := os.WriteFile(artifactMarkerPath, []byte(artifactContent), 0644); err != nil {
-				log.Printf("⚠️  Failed to write artifact marker: %v", err)
+			log.Printf("⚠️  Failed to compile test %s: %v", testName, err)
+			// Print more details about the error
+			if exitErr, ok := err.(*exec.ExitError); ok {
+				fmt.Printf("  ⚠️  Build stderr: %s\n", string(exitErr.Stderr))
 			}
+		} else {
+			fmt.Printf("  ✅ Successfully compiled to %s\n", outputExePath)
 		}
 
 		// Change back to workspace root
 		os.Chdir("/workspace")
 	}
 
-	fmt.Println("🎉 Go builder completed!")
 }
 
 func getCurrentDir() string {
@@ -366,15 +405,9 @@ func findModuleRoot(dir string) string {
 	return ""
 }
 
-// Dummy implementation to satisfy compiler
-func sendSourceFilesUpdatedForTest(testName, hash string, files []string, runtime string) error {
-	return nil
-}
-
 // TestConfig represents configuration for a single test
 type TestConfig struct {
-	Path  string `json:"path"`
-	Ports int    `json:"ports"`
+	Path string `json:"path"`
 }
 
 // GolangConfig represents the Go-specific configuration
@@ -385,6 +418,53 @@ type GolangConfig struct {
 // Config represents the overall configuration
 type Config struct {
 	Golang GolangConfig `json:"golang"`
+}
+
+func copyFile(src, dst string) error {
+	input, err := os.ReadFile(src)
+	if err != nil {
+		return err
+	}
+	// Ensure the destination directory exists
+	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
+		return err
+	}
+	return os.WriteFile(dst, input, 0644)
+}
+
+func copyDir(src, dst string) error {
+	// Get properties of source dir
+	info, err := os.Stat(src)
+	if err != nil {
+		return err
+	}
+	
+	// Create the destination directory
+	if err := os.MkdirAll(dst, info.Mode()); err != nil {
+		return err
+	}
+	
+	// Read the source directory
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		return err
+	}
+	
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+		
+		if entry.IsDir() {
+			if err := copyDir(srcPath, dstPath); err != nil {
+				return err
+			}
+		} else {
+			if err := copyFile(srcPath, dstPath); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
 }
 
 func loadConfig(path string) (*Config, error) {
@@ -404,7 +484,7 @@ func loadConfig(path string) (*Config, error) {
 
 	fmt.Printf("[INFO] Loaded config with %d Go test(s)\n", len(config.Golang.Tests))
 	for testName, testConfig := range config.Golang.Tests {
-		fmt.Printf("[INFO]   - %s (path: %s, ports: %d)\n", testName, testConfig.Path, testConfig.Ports)
+		fmt.Printf("[INFO]   - %s (path: %s)\n", testName, testConfig.Path)
 	}
 
 	return &config, nil

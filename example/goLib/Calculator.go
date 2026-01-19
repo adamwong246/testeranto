@@ -1,4 +1,4 @@
-package main
+package calculatorlib
 
 import "fmt"
 
@@ -163,25 +163,4 @@ type DivisionByZeroError struct{}
 
 func (e *DivisionByZeroError) Error() string {
 	return "Cannot divide by zero"
-}
-
-// press handles button presses (lowercase version for test compatibility)
-func (c *Calculator) press(button string) error {
-	c.Press(button)
-	return nil
-}
-
-// GetWidth is a placeholder method for testing
-func (c *Calculator) GetWidth() int {
-	return 0
-}
-
-// GetHeight is a placeholder method for testing
-func (c *Calculator) GetHeight() int {
-	return 0
-}
-
-// Area is a placeholder method for testing
-func (c *Calculator) Area() int {
-	return 0
 }

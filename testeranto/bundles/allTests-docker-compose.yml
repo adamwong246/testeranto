@@ -1,4 +1,17 @@
 services:
+  browser:
+    image: browserless/chrome:latest
+    container_name: browser-allTests
+    environment:
+      CONNECTION_TIMEOUT: '60000'
+      MAX_CONCURRENT_SESSIONS: '10'
+      ENABLE_CORS: 'true'
+      TOKEN: ''
+    ports:
+      - '3000:3000'
+      - '9222:9222'
+    networks:
+      - default
   node-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -71,13 +84,14 @@ services:
     container_name: web-builder-allTests
     environment:
       NODE_ENV: production
+      DOCKER_ENV: 'true'
     working_dir: /workspace
     volumes:
       - /Users/adam/Code/testeranto/src:/workspace/src
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: yarn tsx src/server/runtimes/web/web.ts /workspace/testeranto/runtimes/web/web.js
+    command: yarn tsx src/server/runtimes/web/web.ts testeranto/runtimes/web/web.js
     networks:
       - default
   web-example_calculator-test-ts-static-0:
@@ -115,7 +129,7 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: echo "BDD command not implemented for web"
+    command: yarn tsx  src/server/runtimes/web/hoist.ts testeranto/bundles/allTests/web/example/Calculator.test.mjs
     networks:
       - default
   web-example_calculator-test-ts-aider:
@@ -132,31 +146,8 @@ services:
   golang-builder:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: golang.Dockerfile
+      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
     container_name: golang-builder-allTests
-    environment: {}
-    working_dir: /workspace
-    volumes:
-      - /Users/adam/Code/testeranto:/workspace
-    command: sh -c 'echo "GOLANG BUILDER STARTING"; cd /workspace && echo "Running main.go directly with go run..."; go run src/server/runtimes/golang/main.go 2>&1'
-    networks:
-      - default
-  golang-example_calculator-golingvu-test-go-static-0:
-    build:
-      context: /Users/adam/Code/testeranto
-      dockerfile: golang.Dockerfile
-    container_name: golang-example_calculator-golingvu-test-go-static-0
-    environment:
-      NODE_ENV: production
-    working_dir: /workspace
-    command: cd /workspace/example && golangci-lint run }
-    networks:
-      - default
-  golang-example_calculator-golingvu-test-go-bdd:
-    build:
-      context: /Users/adam/Code/testeranto
-      dockerfile: golang.Dockerfile
-    container_name: golang-example_calculator-golingvu-test-go-bdd
     environment:
       NODE_ENV: production
     working_dir: /workspace
@@ -165,14 +156,41 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: go run example/Calculator.golingvu.test.go '{"ports":[1111]}'
+    command: go run src/server/runtimes/golang/main.go
     networks:
       - default
-  golang-example_calculator-golingvu-test-go-aider:
+  golang-example_cmd_calculator-test_main-go-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
+    container_name: golang-example_cmd_calculator-test_main-go-static-0
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: golangci-lint run }
+    networks:
+      - default
+  golang-example_cmd_calculator-test_main-go-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
+    container_name: golang-example_cmd_calculator-test_main-go-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: go run example/cmd/calculator-test
+    networks:
+      - default
+  golang-example_cmd_calculator-test_main-go-aider:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: aider.Dockerfile
-    container_name: golang-example_calculator-golingvu-test-go-aider
+    container_name: golang-example_cmd_calculator-test_main-go-aider
     environment:
       NODE_ENV: production
     working_dir: /workspace

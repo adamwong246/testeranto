@@ -4,7 +4,7 @@ import { IBuiltConfig, IRunTime } from "../../Types";
 import { golangBddCommand, golangDockerComposeFile } from "../runtimes/golang/docker";
 import { nodeDockerComposeFile, nodeBddCommand } from "../runtimes/node/docker";
 import { pythonBDDCommand, pythonDockerComposeFile } from "../runtimes/python/docker";
-import { webDockerComposeFile } from "../runtimes/web/docker";
+import { webBddCommand, webDockerComposeFile } from "../runtimes/web/docker";
 
 export type IService = any;
 
@@ -71,7 +71,7 @@ export class DockerManager {
   };
 
   bddTestDockerComposeFile(config: IBuiltConfig, runtime: IRunTime, container_name: string, command: string) {
-    return {
+    const service: any = {
       build: {
         context: process.cwd(),
         dockerfile: `${config[runtime].dockerfile}`,
@@ -90,10 +90,14 @@ export class DockerManager {
         `${process.cwd()}/testeranto:/workspace/testeranto`,
       ],
 
+      // ports: [
+      //   "9222:9222"
+      // ],
 
       command: command,
-    }
+    };
 
+    return service;
   };
 
   aiderDockerComposeFile(config: IBuiltConfig, runtime: IRunTime, container_name: string) {
@@ -118,6 +122,30 @@ export class DockerManager {
     runtimes: IRunTime[],
   ): Record<string, any> {
     const services: IService = {};
+
+    // Add browser service
+    services['browser'] = {
+      image: 'browserless/chrome:latest',
+      container_name: 'browser-allTests',
+      environment: {
+        CONNECTION_TIMEOUT: '60000',
+        MAX_CONCURRENT_SESSIONS: '10',
+        ENABLE_CORS: 'true',
+        TOKEN: '',
+      },
+      ports: [
+        '3000:3000',
+        '9222:9222'
+      ],
+      networks: ["default"],
+      // healthcheck: {
+      //   test: ["CMD", "curl", "-f", "http://localhost:3000h"],
+      //   interval: "30s",
+      //   timeout: "10s",
+      //   retries: 3,
+      //   start_period: "40s"
+      // }
+    };
 
     for (const runtime of runtimes) {
       if (runtime === "node") {
@@ -150,12 +178,11 @@ export class DockerManager {
         if (runtime === 'node') {
           bddCommand = nodeBddCommand(config.httpPort || 3456);
         } else if (runtime === 'web') {
-          // TODO: Import webBddCommand when available
-          bddCommand = 'echo "BDD command not implemented for web"';
+          bddCommand = webBddCommand();
         } else if (runtime === 'golang') {
-          bddCommand = golangBddCommand();  //'echo "BDD command not implemented for golang"';
+          bddCommand = golangBddCommand();
         } else if (runtime === 'python') {
-          bddCommand = pythonBDDCommand(0);  //'echo "BDD command not implemented for python"';
+          bddCommand = pythonBDDCommand(0);
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
 
@@ -166,9 +193,12 @@ export class DockerManager {
 
     // Ensure all services use the same network configuration
     for (const serviceName in services) {
-      services[serviceName].networks = ["default"];
+      if (!services[serviceName].networks) {
+        services[serviceName].networks = ["default"];
+      }
     }
 
+    console.log(JSON.stringify(services, null, 2))
     return services;
   }
 

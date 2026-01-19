@@ -1,10 +1,8 @@
-//go:build testeranto
-// +build testeranto
-
-package testeranto_test
+package main
 
 import (
 	"github.com/adamwong246/testeranto/src/golingvu"
+	calculatorlib "example/goLib"
 )
 
 // SimpleTestAdapter is a basic implementation of ITestAdapter for Calculator tests
@@ -53,18 +51,15 @@ func (a *SimpleTestAdapter) AssertThis(t interface{}) bool {
 // BeforeAll implements golingvu.ITestAdapter.
 func (a *SimpleTestAdapter) BeforeAll(input interface{}, tr golingvu.ITTestResourceConfiguration, pm interface{}) interface{} {
 	// Initialize before all tests - create a new calculator
-	return NewCalculator()
+	return calculatorlib.NewCalculator()
 }
 
 // BeforeEach implements golingvu.ITestAdapter.
 func (a *SimpleTestAdapter) BeforeEach(subject interface{}, initializer interface{}, testResource golingvu.ITTestResourceConfiguration, initialValues interface{}, pm interface{}) interface{} {
-	// Initialize before each test - reset the calculator
-	if calc, ok := subject.(*Calculator); ok {
-		calc.display = ""
-		calc.values = make(map[string]interface{})
-		return calc
-	}
-	return subject
+	// Initialize before each test - create a new calculator
+	// Since the calculator fields are private, we can't reset them directly
+	// So we return a fresh calculator instance
+	return calculatorlib.NewCalculator()
 }
 
 // ButThen implements golingvu.ITestAdapter.

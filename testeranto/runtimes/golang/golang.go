@@ -21,7 +21,7 @@ func GetConfig() Config {
 			Ports int    `json:"ports"`
 		}{
 			"example/Calculator.golingvu.test.go": {
-				Path:  "example/Calculator.golingvu.test.go",
+				Path:  "example",  // Change from file to directory
 				Ports: 1111,
 			},
 		},
