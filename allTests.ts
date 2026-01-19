@@ -11,9 +11,8 @@ const config: ITestconfig = {
   ports: ["3333", "3334"],
   src: "",
 
-
   ruby: createLangConfig("example/calculator-test-ruby.rb", [
-    (x: string[]) => `rubocop `,
+    (x: string[]) => `rubocop`,
   ], `testeranto/runtimes/ruby/ruby.Dockerfile`
   ),
 
