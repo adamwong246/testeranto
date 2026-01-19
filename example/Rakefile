@@ -1,0 +1,29 @@
+require 'rake'
+require 'rubocop/rake_task'
+
+desc 'Run all tests'
+task :test do
+  puts 'Running Calculator tests...'
+  ruby 'example/Calculator-test.rb'
+end
+
+desc 'Run Rubocop'
+RuboCop::RakeTask.new(:rubocop) do |task|
+  task.options = ['--display-cop-names']
+end
+
+desc 'Run Rubocop with auto-correct'
+RuboCop::RakeTask.new(:rubocop_fix) do |task|
+  task.options = ['--auto-correct']
+end
+
+desc 'Start interactive console'
+task :console do
+  puts 'Starting IRB console with Calculator loaded...'
+  exec 'irb -r ./example/Calculator.rb'
+end
+
+desc 'Run all checks (tests and rubocop)'
+task :check => [:test, :rubocop]
+
+task default: :check

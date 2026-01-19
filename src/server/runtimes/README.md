@@ -5,5 +5,6 @@ Each builder is a docker image that does 3 things
   - web - esbuild
   - python - shv ar zipapp
   - golang - TBD
+  - ruby - TBD
 3) creates the inputFiles.json file
   - a list of all the files that were used to create the bundle

@@ -1,4 +1,5 @@
-import { exec, spawn } from "child_process";
+import ansiColors from "ansi-colors";
+import { exec, execSync, spawn } from "child_process";
 import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
@@ -6,16 +7,7 @@ import { promisify } from "util";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { DockerManager, IDockerComposeResult, IService } from "../serverManagers/DockerManager";
 import { IMode } from "../types";
-import { Server_Base } from "./Server_Base";
-import ansiColors from "ansi-colors";
 import { Server_WS } from "./Server_WS";
-
-
-// [x] v0 - bring up all containers
-// [ ] v1 - coordinate containers
-// We need to first bring up the builders, as they produce the inputFiles and artifacts
-// When inputFiles change, we run the static analysis
-// When artifacts change, we run the bdd tests
 
 export class Server_Docker extends Server_WS {
 
@@ -57,7 +49,7 @@ export class Server_Docker extends Server_WS {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
 
-    const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
+    const runtimes: IRunTime[] = ["node", "web", "golang", "python", "ruby"];
 
     // Start builder services
     for (const runtime of runtimes) {
@@ -82,16 +74,16 @@ export class Server_Docker extends Server_WS {
     console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
     await this.waitForContainerHealthy('browser-allTests', 60000); // 60 seconds max
 
-    // Start aider services
-    for (const runtime of runtimes) {
-      const aiderServiceName = `${runtime}-aider`;
-      console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
-      try {
-        await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
-      } catch (error: any) {
-        console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
-      }
-    }
+    // // Start aider services
+    // for (const runtime of runtimes) {
+    //   const aiderServiceName = `${runtime}-aider`;
+    //   console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
+    //   try {
+    //     await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
+    //   } catch (error: any) {
+    //     console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
+    //   }
+    // }
 
     // Start BDD test services
     for (const runtime of runtimes) {
@@ -200,7 +192,7 @@ export class Server_Docker extends Server_WS {
 
       // Generate Dockerfiles for each runtime
       // Note: runtimes needs to be defined - we'll get it from config
-      const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
+      const runtimes: IRunTime[] = ["node", "web", "golang", "python", "ruby"];
       // deprecated 
       // this.generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
 
@@ -434,6 +426,56 @@ export class Server_Docker extends Server_WS {
         data: null,
       };
     }
+  }
+
+  public getProcessSummary(): any {
+    console.log(`[Server_Docker] getProcessSummary called`);
+    
+    try {
+      // Use execSync to get docker ps output with more details
+      const output = execSync('docker ps --format "{{.Names}}|{{.Image}}|{{.Status}}|{{.Ports}}|{{.State}}|{{.Command}}"').toString();
+      
+      const processes = output.trim().split('\n').filter(line => line.trim()).map(line => {
+        const parts = line.split('|');
+        const [name, image, status, ports, state, command] = parts;
+        return {
+          processId: name,
+          command: command || image,
+          image: image,
+          timestamp: new Date().toISOString(),
+          status: status,
+          state: state,
+          ports: ports,
+          // Add additional fields that might be useful for the frontend
+          runtime: this.getRuntimeFromName(name),
+          health: 'unknown' // We could add health check status here
+        };
+      });
+      
+      return {
+        processes: processes,
+        total: processes.length,
+        timestamp: new Date().toISOString()
+      };
+    } catch (error: any) {
+      console.error(`[Server_Docker] Error getting docker processes: ${error.message}`);
+      return {
+        processes: [],
+        total: 0,
+        timestamp: new Date().toISOString(),
+        error: error.message
+      };
+    }
+  }
+
+  private getRuntimeFromName(name: string): string {
+    if (name.includes('node')) return 'node';
+    if (name.includes('web')) return 'web';
+    if (name.includes('golang')) return 'golang';
+    if (name.includes('python')) return 'python';
+    if (name.includes('ruby')) return 'ruby';
+    if (name.includes('browser')) return 'browser';
+    return 'unknown';
   }
 
 }

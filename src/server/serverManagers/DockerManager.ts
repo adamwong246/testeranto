@@ -4,6 +4,7 @@ import { IBuiltConfig, IRunTime } from "../../Types";
 import { golangBddCommand, golangDockerComposeFile } from "../runtimes/golang/docker";
 import { nodeDockerComposeFile, nodeBddCommand } from "../runtimes/node/docker";
 import { pythonBDDCommand, pythonDockerComposeFile } from "../runtimes/python/docker";
+import { rubyBddCommand, rubyDockerComposeFile } from "../runtimes/ruby/docker";
 import { webBddCommand, webDockerComposeFile } from "../runtimes/web/docker";
 
 export type IService = any;
@@ -156,6 +157,8 @@ export class DockerManager {
         services[`${runtime}-builder`] = golangDockerComposeFile(config, 'allTests');
       } else if (runtime === "python") {
         services[`${runtime}-builder`] = pythonDockerComposeFile(config, 'allTests');
+      } else if (runtime === "ruby") {
+        services[`${runtime}-builder`] = rubyDockerComposeFile(config, 'allTests');
       } else {
         throw `unknown runtime ${runtime}`;
       }
@@ -183,6 +186,8 @@ export class DockerManager {
           bddCommand = golangBddCommand();
         } else if (runtime === 'python') {
           bddCommand = pythonBDDCommand(0);
+        } else if (runtime === 'ruby') {
+          bddCommand = rubyBddCommand();
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
 

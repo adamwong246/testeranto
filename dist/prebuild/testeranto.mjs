@@ -6,7 +6,8 @@ import fs3 from "fs";
 import readline from "readline";
 
 // src/server/serverClasees/Server_Docker.ts
-import { exec, spawn } from "child_process";
+import ansiColors from "ansi-colors";
+import { exec, execSync, spawn } from "child_process";
 import fs2 from "fs";
 import yaml from "js-yaml";
 import path2 from "path";
@@ -99,6 +100,36 @@ var pythonBuildCommand = () => {
 };
 var pythonBDDCommand = (port) => {
   return `python /workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py`;
+};
+
+// src/server/runtimes/ruby/docker.ts
+var rubyDockerComposeFile = (config, projectName) => {
+  return {
+    build: {
+      context: process.cwd(),
+      dockerfile: config.ruby?.dockerfile || "testeranto/runtimes/ruby/ruby.Dockerfile"
+    },
+    container_name: `ruby-builder-${projectName}`,
+    environment: {
+      NODE_ENV: "production",
+      ...config.env
+    },
+    working_dir: "/workspace",
+    volumes: [
+      `${process.cwd()}/src:/workspace/src`,
+      `${process.cwd()}/example:/workspace/example`,
+      `${process.cwd()}/dist:/workspace/dist`,
+      `${process.cwd()}/testeranto:/workspace/testeranto`
+    ],
+    command: rubyBuildCommand()
+  };
+};
+var rubyBuildCommand = () => {
+  return `ls; pwd; `;
+};
+var rubyBddCommand = () => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `ruby example/Calculator-test.rb '${jsonStr}'`;
 };
 
 // src/server/runtimes/web/docker.ts
@@ -259,6 +290,8 @@ var DockerManager = class {
         services[`${runtime}-builder`] = golangDockerComposeFile(config, "allTests");
       } else if (runtime === "python") {
         services[`${runtime}-builder`] = pythonDockerComposeFile(config, "allTests");
+      } else if (runtime === "ruby") {
+        services[`${runtime}-builder`] = rubyDockerComposeFile(config, "allTests");
       } else {
         throw `unknown runtime ${runtime}`;
       }
@@ -278,6 +311,8 @@ var DockerManager = class {
           bddCommand = golangBddCommand();
         } else if (runtime === "python") {
           bddCommand = pythonBDDCommand(0);
+        } else if (runtime === "ruby") {
+          bddCommand = rubyBddCommand();
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
         services[`${uid}-aider`] = this.aiderDockerComposeFile(config, runtime, `${uid}-aider`);
@@ -319,9 +354,6 @@ ${x}
     return `docker compose -f "${this.composeFile}" start`;
   }
 };
-
-// src/server/serverClasees/Server_Docker.ts
-import ansiColors from "ansi-colors";
 
 // src/server/serverClasees/Server_WS.ts
 import { WebSocketServer, WebSocket } from "ws";
@@ -1085,7 +1117,6 @@ var Server_WS = class extends Server_HTTP {
       }));
     }
   }
-  // Broadcast a message to all connected WebSocket clients
 };
 
 // src/server/serverClasees/Server_Docker.ts
@@ -1119,7 +1150,7 @@ var Server_Docker = class extends Server_WS {
     } catch (error) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
-    const runtimes = ["node", "web", "golang", "python"];
+    const runtimes = ["node", "web", "golang", "python", "ruby"];
     for (const runtime of runtimes) {
       const serviceName = `${runtime}-builder`;
       console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
@@ -1137,15 +1168,6 @@ var Server_Docker = class extends Server_WS {
     }
     console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
     await this.waitForContainerHealthy("browser-allTests", 6e4);
-    for (const runtime of runtimes) {
-      const aiderServiceName = `${runtime}-aider`;
-      console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
-      try {
-        await this.spawnPromise(`docker compose -f "${this.dockerManager.composeFile}" up -d ${aiderServiceName}`);
-      } catch (error) {
-        console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
-      }
-    }
     for (const runtime of runtimes) {
       const tests = this.configs[runtime]?.tests;
       if (!tests) continue;
@@ -1201,7 +1223,7 @@ var Server_Docker = class extends Server_WS {
     const composeDir = path2.join(process.cwd(), "testeranto", "bundles");
     try {
       fs2.mkdirSync(composeDir, { recursive: true });
-      const runtimes = ["node", "web", "golang", "python"];
+      const runtimes = ["node", "web", "golang", "python", "ruby"];
       const services = this.dockerManager.generateServices(
         config,
         runtimes
@@ -1398,6 +1420,51 @@ var Server_Docker = class extends Server_WS {
         data: null
       };
     }
+  }
+  getProcessSummary() {
+    console.log(`[Server_Docker] getProcessSummary called`);
+    try {
+      const output = execSync('docker ps --format "{{.Names}}|{{.Image}}|{{.Status}}|{{.Ports}}|{{.State}}|{{.Command}}"').toString();
+      const processes = output.trim().split("\n").filter((line) => line.trim()).map((line) => {
+        const parts = line.split("|");
+        const [name, image, status, ports, state, command] = parts;
+        return {
+          processId: name,
+          command: command || image,
+          image,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          status,
+          state,
+          ports,
+          // Add additional fields that might be useful for the frontend
+          runtime: this.getRuntimeFromName(name),
+          health: "unknown"
+          // We could add health check status here
+        };
+      });
+      return {
+        processes,
+        total: processes.length,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      };
+    } catch (error) {
+      console.error(`[Server_Docker] Error getting docker processes: ${error.message}`);
+      return {
+        processes: [],
+        total: 0,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        error: error.message
+      };
+    }
+  }
+  getRuntimeFromName(name) {
+    if (name.includes("node")) return "node";
+    if (name.includes("web")) return "web";
+    if (name.includes("golang")) return "golang";
+    if (name.includes("python")) return "python";
+    if (name.includes("ruby")) return "ruby";
+    if (name.includes("browser")) return "browser";
+    return "unknown";
   }
 };
 

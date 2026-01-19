@@ -304,5 +304,5 @@ export class Server_WS extends Server_HTTP {
 
   // Broadcast a message to all connected WebSocket clients
 
-
+  protected getProcessSummary?(): any;
 }

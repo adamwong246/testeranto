@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { TerminalManager } from "./TerminalManager";
 import { TestTreeDataProvider } from "./providers/TestTreeDataProvider";
 import { FileTreeDataProvider } from "./providers/FileTreeDataProvider";
-import { ResultsTreeDataProvider } from "./providers/ResultsTreeDataProvider";
+import { ProcessesTreeDataProvider } from "./providers/ProcessesTreeDataProvider";
 import { FeaturesTreeDataProvider } from "./providers/FeaturesTreeDataProvider";
 import { TestTreeItem } from "./TestTreeItem";
 import { TreeItemType } from "./types";
@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext): void {
     // Create tree data providers
     const testTreeDataProvider = new TestTreeDataProvider();
     const fileTreeDataProvider = new FileTreeDataProvider();
-    const resultsTreeDataProvider = new ResultsTreeDataProvider();
+    const processesTreeDataProvider = new ProcessesTreeDataProvider();
     const featuresTreeDataProvider = new FeaturesTreeDataProvider();
 
     // Register commands
@@ -118,8 +118,17 @@ export function activate(context: vscode.ExtensionContext): void {
         vscode.window.showInformationMessage("Refreshing all Testeranto views...");
         testTreeDataProvider.refresh();
         fileTreeDataProvider.refresh();
-        resultsTreeDataProvider.refresh();
+        processesTreeDataProvider.refresh();
         featuresTreeDataProvider.refresh();
+    });
+
+    const retryConnectionCommand = vscode.commands.registerCommand("testeranto.retryConnection", (provider: ProcessesTreeDataProvider) => {
+        vscode.window.showInformationMessage("Retrying connection to Docker process server...");
+        // Reset connection attempts and try to reconnect
+        (provider as any).connectionAttempts = 0;
+        (provider as any).isConnected = false;
+        (provider as any).connectWebSocket();
+        provider.refresh();
     });
 
     // Register tree views
@@ -133,8 +142,8 @@ export function activate(context: vscode.ExtensionContext): void {
         showCollapseAll: true
     });
     
-    const resultsTreeView = vscode.window.createTreeView("testerantoResultsView", {
-        treeDataProvider: resultsTreeDataProvider,
+    const processesTreeView = vscode.window.createTreeView("testerantoResultsView", {
+        treeDataProvider: processesTreeDataProvider,
         showCollapseAll: true
     });
     
@@ -147,6 +156,7 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push({
         dispose: () => {
             terminalManager.disposeAll();
+            processesTreeDataProvider.dispose();
         }
     });
 
@@ -158,9 +168,10 @@ export function activate(context: vscode.ExtensionContext): void {
         openFileCommand,
         openConfigCommand,
         refreshCommand,
+        retryConnectionCommand,
         testTreeView,
         fileTreeView,
-        resultsTreeView,
+        processesTreeView,
         featuresTreeView,
         statusBarItem
     );

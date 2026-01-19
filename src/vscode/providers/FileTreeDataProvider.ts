@@ -47,7 +47,7 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
     if (!tree) {
       return [];
     }
-    
+
     // Find the node corresponding to the path
     const parts = path.split('/').filter(p => p.length > 0);
     let currentNode = tree;
@@ -58,7 +58,7 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
         return [];
       }
     }
-    
+
     return this.buildTreeItems(currentNode);
   }
 
@@ -67,7 +67,8 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
       "testeranto/bundles/allTests/golang/example/Calculator.test.go-inputFiles.json",
       "testeranto/bundles/allTests/node/example/Calculator.test.mjs-inputFiles.json",
       "testeranto/bundles/allTests/web/example/Calculator.test.mjs-inputFiles.json",
-      "testeranto/bundles/allTests/python/example/Calculator.test.py-inputFiles.json"
+      "testeranto/bundles/allTests/python/example/Calculator.test.py-inputFiles.json",
+      "testeranto/bundles/allTests/ruby/example/Calculator.test.rb-inputFiles.json"
     ];
 
     const allFiles: Set<string> = new Set();
@@ -78,6 +79,7 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
     }
     const workspaceRoot = workspaceFolders[0].uri;
 
+    // Add files from JSON input files
     for (const jsonFilePath of jsonFilePaths) {
       try {
         const jsonFileUri = vscode.Uri.joinPath(workspaceRoot, jsonFilePath);
@@ -90,19 +92,43 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
       }
     }
 
+    // Add report files from testeranto/reports/allTests/example/
+    try {
+      const reportsDir = vscode.Uri.joinPath(workspaceRoot, "testeranto/reports/allTests/example");
+      // Check if directory exists
+      try {
+        await vscode.workspace.fs.stat(reportsDir);
+
+        // Read directory contents
+        const entries = await vscode.workspace.fs.readDirectory(reportsDir);
+
+        for (const [name, type] of entries) {
+          if (type === vscode.FileType.File && name.endsWith('.json')) {
+            // Add the report file path
+            const reportFilePath = `testeranto/reports/allTests/example/${name}`;
+            allFiles.add(reportFilePath);
+          }
+        }
+      } catch (error) {
+        console.log(`Reports directory doesn't exist or can't be read: ${reportsDir.fsPath}`);
+      }
+    } catch (error) {
+      console.error(`Failed to scan reports directory:`, error);
+    }
+
     // Build tree structure
     const treeRoot: TreeNode = { name: '', children: new Map(), fullPath: '', isFile: false };
-    
+
     for (const rawFileName of Array.from(allFiles)) {
       // Remove leading '/' if present
       const fileName = rawFileName.startsWith('/') ? rawFileName.substring(1) : rawFileName;
       const parts = fileName.split('/');
       let currentNode = treeRoot;
-      
+
       for (let i = 0; i < parts.length; i++) {
         const part = parts[i];
         const isLast = i === parts.length - 1;
-        
+
         if (!currentNode.children.has(part)) {
           currentNode.children.set(part, {
             name: part,
@@ -114,13 +140,13 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
         currentNode = currentNode.children.get(part)!;
       }
     }
-    
+
     return treeRoot;
   }
 
   private buildTreeItems(node: TreeNode): TestTreeItem[] {
     const items: TestTreeItem[] = [];
-    
+
     // Sort children: directories first, then files, alphabetically
     const sortedChildren = Array.from(node.children.values()).sort((a, b) => {
       if (a.isFile && !b.isFile) return 1;
@@ -129,15 +155,15 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
     });
 
     for (const child of sortedChildren) {
-      const collapsibleState = child.isFile 
-        ? vscode.TreeItemCollapsibleState.None 
+      const collapsibleState = child.isFile
+        ? vscode.TreeItemCollapsibleState.None
         : vscode.TreeItemCollapsibleState.Collapsed;
-      
+
       const treeItem = new TestTreeItem(
         child.name,
         TreeItemType.File,
         collapsibleState,
-        { 
+        {
           path: child.fullPath,
           fileName: child.fullPath
         },
@@ -148,10 +174,10 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
         } : undefined,
         child.isFile ? new vscode.ThemeIcon("file") : new vscode.ThemeIcon("folder")
       );
-      
+
       items.push(treeItem);
     }
-    
+
     return items;
   }
 }

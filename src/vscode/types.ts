@@ -11,4 +11,5 @@ export interface TreeItemData {
   path?: string;
   test?: string;
   status?: string;
+  isFile?: boolean;
 }

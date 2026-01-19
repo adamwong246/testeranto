@@ -251,6 +251,60 @@ services:
     command: aider
     networks:
       - default
+  ruby-builder:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/ruby/ruby.Dockerfile
+    container_name: ruby-builder-allTests
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: 'ls; pwd; '
+    networks:
+      - default
+  ruby-example_calculator-test-ruby-rb-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/ruby/ruby.Dockerfile
+    container_name: ruby-example_calculator-test-ruby-rb-static-0
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: 'rubocop '
+    networks:
+      - default
+  ruby-example_calculator-test-ruby-rb-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/ruby/ruby.Dockerfile
+    container_name: ruby-example_calculator-test-ruby-rb-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: ruby example/Calculator-test.rb '{"ports":[1111]}'
+    networks:
+      - default
+  ruby-example_calculator-test-ruby-rb-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: ruby-example_calculator-test-ruby-rb-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
 volumes:
   node_modules:
     driver: local

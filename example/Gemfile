@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+# Add any required gems here
+gem 'json', '~> 2.6'
+gem 'rubocop', '~> 1.56'
+gem 'rubocop-rake', '~> 0.6'

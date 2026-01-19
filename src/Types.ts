@@ -169,7 +169,7 @@ export type IPluginFactory = (
   entrypoints?: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | `golang` | `python`;
+export type IRunTime = `node` | `web` | `golang` | `python` | `ruby`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
@@ -184,12 +184,20 @@ export type ITestconfig = {
   src: string;
   check: string;
 
+  ruby: {
+    plugins: any[];
+    tests: Record<string, { ports: number }>;
+    loaders: Record<string, string>;
+    checks: IChecks;
+    dockerfile: string;
+  };
+
   golang: {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     checks: IChecks;
-    dockerfile: string,
+    dockerfile: string;
   };
 
   python: {
