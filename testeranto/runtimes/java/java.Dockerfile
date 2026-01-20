@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /workspace
 

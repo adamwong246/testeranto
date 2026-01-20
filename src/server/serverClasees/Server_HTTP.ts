@@ -40,7 +40,7 @@ export abstract class Server_HTTP extends Server_Base {
     return new Promise((resolve) => {
       this.httpServer.on("listening", () => {
         const addr = this.httpServer.address();
-        console.log(`[HTTP] HTTP server is now listening on port ${3456}`);
+        console.log(`[HTTP] HTTP server is now listening on ${addr}`);
         resolve()
       });
     });

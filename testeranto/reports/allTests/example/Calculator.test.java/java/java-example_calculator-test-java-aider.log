@@ -1,0 +1,20 @@
+=== Log started at 2026-01-20T03:27:21.089Z for service java-example_calculator-test-java-aider ===
+
+java-example_calculator-test-java-aider  | Warning: Input is not a terminal (fd=0).
+java-example_calculator-test-java-aider  | ────────────────────────────────────────────────────────────────────────────────
+java-example_calculator-test-java-aider  | No LLM model was specified and no API keys were provided.
+java-example_calculator-test-java-aider  | OpenRouter provides free and paid access to many LLMs.
+java-example_calculator-test-java-aider  | 
+java-example_calculator-test-java-aider  | Please open this URL in your browser to connect Aider with OpenRouter:
+java-example_calculator-test-java-aider  | 
+java-example_calculator-test-java-aider  | https://openrouter.ai/auth?callback_url=http://localhost:8484/callback/aider&code_challenge=VgrMkbPw7mS0RfjWKuIPjjJ7iAdIcTm1ZO5e9TRwW44&code_challenge_method=S256
+java-example_calculator-test-java-aider  | 
+java-example_calculator-test-java-aider  | Waiting up to 5 minutes for you to finish in the browser...
+java-example_calculator-test-java-aider  | Use Control-C to interrupt.
+java-example_calculator-test-java-aider  | Authentication with OpenRouter failed.
+java-example_calculator-test-java-aider  | OpenRouter authentication did not complete successfully.
+java-example_calculator-test-java-aider  | 
+java-example_calculator-test-java-aider  | https://aider.chat/docs/troubleshooting/models-and-keys.html
+[Kjava-example_calculator-test-java-aider exited with code 1
+
+=== Log ended at 2026-01-20T03:32:32.177Z, process exited with code 0 ===

@@ -213,7 +213,6 @@ export class DockerManager {
       }
     }
 
-    console.log(JSON.stringify(services, null, 2))
     return services;
   }
 

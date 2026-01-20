@@ -62,18 +62,21 @@ export function activate(context: vscode.ExtensionContext): void {
                 const aiderTerminal = terminalManager.createAiderTerminal(runtime, testName);
                 aiderTerminal.show();
 
+                // Process test name to match Docker container naming convention
                 let processedTestName = testName;
+                // Remove file extension
                 processedTestName = processedTestName?.replace(/\.[^/.]+$/, "") || "";
+                // Remove 'example/' prefix if present
                 processedTestName = processedTestName.replace(/^example\//, "");
-                const sanitizedTestName = processedTestName.replace(/[^a-zA-Z0-9]/g, '-');
-                const containerName = `aider-${runtime}-${sanitizedTestName}`;
+                // Replace special characters with underscores (matching DockerManager)
+                const sanitizedTestName = processedTestName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-");
+                // Construct container name matching DockerManager's convention
+                const containerName = `${runtime}-${sanitizedTestName}-aider`;
 
                 aiderTerminal.sendText("clear");
                 setTimeout(() => {
-                    aiderTerminal.sendText(`echo "Connecting to aider process in container: ${containerName}"`);
-                    aiderTerminal.sendText(`docker ps --filter "name=${containerName}" --format "{{.Names}}"`);
+                    aiderTerminal.sendText(`echo "Connecting to aider container: ${containerName}"`);
                     aiderTerminal.sendText(`docker exec -it ${containerName} /bin/bash`);
-                    aiderTerminal.sendText(`echo "Once inside the container, you can run: aider --yes --dark-mode"`);
                 }, 500);
             }
         }
