@@ -1,0 +1,13 @@
+=== Log started at 2026-01-20T03:27:38.552Z for service web-example_calculator-test-ts-static-1 ===
+
+web-example_calculator-test-ts-static-1  | yarn run v1.22.22
+web-example_calculator-test-ts-static-1  | warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
+web-example_calculator-test-ts-static-1  | $ /workspace/node_modules/.bin/tsc --noEmit }
+web-example_calculator-test-ts-static-1  | error TS6231: Could not resolve the path '}' with the extensions: '.ts', '.tsx', '.d.ts', '.cts', '.d.cts', '.mts', '.d.mts'.
+web-example_calculator-test-ts-static-1  |   The file is in the program because:
+web-example_calculator-test-ts-static-1  |     Root file specified for compilation
+web-example_calculator-test-ts-static-1  | error Command failed with exit code 2.
+web-example_calculator-test-ts-static-1  | info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+[Kweb-example_calculator-test-ts-static-1 exited with code 2
+
+=== Log ended at 2026-01-20T03:27:42.624Z, process exited with code 0 ===

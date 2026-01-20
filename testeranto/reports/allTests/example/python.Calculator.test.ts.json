@@ -917,6 +917,7 @@
   "failed": true,
   "features": [
 <<<<<<< HEAD
+<<<<<<< HEAD
     "simple subtraction calculation",
     "division by zero shows error",
     "memory store and recall",
@@ -939,15 +940,29 @@
     "entering a number puts it on the display",
     "starting with operator should work"
 =======
+=======
+    "incomplete addition expression is displayed correctly",
+    "entering a number puts it on the display",
+    "memory addition",
+    "entering a large number works correctly",
+    "invalid expression shows error",
+    "addition expression is displayed correctly",
+    "multiplication expression is displayed correctly",
+    "memory clear",
+    "entering multiple digits concatenates them",
+    "pressing nothing, the display is empty",
+    "simple multiplication calculation",
+    "simple subtraction calculation",
+    "clear operation resets the display",
+    "subtraction expression is displayed correctly",
+>>>>>>> cf41c3b1 (capture logs of services)
     "memory store and recall",
     "starting with operator should work",
-    "division by zero shows error",
-    "division expression is displayed correctly",
     "simple addition calculation",
     "simple division calculation",
-    "incomplete addition expression is displayed correctly",
-    "simple subtraction calculation",
+    "division by zero shows error",
     "multiple operators in sequence",
+<<<<<<< HEAD
     "clear operation resets the display",
     "multiplication expression is displayed correctly",
     "entering a large number works correctly",
@@ -961,6 +976,9 @@
     "addition expression is displayed correctly",
     "invalid expression shows error"
 >>>>>>> 78387009 (add rusto and kafe)
+=======
+    "division expression is displayed correctly"
+>>>>>>> cf41c3b1 (capture logs of services)
   ],
   "artifacts": []
 }
