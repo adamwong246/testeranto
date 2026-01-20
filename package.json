@@ -2,7 +2,7 @@
   "name": "testeranto",
   "displayName": "Testeranto",
   "description": "the Dockerized, AI powered, BDD test framework for polyglot projects",
-  "version": "0.212.0",
+  "version": "0.215.0",
   "engines": {
     "node": ">=20.19.0",
     "vscode": "^1.60.0"
