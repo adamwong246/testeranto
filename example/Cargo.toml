@@ -1,0 +1,24 @@
+[package]
+name = "calculator-example"
+version = "0.1.0"
+edition = "2021"
+description = "Calculator example using Testeranto framework"
+authors = ["Testeranto Team"]
+license = "MIT"
+
+[dependencies]
+rusto = { path = "../src/lib/rusto" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+
+[[bin]]
+name = "calculator"
+path = "Calculator.rs"
+
+[[bin]]
+name = "calculator-test"
+path = "calculator-test.rs"
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["full"] }

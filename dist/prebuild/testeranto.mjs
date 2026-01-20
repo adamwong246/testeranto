@@ -13,6 +13,9 @@ import yaml from "js-yaml";
 import path2 from "path";
 import { promisify } from "util";
 
+// src/runtimes.ts
+var RUN_TIMES = ["node", "web", "python", "golang", "java", "rust"];
+
 // src/server/runtimes/golang/docker.ts
 var golangDockerComposeFile = (config, projectName) => {
   return {
@@ -41,6 +44,36 @@ var golangBuildCommand = () => {
 var golangBddCommand = () => {
   const jsonStr = JSON.stringify({ ports: [1111] });
   return `go run example/cmd/calculator-test`;
+};
+
+// src/server/runtimes/java/docker.ts
+var javaDockerComposeFile = (config, projectName) => {
+  return {
+    build: {
+      context: process.cwd(),
+      dockerfile: config.java.dockerfile
+    },
+    container_name: `java-builder-${projectName}`,
+    environment: {
+      NODE_ENV: "production",
+      ...config.env
+    },
+    working_dir: "/workspace",
+    volumes: [
+      `${process.cwd()}/src:/workspace/src`,
+      `${process.cwd()}/example:/workspace/example`,
+      `${process.cwd()}/dist:/workspace/dist`,
+      `${process.cwd()}/testeranto:/workspace/testeranto`
+    ],
+    command: javaBuildCommand()
+  };
+};
+var javaBuildCommand = () => {
+  return 'cd /workspace && javac -cp ".:lib/*" src/server/runtimes/java/main.java && java -cp "src/server/runtimes/java:." main';
+};
+var javaBddCommand = () => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `java -jar testeranto/bundles/allTests/java/example/Calculator-test.jar '${jsonStr}'`;
 };
 
 // src/server/runtimes/node/docker.ts
@@ -130,6 +163,36 @@ var rubyBuildCommand = () => {
 var rubyBddCommand = () => {
   const jsonStr = JSON.stringify({ ports: [1111] });
   return `ruby example/Calculator-test.rb '${jsonStr}'`;
+};
+
+// src/server/runtimes/rust/docker.ts
+var rustDockerComposeFile = (config, projectName) => {
+  return {
+    build: {
+      context: process.cwd(),
+      dockerfile: config.rust.dockerfile
+    },
+    container_name: `rust-builder-${projectName}`,
+    environment: {
+      NODE_ENV: "production",
+      ...config.env
+    },
+    working_dir: "/workspace",
+    volumes: [
+      `${process.cwd()}/src:/workspace/src`,
+      `${process.cwd()}/example:/workspace/example`,
+      `${process.cwd()}/dist:/workspace/dist`,
+      `${process.cwd()}/testeranto:/workspace/testeranto`
+    ],
+    command: rustBuildCommand()
+  };
+};
+var rustBuildCommand = () => {
+  return "cd /workspace && rustc src/server/runtimes/rust/main.rs -o /tmp/rust-builder && /tmp/rust-builder";
+};
+var rustBddCommand = () => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `testeranto/bundles/allTests/rust/example/Calculator-test.bin '${jsonStr}'`;
 };
 
 // src/server/runtimes/web/docker.ts
@@ -257,7 +320,7 @@ var DockerManager = class {
       command: "aider"
     };
   }
-  generateServices(config, runtimes) {
+  generateServices(config) {
     const services = {};
     services["browser"] = {
       image: "browserless/chrome:latest",
@@ -281,7 +344,7 @@ var DockerManager = class {
       //   start_period: "40s"
       // }
     };
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       if (runtime === "node") {
         services[`${runtime}-builder`] = nodeDockerComposeFile(config, "allTests");
       } else if (runtime === "web") {
@@ -292,6 +355,10 @@ var DockerManager = class {
         services[`${runtime}-builder`] = pythonDockerComposeFile(config, "allTests");
       } else if (runtime === "ruby") {
         services[`${runtime}-builder`] = rubyDockerComposeFile(config, "allTests");
+      } else if (runtime === "rust") {
+        services[`${runtime}-builder`] = rustDockerComposeFile(config, "allTests");
+      } else if (runtime === "java") {
+        services[`${runtime}-builder`] = javaDockerComposeFile(config, "allTests");
       } else {
         throw `unknown runtime ${runtime}`;
       }
@@ -313,6 +380,10 @@ var DockerManager = class {
           bddCommand = pythonBDDCommand(0);
         } else if (runtime === "ruby") {
           bddCommand = rubyBddCommand();
+        } else if (runtime === "rust") {
+          bddCommand = rustBddCommand();
+        } else if (runtime === "java") {
+          bddCommand = javaBddCommand();
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
         services[`${uid}-aider`] = this.aiderDockerComposeFile(config, runtime, `${uid}-aider`);
@@ -1150,8 +1221,7 @@ var Server_Docker = class extends Server_WS {
     } catch (error) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
-    const runtimes = ["node", "web", "golang", "python", "ruby"];
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       const serviceName = `${runtime}-builder`;
       console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
       try {
@@ -1168,7 +1238,7 @@ var Server_Docker = class extends Server_WS {
     }
     console.log(`[Server_Docker] Waiting for browser container to be healthy...`);
     await this.waitForContainerHealthy("browser-allTests", 6e4);
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       let ext = "";
       if (runtime === "node") {
         ext = "ts";
@@ -1180,6 +1250,10 @@ var Server_Docker = class extends Server_WS {
         ext = "py";
       } else if (runtime === "ruby") {
         ext = "rb";
+      } else if (runtime === "rust") {
+        ext = "rs";
+      } else if (runtime === "java") {
+        ext = "java";
       }
       const aiderServiceName = `${runtime}-example_calculator-test-${ext}-aider`;
       console.log(`[Server_Docker] Starting aider service: ${aiderServiceName}`);
@@ -1189,7 +1263,7 @@ var Server_Docker = class extends Server_WS {
         console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
       }
     }
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       const tests = this.configs[runtime]?.tests;
       if (!tests) continue;
       for (const testName in tests) {
@@ -1210,7 +1284,7 @@ var Server_Docker = class extends Server_WS {
         }
       }
     }
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       const tests = this.configs[runtime]?.tests;
       if (!tests) continue;
       for (const testName in tests) {
@@ -1244,10 +1318,8 @@ var Server_Docker = class extends Server_WS {
     const composeDir = path2.join(process.cwd(), "testeranto", "bundles");
     try {
       fs2.mkdirSync(composeDir, { recursive: true });
-      const runtimes = ["node", "web", "golang", "python", "ruby"];
       const services = this.dockerManager.generateServices(
-        config,
-        runtimes
+        config
       );
       this.writeComposeFile(services, testsName2, composeDir);
     } catch (err) {

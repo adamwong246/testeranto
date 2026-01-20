@@ -143,60 +143,6 @@ services:
     command: aider
     networks:
       - default
-  golang-builder:
-    build:
-      context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
-    container_name: golang-builder-allTests
-    environment:
-      NODE_ENV: production
-    working_dir: /workspace
-    volumes:
-      - /Users/adam/Code/testeranto/src:/workspace/src
-      - /Users/adam/Code/testeranto/example:/workspace/example
-      - /Users/adam/Code/testeranto/dist:/workspace/dist
-      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: go run src/server/runtimes/golang/main.go
-    networks:
-      - default
-  golang-example_cmd_calculator-test_main-go-static-0:
-    build:
-      context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
-    container_name: golang-example_cmd_calculator-test_main-go-static-0
-    environment:
-      NODE_ENV: production
-    working_dir: /workspace
-    command: golangci-lint run }
-    networks:
-      - default
-  golang-example_cmd_calculator-test_main-go-bdd:
-    build:
-      context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
-    container_name: golang-example_cmd_calculator-test_main-go-bdd
-    environment:
-      NODE_ENV: production
-    working_dir: /workspace
-    volumes:
-      - /Users/adam/Code/testeranto/src:/workspace/src
-      - /Users/adam/Code/testeranto/example:/workspace/example
-      - /Users/adam/Code/testeranto/dist:/workspace/dist
-      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: go run example/cmd/calculator-test
-    networks:
-      - default
-  golang-example_cmd_calculator-test_main-go-aider:
-    build:
-      context: /Users/adam/Code/testeranto
-      dockerfile: aider.Dockerfile
-    container_name: golang-example_cmd_calculator-test_main-go-aider
-    environment:
-      NODE_ENV: production
-    working_dir: /workspace
-    command: aider
-    networks:
-      - default
   python-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -251,11 +197,11 @@ services:
     command: aider
     networks:
       - default
-  ruby-builder:
+  golang-builder:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/runtimes/ruby/ruby.Dockerfile
-    container_name: ruby-builder-allTests
+      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
+    container_name: golang-builder-allTests
     environment:
       NODE_ENV: production
     working_dir: /workspace
@@ -264,25 +210,25 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: 'ls; pwd; '
+    command: go run src/server/runtimes/golang/main.go
     networks:
       - default
-  ruby-example_calculator-test-ruby-rb-static-0:
+  golang-example_cmd_calculator-test_main-go-static-0:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/runtimes/ruby/ruby.Dockerfile
-    container_name: ruby-example_calculator-test-ruby-rb-static-0
+      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
+    container_name: golang-example_cmd_calculator-test_main-go-static-0
     environment:
       NODE_ENV: production
     working_dir: /workspace
-    command: 'rubocop '
+    command: golangci-lint run }
     networks:
       - default
-  ruby-example_calculator-test-ruby-rb-bdd:
+  golang-example_cmd_calculator-test_main-go-bdd:
     build:
       context: /Users/adam/Code/testeranto
-      dockerfile: testeranto/runtimes/ruby/ruby.Dockerfile
-    container_name: ruby-example_calculator-test-ruby-rb-bdd
+      dockerfile: testeranto/runtimes/golang/golang.Dockerfile
+    container_name: golang-example_cmd_calculator-test_main-go-bdd
     environment:
       NODE_ENV: production
     working_dir: /workspace
@@ -291,14 +237,144 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: ruby example/Calculator-test.rb '{"ports":[1111]}'
+    command: go run example/cmd/calculator-test
     networks:
       - default
-  ruby-example_calculator-test-ruby-rb-aider:
+  golang-example_cmd_calculator-test_main-go-aider:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: aider.Dockerfile
-    container_name: ruby-example_calculator-test-ruby-rb-aider
+    container_name: golang-example_cmd_calculator-test_main-go-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
+  java-builder:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/java/java.Dockerfile
+    container_name: java-builder-allTests
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: cd /workspace && javac -cp ".:lib/*" src/server/runtimes/java/main.java && java -cp "src/server/runtimes/java:." main
+    networks:
+      - default
+  java-example_calculator-test-java-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/java/java.Dockerfile
+    container_name: java-example_calculator-test-java-static-0
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: yarn eslint}
+    networks:
+      - default
+  java-example_calculator-test-java-static-1:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/java/java.Dockerfile
+    container_name: java-example_calculator-test-java-static-1
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: yarn tsc --noEmit }
+    networks:
+      - default
+  java-example_calculator-test-java-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/java/java.Dockerfile
+    container_name: java-example_calculator-test-java-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: java -jar testeranto/bundles/allTests/java/example/Calculator-test.jar '{"ports":[1111]}'
+    networks:
+      - default
+  java-example_calculator-test-java-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: java-example_calculator-test-java-aider
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: aider
+    networks:
+      - default
+  rust-builder:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/rust/rust.Dockerfile
+    container_name: rust-builder-allTests
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: cd /workspace && rustc src/server/runtimes/rust/main.rs -o /tmp/rust-builder && /tmp/rust-builder
+    networks:
+      - default
+  rust-example_calculator-test-rs-static-0:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/rust/rust.Dockerfile
+    container_name: rust-example_calculator-test-rs-static-0
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: yarn eslint}
+    networks:
+      - default
+  rust-example_calculator-test-rs-static-1:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/rust/rust.Dockerfile
+    container_name: rust-example_calculator-test-rs-static-1
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    command: yarn tsc --noEmit }
+    networks:
+      - default
+  rust-example_calculator-test-rs-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/rust/rust.Dockerfile
+    container_name: rust-example_calculator-test-rs-bdd
+    environment:
+      NODE_ENV: production
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: testeranto/bundles/allTests/rust/example/Calculator-test.bin '{"ports":[1111]}'
+    networks:
+      - default
+  rust-example_calculator-test-rs-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: rust-example_calculator-test-rs-aider
     environment:
       NODE_ENV: production
     working_dir: /workspace

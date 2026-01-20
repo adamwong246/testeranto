@@ -11,6 +11,18 @@ const config: ITestconfig = {
   ports: ["3333", "3334"],
   src: "",
 
+
+  rust: createLangConfig("example/Calculator.test.rs", [
+    (x) => `yarn eslint}`,
+    (x) => `yarn tsc --noEmit }`,
+  ], `testeranto/runtimes/rust/rust.Dockerfile`, { volumes: ['eslint.config.mjs'] }),
+
+
+  java: createLangConfig("example/Calculator.test.java", [
+    (x) => `yarn eslint}`,
+    (x) => `yarn tsc --noEmit }`,
+  ], `testeranto/runtimes/java/java.Dockerfile`, { volumes: ['eslint.config.mjs'] }),
+
   ruby: createLangConfig("example/calculator-test-ruby.rb", [
     (x: string[]) => `rubocop`,
   ], `testeranto/runtimes/ruby/ruby.Dockerfile`

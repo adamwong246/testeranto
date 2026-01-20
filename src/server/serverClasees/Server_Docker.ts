@@ -8,6 +8,7 @@ import { IBuiltConfig, IRunTime } from "../../Types";
 import { DockerManager, IDockerComposeResult, IService } from "../serverManagers/DockerManager";
 import { IMode } from "../types";
 import { Server_WS } from "./Server_WS";
+import { RUN_TIMES } from "../../runtimes";
 
 export class Server_Docker extends Server_WS {
 
@@ -48,11 +49,8 @@ export class Server_Docker extends Server_WS {
     } catch (error: any) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
-
-    const runtimes: IRunTime[] = ["node", "web", "golang", "python", "ruby"];
-
     // Start builder services
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       const serviceName = `${runtime}-builder`;
       console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
       try {
@@ -75,7 +73,7 @@ export class Server_Docker extends Server_WS {
     await this.waitForContainerHealthy('browser-allTests', 60000); // 60 seconds max
 
     // Start aider services
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
 
       let ext = "";
       if (runtime === "node") {
@@ -88,6 +86,10 @@ export class Server_Docker extends Server_WS {
         ext = "py"
       } else if (runtime === "ruby") {
         ext = "rb"
+      } else if (runtime === "rust") {
+        ext = "rs"
+      } else if (runtime === "java") {
+        ext = "java"
       }
       const aiderServiceName = `${runtime}-example_calculator-test-${ext}-aider`; //`${runtime}-aider`;
 
@@ -100,7 +102,7 @@ export class Server_Docker extends Server_WS {
     }
 
     // Start BDD test services
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       const tests = this.configs[runtime]?.tests;
       if (!tests) continue;
 
@@ -127,7 +129,7 @@ export class Server_Docker extends Server_WS {
     }
 
     // Start static test services
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       const tests = this.configs[runtime]?.tests;
       if (!tests) continue;
 
@@ -206,13 +208,12 @@ export class Server_Docker extends Server_WS {
 
       // Generate Dockerfiles for each runtime
       // Note: runtimes needs to be defined - we'll get it from config
-      const runtimes: IRunTime[] = ["node", "web", "golang", "python", "ruby"];
+      // const runtimes: IRunTime[] = ["node", "web", "golang", "python", "ruby"];
       // deprecated 
       // this.generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);
 
       const services = this.dockerManager.generateServices(
         config,
-        runtimes,
       );
 
       this.writeComposeFile(services, testsName, composeDir);

@@ -1,10 +1,13 @@
 // Do not allow imports from outside the project (fs, exec, ws, etc)
 
+import { RUN_TIMES } from "../../runtimes";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { golangBddCommand, golangDockerComposeFile } from "../runtimes/golang/docker";
+import { javaBddCommand, javaDockerComposeFile } from "../runtimes/java/docker";
 import { nodeDockerComposeFile, nodeBddCommand } from "../runtimes/node/docker";
 import { pythonBDDCommand, pythonDockerComposeFile } from "../runtimes/python/docker";
 import { rubyBddCommand, rubyDockerComposeFile } from "../runtimes/ruby/docker";
+import { rustBddCommand, rustDockerComposeFile } from "../runtimes/rust/docker";
 import { webBddCommand, webDockerComposeFile } from "../runtimes/web/docker";
 
 export type IService = any;
@@ -120,7 +123,6 @@ export class DockerManager {
 
   generateServices(
     config: IBuiltConfig,
-    runtimes: IRunTime[],
   ): Record<string, any> {
     const services: IService = {};
 
@@ -148,7 +150,7 @@ export class DockerManager {
       // }
     };
 
-    for (const runtime of runtimes) {
+    for (const runtime of RUN_TIMES) {
       if (runtime === "node") {
         services[`${runtime}-builder`] = nodeDockerComposeFile(config, 'allTests');
       } else if (runtime === "web") {
@@ -159,6 +161,10 @@ export class DockerManager {
         services[`${runtime}-builder`] = pythonDockerComposeFile(config, 'allTests');
       } else if (runtime === "ruby") {
         services[`${runtime}-builder`] = rubyDockerComposeFile(config, 'allTests');
+      } else if (runtime === "rust") {
+        services[`${runtime}-builder`] = rustDockerComposeFile(config, 'allTests');
+      } else if (runtime === "java") {
+        services[`${runtime}-builder`] = javaDockerComposeFile(config, 'allTests');
       } else {
         throw `unknown runtime ${runtime}`;
       }
@@ -188,6 +194,10 @@ export class DockerManager {
           bddCommand = pythonBDDCommand(0);
         } else if (runtime === 'ruby') {
           bddCommand = rubyBddCommand();
+        } else if (runtime === 'rust') {
+          bddCommand = rustBddCommand();
+        } else if (runtime === 'java') {
+          bddCommand = javaBddCommand();
         }
         services[`${uid}-bdd`] = this.bddTestDockerComposeFile(config, runtime, `${uid}-bdd`, bddCommand);
 
