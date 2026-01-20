@@ -916,6 +916,7 @@
   "fails": 21,
   "failed": true,
   "features": [
+<<<<<<< HEAD
     "simple subtraction calculation",
     "division by zero shows error",
     "memory store and recall",
@@ -937,6 +938,29 @@
     "simple multiplication calculation",
     "entering a number puts it on the display",
     "starting with operator should work"
+=======
+    "memory store and recall",
+    "starting with operator should work",
+    "division by zero shows error",
+    "division expression is displayed correctly",
+    "simple addition calculation",
+    "simple division calculation",
+    "incomplete addition expression is displayed correctly",
+    "simple subtraction calculation",
+    "multiple operators in sequence",
+    "clear operation resets the display",
+    "multiplication expression is displayed correctly",
+    "entering a large number works correctly",
+    "entering multiple digits concatenates them",
+    "simple multiplication calculation",
+    "subtraction expression is displayed correctly",
+    "memory addition",
+    "entering a number puts it on the display",
+    "memory clear",
+    "pressing nothing, the display is empty",
+    "addition expression is displayed correctly",
+    "invalid expression shows error"
+>>>>>>> 78387009 (add rusto and kafe)
   ],
   "artifacts": []
 }

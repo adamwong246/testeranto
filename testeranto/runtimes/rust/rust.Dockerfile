@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM rust:1.75-alpine3.19
+FROM rust:1.75-alpine
 
 WORKDIR /workspace
 

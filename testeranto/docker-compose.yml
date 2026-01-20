@@ -26,7 +26,7 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js
+    command: node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/testeranto/runtimes/node/node.ts
     networks:
       - allTests_network
   nodetests-example_calculator-test-ts-aider:

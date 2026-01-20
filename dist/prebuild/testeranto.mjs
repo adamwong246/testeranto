@@ -10,9 +10,6 @@ import yaml from "js-yaml";
 import path2 from "path";
 import { promisify } from "util";
 
-// src/runtimes.ts
-var RUN_TIMES = ["node", "web", "python", "golang", "java", "rust", "ruby"];
-
 // src/server/runtimes/golang/docker.ts
 var golangDockerComposeFile = (config, container_name) => {
   return {
@@ -888,6 +885,9 @@ var Server_WS = class extends Server_HTTP {
     }
   }
 };
+
+// src/runtimes.ts
+var RUN_TIMES = ["node", "web", "python", "golang", "java", "rust", "ruby"];
 
 // src/server/serverClasees/Server_Docker.ts
 var Server_Docker = class extends Server_WS {
