@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Ibdd_in_any } from "../../CoreTypes";
+import { Ibdd_in_any } from "../../../CoreTypes";
 import { BaseThen } from "../BaseThen";
 
 export class MockThen<I extends Ibdd_in_any> extends BaseThen<I> {
@@ -14,8 +12,7 @@ export class MockThen<I extends Ibdd_in_any> extends BaseThen<I> {
   async butThen(
     store: I["istore"],
     thenCB: (s: I["iselection"]) => Promise<I["isubject"]>,
-    testResourceConfiguration: any,
-    pm: any
+    testResourceConfiguration: any
   ): Promise<I["iselection"]> {
     // The thenCB expects a selection, not the store directly
     // We need to extract the selection from the store

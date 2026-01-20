@@ -1,30 +1,19 @@
-import { AiderPoolClient } from './AiderPoolClient';
 import fs from 'fs';
 import path from 'path';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 export class AiderIntegration {
-  private aiderPoolClient: AiderPoolClient;
-  private aiderWatchers: Map<string, fs.FSWatcher> = new Map();
+  private aiderProcesses: Map<string, any> = new Map();
 
-  constructor(wsUrl: string = 'ws://localhost:8765') {
-    this.aiderPoolClient = new AiderPoolClient(wsUrl);
+  constructor() {
+    // No WebSocket client needed
   }
 
   async initialize(): Promise<void> {
-    try {
-      await this.aiderPoolClient.connect();
-      console.log('Aider pool client connected');
-      
-      // Listen for instance creation
-      this.aiderPoolClient.on('instance_created', (instanceInfo) => {
-        console.log(`Aider instance created: ${instanceInfo.instance_id} for ${instanceInfo.test_name}`);
-        
-        // Start watching metafile for changes
-        this.watchMetafileForInstance(instanceInfo);
-      });
-    } catch (err) {
-      console.warn('Could not connect to aider pool:', (err as Error).message);
-    }
+    console.log('Aider integration initialized (direct command mode)');
   }
 
   async createAiderForTest(
@@ -32,63 +21,45 @@ export class AiderIntegration {
     runtime: string,
     metafilePath?: string
   ): Promise<void> {
-    let initialFiles: string[] = [];
-    
-    if (metafilePath) {
-      initialFiles = this.aiderPoolClient.extractFilesFromMetafile(metafilePath);
-    }
-    
-    try {
-      const instanceInfo = await this.aiderPoolClient.createAiderInstance(
-        testName,
-        runtime,
-        initialFiles
-      );
-      
-      console.log(`Aider instance ready. Connect with:`);
-      console.log(`  nc localhost ${instanceInfo.terminal_port}`);
-      console.log(`Or use the terminal bridge`);
-      
-    } catch (error) {
-      console.error(`Failed to create aider instance:`, error);
-    }
+    console.log(`Aider integration: createAiderForTest called for ${testName} (${runtime})`);
+    // Note: Aider processes are now managed by Server_ProcessManager
+    // This method is kept for compatibility but does nothing
+    console.log(`Aider processes are now managed by the ProcessManager`);
   }
 
-  private watchMetafileForInstance(instanceInfo: any): void {
-    const metafilePath = path.join(
-      process.cwd(),
-      'testeranto',
-      'metafiles',
-      instanceInfo.runtime,
-      'allTests.json'
-    );
-    
-    if (!fs.existsSync(metafilePath)) {
-      return;
-    }
-    
-    const watcher = fs.watch(metafilePath, async (eventType) => {
-      if (eventType === 'change') {
-        console.log(`Metafile changed for ${instanceInfo.test_name}, updating aider context...`);
-        await this.aiderPoolClient.updateFilesFromMetafile(
-          instanceInfo.instance_id,
-          metafilePath
+  private extractFilesFromMetafile(metafilePath: string): string[] {
+    try {
+      const metafileContent = fs.readFileSync(metafilePath, 'utf-8');
+      const metafile = JSON.parse(metafileContent);
+
+      // Extract source files
+      return Object.keys(metafile.inputs || {})
+        .filter(
+          (file) =>
+            file.endsWith('.ts') ||
+            file.endsWith('.js') ||
+            file.endsWith('.py') ||
+            file.endsWith('.go')
+        )
+        .map((file) =>
+          path.relative(process.cwd(), path.join(process.cwd(), file))
         );
-      }
-    });
-    
-    // Store watcher for cleanup
-    this.aiderWatchers.set(instanceInfo.instance_id, watcher);
+    } catch (error) {
+      console.error(`Error extracting files from metafile:`, error);
+      return [];
+    }
   }
 
   cleanup(): void {
-    // Clean up all watchers
-    for (const [instanceId, watcher] of this.aiderWatchers) {
-      watcher.close();
+    // Clean up all aider processes
+    for (const [processId, process] of this.aiderProcesses) {
+      try {
+        process.kill();
+        console.log(`Stopped aider process: ${processId}`);
+      } catch (error) {
+        console.error(`Failed to stop aider process ${processId}:`, error);
+      }
     }
-    this.aiderWatchers.clear();
-    
-    // Disconnect from aider pool
-    this.aiderPoolClient.disconnect();
+    this.aiderProcesses.clear();
   }
 }

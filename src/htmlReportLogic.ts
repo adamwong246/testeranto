@@ -59,7 +59,7 @@ export const generateHtmlContent = (params: HtmlGenerationParams): string => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Report: ${sourceFileNameMinusExtension}</title>
 
-    <link rel="stylesheet" href="${relativeReportCssUrl}" />
+    <link rel="stylesheet" href="/dist/prebuild/style.css" />
 
     <style>
         body {
@@ -72,7 +72,7 @@ export const generateHtmlContent = (params: HtmlGenerationParams): string => {
             margin: 0 auto;
         }
     </style>
-    <script src="${relativeReportJsUrl}"></script>
+    <script src="/dist/prebuild/frontend/Report.js"></script>
 </head>
 <body>
     <div id="react-report-root"></div>

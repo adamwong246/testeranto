@@ -1,0 +1,3 @@
+# docker compose and docker
+
+Testeranto models many processes in the form of docker containers within a docker compose arrangement. There is 1 builder for each runtime, and for each runtime, a bdd test plus zero or more static tests. Each runtime has an associated dockerfile (see node.Dockerfile), which serves as the base for the builder, bdd test and static tests. The CMD of the dockerfile is taken to mean the running of the artifact, but for each the builder, bdd, and static, this CMD is discarded in favor of system provided CMDs (bdd tests) or user provided (static tests) (see allTests.ts)

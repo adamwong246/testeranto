@@ -4,7 +4,7 @@
   "metafile": {
     "inputs": {
       "example/Calculator.pitono.test.py": {
-        "bytes": 6085,
+        "bytes": 3916,
         "imports": [
           {
             "path": "sys",
@@ -17,34 +17,79 @@
             "external": true
           },
           {
+            "path": "asyncio",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "importlib.util",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
             "path": "Calculator",
             "kind": "import-statement",
             "external": false
+          },
+          {
+            "path": "pitono.Pitono",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "traceback",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "json",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "Pitono",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "traceback",
+            "kind": "import-statement",
+            "external": true
           }
-        ]
+        ],
+        "hash": "4b5f9987534d2dc8fca026db274d7ba2"
       },
       "example/Calculator.py": {
         "bytes": 3550,
-        "imports": []
+        "imports": [],
+        "hash": "8d2bc5521bf8e1f1a81502c94cf6bc8b"
       }
     },
     "outputs": {
-      "python/Calculator.pitono.test.py": {
+      "python/Calculator.pitono.test.json": {
         "imports": [],
         "exports": [],
         "entryPoint": "example/Calculator.pitono.test.py",
         "inputs": {
           "example/Calculator.pitono.test.py": {
-            "bytesInOutput": 6085
+            "bytesInOutput": 3916,
+            "hash": "4b5f9987534d2dc8fca026db274d7ba2"
           },
           "example/Calculator.py": {
-            "bytesInOutput": 3550
+            "bytesInOutput": 3550,
+            "hash": "8d2bc5521bf8e1f1a81502c94cf6bc8b"
           }
         },
-        "bytes": 9635,
-        "signature": "e055d8b1",
-        "bundlePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundled.py",
-        "bundleSize": 9655
+        "bytes": 7466,
+        "signature": "09efc349b487d141a5b91dbc197b7a6d",
+        "bundlePath": "/workspace/testeranto/bundles/allTests/python/example/Calculator.pitono.test.py-inputFiles.json",
+        "bundleSize": 70,
+        "combinedHash": "09efc349b487d141a5b91dbc197b7a6d",
+        "inputFiles": [
+          "example/Calculator.pitono.test.py",
+          "example/Calculator.py"
+        ],
+        "textFilePath": "/workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.txt"
       }
     }
   }

@@ -1,9 +1,12 @@
 module example
 
-go 1.19
+// LEAVE THIS AS ONE POINT TWENTY
+go 1.20
 
 replace github.com/adamwong246/testeranto => ../
 
-require github.com/adamwong246/testeranto/src/golingvu v0.0.0-20251009224308-c2fde1410839
+replace github.com/adamwong246/testeranto/src/golingvu => ../src/lib/golingvu
 
-require github.com/golangci/golangci-lint v1.60.3
+require (
+	github.com/adamwong246/testeranto/src/golingvu v0.0.0
+)

@@ -1,4 +1,4 @@
-import { Ibdd_in_any, ITestAdapter, Ibdd_out_any } from "../CoreTypes";
+import { Ibdd_in_any, ITestAdapter, Ibdd_out_any } from "../../CoreTypes";
 import { IGivens } from "./BaseGiven";
 import { BaseSuite } from "./BaseSuite";
 
@@ -51,6 +51,9 @@ export type ITestResourceConfiguration = {
   fs: string;
   ports: number[];
   files: string[];
+  timeout?: number;
+  retries?: number;
+  environment?: Record<string, any>;
 };
 
 export type ITTestResourceRequirement = {

@@ -18,3 +18,9 @@ example/lib
 example/lib/python3.12
 example/lib/python3.12/site-packages
 testeranto/reports/allTests/docker-logs/**/*
+
+# VS Code Extension
+*.vsix
+.vscode-test/
+out/
+!dist/vscode/extension.js

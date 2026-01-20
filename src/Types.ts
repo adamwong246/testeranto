@@ -1,10 +1,11 @@
-import { Plugin } from "esbuild";
-import { ITestResourceConfiguration } from "./tiposkripto/index.js";
-import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
-import { BaseSuite } from "./tiposkripto/BaseSuite.js";
-import { IGivens, BaseGiven } from "./tiposkripto/BaseGiven.js";
-import { BaseThen } from "./tiposkripto/BaseThen.js";
-import { BaseWhen } from "./tiposkripto/BaseWhen.js";
+import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes";
+import { ITestResourceConfiguration } from "./lib/tiposkripto";
+import { IGivens, BaseGiven } from "./lib/tiposkripto/BaseGiven";
+import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
+import { BaseThen } from "./lib/tiposkripto/BaseThen";
+import { BaseWhen } from "./lib/tiposkripto/BaseWhen";
+
+export type IChecks = ((x: any) => string)[];
 
 export type ISummary = Record<
   string,
@@ -26,11 +27,11 @@ export type SuiteSpecification<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["suites"]]: (
-    name: string,
-    givens: IGivens<I>
-  ) => BaseSuite<I, O>;
-};
+    [K in keyof O["suites"]]: (
+      name: string,
+      givens: IGivens<I>
+    ) => BaseSuite<I, O>;
+  };
 
 // Simplified test result summary
 export type TestSummary = {
@@ -105,13 +106,13 @@ export type GivenSpecification<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["givens"]]: (
-    features: string[],
-    whens: BaseWhen<I>[],
-    thens: BaseThen<I>[],
-    ...xtrasB: O["givens"][K]
-  ) => BaseGiven<I>;
-};
+    [K in keyof O["givens"]]: (
+      features: string[],
+      whens: BaseWhen<I>[],
+      thens: BaseThen<I>[],
+      ...xtrasB: O["givens"][K]
+    ) => BaseGiven<I>;
+  };
 
 export type WhenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
   [K in keyof O["whens"]]: (...xtrasC: O["whens"][K]) => BaseWhen<I>;
@@ -132,29 +133,29 @@ export type TestGivenImplementation<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
-};
+    [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+  };
 
 export type TestWhenImplementation<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["whens"]]: (
-    ...Iw: O["whens"][K]
-  ) => (
-    zel: I["iselection"],
-    tr: ITestResourceConfiguration
-  ) => Promise<I["when"]>;
-};
+    [K in keyof O["whens"]]: (
+      ...Iw: O["whens"][K]
+    ) => (
+      zel: I["iselection"],
+      tr: ITestResourceConfiguration
+    ) => Promise<I["when"]>;
+  };
 
 export type TestThenImplementation<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any
 > = {
-  [K in keyof O["thens"]]: (
-    ...It: O["thens"][K]
-  ) => (ssel: I["iselection"]) => I["then"];
-};
+    [K in keyof O["thens"]]: (
+      ...It: O["thens"][K]
+    ) => (ssel: I["iselection"]) => I["then"];
+  };
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -168,7 +169,7 @@ export type IPluginFactory = (
   entrypoints?: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | `golang` | `python`;
+export type IRunTime = `node` | `web` | `golang` | `python` | `ruby`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
@@ -176,48 +177,35 @@ export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
 
 export type ITestconfig = {
   httpPort: number;
-  chromiumPort: number;
+
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
   ports: string[];
   src: string;
   check: string;
 
+  ruby: {
+    plugins: any[];
+    tests: Record<string, { ports: number }>;
+    loaders: Record<string, string>;
+    checks: IChecks;
+    dockerfile: string;
+  };
+
   golang: {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // build?: Itest; // Separate build for Go
-    // monitoring?: {
-    //   // Go-specific monitoring options
-    //   captureTestOutput?: boolean;
-    //   captureCoverage?: boolean;
-    // };
+    checks: IChecks;
+    dockerfile: string;
   };
 
   python: {
     plugins: any[];
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // processPool?: {
-    //   maxConcurrent: number;
-    //   timeoutMs: number;
-    // };
-    // monitoring?: {
-    //   // Python-specific monitoring options
-    //   capturePytestOutput?: boolean;
-    //   captureLogging?: boolean;
-    // };
+    checks: IChecks;
+    dockerfile: string;
   };
 
   node: {
@@ -225,20 +213,8 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // processPool?: {
-    //   maxConcurrent: number;
-    //   timeoutMs: number;
-    // };
-    // monitoring?: {
-    //   // Node-specific monitoring options
-    //   captureConsole?: boolean;
-    //   captureUncaughtExceptions?: boolean;
-    // };
+    checks: IChecks;
+    dockerfile: string;
   };
 
   web: {
@@ -246,28 +222,8 @@ export type ITestconfig = {
     tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
-    // flavor: IFlavor;
-    // strategy: IStrategy;
-    // test: Itest;
-    // prod: IProd;
-    check: string;
-    // chrome?: {
-    //   sharedInstance: boolean;
-    //   maxContexts: number;
-    //   memoryLimitMB: number;
-    //   monitoring?: {
-    //     captureConsole?: boolean;
-    //     captureNetwork?: boolean;
-    //     captureErrors?: boolean;
-    //     wsEndpoint?: string;
-    //   };
-    // };
-    // monitoring?: {
-    //   // Web-specific monitoring options
-    //   capturePageErrors?: boolean;
-    //   captureNetworkRequests?: boolean;
-    //   captureConsoleMessages?: boolean;
-    // };
+    checks: IChecks;
+    dockerfile: string;
   };
 };
 

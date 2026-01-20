@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React from "react";
 import {
   Container,
 } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { useWebSocket } from "../app/frontend/useWebSocket";
+// import { useWebSocket } from "../app/frontend/useWebSocket";
 
 type AppFrameProps = {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ type AppFrameProps = {
 
 export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const location = useLocation();
-  const { isConnected } = useWebSocket();
+  // const { isConnected } = useWebSocket();
   return (
     <div className="d-flex min-vh-100">
 

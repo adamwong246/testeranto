@@ -7,38 +7,34 @@ const config: ITestconfig = {
   },
   importPlugins: [],
   httpPort: 3456,
-  chromiumPort: 4567,
+
   ports: ["3333", "3334"],
   src: "",
 
-  // processPool: {
-  //   maxConcurrent: 4,
-  //   timeoutMs: 30000,
-  // },
+  ruby: createLangConfig("example/calculator-test-ruby.rb", [
+    (x: string[]) => `rubocop`,
+  ], `testeranto/runtimes/ruby/ruby.Dockerfile`
+  ),
 
-  // chrome: {
-  //   sharedInstance: true,
-  //   maxContexts: 6,
-  //   memoryLimitMB: 512,
-  // },
-
-  golang: createLangConfig("example/Calculator.golingvu.test.go", [
-    (x) => `cd /workspace/example && golangci-lint run ${x.replace('example/', '')}`,
-  ]),
+  golang: createLangConfig("example/cmd/calculator-test/main.go", [
+    (x) => `golangci-lint run }`,
+  ], `testeranto/runtimes/golang/golang.Dockerfile`
+  ),
 
   python: createLangConfig("example/Calculator.pitono.test.py", [
-    (x) => `pylint ${x}`,
-  ]),
+    (x) => `pylint }`,
+  ], `python.Dockerfile`),
 
   web: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x}`,
-    (x) => `yarn tsc --noEmit ${x}`,
-  ]),
+    (x) => `yarn eslint}`,
+    (x) => `yarn tsc --noEmit }`,
+  ], `web.Dockerfile`, { volumes: ['eslint.config.mjs'] }),
 
   node: createLangConfig("example/Calculator.test.ts", [
-    (x) => `yarn eslint ${x}`,
-    (x) => `yarn tsc --noEmit ${x}`,
-  ]),
+    (x) => `yarn eslint }`,
+    (x) => `yarn tsc --noEmit }`,
+  ], `node.Dockerfile`, { volumes: ['eslint.config.mjs'] }),
+  check: ""
 };
 
 export default config;

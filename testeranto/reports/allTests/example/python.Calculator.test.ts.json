@@ -1,0 +1,942 @@
+{
+  "name": "Testing Calculator operations",
+  "givens": [
+    {
+      "key": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "pressing nothing, the display is empty"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "entering a number puts it on the display"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "entering multiple digits concatenates them"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "entering a large number works correctly"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "addition expression is displayed correctly"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "incomplete addition expression is displayed correctly"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "subtraction expression is displayed correctly"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "multiplication expression is displayed correctly"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "division expression is displayed correctly"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "simple addition calculation"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "simple subtraction calculation"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "simple multiplication calculation"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "simple division calculation"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "clear operation resets the display"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "starting with operator should work"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "multiple operators in sequence"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "division by zero shows error"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "invalid expression shows error"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "memory store and recall"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "memory clear"
+      ],
+      "artifacts": [],
+      "status": false
+    },
+    {
+      "key": "Default",
+      "whens": [
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press",
+          "status": null,
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result",
+          "error": false,
+          "artifacts": [],
+          "status": null
+        }
+      ],
+      "error": "object Calculator can't be used in 'await' expression",
+      "failed": true,
+      "features": [
+        "memory addition"
+      ],
+      "artifacts": [],
+      "status": false
+    }
+  ],
+  "fails": 21,
+  "failed": true,
+  "features": [
+    "entering a large number works correctly",
+    "simple division calculation",
+    "starting with operator should work",
+    "invalid expression shows error",
+    "memory addition",
+    "simple multiplication calculation",
+    "multiplication expression is displayed correctly",
+    "addition expression is displayed correctly",
+    "multiple operators in sequence",
+    "clear operation resets the display",
+    "entering multiple digits concatenates them",
+    "pressing nothing, the display is empty",
+    "simple addition calculation",
+    "incomplete addition expression is displayed correctly",
+    "subtraction expression is displayed correctly",
+    "division by zero shows error",
+    "simple subtraction calculation",
+    "entering a number puts it on the display",
+    "memory clear",
+    "division expression is displayed correctly",
+    "memory store and recall"
+  ],
+  "artifacts": []
+}

@@ -1,266 +1,307 @@
-import { WebSocket } from "ws";
+// Gives the server websocket capabilities
+
+import { WebSocket, WebSocketServer } from "ws";
+import { WsManager } from "../serverManagers/WsManager";
 import { IMode } from "../types";
-import {
-  ERROR_MESSAGES,
-  SERVER_CONSTANTS,
-  WEBSOCKET_MESSAGE_TYPES,
-} from "./utils/Server_TCP_constants";
 import { Server_HTTP } from "./Server_HTTP";
-import {
-  handlePromiseResult,
-  prepareCommandArgs,
-  sendErrorResponse,
-} from "./utils/Server_TCP_utils";
-import { WebSocketMessage } from "./utils/types";
 
 export class Server_WS extends Server_HTTP {
-  processLogs: any;
-  clients: any;
-  allProcesses: any;
-  runningProcesses: any;
+  protected ws: WebSocketServer;
+  protected wsClients: Set<WebSocket> = new Set();
+  wsManager: WsManager
 
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
 
-    if (!this.clients) {
-      this.clients = new Set();
-    }
+    this.ws = new WebSocketServer({
+      noServer: true,
+    });
+
+    this.wsManager = new WsManager()
 
     this.setupWebSocketHandlers();
   }
 
-  protected setupWebSocketHandlers(): void {
-    if (!this.wss) {
-      console.error(
-        `[WebSocket] ERROR: WebSocket server (wss) is not initialized!`
-      );
-      return;
-    }
-    const address = this.httpServer.address();
-    const host = SERVER_CONSTANTS.HOST;
-    let port = 3456;
-    if (address && typeof address === "object") {
-      port = address.port;
-    }
-
-    this.wss.on("connection", (ws, req) => {
-      console.log(
-        `[WebSocket] Client connected from: ${req.socket.remoteAddress}, URL: ${req.url}`
-      );
-      this.clients.add(ws);
-      console.log(`[WebSocket] Total clients: ${this.clients.size}`);
-
-      // For debugging: send a test greeting if no message is received within 2 seconds
-      const timeoutId = setTimeout(() => {
-        console.log(
-          `[WebSocket] No greeting received after 2 seconds, sending test greeting`
-        );
-        const testGreeting = {
-          type: "greeting",
-          data: {
-            testId: `test-${Date.now()}`,
-            testName: "DebugTest",
-            runtime: "node",
-          },
-        };
-        console.log(`[WebSocket] Simulating greeting:`, testGreeting);
-        // Simulate receiving the greeting message
-        this.handleWebSocketMessage(JSON.stringify(testGreeting), ws);
-      }, 2000);
-
-      ws.on("message", (data) => {
-        // Clear the timeout since we received a message
-        clearTimeout(timeoutId);
-        console.log(
-          `[WebSocket] Received message from client: ${data
-            .toString()
-            .substring(0, 100)}...`
-        );
-        try {
-          this.handleWebSocketMessage(data, ws);
-        } catch (error) {
-          console.error("[WebSocket] Error handling WebSocket message:", error);
-        }
-      });
-
-      ws.on("close", () => {
-        console.log(`[WebSocket] Client disconnected`);
-        this.clients.delete(ws);
-        clearTimeout(timeoutId);
-        console.log(`[WebSocket] Total clients: ${this.clients.size}`);
-      });
-
-      ws.on("error", (error) => {
-        console.error(`[WebSocket] WebSocket error:`, error);
-        this.clients.delete(ws);
-        clearTimeout(timeoutId);
-        console.log(`[WebSocket] Total clients: ${this.clients.size}`);
-      });
-    });
-  }
-
-  protected handleWebSocketMessage(data: any, ws: WebSocket): void {
-    try {
-      const rawData = data.toString();
-
-      let parsed;
-      try {
-        parsed = JSON.parse(rawData);
-      } catch (parseError) {
-        console.error(
-          "[WebSocket] Failed to parse WebSocket message as JSON:",
-          rawData.substring(0, 200),
-          parseError
-        );
-        return;
-      }
-
-      if (Array.isArray(parsed)) {
-        console.error(ERROR_MESSAGES.IPC_FORMAT_NO_LONGER_SUPPORTED);
-        console.error("[WebSocket] Received array message:", parsed);
-        ws.send(
-          JSON.stringify({
-            error: ERROR_MESSAGES.IPC_FORMAT_NO_LONGER_SUPPORTED,
-            received: parsed,
-          })
-        );
-        return;
-      }
-
-      const wsm: WebSocketMessage = parsed;
-      // console.log(`[WebSocket] Parsed message type: ${wsm.type}`);
-
-      // // Check if it's a FileService method
-      // let handled = false;
-      // FileService_methods.forEach((fsm) => {
-      //   if (wsm.type === fsm) {
-      //     console.log("[WebSocket] Handling as FileService method:", fsm);
-      //     (this as any)[fsm](wsm, ws);
-      //     handled = true;
-      //   }
-      // });
-      // if (handled) return;
-
-      // Handle commands from PM_Node and PM_Web
-      if (wsm.type && typeof (this as any)[wsm.type] === "function") {
-        const { data: commandData, key } = wsm;
-        const args = prepareCommandArgs(commandData);
-
-        try {
-          const result = (this as any)[wsm.type](...args);
-          console.log(`[WebSocket] Command ${wsm.type} returned:`, result);
-          if (result instanceof Promise) {
-            handlePromiseResult(result, wsm.type, key, ws);
-          } else {
-            ws.send(
-              JSON.stringify({
-                key: key,
-                payload: result,
-              })
-            );
-          }
-        } catch (error) {
-          console.error(
-            `[WebSocket] Error executing command ${wsm.type}:`,
-            error
-          );
-          sendErrorResponse(ws, key, error);
-        }
-        return;
-      }
-
-      // Handle other message types
-      this.handleWebSocketMessageTypes(wsm, ws);
-    } catch (error) {
-      console.error("[WebSocket] Error handling WebSocket message:", error);
-    }
-  }
-
-  protected handleWebSocketMessageTypes(
-    wsm: WebSocketMessage,
-    ws: WebSocket
-  ): void {
-    console.log(`[WebSocket] handling type: ${wsm.type}`);
-
-    if (wsm.type === WEBSOCKET_MESSAGE_TYPES.GET_RUNNING_PROCESSES) {
-      // Treat each WebSocket connection as a "test process"
-      const tests = Array.from(this.clients).map((client, index) => {
-        return {
-          processId: `test-${index}`,
-          command: "Test via WebSocket",
-          status: "connected",
-          timestamp: new Date().toISOString(),
-        };
-      });
-      ws.send(
-        JSON.stringify({
-          type: WEBSOCKET_MESSAGE_TYPES.RUNNING_PROCESSES,
-          processes: tests,
-        })
-      );
-      console.log(`[WebSocket] -> RUNNING_PROCESSES (${tests.length} tests)`);
-    } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.GET_PROCESS) {
-      const processId = wsm.data.processId;
-      // Since we don't have actual processes, return a simple response
-      ws.send(
-        JSON.stringify({
-          type: WEBSOCKET_MESSAGE_TYPES.PROCESS_DATA,
-          processId,
-          command: "Test via WebSocket",
-          status: "connected",
-          timestamp: new Date().toISOString(),
-        })
-      );
-      console.log(`[WebSocket] -> PROCESS_DATA for ${processId}`);
-    } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.STDIN) {
-      console.log("[WebSocket] STDIN not supported - no child processes");
-    } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.KILL_PROCESS) {
-      console.log(
-        "[WebSocket] KILL_PROCESS not supported - no child processes"
-      );
-    } else if (wsm.type === WEBSOCKET_MESSAGE_TYPES.GET_CHAT_HISTORY) {
-      if ((this as any).getChatHistory) {
-        (this as any)
-          .getChatHistory()
-          .then((history: any) => {
-            ws.send(
-              JSON.stringify({
-                type: WEBSOCKET_MESSAGE_TYPES.CHAT_HISTORY,
-                messages: history,
-              })
-            );
-            console.log(`[WebSocket] -> CHAT_HISTORY`);
-          })
-          .catch((error: any) => {
-            console.error("[WebSocket] error getting chat history:", error);
-            ws.send(
-              JSON.stringify({
-                type: WEBSOCKET_MESSAGE_TYPES.ERROR,
-                message: ERROR_MESSAGES.FAILED_TO_GET_CHAT_HISTORY,
-              })
-            );
-          });
-      }
-    } else {
-      console.warn("[WebSocket] unhandled message type:", wsm.type);
-    }
+  async start(): Promise<void> {
+    console.log(`[Server_WS] start()`)
+    await super.start();
+    this.attachWebSocketToHttpServer(this.httpServer);
   }
 
   async stop() {
-    // Safely close WebSocket server if it exists
-    if (this.wss) {
-      this.wss.close(() => {
-        console.log("WebSocket server closed");
-      });
-    }
+    console.log(`[Server_WS] stop()`)
 
-    this.clients.forEach((client) => {
-      // Check if client has a terminate method
-      if (client.terminate) {
-        client.terminate();
-      }
+    this.wsClients.forEach((client) => {
+      client.close();
     });
-    this.clients.clear();
+    this.wsClients.clear();
+
+    // Close the WebSocket server
+    this.ws.close(() => {
+      console.log("[WebSocket] Server closed");
+    });
+
     await super.stop();
   }
+
+
+  escapeXml(unsafe: string): string {
+    return this.wsManager.escapeXml(unsafe)
+  }
+
+  public attachWebSocketToHttpServer(httpServer: any): void {
+
+    httpServer.on("upgrade", (request: any, socket: any, head: any) => {
+      const pathname = new URL(request.url || "", `http://${request.headers.host}`).pathname;
+
+      // Handle WebSocket connections at /ws
+      if (pathname === "/ws") {
+        console.log("[WebSocket] Upgrade request for /ws");
+        this.ws.handleUpgrade(request, socket, head, (ws) => {
+          this.ws.emit("connection", ws, request);
+        });
+      } else {
+        // Close connection for non-WebSocket paths
+        socket.destroy();
+      }
+    });
+
+  }
+
+  public broadcast(message: any): void {
+    const data = typeof message === "string" ? message : JSON.stringify(message);
+    console.log(`[WebSocket] Broadcasting to ${this.wsClients.size} clients:`, message.type || message);
+
+    let sentCount = 0;
+    this.wsClients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data);
+        sentCount++;
+      } else {
+        console.log(`[WebSocket] Client not open, state: ${client.readyState}`);
+      }
+    });
+    console.log(`[WebSocket] Sent to ${sentCount} clients`);
+  }
+
+
+  private setupWebSocketHandlers(): void {
+    this.ws.on("connection", (ws: WebSocket, request: any) => {
+      console.log(`[WebSocket] New connection from ${request.socket.remoteAddress}`);
+      this.wsClients.add(ws);
+
+      // Send initial connection message
+      ws.send(JSON.stringify({
+        type: "connected",
+        message: "Connected to Process Manager WebSocket",
+        timestamp: new Date().toISOString()
+      }));
+
+      // Immediately send current processes
+      // Note: handleGetProcesses needs to be implemented or handled differently
+      // For now, we'll send a placeholder
+      ws.send(JSON.stringify({
+        type: "processes",
+        data: this.getProcessSummary ? this.getProcessSummary() : { processes: [] },
+        timestamp: new Date().toISOString()
+      }));
+
+      // Handle messages from clients
+      ws.on("message", (data: Buffer) => {
+        try {
+          const message = JSON.parse(data.toString());
+          this.handleWebSocketMessage(ws, message);
+        } catch (error) {
+          console.error("[WebSocket] Error parsing message:", error);
+          ws.send(JSON.stringify({
+            type: "error",
+            message: "Invalid JSON message",
+            timestamp: new Date().toISOString()
+          }));
+        }
+      });
+
+      // Handle client disconnection
+      ws.on("close", () => {
+        console.log("[WebSocket] Client disconnected");
+        this.wsClients.delete(ws);
+      });
+
+      // Handle errors
+      ws.on("error", (error) => {
+        console.error("[WebSocket] Error:", error);
+        this.wsClients.delete(ws);
+      });
+    });
+
+    this.ws.on("error", (error) => {
+      console.error("[WebSocket] Server error:", error);
+    });
+
+    this.ws.on("close", () => {
+      console.log("[WebSocket] Server closing...");
+      this.wsClients.clear();
+    });
+  }
+
+
+
+  private handleWebSocketMessage(ws: WebSocket, message: any): void {
+    console.log("[WebSocket] Received message:", message.type);
+
+    // Use WsManager to process the message
+    const response = this.wsManager.processMessage(
+      message.type,
+      message.data,
+      () => this.getProcessSummary(),
+      (processId: string) => {
+        const processManager = this as any;
+        if (typeof processManager.getProcessLogs === "function") {
+          return processManager.getProcessLogs(processId);
+        }
+        return [];
+      }
+    );
+
+    // Send the response
+    ws.send(JSON.stringify(response));
+
+    // For certain message types, we need to perform additional server-side actions
+    // These are side effects that can't be handled by WsManager alone
+    switch (message.type) {
+      case "sourceFilesUpdated":
+        this.handleSourceFilesUpdatedSideEffects(ws, message.data, response);
+        break;
+      case "getBuildListenerState":
+        this.handleGetBuildListenerStateSideEffects(ws);
+        break;
+      case "getBuildEvents":
+        this.handleGetBuildEventsSideEffects(ws);
+        break;
+    }
+  }
+
+  private handleSourceFilesUpdatedSideEffects(ws: WebSocket, data: any, response: any): void {
+    const { testName, hash, files, runtime } = data || {};
+
+    if (!testName || !hash || !files || !runtime) {
+      return;
+    }
+
+    console.log(`[WebSocket] Forwarding source files update to build listener for test: ${testName} (runtime: ${runtime})`);
+
+    // Check if this instance has sourceFilesUpdated method (inherited from Server_BuildListener)
+    if (typeof (this as any).sourceFilesUpdated === 'function') {
+      console.log(`[WebSocket] sourceFilesUpdated method found, calling it`);
+      try {
+        (this as any).sourceFilesUpdated(testName, hash, files, runtime);
+        console.log(`[WebSocket] sourceFilesUpdated called successfully`);
+
+        // Broadcast to all clients
+        this.broadcast({
+          type: "sourceFilesUpdated",
+          testName,
+          hash,
+          files,
+          runtime,
+          status: "processed",
+          timestamp: new Date().toISOString(),
+          message: "Source files update processed successfully"
+        });
+
+        // Update the response if successful
+        if (response.status === "success") {
+          // Response is already sent, but we can send an additional update
+          ws.send(JSON.stringify({
+            type: "sourceFilesUpdated",
+            status: "processed",
+            testName,
+            runtime,
+            message: "Build update processed and broadcasted successfully",
+            timestamp: new Date().toISOString()
+          }));
+        }
+      } catch (error) {
+        console.error("[WebSocket] Error processing source files update:", error);
+        // Send error update
+        ws.send(JSON.stringify({
+          type: "sourceFilesUpdated",
+          status: "error",
+          testName,
+          runtime,
+          message: `Error processing build update: ${error}`,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    } else {
+      console.warn("[WebSocket] sourceFilesUpdated method not available on this instance");
+    }
+  }
+
+  private handleGetBuildListenerStateSideEffects(ws: WebSocket): void {
+    console.log("[WebSocket] Handling getBuildListenerState request");
+
+    if (typeof (this as any).getBuildListenerState === 'function') {
+      try {
+        const state = (this as any).getBuildListenerState();
+        ws.send(JSON.stringify({
+          type: "buildListenerState",
+          data: state,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error getting build listener state:", error);
+        ws.send(JSON.stringify({
+          type: "buildListenerState",
+          status: "error",
+          message: `Error getting build listener state: ${error}`,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    }
+  }
+
+  private handleGetBuildEventsSideEffects(ws: WebSocket): void {
+    console.log("[WebSocket] Handling getBuildEvents request");
+
+    if (typeof (this as any).getBuildEvents === 'function') {
+      try {
+        const events = (this as any).getBuildEvents();
+        ws.send(JSON.stringify({
+          type: "buildEvents",
+          events: events,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (error) {
+        console.error("[WebSocket] Error getting build events:", error);
+        ws.send(JSON.stringify({
+          type: "buildEvents",
+          status: "error",
+          message: `Error getting build events: ${error}`,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    }
+  }
+
+  private handleGetProcesses(ws: WebSocket): void {
+    if (typeof (this as any).getProcessSummary === 'function') {
+      const summary = (this as any).getProcessSummary();
+      ws.send(JSON.stringify({
+        type: "processes",
+        data: summary,
+        timestamp: new Date().toISOString()
+      }));
+    } else {
+      ws.send(JSON.stringify({
+        type: "processes",
+        data: { processes: [], message: "getProcessSummary not available" },
+        timestamp: new Date().toISOString()
+      }));
+    }
+  }
+
+  // Broadcast a message to all connected WebSocket clients
+
+  protected getProcessSummary?(): any;
 }

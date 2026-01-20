@@ -4,148 +4,113 @@ This file contains tests for the Calculator class.
 """
 import sys
 import os
+import asyncio
+import importlib.util
 
-# Add the src directory to the Python path to find pitono
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+print("This is a simple console message.")
+
+# Add the current directory to the Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
+
+# Add the parent directory to find src/lib/pitono
+project_root = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.insert(0, project_root)
 
 # Import Calculator from the current directory
 from Calculator import Calculator
 
-# Try to import specification and implementation
-# These might be in a subdirectory
-specification = None
-implementation = None
+# Load the required modules from the same directory using absolute paths
+spec_path = os.path.join(current_dir, 'Calculator.pitono.specification.py')
+spec_spec = importlib.util.spec_from_file_location("specification", spec_path)
+spec_module = importlib.util.module_from_spec(spec_spec)
+spec_spec.loader.exec_module(spec_module)
+specification = spec_module.specification
 
-def create_specification(Suite, Given, When, Then, Check):
-    """Create test specification for Calculator."""
-    return [
-        {
-            'name': 'Calculator Suite',
-            'givens': {
-                "basic_operations": Given["Default"](
-                    ["Basic calculator operations should work"],
-                    [],
-                    [Then["DisplayMatches"]("")]
-                ),
-                "addition": Given["Addition"](
-                    ["Addition should work correctly"],
-                    [When["Press"]("2"), When["Press"]("+"), When["Press"]("3"), When["Press"]("=")],
-                    [Then["DisplayMatches"]("5")]
-                ),
-                "subtraction": Given["Subtraction"](
-                    ["Subtraction should work correctly"],
-                    [When["Press"]("7"), When["Press"]("-"), When["Press"]("3"), When["Press"]("=")],
-                    [Then["DisplayMatches"]("4")]
-                ),
-                "multiplication": Given["Multiplication"](
-                    ["Multiplication should work correctly"],
-                    [When["Press"]("4"), When["Press"]("*"), When["Press"]("5"), When["Press"]("=")],
-                    [Then["DisplayMatches"]("20")]
-                ),
-                "division": Given["Division"](
-                    ["Division should work correctly"],
-                    [When["Press"]("8"), When["Press"]("/"), When["Press"]("2"), When["Press"]("=")],
-                    [Then["DisplayMatches"]("4")]
-                ),
-                "clear": Given["Clear"](
-                    ["Clear should reset the display"],
-                    [When["Press"]("5"), When["Press"]("+"), When["Press"]("3"), When["Press"]("C")],
-                    [Then["DisplayMatches"]("")]
-                )
-            },
-            'features': []
-        }
-    ]
+impl_path = os.path.join(current_dir, 'Calculator.pitono.implementation.py')
+impl_spec = importlib.util.spec_from_file_location("implementation", impl_path)
+impl_module = importlib.util.module_from_spec(impl_spec)
+impl_spec.loader.exec_module(impl_module)
+implementation = impl_module.implementation
+
+adapter_path = os.path.join(current_dir, 'Calculator.pitono.adapter.py')
+adapter_spec = importlib.util.spec_from_file_location("SimpleTestAdapter", adapter_path)
+adapter_module = importlib.util.module_from_spec(adapter_spec)
+adapter_spec.loader.exec_module(adapter_module)
+SimpleTestAdapter = adapter_module.SimpleTestAdapter
+
+# Try to import pitono from src/lib/pitono
+try:
+    # Add src/lib to the path
+    src_lib_path = os.path.join(project_root, 'src/lib')
+    sys.path.insert(0, src_lib_path)
     
-# Define a comprehensive implementation that works with the existing Calculator class
-class SimpleImplementation:
-    """Simple test implementation for Calculator."""
-    
-    def __init__(self):
-        self.suites = {
-            "Default": "Default Suite",
-            "Addition": "Addition Suite",
-            "Subtraction": "Subtraction Suite", 
-            "Multiplication": "Multiplication Suite",
-            "Division": "Division Suite",
-            "Clear": "Clear Suite"
-        }
-        self.givens = {
-            "Default": lambda: lambda: {"calculator": Calculator(), "display": ""},
-            "Addition": lambda: lambda: {"calculator": Calculator(), "display": ""},
-            "Subtraction": lambda: lambda: {"calculator": Calculator(), "display": ""},
-            "Multiplication": lambda: lambda: {"calculator": Calculator(), "display": ""},
-            "Division": lambda: lambda: {"calculator": Calculator(), "display": ""},
-            "Clear": lambda: lambda: {"calculator": Calculator(), "display": ""}
-        }
-        self.whens = {
-            "Press": lambda button: lambda store, pm: self._press_button(store, button)
-        }
-        self.thens = {
-            "DisplayMatches": lambda expected: lambda store, pm: store["calculator"].get_display() == expected
-        }
-    
-    def _press_button(self, store, button):
-        """Press a button on the calculator."""
-        # Press the button on the calculator using the existing implementation
-        calculator = store["calculator"]
-        if button == "=":
-            # Use the enter method to evaluate the expression
-            calculator.enter()
-        else:
-            # Use the press method for other buttons
-            calculator.press(button)
-        # Update the display in the store
-        store["display"] = calculator.get_display()
-        return store
+    from pitono.Pitono import Pitono, set_default_instance, main
+except ImportError as e:
+    print(f"Error importing pitono: {e}")
+    print("Trying alternative import path...")
+    # Try to import directly
+    try:
+        # Add the pitono directory directly
+        pitono_dir = os.path.join(project_root, 'src/lib/pitono')
+        sys.path.insert(0, pitono_dir)
+        from Pitono import Pitono, set_default_instance, main
+    except ImportError as e2:
+        print(f"Failed to import pitono: {e2}")
+        sys.exit(1)
 
-implementation = SimpleImplementation()
+# Create a mock input value (not used in our case)
+mock_input = None
 
-# Note: The actual test runner setup is handled by the pitono framework
-# This file is meant to be imported and used by the test runner
+# Create the test instance
+try:
+    test_instance = Pitono(
+        mock_input,
+        specification,
+        implementation,
+        SimpleTestAdapter(),
+        {"ports": 1}
+    )
+    # Set it as the default instance
+    set_default_instance(test_instance)
+    print("Test instance created successfully")
+except Exception as e:
+    print(f"Error creating test instance: {e}")
+    import traceback
+    traceback.print_exc()
+    sys.exit(1)
 
+# Run the main function if this file is executed directly
 if __name__ == "__main__":
-    print("This test file is meant to be run through the pitono test runner.")
-    print("To run tests, use the appropriate test command from the project root.")
+    print("Starting Calculator tests...")
+    
+    if len(sys.argv) >= 3:
+        asyncio.run(main())
+    else:
+        # Run in standalone mode for debugging
+        print("Running in standalone mode...")
 
-
-# # First, ensure websockets is installed in the current environment
-# try:
-#     import websockets
-#     print("websockets is already installed")
-# except ImportError:
-#     print("Installing websockets...")
-#     try:
-#         # Try to install websockets using pip
-#         subprocess.check_call([sys.executable, "-m", "pip", "install", "websockets>=12.0"])
-#         print("Successfully installed websockets")
-#         # Reload the module
-#         import importlib
-#         if 'websockets' in sys.modules:
-#             importlib.reload(sys.modules['websockets'])
-#     except Exception as e:
-#         print(f"Failed to install websockets: {e}")
-#         print("Please install websockets manually: pip install websockets>=12.0")
-#         sys.exit(1)
-
-# # Import Calculator from the current directory
-# from Calculator import Calculator
-
-# # Check for websockets before importing pitono
-# try:
-#     import websockets
-# except ImportError:
-#     print("ERROR: websockets is not installed in the virtual environment")
-#     print("Please install it with: pip install websockets>=12.0")
-#     print("Or activate the correct virtual environment")
-#     sys.exit(1)
-
-# # Import pitono components
-# try:
-#     from src.pitono.Pitono import Pitono, set_default_instance, main
-#     from src.pitono.simple_adapter import SimpleTestAdapter
-# except ImportError as e:
-#     print(f"Could not import pitono: {e}")
-#     print("Make sure to run from the project root and install pitono")
-#     raise
+        # Create a simple test resource configuration
+        test_resource_config = {
+            "name": "local-test",
+            "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py",
+            "ports": [8080],
+            "browser_ws_endpoint": None,
+            "timeout": 30000,
+            "retries": 0,
+            "environment": {}
+        }
+        
+        import json
+        config_json = json.dumps(test_resource_config)
+        # Keep the original sys.argv[0] as the script name
+        sys.argv = [sys.argv[0], config_json, 'ipcfile']
+        print(f"Running with sys.argv: {sys.argv}")
+        
+        try:
+            asyncio.run(main())
+        except Exception as e:
+            print(f"Error running tests: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)

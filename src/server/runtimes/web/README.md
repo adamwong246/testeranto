@@ -1,0 +1,3 @@
+The web runtime refers to a testeranto test that should be run in google chrome. The builder service should create metafiles and host a chrome instance with debug connection. The server detects these changes and schedules the test to run. This test is run as a docker-image/process. 
+
+web.ts runs in the builder image, but hoist.ts runs in a test image. The builder should host puppeter/chrome, while the hoist should connect to it

@@ -39,7 +39,6 @@ type ITestAdapter interface {
 type ITTestResourceConfiguration struct {
 	Name              string
 	Fs                string
-	Ports             []int
 	BrowserWSEndpoint string
 	Timeout           int
 	Retries           int
@@ -48,25 +47,20 @@ type ITTestResourceConfiguration struct {
 
 // ITTestResourceRequirement represents test resource requirements
 type ITTestResourceRequirement struct {
-	Name  string
-	Ports int
-	Fs    string
+	Name string
+	Fs   string
 }
 
 // ITTestResourceRequest represents a test resource request
 type ITTestResourceRequest struct {
-	Ports int
 }
 
 // DefaultTestResourceRequest provides a default request
-var DefaultTestResourceRequest = ITTestResourceRequest{
-	Ports: 0,
-}
+var DefaultTestResourceRequest = ITTestResourceRequest{}
 
 // DefaultTestResourceRequirement provides a default requirement
 var DefaultTestResourceRequirement = ITTestResourceRequirement{
-	Name:  "default",
-	Ports: 0,
-	Fs:    "./",
+	Name: "default",
+	Fs:   "./",
 }
 

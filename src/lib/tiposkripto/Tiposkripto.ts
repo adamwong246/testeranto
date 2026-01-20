@@ -1,13 +1,7 @@
-import {
-  Ibdd_in_any,
-  Ibdd_out,
-  ITestSpecification,
-  ITestImplementation,
-  ITestAdapter,
-} from "../CoreTypes";
-import { ITTestResourceRequest, defaultTestResourceRequirement } from ".";
+
+import { ITTestResourceRequest, ITestResourceConfiguration, defaultTestResourceRequirement } from ".";
+import { Ibdd_in_any, Ibdd_out, ITestSpecification, ITestImplementation, ITestAdapter } from "../../CoreTypes";
 import type BaseTiposkripto from "./BaseTiposkripto.js";
-import { Analyzer } from "./Analyzer";
 
 let tpskrt;
 
@@ -26,7 +20,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
   testAdapter: Partial<ITestAdapter<I>>,
-  testResourceRequirement: ITestResourceRequest = defaultTestResourceRequirement,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
   testResourceConfiguration?: ITestResourceConfiguration
 ): Promise<BaseTiposkripto<I, O, M>> => {
   return (

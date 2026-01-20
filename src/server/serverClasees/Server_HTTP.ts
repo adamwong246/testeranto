@@ -1,36 +1,57 @@
+// Gives the server HTTP capabilities
+// 1) serve static files from the project directory
+// 2) handle HTTP requests which are defined by child classes.
+////  for instance, Server_Process_Manager will define the react component.
+////  So we want the Server_Process_Manager class to handle the react component and logic defined by that child class
+////  These extra pages are routed under the ~ (tilde) to seperate the file server from the extra commands
+
 import fs from "fs";
 import http from "http";
 import path from "path";
 import { IMode } from "../types";
-import { CONTENT_TYPES } from "./utils/Server_TCP_constants";
-import { Server_TCP } from "./Server_TCP";
-import { getContentType } from "./utils/Server_TCP_utils";
+import { Server_Docker } from "./Server_Docker";
+import { CONTENT_TYPES, getContentType } from "../serverManagers/tcp";
+import { HttpManager } from "../serverManagers/HttpManager";
+import { Server_Base } from "./Server_Base";
 
-export class Server_HTTP extends Server_TCP {
+export abstract class Server_HTTP extends Server_Base {
+
+  http: HttpManager;
+  protected httpServer: http.Server;
+  routes: any;
+
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
-    if (this.httpServer) {
-      const address = this.httpServer.address();
-      console.log(`[HTTP] HTTP server address:`, address);
+    this.http = new HttpManager();
+    this.httpServer = http.createServer();
+    this.httpServer.on("error", (error) => {
+      console.error(`[HTTP] error:`, error);
+    });
 
-      // Listen for server listening event
+    this.httpServer.on("request", this.handleHttpRequest.bind(this));
+
+    // Note: WebSocket upgrade handling will be set up by child classes if needed
+    // Do not call setupWebSocketUpgrade() here
+  }
+
+  async start(): Promise<void> {
+    console.log(`[Server_HTTP] start()`)
+    super.start()
+    return new Promise((resolve) => {
       this.httpServer.on("listening", () => {
         const addr = this.httpServer.address();
-        console.log(`[HTTP] HTTP server is now listening on port ${addr.port}`);
+        console.log(`[HTTP] HTTP server is now listening on port ${3456}`);
+        resolve()
       });
+    });
+  }
 
-      // Listen for errors
-      this.httpServer.on("error", (error) => {
-        console.error(`[HTTP] HTTP server error:`, error);
-      });
-
-      // Listen for close
-      this.httpServer.on("close", () => {
-        console.log(`[HTTP] HTTP server closed`);
-      });
-    }
-    this.httpServer.on("request", this.handleHttpRequest.bind(this));
-    console.log(`[HTTP] HTTP request handler attached`);
+  async stop() {
+    console.log(`[Server_HTTP] stop()`)
+    this.httpServer.close(() => {
+      console.log("[HTTP] HTTP server closed");
+    });
+    await super.stop();
   }
 
   protected handleHttpRequest(
@@ -39,9 +60,47 @@ export class Server_HTTP extends Server_TCP {
       req: http.IncomingMessage;
     }
   ): void {
-    // Always serve static files from the project directory
-    this.serveStaticFile(req, res);
-    return;
+
+    console.log(`[Server_HTTP] handleHttpRequest(${req.url})`)
+
+    // Check if this is a route request (starts with /~/)
+    if (req.url && req.url.startsWith("/~/")) {
+      this.handleRouteRequest(req, res);
+    } else {
+      // Otherwise serve static files
+      this.serveStaticFile(req, res);
+    }
+  }
+
+  private handleRouteRequest(
+    req: http.IncomingMessage,
+    res: http.ServerResponse<http.IncomingMessage> & {
+      req: http.IncomingMessage;
+    }
+  ): void {
+    console.log(`[Server_HTTP] handleRouteRequest(${req.url})`);
+
+    const routeName = this.http.routeName(req);
+    console.log(`[HTTP] Handling route: /~/${routeName}`);
+
+    // Use HttpManager to match the route
+    const match = this.http.matchRoute(routeName, this.routes);
+    if (match) {
+      // Add params to request object for handler to use
+      (req as any).params = match.params;
+      try {
+        match.handler(req, res);
+      } catch (error) {
+        console.error(`[HTTP] Error in route handler for /~/${routeName}:`, error);
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end(`Internal Server Error: ${error}`);
+      }
+      return;
+    }
+
+    // No route found
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end(`Route not found: /~/${routeName}`);
   }
 
   private serveStaticFile(
@@ -50,22 +109,17 @@ export class Server_HTTP extends Server_TCP {
       req: http.IncomingMessage;
     }
   ): void {
+
+    console.log(`[Server_HTTP] serveStaticFile(${req.url})`)
+
     if (!req.url) {
       res.writeHead(400);
       res.end("Bad Request");
       return;
     }
 
-    // Remove query parameters
-    const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
+    const normalizedPath = this.http.decodedPath(req);
 
-    // Prevent directory traversal attacks
-    const decodedPath = decodeURIComponent(urlPath);
-    // Remove leading slash to make it relative
-    const relativePath = decodedPath.startsWith("/")
-      ? decodedPath.slice(1)
-      : decodedPath;
-    const normalizedPath = path.normalize(relativePath);
 
     // Check for any remaining '..' components
     if (normalizedPath.includes("..")) {
@@ -90,7 +144,7 @@ export class Server_HTTP extends Server_TCP {
       if (err) {
         if (err.code === "ENOENT") {
           res.writeHead(404);
-          res.end(`File not found: ${urlPath}`);
+          res.end(`File not found: ${normalizedPath}`);
           return;
         } else {
           res.writeHead(500);
@@ -115,13 +169,13 @@ export class Server_HTTP extends Server_TCP {
                 const isDir = stat.isDirectory();
                 const slash = isDir ? "/" : "";
                 return `<li><a href="${path.join(
-                  urlPath,
+                  normalizedPath,
                   file
                 )}${slash}">${file}${slash}</a></li>`;
               } catch {
                 // If we can't stat the file, still show it as a link without slash
                 return `<li><a href="${path.join(
-                  urlPath,
+                  normalizedPath,
                   file
                 )}">${file}</a></li>`;
               }
@@ -132,9 +186,9 @@ export class Server_HTTP extends Server_TCP {
           res.end(`
             <!DOCTYPE html>
             <html>
-            <head><title>Directory listing for ${urlPath}</title></head>
+            <head><title>Directory listing for ${normalizedPath}</title></head>
             <body>
-              <h1>Directory listing for ${urlPath}</h1>
+              <h1>Directory listing for ${normalizedPath}</h1>
               <ul>
                 ${items}
               </ul>
@@ -154,6 +208,8 @@ export class Server_HTTP extends Server_TCP {
       req: http.IncomingMessage;
     }
   ): void {
+    console.log(`[Server_HTTP] serveFile(${filePath})`)
+
     const contentType = getContentType(filePath) || CONTENT_TYPES.OCTET_STREAM;
 
     fs.readFile(filePath, (err, data) => {
@@ -173,13 +229,15 @@ export class Server_HTTP extends Server_TCP {
     });
   }
 
-  async stop() {
-    // Safely close HTTP server if it exists
-    if (this.httpServer) {
-      this.httpServer.close(() => {
-        console.log("HTTP server closed");
-      });
-    }
-    await super.stop();
+
+  // The route method is no longer abstract since we're using the routes() method
+  // This is kept for backward compatibility
+  router(a: any): any {
+    // Default implementation does nothing
+    // Inheriting classes can override if needed
+    return a;
   }
+
+
+
 }

@@ -1,0 +1,92 @@
+body {
+    font-family: var(--vscode-font-family);
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-editor-background);
+    margin: 0;
+    padding: 10px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    gap: 10px;
+}
+
+.column {
+    flex: 1;
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.column h3 {
+    margin-top: 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+#test-list, #file-tree {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.test-item, .file-item {
+    padding: 6px 8px;
+    margin: 4px 0;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: var(--vscode-list-inactiveSelectionBackground);
+}
+
+.test-item:hover, .file-item:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.test-item.selected, .file-item.selected {
+    background-color: var(--vscode-list-activeSelectionBackground);
+    color: var(--vscode-list-activeSelectionForeground);
+}
+
+#editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#file-editor {
+    flex: 1;
+    font-family: var(--vscode-editor-font-family);
+    font-size: var(--vscode-editor-font-size);
+    background-color: var(--vscode-editor-background);
+    color: var(--vscode-editor-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 3px;
+    padding: 8px;
+    resize: none;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: auto;
+}
+
+#save-button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#save-button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+#placeholder-content {
+    line-height: 1.5;
+}

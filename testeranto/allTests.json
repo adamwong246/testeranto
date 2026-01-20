@@ -16,7 +16,7 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null
     ]
   },
@@ -29,7 +29,7 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null
     ]
   },
@@ -42,9 +42,12 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null,
       null
+    ],
+    "volumes": [
+      "eslint.config.mjs"
     ]
   },
   "node": {
@@ -56,9 +59,12 @@
       }
     },
     "externals": [],
-    "check": [
+    "checks": [
       null,
       null
+    ],
+    "volumes": [
+      "eslint.config.mjs"
     ]
   },
   "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/allTests"

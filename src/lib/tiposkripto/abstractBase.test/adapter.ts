@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { ITestAdapter } from "../../CoreTypes";
+import { ITestAdapter } from "../../../CoreTypes";
 import { I } from "./types";
 
 export const testAdapter: ITestAdapter<I> = {
-  beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
+  beforeEach: async (subject, initializer, testResource, initialValues) => {
     const result = await initializer();
     // Ensure the result matches the expected type
     if (typeof result === "function") {

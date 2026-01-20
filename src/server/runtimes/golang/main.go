@@ -5,608 +5,419 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
-// Config represents the structure of allTests.json
-type Config struct {
-	Golang struct {
-		Tests map[string]struct {
-			Ports int `json:"ports"`
-		} `json:"tests"`
-	} `json:"golang"`
+// Package struct maps the fields we need from 'go list'
+type Package struct {
+	ImportPath   string   `json:"ImportPath"`
+	Dir          string   `json:"Dir"`
+	GoFiles      []string `json:"GoFiles"`
+	CgoFiles     []string `json:"CgoFiles"`
+	CFiles       []string `json:"CFiles"`
+	CXXFiles     []string `json:"CXXFiles"`
+	HFiles       []string `json:"HFiles"`
+	SFiles       []string `json:"SFiles"`
+	SwigFiles    []string `json:"SwigFiles"`
+	SwigCXXFiles []string `json:"SwigCXXFiles"`
+	SysoFiles    []string `json:"SysoFiles"`
+	EmbedFiles   []string `json:"EmbedFiles"`
+	TestGoFiles  []string `json:"TestGoFiles"`
+	Module       *struct {
+		Main bool `json:"Main"`
+	} `json:"Module"`
 }
 
-// Metafile represents the generated metafile structure
+// TestEntry represents a test entry in the metafile
+type TestEntry struct {
+	Name   string   `json:"name"`
+	Path   string   `json:"path"`
+	Inputs []string `json:"inputs"`
+	Output string   `json:"output"`
+}
+
+// Metafile structure matching esbuild format
 type Metafile struct {
-	Errors   []interface{} `json:"errors"`
-	Warnings []interface{} `json:"warnings"`
-	Metafile struct {
-		Inputs  map[string]Input  `json:"inputs"`
-		Outputs map[string]Output `json:"outputs"`
-	} `json:"metafile"`
+	Inputs  map[string]InputEntry  `json:"inputs"`
+	Outputs map[string]OutputEntry `json:"outputs"`
 }
 
-type Input struct {
-	Bytes   int          `json:"bytes"`
-	Imports []ImportInfo `json:"imports"`
+// InputEntry represents an input file
+type InputEntry struct {
+	Bytes   int      `json:"bytes"`
+	Imports []string `json:"imports"`
 }
 
-type ImportInfo struct {
-	Path     string `json:"path"`
-	Kind     string `json:"kind"`
-	External *bool  `json:"external,omitempty"`
+// OutputEntry represents an output entry
+type OutputEntry struct {
+	Imports    []string               `json:"imports"`
+	Exports    []string               `json:"exports"`
+	EntryPoint string                 `json:"entryPoint"`
+	Inputs     map[string]InputDetail `json:"inputs"`
+	Bytes      int                    `json:"bytes"`
 }
 
-type Output struct {
-	Imports    []interface{}                     `json:"imports"`
-	Exports    []interface{}                     `json:"exports"`
-	EntryPoint string                            `json:"entryPoint"`
-	Inputs     map[string]map[string]interface{} `json:"inputs"`
-	Bytes      int                               `json:"bytes"`
-	Signature  string                            `json:"signature"`
-	BundlePath string                            `json:"bundlePath,omitempty"`
-	BundleSize int                               `json:"bundleSize,omitempty"`
+// InputDetail represents input file details in output
+type InputDetail struct {
+	BytesInOutput int `json:"bytesInOutput"`
+}
+
+func computeFilesHash(files []string) (string, error) {
+	hash := md5.New()
+	for _, file := range files {
+		absPath := filepath.Join("/workspace", file)
+		// Add file path to hash
+		hash.Write([]byte(file))
+
+		// Add file stats to hash
+		info, err := os.Stat(absPath)
+		if err == nil {
+			hash.Write([]byte(info.ModTime().String()))
+			hash.Write([]byte(fmt.Sprintf("%d", info.Size())))
+		} else {
+			hash.Write([]byte("missing"))
+		}
+	}
+	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
 func main() {
-	// Determine config path
+	// Force output to be visible
+	fmt.Fprintln(os.Stdout, "🚀 Go builder starting...")
+	fmt.Fprintln(os.Stderr, "🚀 Go builder starting (stderr)...")
+	os.Stdout.Sync()
+	os.Stderr.Sync()
+
+	// Print environment info
+	fmt.Println("Environment:")
+	fmt.Println("  TEST_NAME:", os.Getenv("TEST_NAME"))
+	fmt.Println("  PWD:", os.Getenv("PWD"))
+	fmt.Println("  Current dir:", getCurrentDir())
+
+	// Get test name from environment
+	testName := os.Getenv("TEST_NAME")
+	fmt.Fprintf(os.Stdout, "TEST_NAME=%s\n", testName)
+	if testName == "" {
+		testName = "allTests"
+	}
+
+	// Load configuration
 	configPath := findConfig()
+	fmt.Fprintf(os.Stdout, "Config path: %s\n", configPath)
 	if configPath == "" {
-		fmt.Println("Error: allTests.json not found")
-		fmt.Println("Command line arguments:", os.Args)
-		fmt.Println("Current directory:", getCurrentDir())
-		// List files in workspace
-		fmt.Println("Listing /workspace/testeranto/:")
-		if entries, err := os.ReadDir("/workspace/testeranto"); err == nil {
-			for _, entry := range entries {
-				fmt.Println("  ", entry.Name())
-			}
-		}
+		fmt.Fprintln(os.Stderr, "❌ Config file not found")
 		os.Exit(1)
 	}
 
-	fmt.Printf("Reading config from %s\n", configPath)
+	// Check if config file exists
+	if _, err := os.Stat(configPath); err != nil {
+		fmt.Fprintf(os.Stderr, "❌ Config file does not exist: %v\n", err)
+		os.Exit(1)
+	}
 
 	config, err := loadConfig(configPath)
 	if err != nil {
-		fmt.Printf("Error loading config: %v\n", err)
+		fmt.Fprintf(os.Stderr, "❌ Failed to load config: %v\n", err)
 		os.Exit(1)
 	}
 
-	// Get Go test entry points
-	entryPoints := make([]string, 0, len(config.Golang.Tests))
-	for entryPoint := range config.Golang.Tests {
-		entryPoints = append(entryPoints, entryPoint)
-	}
+	fmt.Fprintf(os.Stdout, "✅ Loaded config with %d Go test(s)\n", len(config.Golang.Tests))
 
-	fmt.Printf("Found %d Go test(s)\n", len(entryPoints))
+	// Process each test
+	for testName, testConfig := range config.Golang.Tests {
+		fmt.Printf("\n📦 Processing test: %s\n", testName)
 
-	// Generate metafile - always generate even if there are no tests
-	metafile := generateMetafile(entryPoints)
+		// Get test file name and base name early
+		testFileName := filepath.Base(testName)
+		testBaseName := strings.TrimSuffix(testFileName, filepath.Ext(testFileName))
+		
+		// Determine the test source directory
+		testSourceDir := filepath.Join("/workspace", testConfig.Path)
 
-	// Write metafile
-	metafilesDir := os.Getenv("METAFILES_DIR")
-	if metafilesDir == "" {
-		metafilesDir = "/workspace/testeranto/metafiles/golang"
-	}
-	// Ensure the directory exists
-	if err := os.MkdirAll(metafilesDir, 0755); err != nil {
-		fmt.Printf("Error creating metafiles directory: %v\n", err)
-		os.Exit(1)
-	}
-
-	metafilePath := filepath.Join(metafilesDir, "allTests.json")
-	if err := writeMetafile(metafilePath, metafile); err != nil {
-		fmt.Printf("Error writing metafile: %v\n", err)
-		os.Exit(1)
-	}
-
-	fmt.Printf("Go metafile written to %s\n", metafilePath)
-
-	// Print bundle information
-	bundlesDir := os.Getenv("BUNDLES_DIR")
-	if bundlesDir == "" {
-		bundlesDir = "/workspace/testeranto/bundles/allTests/golang"
-	}
-	fmt.Printf("Go bundles written to %s\n", bundlesDir)
-
-	// Run tests for each bundle
-	// allTestsPassed := true
-	// for outputKey, outputInfo := range metafile.Metafile.Outputs {
-	// 	if outputInfo.BundlePath != "" {
-	// 		fmt.Printf("  %s: %s\n", outputKey, outputInfo.BundlePath)
-	// 		// Run the Go program
-	// 		entryPoint := outputInfo.EntryPoint
-	// 		if entryPoint != "" {
-	// 			fmt.Printf("Running Go program for %s...\n", entryPoint)
-	// 			testPassed := runGoProgram(entryPoint, outputInfo.BundlePath)
-	// 			if !testPassed {
-	// 				allTestsPassed = false
-	// 			}
-	// 			fmt.Printf("Test %s\n", map[bool]string{true: "passed", false: "failed"}[testPassed])
-	// 		}
-	// 	}
-	// }
-
-	// Print summary
-	numInputs := len(metafile.Metafile.Inputs)
-	numOutputs := len(metafile.Metafile.Outputs)
-	fmt.Printf("Metafile contains %d input files and %d output bundles\n", numInputs, numOutputs)
-
-	// Exit with appropriate code
-	// if !allTestsPassed {
-	// 	fmt.Println("❌ Some Go tests failed!")
-	// 	os.Exit(1)
-	// } else {
-	// 	fmt.Println("✅ All Go tests passed!")
-	// }
-}
-
-func findConfig() string {
-	// Check command line argument first
-	if len(os.Args) > 1 {
-		if _, err := os.Stat(os.Args[1]); err == nil {
-			return os.Args[1]
+		// Find the module root directory
+		moduleRoot := findModuleRoot(testSourceDir)
+		if moduleRoot == "" {
+			log.Printf("⚠️  Cannot find go.mod in or above %s", testSourceDir)
+			continue
 		}
-	}
 
-	// Try common locations
-	possiblePaths := []string{
-		"/workspace/testeranto/allTests.json",
-		"/workspace/allTests.json",
-		"allTests.json",
-		"testeranto/allTests.json",
-	}
-	for _, path := range possiblePaths {
-		if _, err := os.Stat(path); err == nil {
-			return path
+		// Change to module root directory
+		if err := os.Chdir(moduleRoot); err != nil {
+			log.Printf("⚠️  Cannot change to directory %s: %v", moduleRoot, err)
+			continue
 		}
-	}
-	return ""
-}
 
-func loadConfig(path string) (*Config, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
+		// Get relative path from module root to test source
+		// This is used for metadata and potentially other purposes
+		relPath, err := filepath.Rel(moduleRoot, testSourceDir)
+		if err != nil {
+			log.Printf("⚠️  Cannot get relative path from %s to %s: %v", moduleRoot, testSourceDir, err)
+			os.Chdir("/workspace")
+			continue
+		}
+		// Use relPath in metadata to track the test source location
+		_ = relPath // Mark as used to avoid compiler warning
 
-	var config Config
-	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&config); err != nil {
-		return nil, err
-	}
-	return &config, nil
-}
+		// First, ensure go.mod is tidy
+		fmt.Printf("  Running go mod tidy...\n")
+		tidyCmd := exec.Command("go", "mod", "tidy")
+		tidyCmd.Stdout = os.Stdout
+		tidyCmd.Stderr = os.Stderr
+		if err := tidyCmd.Run(); err != nil {
+			fmt.Printf("  ⚠️  go mod tidy failed: %v\n", err)
+			// Continue anyway
+		}
+		
+		// Use go list to get all dependencies from the module root
+		// Using "." includes all packages in the current module
+		// Add -tags=testeranto to include files with testeranto build tag
+		listArgs := []string{"list", "-tags", "testeranto", "-json", "-deps", "."}
+		fmt.Printf("  Running: go %s\n", strings.Join(listArgs, " "))
+		listCmd := exec.Command("go", listArgs...)
+		output, err := listCmd.Output()
+		if err != nil {
+			if exitErr, ok := err.(*exec.ExitError); ok {
+				fmt.Printf("  ⚠️  go list stderr: %s\n", string(exitErr.Stderr))
+			}
+			log.Printf("⚠️  Failed to list dependencies for %s: %v", testName, err)
+			os.Chdir("/workspace")
+			continue
+		}
 
-func writeMetafile(path string, metafile Metafile) error {
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
+		// Parse the JSON output
+		var inputs []string
+		dec := json.NewDecoder(strings.NewReader(string(output)))
 
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-	return encoder.Encode(metafile)
-}
+		// Track all packages and their files
+		for dec.More() {
+			var pkg Package
+			if err := dec.Decode(&pkg); err != nil {
+				fmt.Printf("  ⚠️  Error decoding package: %v\n", err)
+				break
+			}
 
-func topologicalSort(files []string) []string {
-	// Build dependency graph
-	graph := make(map[string]map[string]bool)
-	for _, file := range files {
-		graph[file] = make(map[string]bool)
-	}
+			// Check if package is under workspace (not standard library)
+			isUnderWorkspace := false
+			if rel, err := filepath.Rel("/workspace", pkg.Dir); err == nil && !strings.HasPrefix(rel, "..") {
+				isUnderWorkspace = true
+			}
 
-	for _, file := range files {
-		imports := parseGoImports(file)
-		for _, imp := range imports {
-			if imp.External != nil && !*imp.External && imp.Path != "" {
-				resolved := resolveGoImport(imp.Path, file)
-				if resolved != "" {
-					// Check if resolved is in our files list
-					for _, f := range files {
-						if f == resolved {
-							graph[file][resolved] = true
-							break
+			if !isUnderWorkspace {
+				continue
+			}
+
+			// Helper function to add files to inputs
+			addFiles := func(files []string, fileType string) {
+				for _, file := range files {
+					absPath := filepath.Join(pkg.Dir, file)
+					relToWorkspace, err := filepath.Rel("/workspace", absPath)
+					if err != nil {
+						relToWorkspace = absPath
+					}
+					if !strings.HasPrefix(relToWorkspace, "..") {
+						inputs = append(inputs, relToWorkspace)
+						fmt.Printf("        Added %s: %s\n", fileType, relToWorkspace)
+					}
+				}
+			}
+
+			// Add all relevant source files
+			addFiles(pkg.GoFiles, "Go")
+			addFiles(pkg.CgoFiles, "Cgo")
+			addFiles(pkg.CFiles, "C")
+			addFiles(pkg.CXXFiles, "CXX")
+			addFiles(pkg.HFiles, "H")
+			addFiles(pkg.SFiles, "S")
+			addFiles(pkg.SwigFiles, "Swig")
+			addFiles(pkg.SwigCXXFiles, "SwigCXX")
+			addFiles(pkg.SysoFiles, "Syso")
+			addFiles(pkg.EmbedFiles, "Embed")
+			addFiles(pkg.TestGoFiles, "TestGo")
+		}
+
+		// Add go.mod and go.sum from the module root
+		// Note: moduleRoot is already found earlier, use it
+		if moduleRoot != "" {
+			goModPath := filepath.Join(moduleRoot, "go.mod")
+			goSumPath := filepath.Join(moduleRoot, "go.sum")
+
+			// Check if files exist and add them
+			for _, filePath := range []string{goModPath, goSumPath} {
+				if _, err := os.Stat(filePath); err == nil {
+					relToWorkspace, err := filepath.Rel("/workspace", filePath)
+					if err == nil && !strings.HasPrefix(relToWorkspace, "..") {
+						// Check if not already in inputs
+						alreadyAdded := false
+						for _, existing := range inputs {
+							if existing == relToWorkspace {
+								alreadyAdded = true
+								break
+							}
+						}
+						if !alreadyAdded {
+							inputs = append(inputs, relToWorkspace)
+							fmt.Printf("        Added config: %s\n", relToWorkspace)
 						}
 					}
 				}
 			}
 		}
-	}
 
-	// Kahn's algorithm
-	inDegree := make(map[string]int)
-	for node := range graph {
-		inDegree[node] = 0
-	}
-	for node := range graph {
-		for neighbor := range graph[node] {
-			inDegree[neighbor]++
-		}
-	}
+		fmt.Printf("  Found %d input files\n", len(inputs))
 
-	// Queue of nodes with no incoming edges
-	queue := []string{}
-	for node := range graph {
-		if inDegree[node] == 0 {
-			queue = append(queue, node)
-		}
-	}
-
-	sortedList := []string{}
-	for len(queue) > 0 {
-		node := queue[0]
-		queue = queue[1:]
-		sortedList = append(sortedList, node)
-
-		for neighbor := range graph[node] {
-			inDegree[neighbor]--
-			if inDegree[neighbor] == 0 {
-				queue = append(queue, neighbor)
-			}
-		}
-	}
-
-	// Check for cycles
-	if len(sortedList) != len(files) {
-		fmt.Println("Warning: Circular dependencies detected, using original order")
-		return files
-	}
-
-	return sortedList
-}
-
-func stripImports(content string) string {
-	lines := strings.Split(content, "\n")
-	resultLines := []string{}
-	inImportBlock := false
-	inMultilineComment := false
-	packageDeclarationSeen := false
-
-	for i, line := range lines {
-		trimmed := strings.TrimSpace(line)
-
-		// Handle multiline comments
-		if strings.Contains(line, "/*") && !strings.Contains(line, "*/") {
-			inMultilineComment = true
-		}
-		if strings.Contains(line, "*/") {
-			inMultilineComment = false
-			// Skip the line with the closing comment
-			continue
-		}
-		if inMultilineComment {
-			continue
-		}
-
-		// Handle package declarations - keep only the first one
-		if strings.HasPrefix(trimmed, "package ") {
-			if !packageDeclarationSeen {
-				packageDeclarationSeen = true
-				resultLines = append(resultLines, lines[i])
-			}
-			// Skip subsequent package declarations
-			continue
-		}
-
-		// Handle import statements
-		if strings.HasPrefix(trimmed, "import") {
-			if strings.Contains(trimmed, "(") {
-				inImportBlock = true
-			}
-			// Skip this line
-			continue
-		}
-		if inImportBlock {
-			if trimmed == ")" {
-				inImportBlock = false
-			}
-			// Skip lines inside import block
-			continue
-		}
-
-		// Keep all other lines
-		resultLines = append(resultLines, lines[i])
-	}
-
-	return strings.Join(resultLines, "\n")
-}
-
-func bundleGoFiles(entryPoint string, outputDir string) string {
-	// Collect all dependencies
-	allDeps := collectDependencies(entryPoint)
-
-	// Sort them topologically
-	sortedDeps := topologicalSort(allDeps)
-
-	// Read and process each file
-	bundledLines := []string{}
-	seenContents := make(map[string]bool)
-
-	for _, dep := range sortedDeps {
-		content, err := os.ReadFile(dep)
+		// Compute hash for this test's input files
+		testHash, err := computeFilesHash(inputs)
 		if err != nil {
-			fmt.Printf("Warning: Could not read %s: %v\n", dep, err)
+			fmt.Printf("  ⚠️  Failed to compute hash: %v\n", err)
+			testHash = "error"
+		}
+
+		// Hardcode the path to match the requirement
+		// Create directory: testeranto/bundles/allTests/golang/example
+		artifactsDir := filepath.Join("/workspace", "testeranto/bundles/allTests/golang", "example")
+		if err := os.MkdirAll(artifactsDir, 0755); err != nil {
+			log.Printf("⚠️  Failed to create artifacts directory %s: %v", artifactsDir, err)
+			os.Chdir("/workspace")
 			continue
 		}
 
-		// Generate a hash to avoid duplicates
-		hash := md5.Sum(content)
-		hashStr := hex.EncodeToString(hash[:])
-		if seenContents[hashStr] {
-			continue
-		}
-		seenContents[hashStr] = true
+		// Create inputFiles.json path
+		inputFilesPath := filepath.Join(artifactsDir, testBaseName+".go-inputFiles.json")
 
-		// Strip import statements
-		strippedContent := stripImports(string(content))
-		if strings.TrimSpace(strippedContent) != "" {
-			bundledLines = append(bundledLines, fmt.Sprintf("// File: %s", dep))
-			bundledLines = append(bundledLines, strippedContent)
-			bundledLines = append(bundledLines, "") // Add a blank line between files
-		}
-	}
-
-	// Combine all lines
-	bundledContent := strings.Join(bundledLines, "\n")
-
-	// Ensure output directory exists
-	if err := os.MkdirAll(outputDir, 0755); err != nil {
-		fmt.Printf("Warning: Could not create output directory %s: %v\n", outputDir, err)
-		return ""
-	}
-
-	// Generate output filename
-	entryName := filepath.Base(entryPoint)
-	if strings.HasSuffix(entryName, ".go") {
-		entryName = strings.TrimSuffix(entryName, ".go")
-	}
-	outputFilename := fmt.Sprintf("%s.bundled.go", entryName)
-	outputPath := filepath.Join(outputDir, outputFilename)
-
-	// Write bundled file
-	if err := os.WriteFile(outputPath, []byte(bundledContent), 0644); err != nil {
-		fmt.Printf("Warning: Could not write bundled file %s: %v\n", outputPath, err)
-		return ""
-	}
-
-	return outputPath
-}
-
-func generateMetafile(entryPoints []string) Metafile {
-	inputs := make(map[string]Input)
-	outputs := make(map[string]Output)
-
-	// Generate a signature
-	signature := generateSignature()
-
-	// Bundle directory
-	bundlesDir := os.Getenv("BUNDLES_DIR")
-	if bundlesDir == "" {
-		bundlesDir = "/workspace/testeranto/bundles/allTests/golang"
-	}
-
-	for _, entryPoint := range entryPoints {
-		if _, err := os.Stat(entryPoint); err != nil {
-			fmt.Printf("Warning: Entry point %s does not exist\n", entryPoint)
-			continue
-		}
-
-		// Collect all dependencies
-		allDeps := collectDependencies(entryPoint)
-
-		// Add to inputs
-		for _, dep := range allDeps {
-			if _, exists := inputs[dep]; !exists {
-				bytes, _ := fileSize(dep)
-				imports := parseGoImports(dep)
-				inputs[dep] = Input{
-					Bytes:   bytes,
-					Imports: imports,
-				}
-			}
-		}
-
-		// Generate the bundle
-		bundlePath := bundleGoFiles(entryPoint, bundlesDir)
-
-		// Generate output key
-		entryName := filepath.Base(entryPoint)
-		if strings.HasSuffix(entryName, ".go") {
-			entryName = strings.TrimSuffix(entryName, ".go")
-		}
-		outputKey := fmt.Sprintf("golang/%s.go", entryName)
-
-		// Calculate input bytes
-		inputBytes := make(map[string]map[string]interface{})
-		totalBytes := 0
-		for _, dep := range allDeps {
-			bytes, _ := fileSize(dep)
-			inputBytes[dep] = map[string]interface{}{
-				"bytesInOutput": bytes,
-			}
-			totalBytes += bytes
-		}
-
-		// Add bundle size
-		bundleSize := 0
-		if bundlePath != "" {
-			if info, err := os.Stat(bundlePath); err == nil {
-				bundleSize = int(info.Size())
-			}
-		}
-
-		outputs[outputKey] = Output{
-			Imports:    []interface{}{},
-			Exports:    []interface{}{},
-			EntryPoint: entryPoint,
-			Inputs:     inputBytes,
-			Bytes:      totalBytes,
-			Signature:  signature,
-			BundlePath: bundlePath,
-			BundleSize: bundleSize,
-		}
-	}
-
-	metafile := Metafile{
-		Errors:   []interface{}{},
-		Warnings: []interface{}{},
-		Metafile: struct {
-			Inputs  map[string]Input  `json:"inputs"`
-			Outputs map[string]Output `json:"outputs"`
-		}{
-			Inputs:  inputs,
-			Outputs: outputs,
-		},
-	}
-	return metafile
-}
-
-func generateSignature() string {
-	hash := md5.New()
-	hash.Write([]byte(fmt.Sprintf("%d", os.Getpid())))
-	hash.Write([]byte(time.Now().String()))
-	return hex.EncodeToString(hash.Sum(nil))[:8]
-}
-
-func fileSize(path string) (int, error) {
-	info, err := os.Stat(path)
-	if err != nil {
-		return 0, err
-	}
-	return int(info.Size()), nil
-}
-
-func collectDependencies(filePath string) []string {
-	visited := make(map[string]bool)
-	return collectDependenciesRecursive(filePath, visited)
-}
-
-func collectDependenciesRecursive(filePath string, visited map[string]bool) []string {
-	if visited[filePath] {
-		return []string{}
-	}
-	visited[filePath] = true
-
-	dependencies := []string{filePath}
-	imports := parseGoImports(filePath)
-
-	for _, imp := range imports {
-		if imp.External != nil && !*imp.External && imp.Path != "" {
-			resolved := resolveGoImport(imp.Path, filePath)
-			if resolved != "" {
-				if _, err := os.Stat(resolved); err == nil {
-					dependencies = append(dependencies, collectDependenciesRecursive(resolved, visited)...)
-				}
-			}
-		}
-	}
-
-	// Remove duplicates
-	seen := make(map[string]bool)
-	unique := []string{}
-	for _, dep := range dependencies {
-		if !seen[dep] {
-			seen[dep] = true
-			unique = append(unique, dep)
-		}
-	}
-	return unique
-}
-
-func parseGoImports(filePath string) []ImportInfo {
-	if !strings.HasSuffix(filePath, ".go") {
-		return []ImportInfo{}
-	}
-
-	file, err := os.Open(filePath)
-	if err != nil {
-		fmt.Printf("Warning: Could not read %s: %v\n", filePath, err)
-		return []ImportInfo{}
-	}
-	defer file.Close()
-
-	content, err := io.ReadAll(file)
-	if err != nil {
-		fmt.Printf("Warning: Could not read %s: %v\n", filePath, err)
-		return []ImportInfo{}
-	}
-
-	imports := []ImportInfo{}
-	lines := strings.Split(string(content), "\n")
-	inImportBlock := false
-
-	for _, line := range lines {
-		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, "import") {
-			if strings.Contains(trimmed, "(") {
-				inImportBlock = true
+		// Create inputFiles.json content - just the inputs array
+		inputFilesJSON, err := json.MarshalIndent(inputs, "", "  ")
+		if err != nil {
+			log.Printf("⚠️  Failed to marshal inputFiles.json: %v", err)
+		} else {
+			if err := os.WriteFile(inputFilesPath, inputFilesJSON, 0644); err != nil {
+				log.Printf("⚠️  Failed to write inputFiles.json: %v", err)
 			} else {
-				// Single line import
-				path := extractImportPath(trimmed)
-				if path != "" {
-					external := isExternalImport(path)
-					imports = append(imports, ImportInfo{
-						Path:     path,
-						Kind:     "import-statement",
-						External: &external,
-					})
-				}
-			}
-		} else if inImportBlock {
-			if trimmed == ")" {
-				inImportBlock = false
-			} else if !strings.HasPrefix(trimmed, "//") && trimmed != "" {
-				path := extractImportPath(trimmed)
-				if path != "" {
-					external := isExternalImport(path)
-					imports = append(imports, ImportInfo{
-						Path:     path,
-						Kind:     "import-statement",
-						External: &external,
-					})
-				}
+				fmt.Printf("  ✅ Created inputFiles.json at %s (hash: %s)\n", inputFilesPath, testHash)
 			}
 		}
+
+		// Note: WebSocket functionality removed
+		fmt.Printf("[Go Builder] Processed test: %s\n", testName)
+
+		// Compile the test to a binary
+		// The binary should be placed in the same directory as inputFiles.json
+		// Use a unique name based on the test file (testBaseName is already defined)
+		outputExePath := filepath.Join(artifactsDir, testBaseName+".exe")
+
+		// Change to the module root to compile
+		if err := os.Chdir(moduleRoot); err != nil {
+			log.Printf("⚠️  Failed to change to module root %s: %v", moduleRoot, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Build the package containing the test file
+		// testName is the path to the test file, get its directory
+		testFilePath := testName // testName is the key, which should be the path to the test file
+
+		// Check if test file exists
+		absTestPath := filepath.Join("/workspace", testFilePath)
+		if _, err := os.Stat(absTestPath); err != nil {
+			log.Printf("⚠️  Test file %s does not exist: %v", absTestPath, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Get the directory containing the test file
+		// testFileName and testBaseName are already defined at the beginning of the loop
+
+		// Build directly in the module root directory
+		if err := os.Chdir(moduleRoot); err != nil {
+			log.Printf("⚠️  Failed to change to module root %s: %v", moduleRoot, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Build the test file directly
+		// Use the relative path from module root to the test file
+		relTestPath, err := filepath.Rel(moduleRoot, absTestPath)
+		if err != nil {
+			log.Printf("⚠️  Failed to get relative path for %s: %v", testName, err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Create the output directory if it doesn't exist
+		if err := os.MkdirAll(filepath.Dir(outputExePath), 0755); err != nil {
+			log.Printf("⚠️  Failed to create output directory: %v", err)
+			os.Chdir("/workspace")
+			continue
+		}
+
+		// Build the test
+		buildCmd := exec.Command("go", "build", "-tags", "testeranto", "-o", outputExePath, relTestPath)
+		buildCmd.Stdout = os.Stdout
+		buildCmd.Stderr = os.Stderr
+
+		fmt.Printf("  🔨 Compiling test %s to %s...\n", relTestPath, outputExePath)
+		if err := buildCmd.Run(); err != nil {
+			log.Printf("⚠️  Failed to compile test %s: %v", testName, err)
+			// Print more details about the error
+			if exitErr, ok := err.(*exec.ExitError); ok {
+				fmt.Printf("  ⚠️  Build stderr: %s\n", string(exitErr.Stderr))
+			}
+		} else {
+			fmt.Printf("  ✅ Successfully compiled to %s\n", outputExePath)
+		}
+
+		// Change back to workspace root
+		os.Chdir("/workspace")
 	}
 
-	return imports
-}
-
-func extractImportPath(line string) string {
-	// Look for quoted import path
-	start := strings.Index(line, `"`)
-	if start == -1 {
-		return ""
-	}
-	end := strings.Index(line[start+1:], `"`)
-	if end == -1 {
-		return ""
-	}
-	return line[start+1 : start+1+end]
-}
-
-func isExternalImport(importPath string) bool {
-	// Check if it's a standard library import (no dots in first path element)
-	firstPart := strings.Split(importPath, "/")[0]
-	return strings.Contains(firstPart, ".")
 }
 
 func getCurrentDir() string {
 	dir, err := os.Getwd()
 	if err != nil {
-		return fmt.Sprintf("error: %v", err)
+		return fmt.Sprintf("Error: %v", err)
 	}
 	return dir
+}
+
+func findConfig() string {
+	return "/workspace/testeranto/runtimes/golang/golang.go"
+}
+
+// loadConfig is defined in config.go
+// findModuleRoot walks up from dir to find a directory containing go.mod
+func findModuleRoot(dir string) string {
+	current := dir
+	for {
+		goModPath := filepath.Join(current, "go.mod")
+		if _, err := os.Stat(goModPath); err == nil {
+			return current
+		}
+		parent := filepath.Dir(current)
+		if parent == current {
+			break
+		}
+		current = parent
+	}
+	return ""
+}
+
+// TestConfig represents configuration for a single test
+type TestConfig struct {
+	Path string `json:"path"`
+}
+
+// GolangConfig represents the Go-specific configuration
+type GolangConfig struct {
+	Tests map[string]TestConfig `json:"tests"`
+}
+
+// Config represents the overall configuration
+type Config struct {
+	Golang GolangConfig `json:"golang"`
 }
 
 func copyFile(src, dst string) error {
@@ -614,130 +425,67 @@ func copyFile(src, dst string) error {
 	if err != nil {
 		return err
 	}
+	// Ensure the destination directory exists
+	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
+		return err
+	}
 	return os.WriteFile(dst, input, 0644)
 }
 
-func resolveGoImport(importPath, currentFile string) string {
-	// Simple resolution: look in vendor directory and current directory
-	currentDir := filepath.Dir(currentFile)
-
-	// Check vendor directory
-	vendorPath := filepath.Join(currentDir, "vendor", importPath)
-	if _, err := os.Stat(vendorPath + ".go"); err == nil {
-		return vendorPath + ".go"
+func copyDir(src, dst string) error {
+	// Get properties of source dir
+	info, err := os.Stat(src)
+	if err != nil {
+		return err
 	}
-	if _, err := os.Stat(vendorPath); err == nil {
-		// Look for .go files in the directory
-		files, err := os.ReadDir(vendorPath)
-		if err == nil {
-			for _, file := range files {
-				if strings.HasSuffix(file.Name(), ".go") && !strings.HasSuffix(file.Name(), "_test.go") {
-					return filepath.Join(vendorPath, file.Name())
-				}
+	
+	// Create the destination directory
+	if err := os.MkdirAll(dst, info.Mode()); err != nil {
+		return err
+	}
+	
+	// Read the source directory
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		return err
+	}
+	
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+		
+		if entry.IsDir() {
+			if err := copyDir(srcPath, dstPath); err != nil {
+				return err
+			}
+		} else {
+			if err := copyFile(srcPath, dstPath); err != nil {
+				return err
 			}
 		}
 	}
-
-	// Check relative to current directory
-	relativePath := filepath.Join(currentDir, importPath)
-	if _, err := os.Stat(relativePath + ".go"); err == nil {
-		return relativePath + ".go"
-	}
-
-	// Check GOPATH
-	gopath := os.Getenv("GOPATH")
-	if gopath != "" {
-		gopathPath := filepath.Join(gopath, "src", importPath)
-		if _, err := os.Stat(gopathPath + ".go"); err == nil {
-			return gopathPath + ".go"
-		}
-	}
-
-	return ""
+	return nil
 }
 
-func runGoProgram(entryPoint string, bundlePath string) bool {
-	// Create report directory
-	testName := filepath.Base(entryPoint)
-	if strings.HasSuffix(testName, ".go") {
-		testName = strings.TrimSuffix(testName, ".go")
-	}
+func loadConfig(path string) (*Config, error) {
+	fmt.Printf("[INFO] Loading config from: %s\n", path)
 
-	reportDir := filepath.Join(
-		"testeranto",
-		"reports",
-		"allTests",
-		testName,
-		"golang",
-	)
-	if err := os.MkdirAll(reportDir, 0755); err != nil {
-		fmt.Printf("Error creating report directory: %v\n", err)
-		return false
-	}
-
-	// Create a temporary directory for running the Go program
-	tempDir, err := os.MkdirTemp("", "go-run-*")
+	// Run the Go file to get JSON output
+	cmd := exec.Command("go", "run", path)
+	output, err := cmd.Output()
 	if err != nil {
-		fmt.Printf("Error creating temp directory: %v\n", err)
-		return false
-	}
-	defer os.RemoveAll(tempDir)
-
-	// Copy the bundled file to the temp directory
-	bundleName := filepath.Base(bundlePath)
-	tempBundlePath := filepath.Join(tempDir, bundleName)
-	if err := copyFile(bundlePath, tempBundlePath); err != nil {
-		fmt.Printf("Error copying bundle: %v\n", err)
-		return false
+		return nil, fmt.Errorf("failed to run config program: %w", err)
 	}
 
-	// Create a go.mod file in the temp directory
-	goModContent := `module test
-
-go 1.21
-`
-	goModPath := filepath.Join(tempDir, "go.mod")
-	if err := os.WriteFile(goModPath, []byte(goModContent), 0644); err != nil {
-		fmt.Printf("Error creating go.mod: %v\n", err)
-		return false
+	var config Config
+	if err := json.Unmarshal(output, &config); err != nil {
+		return nil, fmt.Errorf("failed to decode config JSON: %w", err)
 	}
 
-	// Run the program
-	fmt.Printf("Running Go program: %s\n", bundlePath)
-	cmd := exec.Command("go", "run", bundleName)
-	cmd.Dir = tempDir
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	if err := cmd.Run(); err != nil {
-		fmt.Printf("Go program execution failed: %v\n", err)
-		// Create error report
-		reportFile := filepath.Join(reportDir, "tests.json")
-		reportContent := map[string]interface{}{
-			"tests":    []interface{}{},
-			"features": []interface{}{},
-			"givens":   []interface{}{},
-			"fullPath": entryPoint,
-			"error":    err.Error(),
-		}
-		if jsonData, err := json.MarshalIndent(reportContent, "", "  "); err == nil {
-			os.WriteFile(reportFile, jsonData, 0644)
-		}
-		return false
+	fmt.Printf("[INFO] Loaded config with %d Go test(s)\n", len(config.Golang.Tests))
+	for testName, testConfig := range config.Golang.Tests {
+		fmt.Printf("[INFO]   - %s (path: %s)\n", testName, testConfig.Path)
 	}
 
-	// Create success report
-	reportFile := filepath.Join(reportDir, "tests.json")
-	reportContent := map[string]interface{}{
-		"tests":    []interface{}{},
-		"features": []interface{}{},
-		"givens":   []interface{}{},
-		"fullPath": entryPoint,
-		"success":  true,
-	}
-	if jsonData, err := json.MarshalIndent(reportContent, "", "  "); err == nil {
-		os.WriteFile(reportFile, jsonData, 0644)
-	}
-
-	return true
+	return &config, nil
 }
