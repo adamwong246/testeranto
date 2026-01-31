@@ -1,17 +1,4 @@
 services:
-  browser:
-    image: browserless/chrome:latest
-    container_name: browser-allTests
-    environment:
-      CONNECTION_TIMEOUT: '60000'
-      MAX_CONCURRENT_SESSIONS: '10'
-      ENABLE_CORS: 'true'
-      TOKEN: ''
-    ports:
-      - '3000:3000'
-      - '9222:9222'
-    networks:
-      - default
   node-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -26,7 +13,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.ts
     networks:
-      - default
+      - allTests_network
   node_tests-example_calculator-test-ts-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -41,7 +28,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js
     networks:
-      - default
+      - allTests_network
   node_tests-example_calculator-test-ts-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -51,7 +38,7 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
   web-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -66,7 +53,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: yarn tsx src/server/runtimes/web/web.ts /workspace/testeranto/runtimes/web/web.ts
     networks:
-      - default
+      - allTests_network
   web_tests-example_calculator-test-ts-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -79,9 +66,9 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: 'node testeranto/bundles/web/testeranto/bundles/allTests/web/example/Calculator.test.ts /workspace/web.js '
+    command: 'node dist/prebuild/server/runtimes/web/hoist.mjs '
     networks:
-      - default
+      - allTests_network
   web_tests-example_calculator-test-ts-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -91,7 +78,7 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
   python-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -106,7 +93,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: python src/server/runtimes/python/pitono.py /workspace/testeranto/runtimes/python/python.py
     networks:
-      - default
+      - allTests_network
   python_tests-example_calculator-pitono-test-py-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -121,7 +108,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: python testeranto/bundles/allTests/python/example/Calculator.pitono.test.py '{"ports":[1111]}'
     networks:
-      - default
+      - allTests_network
   python_tests-example_calculator-pitono-test-py-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -131,7 +118,7 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
   golang-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -146,7 +133,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: go run src/server/runtimes/golang/main.go
     networks:
-      - default
+      - allTests_network
   golang_tests-example_calculator-test-go-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -161,7 +148,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: go run example/cmd/calculator-test
     networks:
-      - default
+      - allTests_network
   golang_tests-example_calculator-test-go-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -171,7 +158,7 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
   java-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -186,7 +173,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: java src/server/runtimes/java/java.java /workspace/testeranto/runtimes/java/java.java
     networks:
-      - default
+      - allTests_network
   java_tests-example_calculator-test-java-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -201,7 +188,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: java testeranto/bundles/java/testeranto/bundles/allTests/java/example/Calculator.test.java /workspace/java.java
     networks:
-      - default
+      - allTests_network
   java_tests-example_calculator-test-java-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -211,7 +198,7 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
   ruby-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -226,7 +213,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: ruby src/server/runtimes/ruby/ruby.rb /workspace/testeranto/runtimes/ruby/ruby.rb
     networks:
-      - default
+      - allTests_network
   ruby_tests-example_calculator-test-rb-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -241,7 +228,7 @@ services:
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
     command: ruby testeranto/bundles/allTests/ruby/example/Calculator.test.rb '{"ports":[1111]}'
     networks:
-      - default
+      - allTests_network
   ruby_tests-example_calculator-test-rb-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -251,7 +238,7 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
   rust-builder:
     build:
       context: /Users/adam/Code/testeranto
@@ -264,9 +251,9 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: rust src/server/runtimes/rust/rust.rs /workspace/testeranto/runtimes/rust/rust.rs
+    command: rustc src/server/runtimes/rust/rust.rs /workspace/testeranto/runtimes/rust/rust.rs
     networks:
-      - default
+      - allTests_network
   rust_tests-example_calculator-test-rs-bdd:
     build:
       context: /Users/adam/Code/testeranto
@@ -279,9 +266,9 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: rust testeranto/bundles/rust/testeranto/bundles/allTests/rust/example/Calculator.test.rs /workspace/rust.rs
+    command: rustc testeranto/bundles/rust/testeranto/bundles/allTests/rust/example/Calculator.test.rs /workspace/rust.rs
     networks:
-      - default
+      - allTests_network
   rust_tests-example_calculator-test-rs-aider:
     build:
       context: /Users/adam/Code/testeranto
@@ -291,10 +278,10 @@ services:
     working_dir: /workspace
     command: aider
     networks:
-      - default
+      - allTests_network
 volumes:
   node_modules:
     driver: local
 networks:
-  default:
-    name: allTests_network
+  allTests_network:
+    driver: bridge

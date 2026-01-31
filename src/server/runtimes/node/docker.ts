@@ -24,15 +24,9 @@ export const nodeDockerComposeFile = (config: IConfig, container_name: string, f
 };
 
 export const nodeBuildCommand = (fpath: string) => {
-  // return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.js`;
   return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
-  // return 'ls'
-  // return `cat src/server/runtimes/node/node.ts`
-  // return 'idk'
 }
 
 export const nodeBddCommand = (fpath: string) => {
-  // return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/node.js`;
   return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/node.js`;
-  // return `node testeranto/bundles/node/example/Calculator.test.mjs /workspace/node.js `;
 }

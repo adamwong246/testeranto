@@ -41,8 +41,8 @@ export class Server_Docker extends Server_WS {
         },
       },
       networks: {
-        default: {
-          name: "allTests_network",
+        allTests_network: {
+          driver: "bridge",
         },
       },
     };
@@ -76,7 +76,7 @@ export class Server_Docker extends Server_WS {
       },
       working_dir: "/workspace",
       command: command,
-      networks: ["default"],
+      networks: ["allTests_network"],
     };
   };
 
@@ -113,7 +113,7 @@ export class Server_Docker extends Server_WS {
         `${process.cwd()}/testeranto:/workspace/testeranto`,
       ],
       command: command,
-      networks: ["default"],
+      networks: ["allTests_network"],
     };
 
     return service;
@@ -132,7 +132,7 @@ export class Server_Docker extends Server_WS {
       },
       working_dir: "/workspace",
       command: "aider",
-      networks: ["default"],
+      networks: ["allTests_network"],
     };
   };
 
@@ -141,22 +141,34 @@ export class Server_Docker extends Server_WS {
   ): Record<string, any> {
     const services: IService = {};
 
-    // Add browser service
-    services['browser'] = {
-      image: 'browserless/chrome:latest',
-      container_name: 'browser-allTests',
-      environment: {
-        CONNECTION_TIMEOUT: '60000',
-        MAX_CONCURRENT_SESSIONS: '10',
-        ENABLE_CORS: 'true',
-        TOKEN: '',
-      },
-      ports: [
-        '3000:3000',
-        '9222:9222'
-      ],
-      networks: ["default"],
-    };
+    // // Add browser service
+    // services['browser'] = {
+
+    //   build:
+    //   {
+    //     context: `/Users/adam/Code/testeranto`,
+    //     dockerfile: `src/server/runtimes/web/web.Dockerfile`
+    //   },
+
+    //   // image: 'browserless/chrome:latest',
+    //   shm_size: '2gb',
+
+    //   // environment: [ "DEFAULT_ARGS=--disable-dev-shm-usage"],
+
+    //   container_name: 'browser-allTests',
+    //   // environment: {
+    //   //   CONNECTION_TIMEOUT: '60000',
+    //   //   MAX_CONCURRENT_SESSIONS: '10',
+    //   //   ENABLE_CORS: 'true',
+    //   //   TOKEN: '',
+    //   //   DEFAULT_ARGS: '--disable-dev-shm-usage'
+    //   // },
+    //   ports: [
+    //     '3000:3000',
+    //     '9222:9222'
+    //   ],
+    //   networks: ["default"],
+    // };
 
     const runTimeToCompose: Record<IRunTime, [
       (
@@ -177,7 +189,6 @@ export class Server_Docker extends Server_WS {
       "java": [javaDockerComposeFile, javaBuildCommand, javaBddCommand]
     };
 
-    console.log("mark7", this.configs)
     // Iterate through each entry in the config Map
     for (const [runtimeTestsName, runtimeTests] of this.configs.entries()) {
       const runtime: IRunTime = runtimeTests[0];
@@ -214,32 +225,12 @@ export class Server_Docker extends Server_WS {
             `${process.cwd()}/testeranto:/workspace/testeranto`,
           ],
           command: buildCommand,
-          networks: ["default"],
+          networks: ["allTests_network"],
         };
 
-        // Also add the main service for this runtime from runTimeToCompose
-        // This ensures we have the base service for the runtime
-        // Temporarily disabled due to errors - these services may not be needed
-        // if (runTimeToCompose[runtime]) {
-        //   // Check if it's a function and call it with appropriate parameters
-        //   const serviceConfig = runTimeToCompose[runtime][0];
-        //   if (typeof serviceConfig === 'function') {
-        //     try {
-        //       // Pass the required parameters: config, container_name, fpath
-        //       // Use runtimeTestsName as container name, and dockerfile path
-        //       services[runtimeTestsName] = serviceConfig(this.configs, runtimeTestsName, dockerfile);
-        //     } catch (error) {
-        //       console.error(`[Server_Docker] Error calling ${runtime}DockerComposeFile:`, error);
-        //     }
-        //   } else {
-        //     services[runtimeTestsName] = serviceConfig;
-        //   }
-        // }
       } else {
         throw `unknown runtime ${runtime}`;
       }
-
-      console.log("mark6", testsObj)
 
       const testEntries = testsObj.tests.map(test => {
         if (typeof test === 'string') {
@@ -253,8 +244,6 @@ export class Server_Docker extends Server_WS {
           return { name: String(test), config: {} };
         }
       });
-
-      console.log("mark5", testEntries)
 
       for (const { name: testName, config: testConfig } of testEntries) {
         // Clean the test name for use in container names
@@ -273,6 +262,7 @@ export class Server_Docker extends Server_WS {
         // TODO find filepath
         // const filePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb"
 
+        console.log("mark8", testName)
         const filePath = `testeranto/bundles/allTests/${runtime}/${testName}`
         console.log("mark4", filePath)
 
@@ -302,7 +292,7 @@ export class Server_Docker extends Server_WS {
     // Ensure all services use the same network configuration
     for (const serviceName in services) {
       if (!services[serviceName].networks) {
-        services[serviceName].networks = ["default"];
+        services[serviceName].networks = ["allTests_network"];
       }
     }
 

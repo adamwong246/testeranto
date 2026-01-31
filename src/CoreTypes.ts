@@ -1,5 +1,5 @@
-import { ITestResourceConfiguration } from "./tiposkripto";
-import { BaseSuite } from "./tiposkripto/BaseSuite";
+import { ITestResourceConfiguration } from "./lib/tiposkripto";
+import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
 import {
   GivenSpecification,
   WhenSpecification,

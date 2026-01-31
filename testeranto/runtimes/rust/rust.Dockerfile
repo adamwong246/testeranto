@@ -23,5 +23,6 @@ RUN cargo install --version 0.9.0 cargo-audit || true
 # Pre-create target directory with proper permissions
 RUN mkdir -p /workspace/target && chmod 777 /workspace/target
 
+# Don't do this, we run our own custom command
 # Default command: run the Rust builder
-CMD ["sh", "-c", "cd /workspace && rustc src/server/runtimes/rust/main.rs -o /tmp/rust-builder && /tmp/rust-builder"]
+# CMD ["sh", "-c", "cd /workspace && rustc src/server/runtimes/rust/main.rs -o /tmp/rust-builder && /tmp/rust-builder"]

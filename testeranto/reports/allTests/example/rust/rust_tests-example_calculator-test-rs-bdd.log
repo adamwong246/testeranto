@@ -1,0 +1,6 @@
+rust_tests-example_calculator-test-rs-bdd  | error: multiple input filenames provided (first two filenames are `testeranto/bundles/rust/testeranto/bundles/allTests/rust/example/Calculator.test.rs` and `/workspace/rust.rs`)
+rust_tests-example_calculator-test-rs-bdd  | 
+=== Log started at 2026-01-31T15:31:33.438Z for service rust_tests-example_calculator-test-rs-bdd ===
+
+rust_tests-example_calculator-test-rs-bdd  | error: multiple input filenames provided (first two filenames are `testeranto/bundles/rust/testeranto/bundles/allTests/rust/example/Calculator.test.rs` and `/workspace/rust.rs`)
+rust_tests-example_calculator-test-rs-bdd  | 

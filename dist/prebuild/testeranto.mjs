@@ -188,15 +188,16 @@ var rustDockerComposeFile = (config, container_name, fpath) => {
   };
 };
 var rustBuildCommand = (fpath) => {
-  return `rust src/server/runtimes/rust/rust.rs /workspace/${fpath}`;
+  return `rustc src/server/runtimes/rust/rust.rs /workspace/${fpath}`;
 };
 var rustBddCommand = (fpath) => {
-  return `rust testeranto/bundles/rust/${fpath} /workspace/rust.rs`;
+  return `rustc testeranto/bundles/rust/${fpath} /workspace/rust.rs`;
 };
 
 // src/server/runtimes/web/docker.ts
 var webDockerComposeFile = (config, container_name, fpath) => {
   return {
+    platform: "linux/arm64",
     build: {
       context: process.cwd(),
       dockerfile: config[container_name].dockerfile
@@ -220,7 +221,7 @@ var webBuildCommand = (fpath) => {
   return `yarn tsx src/server/runtimes/web/web.ts /workspace/${fpath}`;
 };
 var webBddCommand = (fpath) => {
-  return `node testeranto/bundles/web/${fpath} /workspace/web.js `;
+  return `node dist/prebuild/server/runtimes/web/hoist.mjs `;
 };
 
 // src/server/serverClasees/Server_WS.ts
@@ -907,8 +908,8 @@ var Server_Docker = class extends Server_WS {
         }
       },
       networks: {
-        default: {
-          name: "allTests_network"
+        allTests_network: {
+          driver: "bridge"
         }
       }
     };
@@ -936,7 +937,7 @@ var Server_Docker = class extends Server_WS {
       },
       working_dir: "/workspace",
       command,
-      networks: ["default"]
+      networks: ["allTests_network"]
     };
   }
   bddTestDockerComposeFile(runtime, container_name, command) {
@@ -968,7 +969,7 @@ var Server_Docker = class extends Server_WS {
         `${process.cwd()}/testeranto:/workspace/testeranto`
       ],
       command,
-      networks: ["default"]
+      networks: ["allTests_network"]
     };
     return service;
   }
@@ -985,26 +986,11 @@ var Server_Docker = class extends Server_WS {
       },
       working_dir: "/workspace",
       command: "aider",
-      networks: ["default"]
+      networks: ["allTests_network"]
     };
   }
   generateServices() {
     const services = {};
-    services["browser"] = {
-      image: "browserless/chrome:latest",
-      container_name: "browser-allTests",
-      environment: {
-        CONNECTION_TIMEOUT: "60000",
-        MAX_CONCURRENT_SESSIONS: "10",
-        ENABLE_CORS: "true",
-        TOKEN: ""
-      },
-      ports: [
-        "3000:3000",
-        "9222:9222"
-      ],
-      networks: ["default"]
-    };
     const runTimeToCompose = {
       "node": [nodeDockerComposeFile, nodeBuildCommand, nodeBddCommand],
       "web": [webDockerComposeFile, webBuildCommand, webBddCommand],
@@ -1014,7 +1000,6 @@ var Server_Docker = class extends Server_WS {
       "rust": [rustDockerComposeFile, rustBuildCommand, rustBddCommand],
       "java": [javaDockerComposeFile, javaBuildCommand, javaBddCommand]
     };
-    console.log("mark7", this.configs);
     for (const [runtimeTestsName, runtimeTests] of this.configs.entries()) {
       const runtime = runtimeTests[0];
       const dockerfile = runtimeTests[1];
@@ -1043,12 +1028,11 @@ var Server_Docker = class extends Server_WS {
             `${process.cwd()}/testeranto:/workspace/testeranto`
           ],
           command: buildCommand,
-          networks: ["default"]
+          networks: ["allTests_network"]
         };
       } else {
         throw `unknown runtime ${runtime}`;
       }
-      console.log("mark6", testsObj);
       const testEntries = testsObj.tests.map((test) => {
         if (typeof test === "string") {
           return { name: test, config: {} };
@@ -1061,12 +1045,12 @@ var Server_Docker = class extends Server_WS {
           return { name: String(test), config: {} };
         }
       });
-      console.log("mark5", testEntries);
       for (const { name: testName, config: testConfig } of testEntries) {
         const testNameStr = String(testName);
         const cleanTestName = testNameStr.toLowerCase().replaceAll("/", "_").replaceAll(".", "-").replace(/[^a-z0-9_-]/g, "");
         const uid = `${runtimeTestsName}-${cleanTestName}`;
         const bddCommandFunc = runTimeToCompose[runtime][2];
+        console.log("mark8", testName);
         const filePath = `testeranto/bundles/allTests/${runtime}/${testName}`;
         console.log("mark4", filePath);
         const command = bddCommandFunc(filePath);
@@ -1078,7 +1062,7 @@ var Server_Docker = class extends Server_WS {
     }
     for (const serviceName in services) {
       if (!services[serviceName].networks) {
-        services[serviceName].networks = ["default"];
+        services[serviceName].networks = ["allTests_network"];
       }
     }
     return services;
