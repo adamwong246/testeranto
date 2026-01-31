@@ -1,12 +1,12 @@
-import { IBuiltConfig } from "../../../Types";
+import { IBuiltConfig, IConfig } from "../../../Types";
 
-export const pythonDockerComposeFile = (config: IBuiltConfig, projectName: string) => {
+export const pythonDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
   return {
     build: {
-      context: process.cwd(),
-      dockerfile: config.python.dockerfile,
+      context: `${process.cwd()}/example`,
+      dockerfile: config[container_name].dockerfile,
     },
-    container_name: `python-builder-${projectName}`,
+    container_name,
     environment: {
       NODE_ENV: "production",
       ...config.env,
@@ -18,17 +18,17 @@ export const pythonDockerComposeFile = (config: IBuiltConfig, projectName: strin
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: pythonBuildCommand(),
+    command: pythonBuildCommand(fpath),
   }
 
 };
 
-export const pythonBuildCommand = () => {
-  return `python src/server/runtimes/python/pitono.py`;
+export const pythonBuildCommand = (fpath: string) => {
+  return `python src/server/runtimes/python/pitono.py /workspace/${fpath}`;
 }
 
-
-export const pythonBDDCommand = (port) => {
-  return `python /workspace/testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py`;
+export const pythonBddCommand = (fpath: string) => {
+  const jsonStr = JSON.stringify({ ports: [1111] });
+  return `python ${fpath} '${jsonStr}'`;
 }
 

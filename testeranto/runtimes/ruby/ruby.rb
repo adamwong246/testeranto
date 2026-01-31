@@ -1,3 +1,4 @@
+# This file is where your project configures the runtime that testeranto uses for ruby
 #!/usr/bin/env ruby
 require 'json'
 require 'bundler/setup'

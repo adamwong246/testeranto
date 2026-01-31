@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as esbuild from 'esbuild'
-import { sassPlugin } from 'esbuild-sass-plugin'
 
 // Build main application
 await esbuild.build({
@@ -74,25 +73,3 @@ for (const file of mediaFiles) {
     console.warn(`Media file not found: ${src}`);
   }
 }
-
-// Build React app for webviews
-await esbuild.build({
-  entryPoints: [
-    'src/server/serverPages/ProcessManagerReactApp.tsx',
-    'src/server/serverPages/BuildListenerReactApp.tsx',
-    'src/server/serverPages/WebsocketsReactApp.tsx',
-    'src/style.scss',
-    'src/frontend/Report.tsx'
-  ],
-  bundle: true,
-  format: "iife",
-  platform: "browser",
-  outdir: 'dist/prebuild',
-  logLevel: 'error',
-  loader: {
-    ".ttf": "binary",
-    ".png": "binary",
-    ".jpg": "binary",
-  },
-  plugins: [sassPlugin()]
-})

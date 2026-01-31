@@ -1,11 +1,0 @@
-web-example_calculator-test-ts-static-0  | yarn run v1.22.22
-web-example_calculator-test-ts-static-0  | info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-web-example_calculator-test-ts-static-0  | error Command "eslint}" not found. Did you mean "eslint"?
-=== Log started at 2026-01-20T03:27:37.353Z for service web-example_calculator-test-ts-static-0 ===
-
-web-example_calculator-test-ts-static-0  | yarn run v1.22.22
-web-example_calculator-test-ts-static-0  | info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-web-example_calculator-test-ts-static-0  | error Command "eslint}" not found. Did you mean "eslint"?
-[Kweb-example_calculator-test-ts-static-0 exited with code 1
-
-=== Log ended at 2026-01-20T03:27:37.863Z, process exited with code 0 ===

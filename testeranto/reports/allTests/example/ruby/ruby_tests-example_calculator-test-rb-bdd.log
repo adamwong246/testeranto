@@ -1,0 +1,476 @@
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:08:05.314Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | src/server/runtimes/ruby/ruby.rb:28:in `<main>': undefined local variable or method `world' for main:Object (NameError)
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  |   hello: world,
+ruby_tests-example_calculator-test-rb-bdd  |          ^^^^^
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:16:28.937Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | src/server/runtimes/ruby/ruby.rb:28:in `<main>': undefined local variable or method `world' for main:Object (NameError)
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  |   hello: world,
+ruby_tests-example_calculator-test-rb-bdd  |          ^^^^^
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:17:03.030Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:20:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:18:50.812Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:20:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:22:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:24:31.377Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:22:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:22:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:26:21.589Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:22:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:22:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+=== Log started at 2026-01-31T02:27:42.224Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- /workspace/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from <internal:/usr/local/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+ruby_tests-example_calculator-test-rb-bdd  | 	from src/server/runtimes/ruby/ruby.rb:22:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | hello ruby builder
+ruby_tests-example_calculator-test-rb-bdd  | example/Calculator-test.rb:2:in `require_relative': cannot load such file -- /workspace/Calculator (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from example/Calculator-test.rb:2:in `<main>'
+=== Log started at 2026-01-31T02:33:39.343Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | example/Calculator-test.rb:2:in `require_relative': cannot load such file -- /workspace/Calculator (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from example/Calculator-test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | example/Calculator-test.rb:2:in `require_relative': cannot load such file -- /workspace/Calculator (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from example/Calculator-test.rb:2:in `<main>'
+=== Log started at 2026-01-31T02:35:01.837Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | example/Calculator-test.rb:2:in `require_relative': cannot load such file -- /workspace/Calculator (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from example/Calculator-test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:35:48.714Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:40:15.048Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:41:31.840Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:45:59.864Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:48:19.159Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:53:00.370Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:54:47.051Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:57:27.816Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T02:59:36.546Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+=== Log started at 2026-01-31T03:03:28.077Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | Running 5 tests...
+ruby_tests-example_calculator-test-rb-bdd  | ✓ basic addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ clear display
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory operations
+ruby_tests-example_calculator-test-rb-bdd  | ✓ memory addition
+ruby_tests-example_calculator-test-rb-bdd  | ✓ complex expression
+ruby_tests-example_calculator-test-rb-bdd  | 
+ruby_tests-example_calculator-test-rb-bdd  | Summary:
+ruby_tests-example_calculator-test-rb-bdd  |   Passed: 5
+ruby_tests-example_calculator-test-rb-bdd  |   Failed: 0
+ruby_tests-example_calculator-test-rb-bdd  |   Errors: 0
+ruby_tests-example_calculator-test-rb-bdd  | python: can't open file '/workspace/testeranto/bundles/ruby/': [Errno 2] No such file or directory
+=== Log started at 2026-01-31T03:04:46.998Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | python: can't open file '/workspace/testeranto/bundles/ruby/': [Errno 2] No such file or directory
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/ (LoadError)
+=== Log started at 2026-01-31T03:08:17.396Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/ (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:16:50.066Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:20:09.415Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:22:16.463Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:23:10.504Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:24:09.189Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:25:01.057Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:25:33.977Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:27:13.501Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+=== Log started at 2026-01-31T03:29:10.473Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/ruby/testeranto/bundles/allTests/ruby/example/Calculator.test.rb (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T03:32:37.957Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/allTests/ruby/example/Calculator.test.rb.py (LoadError)
+=== Log started at 2026-01-31T03:34:26.359Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | ruby: No such file or directory -- testeranto/bundles/allTests/ruby/example/Calculator.test.rb.py (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T03:36:19.862Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T03:38:00.406Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T03:58:34.045Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T03:59:24.202Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T04:05:52.037Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T04:08:21.104Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T04:11:33.555Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T04:14:54.037Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T04:16:52.871Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `require_relative': cannot load such file -- /workspace/testeranto/bundles/example/Calculator-test (LoadError)
+ruby_tests-example_calculator-test-rb-bdd  | 	from testeranto/bundles/allTests/ruby/example/Calculator.test.rb:2:in `<main>'
+=== Log started at 2026-01-31T04:18:14.924Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+=== Log started at 2026-01-31T04:19:37.556Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T04:20:43.042Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T04:23:13.816Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T04:28:06.955Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T04:28:42.396Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T11:48:20.659Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T11:48:52.061Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T11:54:09.164Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T11:54:58.180Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T11:56:49.394Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T11:57:52.852Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T12:02:05.811Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T12:03:52.340Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T12:05:37.281Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test

@@ -1,9 +1,0 @@
-node-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js,{"ports":[1111]}
-node-example_calculator-test-ts-bdd  | [NodeTiposkripto] constructor {"ports":[1111]}
-=== Log started at 2026-01-20T03:27:25.281Z for service node-example_calculator-test-ts-bdd ===
-
-node-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js,{"ports":[1111]}
-node-example_calculator-test-ts-bdd  | [NodeTiposkripto] constructor {"ports":[1111]}
-[Knode-example_calculator-test-ts-bdd exited with code 0
-
-=== Log ended at 2026-01-20T03:27:26.135Z, process exited with code 0 ===

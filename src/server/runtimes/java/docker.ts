@@ -1,13 +1,12 @@
-import { IBuiltConfig } from "../../../Types";
+import { IBuiltConfig, IConfig } from "../../../Types";
 
-export const javaDockerComposeFile = (config: IBuiltConfig, projectName: string): object => {
-
+export const javaDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
   return {
     build: {
       context: process.cwd(),
-      dockerfile: config.java.dockerfile,
+      dockerfile: config[container_name].dockerfile,
     },
-    container_name: `java-builder-${projectName}`,
+    container_name,
     environment: {
       NODE_ENV: "production",
       ...config.env,
@@ -19,43 +18,38 @@ export const javaDockerComposeFile = (config: IBuiltConfig, projectName: string)
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: javaBuildCommand(),
+    command: javaBuildCommand(fpath),
   }
-
-  // return {
-  //   build: {
-  //     context: process.cwd(), // Use the project root as build context
-  //     dockerfile: config.golang.dockerfile,
-  //   },
-  //   container_name: `golang-builder-${projectName}`,
-  //   environment: {
-  //     ...config.env,
-  //   },
-  //   working_dir: "/workspace",
-  //   volumes: [
-  //     `${process.cwd()}:/workspace`,
-  //   ],
-  //   command: golangBuildCommand(),
-  // }
 
 };
 
-export const javaBuildCommand = () => {
-  return "cd /workspace && javac -cp \".:lib/*\" src/server/runtimes/java/main.java && java -cp \"src/server/runtimes/java:.\" main";
+
+export const javaBuildCommand = (fpath: string) => {
+  return `java src/server/runtimes/java/java.java /workspace/${fpath}`;
 }
 
-// this image "builds" test bundles. it is not a "docker build" thing
-export const javaBddCommand = () => {
-  const jsonStr = JSON.stringify({ ports: [1111] });
-  return `java -jar testeranto/bundles/allTests/java/example/Calculator-test.jar '${jsonStr}'`
+export const javaBddCommand = (fpath: string) => {
+  return `java testeranto/bundles/java/${fpath} /workspace/java.java`;
 }
 
-export const javaTestCommand = (config: IBuiltConfig, inputfiles: string[]) => {
-  return `
-${config.java.checks?.map((c) => {
-    return c(inputfiles);
-  }).join('\n') || ''}
 
-    ${javaBddCommand()}
-  `;
-}
+
+// export const javaBuildCommand = () => {
+//   return "cd /workspace && javac -cp \".:lib/*\" src/server/runtimes/java/main.java && java -cp \"src/server/runtimes/java:.\" main";
+// }
+
+// // this image "builds" test bundles. it is not a "docker build" thing
+// export const javaBddCommand = () => {
+//   const jsonStr = JSON.stringify({ ports: [1111] });
+//   return `java -jar testeranto/bundles/allTests/java/example/Calculator-test.jar '${jsonStr}'`
+// }
+
+// export const javaTestCommand = (config: IBuiltConfig, inputfiles: string[]) => {
+//   return `
+// ${config.java.checks?.map((c) => {
+//     return c(inputfiles);
+//   }).join('\n') || ''}
+
+//     ${javaBddCommand()}
+//   `;
+// }

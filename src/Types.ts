@@ -246,3 +246,5 @@ export type ITestconfig = {
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;
+
+export type IConfig = Map<string, [IRunTime, string, string, { tests: string[] }]>

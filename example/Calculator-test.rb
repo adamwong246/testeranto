@@ -1,6 +1,7 @@
 require 'json'
-require_relative 'Calculator'
+require_relative './Calculator'
 
+puts "hello calculator test"
 # Since we don't have access to the full Rubeno library in this example,
 # let's create a simple test runner
 class SimpleTestRunner

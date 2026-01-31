@@ -1,0 +1,1673 @@
+=== Log started at 2026-01-31T00:53:32.656Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | No LLM model was specified and no API keys were provided.
+python_tests-example_calculator-test-ps-aider  | OpenRouter provides free and paid access to many LLMs.
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please open this URL in your browser to connect Aider with OpenRouter:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | https://openrouter.ai/auth?callback_url=http://localhost:8484/callback/aider&code_challenge=8eGyE9bM9GR8lyOQPRG1vvU-anTYxDW7EMxlKo6SRK8&code_challenge_method=S256
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Waiting up to 5 minutes for you to finish in the browser...
+python_tests-example_calculator-test-ps-aider  | Use Control-C to interrupt.
+python_tests-example_calculator-test-ps-aider  | Authentication with OpenRouter failed.
+python_tests-example_calculator-test-ps-aider  | OpenRouter authentication did not complete successfully.
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | https://aider.chat/docs/troubleshooting/models-and-keys.html
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T00:58:36.269Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:07:57.961Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:07:59.752Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:13:09.140Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:13:09.986Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:15:27.042Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:15:28.094Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:18:07.489Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | No LLM model was specified and no API keys were provided.
+python_tests-example_calculator-test-ps-aider  | OpenRouter provides free and paid access to many LLMs.
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please open this URL in your browser to connect Aider with OpenRouter:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | https://openrouter.ai/auth?callback_url=http://localhost:8484/callback/aider&code_challenge=RzrdufQjfBRx8uHQ_Dt8Vc8yUVRNtEUqKjQypdFs0cU&code_challenge_method=S256
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Waiting up to 5 minutes for you to finish in the browser...
+python_tests-example_calculator-test-ps-aider  | Use Control-C to interrupt.
+python_tests-example_calculator-test-ps-aider  | Authentication with OpenRouter failed.
+python_tests-example_calculator-test-ps-aider  | OpenRouter authentication did not complete successfully.
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | https://aider.chat/docs/troubleshooting/models-and-keys.html
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:23:14.511Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:55:51.828Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:55:53.103Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:58:04.366Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+python_tests-example_calculator-test-ps-aider  | personal info.
+python_tests-example_calculator-test-ps-aider  | For more info: https://aider.chat/docs/more/analytics.html
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:58:05.985Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:59:43.846Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T01:59:44.690Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:00:11.618Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:00:12.889Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:01:38.310Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:01:39.129Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:03:17.658Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:03:18.479Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:06:28.062Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:06:28.891Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:07:58.749Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+python_tests-example_calculator-test-ps-aider  | personal info.
+python_tests-example_calculator-test-ps-aider  | For more info: https://aider.chat/docs/more/analytics.html
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:08:00.872Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:16:22.702Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:16:23.480Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:16:56.427Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:16:57.465Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:18:45.045Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:18:45.872Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:24:25.505Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:24:26.419Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:26:15.332Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:26:16.284Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:27:36.186Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:27:37.207Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:33:33.772Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:33:34.689Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:34:55.612Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:34:56.532Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:35:42.835Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:35:43.719Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:40:09.115Z for service python_tests-example_calculator-test-ps-aider ===
+
+python_tests-example_calculator-test-ps-aider  | Warning: Input is not a terminal (fd=0).
+python_tests-example_calculator-test-ps-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+python_tests-example_calculator-test-ps-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+python_tests-example_calculator-test-ps-aider  | ────────────────────────────────────────────────────────────────────────────────
+python_tests-example_calculator-test-ps-aider  | Error in sys.excepthook:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | # Uncaught OSError in pathlib.py line 1116
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Aider version: 0.86.1
+python_tests-example_calculator-test-ps-aider  | Python version: 3.11.14
+python_tests-example_calculator-test-ps-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+python_tests-example_calculator-test-ps-aider  | Python implementation: CPython
+python_tests-example_calculator-test-ps-aider  | Virtual environment: No
+python_tests-example_calculator-test-ps-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+python_tests-example_calculator-test-ps-aider  | Git information unavailable
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | An uncaught exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | ```
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Please consider reporting this bug to help improve aider!
+python_tests-example_calculator-test-ps-aider  |     report_github_issue(issue_text, title=title)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+python_tests-example_calculator-test-ps-aider  |     confirmation = input(prompt).strip().lower()
+python_tests-example_calculator-test-ps-aider  |                    ^^^^^^^^^^^^^
+python_tests-example_calculator-test-ps-aider  | EOFError: EOF when reading a line
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Original exception was:
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | During handling of the above exception, another exception occurred:
+python_tests-example_calculator-test-ps-aider  | 
+python_tests-example_calculator-test-ps-aider  | Traceback (most recent call last):
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+python_tests-example_calculator-test-ps-aider  |     sys.exit(main())
+python_tests-example_calculator-test-ps-aider  |              ^^^^^^
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+python_tests-example_calculator-test-ps-aider  |     check_version(io, verbose=args.verbose)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+python_tests-example_calculator-test-ps-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+python_tests-example_calculator-test-ps-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+python_tests-example_calculator-test-ps-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+python_tests-example_calculator-test-ps-aider  |     os.mkdir(self, mode)
+python_tests-example_calculator-test-ps-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kpython_tests-example_calculator-test-ps-aider exited with code 1
+
+=== Log ended at 2026-01-31T02:40:10.057Z, process exited with code 0 ===

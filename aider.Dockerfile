@@ -1,8 +1,8 @@
 FROM python:3.11-slim
-WORKDIR /workspace
+WORKDIR /example
 RUN pip install --no-cache-dir aider-chat
 # Create a non-root user for security`,
-RUN useradd -m -u 1000 aider && chown -R aider:aider /workspace
+RUN useradd -m -u 1000 aider && chown -R aider:aider /example
 USER aider
 # Copy API keys if they exist in the host's .aider.conf.yml`,
 # The actual API keys will be passed as environment variables at runtime`,

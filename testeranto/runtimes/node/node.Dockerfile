@@ -14,7 +14,7 @@ RUN yarn install
 # --immutable
 
 # Resumbably, the user provides the but we ignore it
-CMD yarn run
+CMD ls
 
 # FROM build as testeranto/lintcheck
 # CMD yarn eslint

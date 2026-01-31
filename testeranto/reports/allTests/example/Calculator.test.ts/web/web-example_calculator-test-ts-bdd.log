@@ -1,18 +1,0 @@
-=== Log started at 2026-01-20T03:27:27.114Z for service web-example_calculator-test-ts-bdd ===
-
-web-example_calculator-test-ts-bdd  | yarn run v1.22.22
-web-example_calculator-test-ts-bdd  | warning testeranto@0.212.0: The engine "vscode" appears to be invalid.
-web-example_calculator-test-ts-bdd  | $ /workspace/node_modules/.bin/tsx src/server/runtimes/web/hoist.ts testeranto/bundles/allTests/web/example/Calculator.test.mjs
-web-example_calculator-test-ts-bdd  | hoist
-web-example_calculator-test-ts-bdd  | Attempt 1/30 to connect to Chrome...
-web-example_calculator-test-ts-bdd  | Fetching Chrome debugger info from http://browser-allTests:3000/json/version...
-web-example_calculator-test-ts-bdd  | Fetched WebSocket endpoint: ws://browser-alltests:3000
-web-example_calculator-test-ts-bdd  | Corrected WebSocket endpoint: ws://browser-alltests:3000
-web-example_calculator-test-ts-bdd  | Connecting to Chrome at ws://browser-alltests:3000...
-web-example_calculator-test-ts-bdd  | Successfully connected to Chrome browser
-web-example_calculator-test-ts-bdd  | Opened a new page
-web-example_calculator-test-ts-bdd  | Disconnected from Chrome
-web-example_calculator-test-ts-bdd  | Done in 5.21s.
-[Kweb-example_calculator-test-ts-bdd exited with code 0
-
-=== Log ended at 2026-01-20T03:27:33.865Z, process exited with code 0 ===

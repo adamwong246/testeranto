@@ -1,18 +1,15 @@
-import { IBuiltConfig } from "../../Types";
+import { IBuiltConfig, IConfig } from "../../Types";
 import { IMode } from "../types";
 
 export abstract class Server_Base {
   mode: IMode;
-  configs: IBuiltConfig;
-  projectName: string;
-  configsV2: string[];
+  configs: IConfig;
 
-  constructor(configs: IBuiltConfig, projectName: string, mode: IMode) {
+
+  constructor(configs: IConfig, mode: IMode) {
     this.configs = configs;
     this.mode = mode;
-    this.projectName = projectName;
 
-    this.configsV2 = ['node.js', 'web.js', 'golang.go', 'python.py'];
   }
 
   async start() {

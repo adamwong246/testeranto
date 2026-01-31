@@ -7,7 +7,7 @@ var tpskrt;
 if (false) {
   tpskrt = await null;
 } else if (true) {
-  tpskrt = await import("../Web-47KJWYNM.mjs");
+  tpskrt = await import("../Web-TXOXR4ZX.mjs");
 } else {
   throw `Unknown ENV ${"web"}`;
 }

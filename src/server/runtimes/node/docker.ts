@@ -1,12 +1,12 @@
-import { IBuiltConfig } from "../../../Types";
+import { IConfig } from "../../../Types";
 
-export const nodeDockerComposeFile = (config: IBuiltConfig, projectName: string) => {
+export const nodeDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
   return {
     build: {
       context: process.cwd(),
-      dockerfile: config.node.dockerfile,
+      dockerfile: config[container_name].dockerfile,
     },
-    container_name: `node-builder-${projectName}`,
+    container_name,
     environment: {
       NODE_ENV: "production",
       ...config.env,
@@ -18,16 +18,21 @@ export const nodeDockerComposeFile = (config: IBuiltConfig, projectName: string)
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: nodeBuildCommand(config.httpPort || 3456),
+    command: nodeBuildCommand(fpath),
   }
 
 };
 
-export const nodeBuildCommand = (port) => {
-  return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.js`;
+export const nodeBuildCommand = (fpath: string) => {
+  // return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.js`;
+  return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  // return 'ls'
+  // return `cat src/server/runtimes/node/node.ts`
+  // return 'idk'
 }
 
-export const nodeBddCommand = (port) => {
-  const jsonStr = JSON.stringify({ ports: [1111] });
-  return `node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+export const nodeBddCommand = (fpath: string) => {
+  // return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/node.js`;
+  return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/node.js`;
+  // return `node testeranto/bundles/node/example/Calculator.test.mjs /workspace/node.js `;
 }

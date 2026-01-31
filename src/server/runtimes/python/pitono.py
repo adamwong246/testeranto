@@ -323,7 +323,7 @@ def bundle_python_files(entry_point: str, output_dir: str) -> str:
         print(f"=== Generated JSON bundle (array format): {output_path_json}")
         
         # Create a Python bundle file that acts like a symlink to the original test
-        python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
+        python_bundle_path = os.path.join(output_dir, "example", f"{entry_name}.py")
         
         # Get absolute paths
         original_test_abs = os.path.abspath(entry_point)
@@ -433,7 +433,7 @@ if __name__ == "__main__":
         print(f"=== Generated minimal JSON bundle (empty array) due to error: {output_path_json}")
         
         # Create a Python bundle file even on error (but it will report the error)
-        python_bundle_path = os.path.join(output_dir, f"{entry_name}.bundle.py")
+        python_bundle_path = os.path.join(output_dir, "example", f"{entry_name}.py")
         original_test_abs = os.path.abspath(entry_point)
         python_bundle_content = f'''#!/usr/bin/env python3
 """
@@ -492,8 +492,9 @@ def main():
 if __name__ == "__main__":
     sys.exit(main())
 '''
-        with open(python_bundle_path, 'w', encoding='utf-8') as f:
-            f.write(python_bundle_content)
+        # FIXME
+        # with open(python_bundle_path, 'w', encoding='utf-8') as f:
+        #     f.write(python_bundle_content)
         
         # Make the bundle executable
         try:
@@ -662,33 +663,41 @@ def compute_files_hash(files: List[str]) -> str:
 def main():
     # Determine config path
     # First, check command line argument
-    if len(sys.argv) > 1:
-        config_path = sys.argv[1]
-    else:
-        # Try common locations
-        possible_paths = [
-            'testeranto/allTests.json'
-        ]
-        config_path = None
-        for path in possible_paths:
-            if os.path.exists(path):
-                config_path = path
-                break
-        if not config_path:
-            print("Error: allTests.json not found")
-            sys.exit(1)
+    # if len(sys.argv) > 1:
+    #     config_path = sys.argv[1]
+    # else:
+    #     # Try common locations
+    #     possible_paths = [
+    #         'testeranto/allTests.json'
+    #     ]
+    #     config_path = None
+    #     for path in possible_paths:
+    #         if os.path.exists(path):
+    #             config_path = path
+    #             break
+    #     if not config_path:
+    #         print("Error: allTests.json not found")
+    #         sys.exit(1)
     
+    print(f"ARGV {sys.argv}")
+    config_path = sys.argv[1]
+
     print(f"Reading config from {config_path}")
     
     try:
-        with open(config_path, 'r') as f:
-            config = json.load(f)
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("config_module", config_path)
+        config_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(config_module)
+
+        config = config_module.main()
     except Exception as e:
         print(f"Error loading config: {e}")
         sys.exit(1)
     
     # Get Python test entry points
-    python_config = config.get('python', {})
+    python_config = config['python']
     tests = python_config.get('tests', {})
     entry_points = list(tests.keys())
     
@@ -755,16 +764,16 @@ def main():
     metafile = generate_metafile(entry_points)
     
     # Write metafile
-    metafiles_dir = os.environ.get('METAFILES_DIR', '/workspace/testeranto/metafiles/python')
-    os.makedirs(metafiles_dir, exist_ok=True)
+    # metafiles_dir = os.environ.get('METAFILES_DIR', '/workspace/testeranto/metafiles/python')
+    # os.makedirs(metafiles_dir, exist_ok=True)
     
-    metafile_path = os.path.join(metafiles_dir, 'allTests.json')
-    print(f"Writing metafile to: {metafile_path}")
-    with open(metafile_path, 'w') as f:
-        json.dump(metafile, f, indent=2)
-    print(f"Metafile written successfully")
+    # metafile_path = os.path.join(metafiles_dir, 'allTests.json')
+    # print(f"Writing metafile to: {metafile_path}")
+    # with open(metafile_path, 'w') as f:
+    #     json.dump(metafile, f, indent=2)
+    # print(f"Metafile written successfully")
     
-    print(f"Python metafile written to {metafile_path}")
+    # print(f"Python metafile written to {metafile_path}")
     
     # Print bundle information
     bundles_dir = os.environ.get('BUNDLES_DIR', '/workspace/testeranto/bundles/allTests/python')

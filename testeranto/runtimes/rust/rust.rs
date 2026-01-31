@@ -1,4 +1,4 @@
-// the esbuild configuration for testeranto/web
-export default {
-  loaders: []
-}
+// # This file is where your project configures the runtime that testeranto uses for ruST
+// export default {
+//   loaders: []
+// }

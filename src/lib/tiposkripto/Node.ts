@@ -29,7 +29,7 @@ export class NodeTiposkripto<
     testResourceRequirement: ITTestResourceRequest,
     testAdapter: Partial<ITestAdapter<I>>
   ) {
-    console.log(`[NodeTiposkripto] constructor ${process.argv[3]}`);
+    // console.log(`[NodeTiposkripto] constructor ${process.argv[3]}`);
     // const config = JSON.parse(process.argv[3])
 
     super(
@@ -47,7 +47,7 @@ export class NodeTiposkripto<
     filename: string,
     payload: string,
   ) {
-    // Ensure the directory exists
+    console.log('writeFileSync', filename)
     const dir = "testeranto/reports/allTests/example";
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
