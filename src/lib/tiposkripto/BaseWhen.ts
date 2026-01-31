@@ -1,4 +1,4 @@
-import { Ibdd_in_any } from "../../CoreTypes";
+import { Ibdd_in_any } from "./CoreTypes";
 
 export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;

@@ -1,4 +1,4 @@
-import { Ibdd_in_any } from "../../CoreTypes";
+import { Ibdd_in_any } from "./CoreTypes";
 import { ITestResourceConfiguration } from ".";
 
 export abstract class BaseThen<I extends Ibdd_in_any> {

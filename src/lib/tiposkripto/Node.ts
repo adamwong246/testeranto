@@ -6,7 +6,7 @@ import {
   ITestAdapter,
   ITestImplementation,
   ITestSpecification,
-} from "../../CoreTypes.js";
+} from "./CoreTypes.js";
 import Tiposkripto from "./BaseTiposkripto.js";
 import {
   defaultTestResourceRequirement,

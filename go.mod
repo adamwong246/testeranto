@@ -7,3 +7,5 @@ go 1.23
 require example v0.0.0
 
 replace example => ./example
+
+require golingvu v0.0.1

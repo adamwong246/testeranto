@@ -1,6 +1,6 @@
 
 import { ITTestResourceRequest, ITestResourceConfiguration, defaultTestResourceRequirement } from ".";
-import { ITestAdapter, ITestImplementation, ITestSpecification, Ibdd_in_any, Ibdd_out } from "../../CoreTypes";
+import { ITestAdapter, ITestImplementation, ITestSpecification, Ibdd_in_any, Ibdd_out } from "./CoreTypes";
 import type BaseTiposkripto from "./BaseTiposkripto.js";
 
 let tpskrt;

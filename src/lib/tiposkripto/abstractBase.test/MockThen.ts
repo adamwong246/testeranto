@@ -1,4 +1,4 @@
-import { Ibdd_in_any } from "../../../CoreTypes";
+import { Ibdd_in_any } from ".././CoreTypes";
 import { BaseThen } from "../BaseThen";
 
 export class MockThen<I extends Ibdd_in_any> extends BaseThen<I> {

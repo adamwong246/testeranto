@@ -1,4 +1,4 @@
-import { ITestAdapter } from "../../../CoreTypes";
+import { ITestAdapter } from ".././CoreTypes";
 import { I } from "./types";
 
 export const testAdapter: ITestAdapter<I> = {
@@ -18,7 +18,7 @@ export const testAdapter: ITestAdapter<I> = {
     return thenCB(store);
   },
   afterEach: async (store, key, pm) => Promise.resolve(store),
-  afterAll: async (store, pm) => {},
+  afterAll: async (store, pm) => { },
   assertThis: (result) => !!result,
   beforeAll: async (input, testResource, pm) => input as any,
 };

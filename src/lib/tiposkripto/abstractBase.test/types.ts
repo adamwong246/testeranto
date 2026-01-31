@@ -1,4 +1,4 @@
-import { Ibdd_in, Ibdd_out } from "../../CoreTypes";
+import { Ibdd_in, Ibdd_out } from "./CoreTypes";
 
 export type I = Ibdd_in<
   {}, // iinput

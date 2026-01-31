@@ -5,7 +5,7 @@ import {
   ITestAdapter,
   ITestImplementation,
   ITestSpecification,
-} from "../../CoreTypes";
+} from "./CoreTypes";
 import { BaseGiven, IGivens } from "./BaseGiven";
 import { BaseSuite } from "./BaseSuite";
 import { BaseThen } from "./BaseThen.js";

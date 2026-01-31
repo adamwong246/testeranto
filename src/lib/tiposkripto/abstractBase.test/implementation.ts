@@ -1,4 +1,4 @@
-import { ITestImplementation } from "../../CoreTypes";
+import { ITestImplementation } from "./CoreTypes";
 
 import { I, O } from "./types";
 

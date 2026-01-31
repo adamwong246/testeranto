@@ -1,4 +1,4 @@
-import { Ibdd_in_any } from "../../../CoreTypes";
+import { Ibdd_in_any } from ".././CoreTypes";
 import { BaseGiven } from "../BaseGiven";
 import { BaseThen } from "../BaseThen";
 import { BaseWhen } from "../BaseWhen";
