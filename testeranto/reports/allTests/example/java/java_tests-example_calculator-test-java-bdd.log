@@ -805,3 +805,9 @@ java_tests-example_calculator-test-java-bdd  | Caused by: java.lang.ClassNotFoun
 
 java_tests-example_calculator-test-java-bdd  | Error: Could not find or load main class testeranto.bundles.java.testeranto.bundles.allTests.java.example.Calculator.test.java
 java_tests-example_calculator-test-java-bdd  | Caused by: java.lang.ClassNotFoundException: testeranto.bundles.java.testeranto.bundles.allTests.java.example.Calculator.test.java
+java_tests-example_calculator-test-java-bdd  | Error: Could not find or load main class testeranto.bundles.java.testeranto.bundles.allTests.java.example.Calculator.test.java
+java_tests-example_calculator-test-java-bdd  | Caused by: java.lang.ClassNotFoundException: testeranto.bundles.java.testeranto.bundles.allTests.java.example.Calculator.test.java
+=== Log started at 2026-01-31T19:09:48.757Z for service java_tests-example_calculator-test-java-bdd ===
+
+java_tests-example_calculator-test-java-bdd  | Error: Could not find or load main class testeranto.bundles.java.testeranto.bundles.allTests.java.example.Calculator.test.java
+java_tests-example_calculator-test-java-bdd  | Caused by: java.lang.ClassNotFoundException: testeranto.bundles.java.testeranto.bundles.allTests.java.example.Calculator.test.java

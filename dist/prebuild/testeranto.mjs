@@ -98,7 +98,13 @@ var nodeDockerComposeFile = (config, container_name, fpath) => {
   };
 };
 var nodeBuildCommand = (fpath) => {
-  return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  if (false) {
+    console.log("external tests");
+    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  } else {
+    console.log("not external tests");
+    return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  }
 };
 var nodeBddCommand = (fpath) => {
   return `node ${fpath.split(".").slice(0, -1).concat("mjs").join(".")} /workspace/node.js`;
@@ -1642,6 +1648,7 @@ ${x}
 };
 
 // src/server/serverClasees/Server.ts
+console.log("hello server");
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 var Server = class extends Server_Docker {

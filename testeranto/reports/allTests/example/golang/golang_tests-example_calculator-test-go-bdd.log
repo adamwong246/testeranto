@@ -970,3 +970,7 @@ golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-te
 === Log started at 2026-01-31T16:44:03.346Z for service golang_tests-example_calculator-test-go-bdd ===
 
 golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T19:09:48.033Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)

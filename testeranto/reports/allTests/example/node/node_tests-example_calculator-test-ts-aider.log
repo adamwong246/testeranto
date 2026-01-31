@@ -10262,3 +10262,80 @@ node_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left
 [Knode_tests-example_calculator-test-ts-aider exited with code 1
 
 === Log ended at 2026-01-31T16:43:58.416Z, process exited with code 0 ===
+=== Log started at 2026-01-31T19:09:40.619Z for service node_tests-example_calculator-test-ts-aider ===
+
+node_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+node_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+node_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+node_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+node_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+node_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+node_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+node_tests-example_calculator-test-ts-aider  | Virtual environment: No
+node_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+node_tests-example_calculator-test-ts-aider  | Git information unavailable
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | ```
+node_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+node_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+node_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+node_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+node_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+node_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+node_tests-example_calculator-test-ts-aider  |              ^^^^^^
+node_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+node_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+node_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+node_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+node_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+node_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+node_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+node_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+node_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | ```
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+node_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+node_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+node_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+node_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+node_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+node_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | Original exception was:
+node_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+node_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+node_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+node_tests-example_calculator-test-ts-aider  | 
+node_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+node_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+node_tests-example_calculator-test-ts-aider  |              ^^^^^^
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+node_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+node_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+node_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+node_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+node_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+node_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Knode_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T19:09:42.044Z, process exited with code 0 ===

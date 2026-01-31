@@ -23,8 +23,18 @@ export const nodeDockerComposeFile = (config: IConfig, container_name: string, f
 
 };
 
+const externalTests = true;
+
 export const nodeBuildCommand = (fpath: string) => {
-  return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+
+  if (false) {
+    console.log("external tests")
+    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  } else {
+    console.log("not external tests")
+    return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  }
+
 }
 
 export const nodeBddCommand = (fpath: string) => {

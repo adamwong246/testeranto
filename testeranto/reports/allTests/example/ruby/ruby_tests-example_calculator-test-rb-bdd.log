@@ -756,3 +756,10 @@ ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
 === Log started at 2026-01-31T16:44:04.669Z for service ruby_tests-example_calculator-test-rb-bdd ===
 
 ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+=== Log started at 2026-01-31T19:09:49.529Z for service ruby_tests-example_calculator-test-rb-bdd ===
+
+[Kruby_tests-example_calculator-test-rb-bdd exited with code 0
+ruby_tests-example_calculator-test-rb-bdd  | hello calculator test
+
+=== Log ended at 2026-01-31T19:09:49.961Z, process exited with code 0 ===

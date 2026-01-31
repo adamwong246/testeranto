@@ -4,6 +4,8 @@ import { IBuiltConfig, IConfig } from "../../Types";
 import { IMode } from "../types";
 import { Server_Docker } from "./Server_Docker";
 
+console.log("hello server")
+
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 

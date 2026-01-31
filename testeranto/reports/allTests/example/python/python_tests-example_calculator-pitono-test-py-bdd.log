@@ -12306,3 +12306,184 @@ python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display:
 python_tests-example_calculator-pitono-test-py-bdd  | tests.json written to: ../testeranto/reports/allTests/example/python/Calculator.test.ts.json
 
 === Log ended at 2026-01-31T16:44:03.050Z, process exited with code 0 ===
+=== Log started at 2026-01-31T19:09:47.077Z for service python_tests-example_calculator-pitono-test-py-bdd ===
+
+python_tests-example_calculator-pitono-test-py-bdd  | This is a simple console message.
+python_tests-example_calculator-pitono-test-py-bdd  | hello PitonoClass
+python_tests-example_calculator-pitono-test-py-bdd  | Test instance created successfully
+python_tests-example_calculator-pitono-test-py-bdd  | Starting Calculator tests...
+python_tests-example_calculator-pitono-test-py-bdd  | Running in standalone mode...
+python_tests-example_calculator-pitono-test-py-bdd  | Running with sys.argv: ['/workspace/example/Calculator.pitono.test.py', '{"name": "local-test", "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.py", "ports": [8080], "browser_ws_endpoint": null, "timeout": 30000, "retries": 0, "environment": {}}', 'ipcfile']
+python_tests-example_calculator-pitono-test-py-bdd  | hello world ['/workspace/example/Calculator.pitono.test.py', '{"name": "local-test", "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.py", "ports": [8080], "browser_ws_endpoint": null, "timeout": 30000, "retries": 0, "environment": {}}', 'ipcfile']
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testEmptyDisplay
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67bb10>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842658064] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testSingleDigit
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67bc10>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842658320] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testMultipleDigits
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67bcd0>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842658512] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testLargeNumber
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67bd90>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842658704] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testAdditionExpression
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67be50>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842658896] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testIncompleteAddition
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67bf10>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842659088] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testSubtractionExpression
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc67bfd0>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842659280] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testMultiplicationExpression
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c0d0>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842725072] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testDivisionExpression
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c190>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842725264] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testSimpleAddition
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c250>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842725456] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testSimpleSubtraction
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c310>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842725648] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testSimpleMultiplication
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c3d0>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842725840] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testSimpleDivision
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c490>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842726032] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testClearOperation
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c550>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842726224] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testStartingWithOperator
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c610>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842726416] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testMultipleOperators
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c6d0>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842726608] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testDivisionByZero
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c790>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842726800] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testInvalidExpression
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c850>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842726992] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testMemoryStoreRecall
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c910>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842727184] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testMemoryClear
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68c9d0>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842727376] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  testMemoryAddition
+python_tests-example_calculator-pitono-test-py-bdd  | 
+python_tests-example_calculator-pitono-test-py-bdd  |  Given: Default
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach called
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] beforeEach result: <Calculator.Calculator object at 0xffffbc68ca90>
+python_tests-example_calculator-pitono-test-py-bdd  | [CALCULATOR 281473842727568] getDisplay: ''
+python_tests-example_calculator-pitono-test-py-bdd  | [ADAPTER] display: 
+python_tests-example_calculator-pitono-test-py-bdd  | tests.json written to: ../testeranto/reports/allTests/example/python/Calculator.test.ts.json
+[Kpython_tests-example_calculator-pitono-test-py-bdd exited with code 21
+
+=== Log ended at 2026-01-31T19:09:48.418Z, process exited with code 0 ===
