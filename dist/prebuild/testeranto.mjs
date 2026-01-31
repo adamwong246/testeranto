@@ -169,7 +169,7 @@ var rubyBddCommand = (fpath) => {
 var rustDockerComposeFile = (config, container_name, fpath) => {
   return {
     build: {
-      context: process.cwd(),
+      context: `${process.cwd()}`,
       dockerfile: config[container_name].dockerfile
     },
     container_name,
@@ -188,7 +188,7 @@ var rustDockerComposeFile = (config, container_name, fpath) => {
   };
 };
 var rustBuildCommand = (fpath) => {
-  return `rustc src/server/runtimes/rust/rust.rs /workspace/${fpath}`;
+  return `sh -c "CONFIG_PATH=/workspace/${fpath} cargo build --release && ./target/release/my_program"`;
 };
 var rustBddCommand = (fpath) => {
   return `rustc testeranto/bundles/rust/${fpath} /workspace/rust.rs`;

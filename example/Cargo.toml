@@ -7,7 +7,8 @@ authors = ["Testeranto Team"]
 license = "MIT"
 
 [dependencies]
-rusto = { path = "../src/lib/rusto" }
+md5 = "0.8.0"
+testeranto = { path = "../src/lib/rusto" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1.0", features = ["full"] }

@@ -3,7 +3,7 @@ import { IConfig } from "../../../Types";
 export const rustDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
   return {
     build: {
-      context: process.cwd(),
+      context: `${process.cwd()}`,
       dockerfile: config[container_name].dockerfile,
     },
     container_name,
@@ -24,7 +24,12 @@ export const rustDockerComposeFile = (config: IConfig, container_name: string, f
 };
 
 export const rustBuildCommand = (fpath: string) => {
-  return `rustc src/server/runtimes/rust/rust.rs /workspace/${fpath}`;
+  // return `cat /workspace/testeranto/runtimes/rust/rust.rs`
+  // return `cat /workspace/${fpath}`
+  // return `echo "${fpath}"`
+  // return `CONFIG_PATH="/workspace/${fpath}"  rustc src/server/runtimes/rust/main.rs -o my_program`;
+  return `sh -c "CONFIG_PATH=/workspace/${fpath} cargo build --release && ./target/release/my_program"`
+  // return `tree`
 }
 
 export const rustBddCommand = (fpath: string) => {

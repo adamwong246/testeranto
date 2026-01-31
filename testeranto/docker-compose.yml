@@ -251,7 +251,7 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: rustc src/server/runtimes/rust/rust.rs /workspace/testeranto/runtimes/rust/rust.rs
+    command: sh -c "CONFIG_PATH=/workspace/testeranto/runtimes/rust/rust.rs cargo build --release && ./target/release/my_program"
     networks:
       - allTests_network
   rust_tests-example_calculator-test-rs-bdd:

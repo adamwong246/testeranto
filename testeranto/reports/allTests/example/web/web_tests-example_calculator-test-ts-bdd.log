@@ -5246,3 +5246,1398 @@ web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
 [Kweb_tests-example_calculator-test-ts-bdd exited with code 1
 
 === Log ended at 2026-01-31T15:31:30.734Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T15:51:14.472Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T15:51:14.909Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T15:52:38.824Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T15:52:39.265Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T15:57:29.573Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T15:57:29.991Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T15:58:41.973Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T15:58:42.412Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T15:59:33.001Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T15:59:33.411Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: connect ECONNREFUSED 172.19.0.3:9222
+web_tests-example_calculator-test-ts-bdd  |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -111,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ECONNREFUSED',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'connect',
+web_tests-example_calculator-test-ts-bdd  |     address: '172.19.0.3',
+web_tests-example_calculator-test-ts-bdd  |     port: 9222
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:00:33.233Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: connect ECONNREFUSED 172.19.0.3:9222
+web_tests-example_calculator-test-ts-bdd  |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -111,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ECONNREFUSED',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'connect',
+web_tests-example_calculator-test-ts-bdd  |     address: '172.19.0.3',
+web_tests-example_calculator-test-ts-bdd  |     port: 9222
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:00:33.649Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:01:19.281Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:01:19.715Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:02:29.472Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:02:29.889Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:03:13.758Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:03:14.185Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:04:47.733Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:04:48.103Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:05:48.765Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:05:49.181Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:07:52.556Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:07:53.003Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:09:05.910Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:09:06.364Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:11:59.033Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:11:59.451Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:14:42.857Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:14:43.271Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:22:21.484Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:22:22.160Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: connect ECONNREFUSED 172.19.0.3:9222
+web_tests-example_calculator-test-ts-bdd  |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -111,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ECONNREFUSED',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'connect',
+web_tests-example_calculator-test-ts-bdd  |     address: '172.19.0.3',
+web_tests-example_calculator-test-ts-bdd  |     port: 9222
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:23:16.763Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: connect ECONNREFUSED 172.19.0.3:9222
+web_tests-example_calculator-test-ts-bdd  |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -111,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ECONNREFUSED',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'connect',
+web_tests-example_calculator-test-ts-bdd  |     address: '172.19.0.3',
+web_tests-example_calculator-test-ts-bdd  |     port: 9222
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:23:17.188Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: connect ECONNREFUSED 172.19.0.3:9222
+web_tests-example_calculator-test-ts-bdd  |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -111,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ECONNREFUSED',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'connect',
+web_tests-example_calculator-test-ts-bdd  |     address: '172.19.0.3',
+web_tests-example_calculator-test-ts-bdd  |     port: 9222
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:25:02.845Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: connect ECONNREFUSED 172.19.0.3:9222
+web_tests-example_calculator-test-ts-bdd  |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -111,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ECONNREFUSED',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'connect',
+web_tests-example_calculator-test-ts-bdd  |     address: '172.19.0.3',
+web_tests-example_calculator-test-ts-bdd  |     port: 9222
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:25:03.281Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:26:24.504Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:26:24.912Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:29:29.367Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:29:29.805Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:31:11.583Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:31:12.022Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:32:48.260Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:32:48.696Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:34:07.888Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:34:08.289Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:35:05.737Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:35:06.187Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:37:25.765Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:37:26.211Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:41:21.816Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:41:22.261Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:42:46.880Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:42:47.297Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:43:04.030Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:43:04.493Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:43:26.583Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:43:27.048Z, process exited with code 0 ===
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+=== Log started at 2026-01-31T16:44:01.880Z for service web_tests-example_calculator-test-ts-bdd ===
+
+web_tests-example_calculator-test-ts-bdd  | node:internal/deps/undici/undici:13510
+web_tests-example_calculator-test-ts-bdd  |       Error.captureStackTrace(err);
+web_tests-example_calculator-test-ts-bdd  |             ^
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | TypeError: Failed to fetch browser webSocket URL from http://web-builder:9222/json/version: fetch failed
+web_tests-example_calculator-test-ts-bdd  |     at node:internal/deps/undici/undici:13510:13
+web_tests-example_calculator-test-ts-bdd  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+web_tests-example_calculator-test-ts-bdd  |     at async getWSEndpoint (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:111:24)
+web_tests-example_calculator-test-ts-bdd  |     at async getConnectionTransport (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:57:31)
+web_tests-example_calculator-test-ts-bdd  |     at async _connectToBrowser (file:///workspace/node_modules/puppeteer/node_modules/puppeteer-core/lib/esm/puppeteer/common/BrowserConnector.js:24:50)
+web_tests-example_calculator-test-ts-bdd  |     at async main (file:///workspace/dist/prebuild/server/runtimes/web/hoist.mjs:4:19) {
+web_tests-example_calculator-test-ts-bdd  |   [cause]: Error: getaddrinfo ENOTFOUND web-builder
+web_tests-example_calculator-test-ts-bdd  |       at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26) {
+web_tests-example_calculator-test-ts-bdd  |     errno: -3008,
+web_tests-example_calculator-test-ts-bdd  |     code: 'ENOTFOUND',
+web_tests-example_calculator-test-ts-bdd  |     syscall: 'getaddrinfo',
+web_tests-example_calculator-test-ts-bdd  |     hostname: 'web-builder'
+web_tests-example_calculator-test-ts-bdd  |   }
+web_tests-example_calculator-test-ts-bdd  | }
+web_tests-example_calculator-test-ts-bdd  | 
+web_tests-example_calculator-test-ts-bdd  | Node.js v20.19.4
+[Kweb_tests-example_calculator-test-ts-bdd exited with code 1
+
+=== Log ended at 2026-01-31T16:44:02.318Z, process exited with code 0 ===

@@ -7966,3 +7966,2337 @@ web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left 
 [Kweb_tests-example_calculator-test-ts-aider exited with code 1
 
 === Log ended at 2026-01-31T15:31:27.374Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:51:10.368Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:51:11.420Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:52:35.069Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:52:36.181Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:57:26.235Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:57:27.069Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:58:38.562Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:58:39.539Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:59:29.292Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:59:30.261Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:00:29.693Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:00:30.593Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:01:15.653Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:01:16.617Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:02:25.665Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+web_tests-example_calculator-test-ts-aider  | personal info.
+web_tests-example_calculator-test-ts-aider  | For more info: https://aider.chat/docs/more/analytics.html
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:02:27.322Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:03:10.148Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+web_tests-example_calculator-test-ts-aider  | personal info.
+web_tests-example_calculator-test-ts-aider  | For more info: https://aider.chat/docs/more/analytics.html
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:03:11.918Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:04:44.090Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:04:45.165Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:05:45.057Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:05:46.071Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:07:48.913Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:07:49.960Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:09:02.307Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:09:03.309Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:11:55.327Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+web_tests-example_calculator-test-ts-aider  | personal info.
+web_tests-example_calculator-test-ts-aider  | For more info: https://aider.chat/docs/more/analytics.html
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:11:57.156Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:14:38.969Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:14:40.075Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:22:16.178Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:22:18.421Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:23:12.870Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:23:14.977Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:24:59.327Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:25:00.241Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:26:20.553Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:26:21.790Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:29:25.328Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:29:26.604Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:31:07.494Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:31:08.683Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:32:44.249Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:32:45.282Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:34:03.971Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:34:04.950Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:35:02.193Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:35:03.101Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:37:22.113Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:37:23.006Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:41:17.191Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:41:18.462Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:42:42.830Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:42:43.994Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:00.361Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:01.285Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:22.806Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:23.755Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:58.064Z for service web_tests-example_calculator-test-ts-aider ===
+
+web_tests-example_calculator-test-ts-aider  | Warning: Input is not a terminal (fd=0).
+web_tests-example_calculator-test-ts-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+web_tests-example_calculator-test-ts-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+web_tests-example_calculator-test-ts-aider  | ────────────────────────────────────────────────────────────────────────────────
+web_tests-example_calculator-test-ts-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+web_tests-example_calculator-test-ts-aider  | personal info.
+web_tests-example_calculator-test-ts-aider  | For more info: https://aider.chat/docs/more/analytics.html
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Error in sys.excepthook:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+web_tests-example_calculator-test-ts-aider  |     report_github_issue(issue_text, title=title)
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | # Uncaught OSError in pathlib.py line 1116
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Aider version: 0.86.1
+web_tests-example_calculator-test-ts-aider  | Python version: 3.11.14
+web_tests-example_calculator-test-ts-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+web_tests-example_calculator-test-ts-aider  | Python implementation: CPython
+web_tests-example_calculator-test-ts-aider  | Virtual environment: No
+web_tests-example_calculator-test-ts-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+web_tests-example_calculator-test-ts-aider  | Git information unavailable
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | An uncaught exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | ```
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Please consider reporting this bug to help improve aider!
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+web_tests-example_calculator-test-ts-aider  |     confirmation = input(prompt).strip().lower()
+web_tests-example_calculator-test-ts-aider  |                    ^^^^^^^^^^^^^
+web_tests-example_calculator-test-ts-aider  | EOFError: EOF when reading a line
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Original exception was:
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | During handling of the above exception, another exception occurred:
+web_tests-example_calculator-test-ts-aider  | 
+web_tests-example_calculator-test-ts-aider  | Traceback (most recent call last):
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+web_tests-example_calculator-test-ts-aider  |     sys.exit(main())
+web_tests-example_calculator-test-ts-aider  |              ^^^^^^
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+web_tests-example_calculator-test-ts-aider  |     check_version(io, verbose=args.verbose)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+web_tests-example_calculator-test-ts-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+web_tests-example_calculator-test-ts-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+web_tests-example_calculator-test-ts-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+web_tests-example_calculator-test-ts-aider  |     os.mkdir(self, mode)
+web_tests-example_calculator-test-ts-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kweb_tests-example_calculator-test-ts-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:59.709Z, process exited with code 0 ===

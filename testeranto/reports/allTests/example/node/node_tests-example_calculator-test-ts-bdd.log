@@ -1950,3 +1950,183 @@ node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/al
 
 node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
 node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T15:51:13.752Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T15:52:38.213Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T15:57:28.967Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T15:58:41.288Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T15:59:32.423Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:00:32.598Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:01:18.690Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:02:28.839Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:03:13.129Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:04:46.928Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:05:48.065Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:07:51.871Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:09:05.254Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:11:58.385Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:14:42.281Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:22:20.148Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:23:16.087Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:25:02.139Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:26:23.805Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:29:28.689Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:31:10.984Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:32:47.534Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:34:07.289Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:35:05.102Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:37:24.996Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:41:21.227Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:42:46.296Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:43:03.401Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:43:25.941Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json
+=== Log started at 2026-01-31T16:44:01.130Z for service node_tests-example_calculator-test-ts-bdd ===
+
+node_tests-example_calculator-test-ts-bdd  | [NodeTiposkripto] /usr/local/bin/node,/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs,/workspace/node.js
+node_tests-example_calculator-test-ts-bdd  | writeFileSync testeranto/reports/allTests/example/node/Calculator.test.ts.json

@@ -7968,3 +7968,2331 @@ ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left
 [Kruby_tests-example_calculator-test-rb-aider exited with code 1
 
 === Log ended at 2026-01-31T15:31:29.212Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:51:12.553Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:51:13.567Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:52:37.295Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:52:38.067Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:57:28.014Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:57:28.842Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:58:40.546Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:58:41.152Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:59:31.333Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:59:32.259Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:00:31.714Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:00:32.458Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:01:17.688Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:01:18.554Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:02:27.788Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:02:28.707Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:03:12.078Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:03:12.986Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:04:46.178Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+ruby_tests-example_calculator-test-rb-aider  | personal info.
+ruby_tests-example_calculator-test-rb-aider  | For more info: https://aider.chat/docs/more/analytics.html
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:04:47.607Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:05:47.154Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:05:47.933Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:07:50.950Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:07:51.724Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:09:04.384Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:09:05.094Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:11:57.524Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:11:58.246Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:14:41.305Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:14:42.144Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:22:18.716Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+ruby_tests-example_calculator-test-rb-aider  | personal info.
+ruby_tests-example_calculator-test-rb-aider  | For more info: https://aider.chat/docs/more/analytics.html
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:22:20.941Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:23:15.133Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:23:15.926Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:25:01.342Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+ruby_tests-example_calculator-test-rb-aider  | personal info.
+ruby_tests-example_calculator-test-rb-aider  | For more info: https://aider.chat/docs/more/analytics.html
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:25:03.404Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:26:22.985Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:26:24.246Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:29:27.788Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:29:28.540Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:31:09.893Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:31:10.829Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:32:46.419Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:32:47.296Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:34:06.236Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:34:07.163Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:35:04.174Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:35:04.963Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:37:24.103Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:37:24.787Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:41:20.022Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:41:21.061Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:42:45.291Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:42:46.167Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:02.360Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:03.227Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:25.021Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:25.792Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:44:00.134Z for service ruby_tests-example_calculator-test-rb-aider ===
+
+ruby_tests-example_calculator-test-rb-aider  | Warning: Input is not a terminal (fd=0).
+ruby_tests-example_calculator-test-rb-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+ruby_tests-example_calculator-test-rb-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+ruby_tests-example_calculator-test-rb-aider  | ────────────────────────────────────────────────────────────────────────────────
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | # Uncaught OSError in pathlib.py line 1116
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Aider version: 0.86.1
+ruby_tests-example_calculator-test-rb-aider  | Python version: 3.11.14
+ruby_tests-example_calculator-test-rb-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+ruby_tests-example_calculator-test-rb-aider  | Python implementation: CPython
+ruby_tests-example_calculator-test-rb-aider  | Virtual environment: No
+ruby_tests-example_calculator-test-rb-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+ruby_tests-example_calculator-test-rb-aider  | Git information unavailable
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | An uncaught exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | ```
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Please consider reporting this bug to help improve aider!
+ruby_tests-example_calculator-test-rb-aider  | Error in sys.excepthook:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+ruby_tests-example_calculator-test-rb-aider  |     report_github_issue(issue_text, title=title)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+ruby_tests-example_calculator-test-rb-aider  |     confirmation = input(prompt).strip().lower()
+ruby_tests-example_calculator-test-rb-aider  |                    ^^^^^^^^^^^^^
+ruby_tests-example_calculator-test-rb-aider  | EOFError: EOF when reading a line
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Original exception was:
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | During handling of the above exception, another exception occurred:
+ruby_tests-example_calculator-test-rb-aider  | 
+ruby_tests-example_calculator-test-rb-aider  | Traceback (most recent call last):
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+ruby_tests-example_calculator-test-rb-aider  |     sys.exit(main())
+ruby_tests-example_calculator-test-rb-aider  |              ^^^^^^
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+ruby_tests-example_calculator-test-rb-aider  |     check_version(io, verbose=args.verbose)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+ruby_tests-example_calculator-test-rb-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+ruby_tests-example_calculator-test-rb-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+ruby_tests-example_calculator-test-rb-aider  |     os.mkdir(self, mode)
+ruby_tests-example_calculator-test-rb-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Kruby_tests-example_calculator-test-rb-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:44:00.865Z, process exited with code 0 ===

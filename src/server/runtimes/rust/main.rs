@@ -1,12 +1,16 @@
 use std::collections::HashMap;
 use std::env;
 use std::fs;
-use std::io;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::Command;
 use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 use serde_json;
 use md5;
+
+extern crate serde;
+
+include!(env!("CONFIG_PATH"));
 
 #[derive(Serialize, Deserialize)]
 struct TestConfig {
@@ -14,13 +18,13 @@ struct TestConfig {
 }
 
 #[derive(Serialize, Deserialize)]
-struct RustConfig {
+struct RustProjectConfig {
     tests: HashMap<String, TestConfig>,
 }
 
 #[derive(Serialize, Deserialize)]
-struct Config {
-    rust: RustConfig,
+struct ProjectConfig {
+    rust: RustProjectConfig,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -30,7 +34,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let test_name = env::var("TEST_NAME").unwrap_or_else(|_| "allTests".to_string());
     println!("TEST_NAME={}", test_name);
     
-    // Load configuration
+    // Load master configuration yml files
     let config_path = find_config();
     println!("Config path: {}", config_path);
     
@@ -40,9 +44,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     
     let config_content = fs::read_to_string(&config_path)?;
-    let config: Config = serde_json::from_str(&config_content)?;
+    let config: ProjectConfig = serde_json::from_str(&config_content)?;
     
-    println!("✅ Loaded config with {} Rust test(s)", config.rust.tests.len());
+    println!("✅ Loaded config with {} Rust test(s)", config.rust_tests[3].tests.len());
     
     // Process each test
     for (test_key, test_config) in &config.rust.tests {

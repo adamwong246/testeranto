@@ -7960,3 +7960,2331 @@ rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left
 [Krust_tests-example_calculator-test-rs-aider exited with code 1
 
 === Log ended at 2026-01-31T15:31:29.831Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:51:13.141Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:51:14.210Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:52:37.718Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+rust_tests-example_calculator-test-rs-aider  | personal info.
+rust_tests-example_calculator-test-rs-aider  | For more info: https://aider.chat/docs/more/analytics.html
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:52:39.383Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:57:28.469Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:57:29.321Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:58:40.882Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:58:41.814Z, process exited with code 0 ===
+=== Log started at 2026-01-31T15:59:31.810Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T15:59:32.763Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:00:32.077Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:00:33.015Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:01:18.086Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:01:19.028Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:02:28.280Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:02:29.250Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:03:12.543Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:03:13.531Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:04:46.603Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:04:47.347Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:05:47.646Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:05:48.542Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:07:51.465Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:07:52.253Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:09:04.765Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:09:05.688Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:11:57.978Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:11:58.783Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:14:41.784Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+rust_tests-example_calculator-test-rs-aider  | personal info.
+rust_tests-example_calculator-test-rs-aider  | For more info: https://aider.chat/docs/more/analytics.html
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:14:43.398Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:22:19.557Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:22:21.255Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:23:15.627Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:23:16.532Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:25:01.787Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:25:02.592Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:26:23.409Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:26:24.377Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:29:28.200Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:29:29.127Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:31:10.389Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:31:11.340Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:32:47.029Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:32:48.015Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:34:06.691Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:34:07.661Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:35:04.612Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:35:05.511Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:37:24.563Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:37:25.531Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:41:20.617Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:41:21.607Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:42:45.764Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:42:46.653Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:02.902Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Aider respects your privacy and never collects your code, chat messages, keys or
+rust_tests-example_calculator-test-rs-aider  | personal info.
+rust_tests-example_calculator-test-rs-aider  | For more info: https://aider.chat/docs/more/analytics.html
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/posthog/exception_capture.py", line 32, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     self.original_excepthook(exc_type, exc_value, exc_traceback)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:04.666Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:43:25.542Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:43:26.342Z, process exited with code 0 ===
+=== Log started at 2026-01-31T16:44:00.712Z for service rust_tests-example_calculator-test-rs-aider ===
+
+rust_tests-example_calculator-test-rs-aider  | Warning: Input is not a terminal (fd=0).
+rust_tests-example_calculator-test-rs-aider  | Warning: Unable to write to chat history file .aider.chat.history.md.
+rust_tests-example_calculator-test-rs-aider  | [Errno 13] Permission denied: '.aider.chat.history.md'
+rust_tests-example_calculator-test-rs-aider  | ────────────────────────────────────────────────────────────────────────────────
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | # Uncaught OSError in pathlib.py line 1116
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Aider version: 0.86.1
+rust_tests-example_calculator-test-rs-aider  | Python version: 3.11.14
+rust_tests-example_calculator-test-rs-aider  | Platform: Linux-6.12.54-linuxkit-aarch64-with-glibc2.41
+rust_tests-example_calculator-test-rs-aider  | Python implementation: CPython
+rust_tests-example_calculator-test-rs-aider  | Virtual environment: No
+rust_tests-example_calculator-test-rs-aider  | OS: Linux 6.12.54-linuxkit (64bit)
+rust_tests-example_calculator-test-rs-aider  | Git information unavailable
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | An uncaught exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | ```
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Please consider reporting this bug to help improve aider!
+rust_tests-example_calculator-test-rs-aider  | Error in sys.excepthook:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 151, in exception_handler
+rust_tests-example_calculator-test-rs-aider  |     report_github_issue(issue_text, title=title)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/report.py", line 71, in report_github_issue
+rust_tests-example_calculator-test-rs-aider  |     confirmation = input(prompt).strip().lower()
+rust_tests-example_calculator-test-rs-aider  |                    ^^^^^^^^^^^^^
+rust_tests-example_calculator-test-rs-aider  | EOFError: EOF when reading a line
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Original exception was:
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | FileNotFoundError: [Errno 2] No such file or directory: '/home/aider/.aider/caches'
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | During handling of the above exception, another exception occurred:
+rust_tests-example_calculator-test-rs-aider  | 
+rust_tests-example_calculator-test-rs-aider  | Traceback (most recent call last):
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/bin/aider", line 8, in <module>
+rust_tests-example_calculator-test-rs-aider  |     sys.exit(main())
+rust_tests-example_calculator-test-rs-aider  |              ^^^^^^
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/main.py", line 738, in main
+rust_tests-example_calculator-test-rs-aider  |     check_version(io, verbose=args.verbose)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/site-packages/aider/versioncheck.py", line 94, in check_version
+rust_tests-example_calculator-test-rs-aider  |     VERSION_CHECK_FNAME.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1120, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     self.parent.mkdir(parents=True, exist_ok=True)
+rust_tests-example_calculator-test-rs-aider  |   File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+rust_tests-example_calculator-test-rs-aider  |     os.mkdir(self, mode)
+rust_tests-example_calculator-test-rs-aider  | OSError: [Errno 28] No space left on device: '/home/aider/.aider'
+[Krust_tests-example_calculator-test-rs-aider exited with code 1
+
+=== Log ended at 2026-01-31T16:44:01.590Z, process exited with code 0 ===
