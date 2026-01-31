@@ -1,10 +1,4 @@
 import {
-  defaultTestResourceRequirement,
-  ITestResourceConfiguration,
-  ITTestResourceRequest,
-} from "./index.js";
-
-import {
   Ibdd_in_any,
   Ibdd_out,
   Ibdd_out_any,
@@ -13,6 +7,10 @@ import {
   ITestSpecification,
 } from "../../CoreTypes.js";
 import Tiposkripto from "./BaseTiposkripto.js";
+import {
+  defaultTestResourceRequirement,
+  ITTestResourceRequest,
+} from "./index.js";
 
 const config = {
   name: 'web',

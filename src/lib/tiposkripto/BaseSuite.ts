@@ -1,7 +1,6 @@
-import { ITestResourceConfiguration, ITestArtifactory } from ".";
-import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
+import { Ibdd_in_any, Ibdd_out_any } from "../../CoreTypes";
 import { IGivens } from "./BaseGiven";
-
+import { ITestResourceConfiguration, ITestArtifactory } from ".";
 /**
  * Represents a collection of test suites keyed by their names.
  * Suites are organized as named collections because:

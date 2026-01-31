@@ -1,5 +1,5 @@
+import { Ibdd_in_any } from "../../CoreTypes";
 import { ITestResourceConfiguration } from ".";
-import type { Ibdd_in_any } from "../CoreTypes";
 
 export abstract class BaseThen<I extends Ibdd_in_any> {
   public name: string;
@@ -48,7 +48,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     thenCB: (s: I["iselection"]) => Promise<I["isubject"]>,
     testResourceConfiguration: ITestResourceConfiguration
   ): // pm: IPM
-  Promise<I["iselection"]>;
+    Promise<I["iselection"]>;
 
   async test(
     store: I["istore"],

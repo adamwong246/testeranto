@@ -1,4 +1,4 @@
-import { NonEmptyObject } from "type-fest";
+// import { NonEmptyObject } from "type-fest";
 import {
   Ibdd_in_any,
   Ibdd_out_any,
@@ -48,7 +48,8 @@ export default abstract class BaseTiposkripto<
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M> & {
-      suites: Record<string, NonEmptyObject<object>>;
+      // suites: Record<string, NonEmptyObject<object>>;
+      suites: Record<string, object>;
       givens: Record<string, any>;
       whens: Record<string, any>;
       thens: Record<string, any>;
