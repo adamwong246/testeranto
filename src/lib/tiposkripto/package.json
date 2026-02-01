@@ -1,6 +1,6 @@
 {
   "name": "tiposkripto",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "the typescript implementation of testeranto",
   "main": "index.js",
   "author": "adamwong246@gmail.com",
