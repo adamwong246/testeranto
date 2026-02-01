@@ -1,39 +1,24 @@
-import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes";
-import { ITestResourceConfiguration } from "./lib/tiposkripto";
-import { IGivens, BaseGiven } from "./lib/tiposkripto/BaseGiven";
-import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
-import { BaseThen } from "./lib/tiposkripto/BaseThen";
-import { BaseWhen } from "./lib/tiposkripto/BaseWhen";
+import { BaseGiven } from "./lib/tiposkripto/src/BaseGiven";
+import { BaseThen } from "./lib/tiposkripto/src/BaseThen";
+import { BaseWhen } from "./lib/tiposkripto/src/BaseWhen";
+import { Ibdd_in_any, Ibdd_out_any } from "./lib/tiposkripto/src/CoreTypes";
+import { ITestResourceConfiguration } from "./lib/tiposkripto/src/types";
+
+export type ITestconfigV2 = {
+  featureIngestor: (s: string) => Promise<string>;
+  runtimes: Record<string, IBaseTestConfig>
+};
 
 export type IChecks = ((x: any) => string)[];
 
-export type ISummary = Record<
-  string,
-  {
-    runTimeTests: number | "?" | undefined;
-    runTimeErrors: number | "?" | undefined;
-    typeErrors: number | "?" | undefined;
-    staticErrors: number | "?" | undefined;
-    prompt: string | "?" | undefined;
-    failingFeatures: object | undefined;
-  }
-> & {
-  nodeLogs?: string;
-  webLogs?: string;
-  pureLogs?: string;
-};
+export type IBaseTestConfig = {
+  runtime: string;
+  tests: string[];
+  dockerfile: string;
+  buildOptions: string,
+  checks: IChecks;
+}
 
-export type SuiteSpecification<
-  I extends Ibdd_in_any,
-  O extends Ibdd_out_any
-> = {
-    [K in keyof O["suites"]]: (
-      name: string,
-      givens: IGivens<I>
-    ) => BaseSuite<I, O>;
-  };
-
-// Simplified test result summary
 export type TestSummary = {
   testName: string;
   errors?: {
@@ -169,62 +154,6 @@ export type IPluginFactory = (
   entrypoints?: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | `golang` | `python` | `ruby`;
+export type IRunTime = `node` | `web` | `golang` | `python` | `ruby` | `java` | `rust`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
-
-export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
-
-export type ITestconfig = {
-  httpPort: number;
-
-  featureIngestor: (s: string) => Promise<string>;
-  importPlugins: IPluginFactory[];
-  ports: string[];
-  src: string;
-  check: string;
-
-  ruby: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
-
-  golang: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
-
-  python: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
-
-  node: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    externals: string[];
-    checks: IChecks;
-    dockerfile: string;
-  };
-
-  web: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    externals: string[];
-    checks: IChecks;
-    dockerfile: string;
-  };
-};
-
-export type IBuiltConfig = { buildDir: string } & ITestconfig;

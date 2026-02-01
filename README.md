@@ -2,13 +2,22 @@
 
 ## What is it?
 
-Testeranto lets you vibe code large, real-world polyglot codebases via BDD tests. It currently supports node, web, python and golang. By wrapping your code in gherkin semantics, you specify the behavior of your components. The tests are run and the output of those tests are passed into the context of your favorite LLM. Testeranto edits your code and tests in congruence with your documentation and then runs the tests again. Once all the tests pass, the results are committed to the repo. In short, testeranto is my attempt to automate my job. It allows a Product Manager to create a jira ticket and, within minutes, recieve a well-tested pull request addressing that ticket and with almost zero human intervention.
+Testeranto lets you vibe code large, real-world polyglot codebases via BDD tests written in javascript, python, golang, rust and java. By wrapping your code in gherkin semantics, you specify the behavior of your components. The tests are run and the output of those tests are passed into the context of your favorite LLM. Testeranto edits your code and tests using your documentation and then runs the tests again. Once all the tests pass, the results are committed to the repo. In short, testeranto is my attempt to automate my job. It allows a Product Manager to create a jira ticket and, within minutes, recieve a well-tested pull request addressing that ticket and without human intervention.
 
 In more conrete terms, testeranto is
 - a test runner that uses docker as a multi-language process manager
 - a VS code extension
 - integrates static tests, unit tests, integration tests and source code into focused Aider sessions.
 - turns github issues, BDD specs and markdown documentation into packaged artifacts and human readable test reports.
+- a library of code split across 7 packages
+
+1) testeranto (the server) npm - https://www.npmjs.com/package/testeranto
+2) tiposkripto (ts) npm
+3) rusto  (rust) cargo
+4) pitono (python) pypi
+5) golingvu (go) TBD
+6) kafe (java) TBD
+7) rubeno (ruby ) rubygems - https://rubygems.org/gems/rubeno
 
 ## Philosophy
 

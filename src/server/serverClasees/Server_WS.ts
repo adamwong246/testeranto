@@ -1,6 +1,5 @@
-// Gives the server websocket capabilities
-
 import { WebSocket, WebSocketServer } from "ws";
+import { ITestconfigV2 } from "../../Types";
 import { WsManager } from "../serverManagers/WsManager";
 import { IMode } from "../types";
 import { Server_HTTP } from "./Server_HTTP";
@@ -10,8 +9,8 @@ export class Server_WS extends Server_HTTP {
   protected wsClients: Set<WebSocket> = new Set();
   wsManager: WsManager
 
-  constructor(configs: any, name: string, mode: IMode) {
-    super(configs, name, mode);
+  constructor(configs: ITestconfigV2, mode: IMode) {
+    super(configs, mode);
 
     this.ws = new WebSocketServer({
       noServer: true,

@@ -1,3 +1,4 @@
+// This file is where your project configures the runtime that testeranto uses for go
 package main
 
 import (
@@ -21,7 +22,7 @@ func GetConfig() Config {
 			Ports int    `json:"ports"`
 		}{
 			"example/Calculator.golingvu.test.go": {
-				Path:  "example",  // Change from file to directory
+				Path:  "example", // Change from file to directory
 				Ports: 1111,
 			},
 		},
@@ -31,14 +32,14 @@ func GetConfig() Config {
 func main() {
 	// This can be used as a standalone program to output JSON
 	config := GetConfig()
-	
+
 	// Wrap in the expected structure
 	output := map[string]interface{}{
 		"golang": map[string]interface{}{
 			"tests": config.Tests,
 		},
 	}
-	
+
 	encoder := json.NewEncoder(os.Stdout)
 	encoder.SetIndent("", "  ")
 	encoder.Encode(output)

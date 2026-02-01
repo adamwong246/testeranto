@@ -1,4 +1,5 @@
 node_modules
+.secret
 secret*
 .aider*
 stargazers.txt
@@ -7,8 +8,6 @@ example/vendor/
 vendor/
 
 !testeranto/bundles/golang/Calculator.golingvu.test.go
-
-dist
 
 example/bin
 example/calculator_example
@@ -24,3 +23,5 @@ testeranto/reports/allTests/docker-logs/**/*
 .vscode-test/
 out/
 !dist/vscode/extension.js
+testeranto/reports
+src/lib/rusto/target

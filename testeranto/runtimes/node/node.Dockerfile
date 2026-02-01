@@ -2,7 +2,6 @@
 
 FROM node:20.19.4-alpine as build
 WORKDIR /workspace
-COPY ./allTests.ts ./
 COPY ./tsconfig*.json ./
 COPY package.json /workspace
 COPY ./.yarnrc.yml ./
@@ -14,7 +13,7 @@ RUN yarn install
 # --immutable
 
 # Resumbably, the user provides the but we ignore it
-CMD yarn run
+# CMD ls
 
 # FROM build as testeranto/lintcheck
 # CMD yarn eslint

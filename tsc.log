@@ -20,29 +20,29 @@ node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts(44,15): error TS2551:
 node_modules/testeranto-react/src/react-dom/jsx/web.ts(1,24): error TS2307: Cannot find module 'testeranto/src/Web' or its corresponding type declarations.
 node_modules/testeranto-react/src/react/component/index.ts(21,3): error TS2739: Type '{ beforeEach: () => Promise<CElement<any, any>>; andWhen: (s: CElement<any, any>, whenCB: () => (s: CElement<any, any>) => any) => any; }' is missing the following properties from type 'ITestAdapter<I>': assertThis, butThen, afterAll, afterEach, beforeAll
 src/app/frontend/components/DesignEditorPage.tsx(12,8): error TS2307: Cannot find module '../../../../design-editor/DesignEditor' or its corresponding type declarations.
-src/app/frontend/components/pure/AppFrame.test/implementation.tsx(4,37): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/AppFrame.test/implementation.tsx(4,37): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/AppFrame.test/index.tsx(21,3): error TS2345: Argument of type 'FC<{ children?: ReactNode; }>' is not assignable to parameter of type 'typeof Component'.
   Type 'FunctionComponent<{ children?: ReactNode; }>' provides no match for the signature 'new <P = {}, S = {}, SS = any>(props: P | Readonly<P>): Component<P, S, SS>'.
-src/app/frontend/components/pure/AppFrame.test/specification.ts(1,36): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
-src/app/frontend/components/pure/AppFrame.test/types.ts(6,35): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
-src/app/frontend/components/pure/FeaturesReporterView.test/implementation.tsx(2,37): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/AppFrame.test/specification.ts(1,36): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/AppFrame.test/types.ts(6,35): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/FeaturesReporterView.test/implementation.tsx(2,37): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/FeaturesReporterView.test/implementation.tsx(4,26): error TS2307: Cannot find module '../../../types/features' or its corresponding type declarations.
 src/app/frontend/components/pure/FeaturesReporterView.test/index.tsx(17,3): error TS2345: Argument of type '(props: any) => Element' is not assignable to parameter of type 'typeof Component'.
   Type '(props: any) => Element' provides no match for the signature 'new <P = {}, S = {}, SS = any>(props: P | Readonly<P>): Component<P, S, SS>'.
-src/app/frontend/components/pure/FeaturesReporterView.test/specification.ts(1,36): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
-src/app/frontend/components/pure/FeaturesReporterView.test/types.ts(2,35): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/FeaturesReporterView.test/specification.ts(1,36): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/FeaturesReporterView.test/types.ts(2,35): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/FeaturesReporterView.test/types.ts(3,26): error TS2307: Cannot find module '../../../types/features' or its corresponding type declarations.
 src/app/frontend/components/pure/FeaturesReporterView.tsx(2,26): error TS2307: Cannot find module '../../../types/features' or its corresponding type declarations.
 src/app/frontend/components/pure/FileTree.tsx(18,13): error TS18046: 'node' is of type 'unknown'.
 src/app/frontend/components/pure/FileTree.tsx(26,45): error TS18046: 'node' is of type 'unknown'.
 src/app/frontend/components/pure/GitIntegrationView.tsx(586,25): error TS2353: Object literal may only specify known properties, and 'renderSideBySide' does not exist in type 'IStandaloneEditorConstructionOptions'.
 src/app/frontend/components/pure/MagicRobotModal.tsx(45,12): error TS2339: Property 'send' does not exist on type 'any[]'.
-src/app/frontend/components/pure/ModalContent.test/implementation.tsx(2,37): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/ModalContent.test/implementation.tsx(2,37): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/ModalContent.test/implementation.tsx(5,21): error TS2307: Cannot find module '../../../lib/types' or its corresponding type declarations.
 src/app/frontend/components/pure/ModalContent.test/index.tsx(12,20): error TS2304: Cannot find name 'ITestInterface'.
 src/app/frontend/components/pure/ModalContent.test/index.tsx(63,27): error TS2558: Expected 2 type arguments, but got 3.
-src/app/frontend/components/pure/ModalContent.test/specification.ts(1,36): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
-src/app/frontend/components/pure/ModalContent.test/types.ts(6,35): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/ModalContent.test/specification.ts(1,36): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/ModalContent.test/types.ts(6,35): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/NavBar.tsx(88,21): error TS2322: Type '{ children: (ReactNode | Element)[]; key: number; as: "div" | ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>; to: string | undefined; active: boolean | undefined; className: string; title: string | undefined; }' is not assignable to type 'IntrinsicAttributes & Omit<(Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & { ...; }) | (LinkProps & RefAttributes<...>), BsPrefixProps<...> & NavLinkProps> & BsPrefixProps<...> & NavLinkProps & { ...; }'.
   Property 'to' does not exist on type 'IntrinsicAttributes & Omit<(Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & { ...; }) | (LinkProps & RefAttributes<...>), BsPrefixProps<...> & NavLinkProps> & BsPrefixProps<...> & NavLinkProps & { ...; }'.
 src/app/frontend/components/pure/ProcessSidebar.tsx(3,10): error TS2459: Module '"./ProcessManagerView"' declares 'Process' locally, but it is not exported.
@@ -58,8 +58,8 @@ src/app/frontend/components/pure/ProjectPageView.test/implementation.tsx(208,5):
     Target signature provides too few arguments. Expected 2 or more, but got 1.
 src/app/frontend/components/pure/ProjectPageView.test/index.tsx(17,3): error TS2345: Argument of type '(props: any) => Element' is not assignable to parameter of type 'typeof Component'.
   Type '(props: any) => Element' provides no match for the signature 'new <P = {}, S = {}, SS = any>(props: P | Readonly<P>): Component<P, S, SS>'.
-src/app/frontend/components/pure/ProjectPageView.test/specification.ts(1,36): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
-src/app/frontend/components/pure/ProjectPageView.test/types.ts(6,35): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/ProjectPageView.test/specification.ts(1,36): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
+src/app/frontend/components/pure/ProjectPageView.test/types.ts(6,35): error TS2307: Cannot find module '.././CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/UserProfile.tsx(3,35): error TS2307: Cannot find module '../../services/GitHubAuthService' or its corresponding type declarations.
 src/app/frontend/components/stateful/GenericXMLEditorPage.tsx(361,18): error TS2741: Property 'onTreeUpdate' is missing in type '{ xmlTree: XMLNode; selectedNodeId: string | null; hiddenNodes: Set<string>; renderPreview: (node: XMLNode, isSelected: boolean, eventHandlers: any) => ReactElement<any, string | JSXElementConstructor<...>>; }' but required in type 'GenericPreviewProps'.
 src/app/frontend/components/stateful/GenericXMLEditorPage.tsx(373,14): error TS2741: Property 'onToggle' is missing in type '{ children: Element; position: "left"; isOpen: true; zIndex: number; onBringToFront: () => void; title: string; }' but required in type 'DrawerProps'.

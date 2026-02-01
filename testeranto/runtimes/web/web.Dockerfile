@@ -1,18 +1,28 @@
-FROM node:20.19.4-alpine
+# Do NOT use --platform=linux/amd64 here
+FROM alpine:latest
+
 WORKDIR /workspace
 COPY ./tsconfig*.json ./
 COPY ./package.json ./package.json
 COPY ./.yarnrc.yml ./
 
+
+
+# Install the native ARM64 version of Chromium
 RUN apk add --no-cache \
-    --repository dl-cdn.alpinelinux.org \
+    libc6-compat \
     chromium \
     nss \
     freetype \
     harfbuzz \
+    ca-certificates \
     ttf-freefont \
-    python3 make g++ libxml2-utils \
-    net-tools curl
+    libstdc++ \
+    chromium-chromedriver
+
+# Ensure Puppeteer knows exactly where the native binary is
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 RUN yarn install
 

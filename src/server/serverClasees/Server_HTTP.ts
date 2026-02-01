@@ -9,10 +9,11 @@ import fs from "fs";
 import http from "http";
 import path from "path";
 import { IMode } from "../types";
-import { Server_Docker } from "./Server_Docker";
+
 import { CONTENT_TYPES, getContentType } from "../serverManagers/tcp";
 import { HttpManager } from "../serverManagers/HttpManager";
 import { Server_Base } from "./Server_Base";
+import { ITestconfigV2 } from "../../Types";
 
 export abstract class Server_HTTP extends Server_Base {
 
@@ -20,9 +21,9 @@ export abstract class Server_HTTP extends Server_Base {
   protected httpServer: http.Server;
   routes: any;
 
-  constructor(configs: any, name: string, mode: IMode) {
-    super(configs, name, mode);
-    this.http = new HttpManager();
+  constructor(configs: ITestconfigV2, mode: IMode) {
+    super(configs, mode);
+    // this.http = new HttpManager();
     this.httpServer = http.createServer();
     this.httpServer.on("error", (error) => {
       console.error(`[HTTP] error:`, error);
@@ -40,7 +41,7 @@ export abstract class Server_HTTP extends Server_Base {
     return new Promise((resolve) => {
       this.httpServer.on("listening", () => {
         const addr = this.httpServer.address();
-        console.log(`[HTTP] HTTP server is now listening on port ${3456}`);
+        console.log(`[HTTP] HTTP server is now listening on ${addr}`);
         resolve()
       });
     });

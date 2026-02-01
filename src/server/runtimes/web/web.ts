@@ -7,10 +7,11 @@ import { processMetafile } from "../common";
 import * as fs from "fs";
 import * as path from "path";
 
-const configFilePath = "/workspace/testeranto/runtimes/web/web.js";  //path.join(process.cwd(), 'testeranto/runtimes/web/web.js'); //process.argv[2];
+const configFilePath = process.argv[2];
+// const configFilePath = "/workspace/testeranto/runtimes/web/web.js";  //path.join(process.cwd(), 'testeranto/runtimes/web/web.js'); //process.argv[2];
 const testName = process.argv[3] || "allTests";
 
-let browser: puppeteer.Browser;
+// let browser: puppeteer.Browser;
 
 async function startBundling(config: IBuiltConfig) {
   console.log(`[WEB BUILDER] is now bundling:  ${testName}`);
@@ -25,8 +26,7 @@ async function startBundling(config: IBuiltConfig) {
   }
   console.log(`Using build directory: ${config.buildDir}`);
 
-  // Note: We no longer start Chrome here. The browser service runs separately.
-  console.log("[WEB BUILDER] Using external browser service (browserless/chrome)");
+
 
   // Proceed with bundling
   const webConfig = configer(config, 'allTests');
@@ -70,6 +70,7 @@ async function startBundling(config: IBuiltConfig) {
 
   console.log("WEB BUILDER: Metafiles have been generated");
 
+  // TODO FIXME
   // In dev mode, keep the process alive
   if ("dev" === "dev") {
     console.log(
@@ -89,6 +90,35 @@ async function startBundling(config: IBuiltConfig) {
       process.exit(0);
     });
 
+
+    try {
+      const browser = await puppeteer.launch({
+        // Flags required for Docker/Alpine compatibility
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage', // Prevents crashes in low-memory Docker envs
+          '--disable-gpu',
+          '--single-process', // Run in a single process
+          '--no-zygote', // Disable zygote process
+          '--disable-background-timer-throttling', // Disable throttling of timers in background pages
+          '--disable-backgrounding-occluded-windows', // Disable backgrounding of occluded windows
+          '--disable-renderer-backgrounding', // Disable backgrounding renders
+          '--remote-debugging-address=0.0.0.0', // Allow remote debugging
+          '--remote-debugging-port=9222' // Set remote debugging port
+        ],
+        // Automatically uses ENV PUPPETEER_EXECUTABLE_PATH
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
+        headless: true, // Run in headless mode
+        timeout: 60000 // Increase timeout to 60 seconds
+      });
+
+      console.log("Puppeteer launched successfully");
+    } catch (error) {
+      console.error("Failed to launch Puppeteer:", error);
+      process.exit(1);
+    }
+
     // Keep alive
     await new Promise(() => {
       // This promise never resolves, keeping the process alive
@@ -106,8 +136,11 @@ async function main() {
     }
     console.log('[WEB BUILDER] Config imported successfully:', Object.keys(config));
     await startBundling(config);
+
+
+    console.log(`[WEB BUILDER] Puppeteer is running: ${puppeteer}`);
+
   } catch (error) {
-    console.error("[WEB BUILDER]: Error importing config:", configFilePath, error);
     console.error(error);
     process.exit(1);
   }

@@ -1,12 +1,18 @@
-import { IBuiltConfig } from "../../../Types";
+import { ITestconfigV2 } from "../../types";
 
-export const nodeDockerComposeFile = (config: IBuiltConfig, projectName: string) => {
+export const nodeDockerComposeFile = (
+  config: ITestconfigV2,
+  container_name: string,
+  projectConfigPath: string,
+  nodeConfigPath: string,
+  testName: string
+) => {
   return {
     build: {
       context: process.cwd(),
-      dockerfile: config.node.dockerfile,
+      dockerfile: config[container_name].dockerfile,
     },
-    container_name: `node-builder-${projectName}`,
+    container_name,
     environment: {
       NODE_ENV: "production",
       ...config.env,
@@ -18,16 +24,33 @@ export const nodeDockerComposeFile = (config: IBuiltConfig, projectName: string)
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: nodeBuildCommand(config.httpPort || 3456),
+    command: nodeBuildCommand(projectConfigPath, nodeConfigPath, testName),
   }
-
 };
 
-export const nodeBuildCommand = (port) => {
-  return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/runtimes/node/node.js`;
+
+
+export const nodeBuildCommand = (projectConfigPath: string, nodeConfigPath: string, testName: string) => {
+
+  return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
+  // const externalTests = true;
+  // if (externalTests) {
+  //   console.log("external tests", testName)
+  //   // return `cat node_modules/testeranto/src/server/runtimes/node/esbuild.ts`
+  // return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;  
+  //   // return `cat node_modules/testeranto/src/server/runtimes/node/node.ts`
+  //   // return ["sh", "-c", "cd /workspace && javac -cp \".:lib/*\" src/server/runtimes/java/main.java && java -cp \"src/server/runtimes/java:.\" main"]
+  // } else {
+  //   console.log("not external tests")
+  //   // return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  //   return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/${nodeConfigPath} ${testName}`;
+  // }
+
 }
 
-export const nodeBddCommand = (port) => {
-  const jsonStr = JSON.stringify({ ports: [1111] });
-  return `node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js '${jsonStr}' || echo "Build process exited with code $?, but keeping container alive for health checks";`;
+export const nodeBddCommand = (fpath: string, nodeConfigPath: string) => {
+  // return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/node.js`;
+  // return `yarn tsx ${fpath} /workspace/node.js`;
+  return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/${nodeConfigPath}`;
+  // return `yarn tsx ${fpath} /workspace/${nodeConfigPath}`;
 }

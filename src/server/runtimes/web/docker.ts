@@ -1,18 +1,16 @@
-import { IBuiltConfig } from "../../../Types";
+import { IBuiltConfig, IConfig } from "../../../Types";
 
-
-export const webDockerComposeFile = (config: IBuiltConfig, projectName: string) => {
-  const service: any = {
+export const webDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
+  return {
+    platform: "linux/arm64",
     build: {
       context: process.cwd(),
-      dockerfile: config.web.dockerfile,
+      dockerfile: config[container_name].dockerfile,
     },
-    container_name: `web-builder-${projectName}`,
+    container_name,
     environment: {
-      NODE_ENV: "production",
-      DOCKER_ENV: "true",
-      // CHROME_HOST: `web-builder`,
-      ...config.env,
+      // NODE_ENV: "production",
+      // ...config.env,
     },
     working_dir: "/workspace",
     volumes: [
@@ -21,74 +19,28 @@ export const webDockerComposeFile = (config: IBuiltConfig, projectName: string) 
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    // Expose port 9222 for Chrome DevTools Protocol
-    // This allows other containers to connect to Chrome
-    // Use 'expose' to make the port available to linked containers
-    // and 'ports' to also expose to the host for debugging
-    command: webBuildCommand(),
-  };
+    command: webBuildCommand(fpath),
 
-  return service;
+  }
+
 };
 
 
-export const webBuildCommand = () => {
-  return `yarn tsx src/server/runtimes/web/web.ts testeranto/runtimes/web/web.js`
+export const webBuildCommand = (fpath: string) => {
+  // return `yarn tsx src/server/runtimes/web/web.ts /workspace/${fpath}`;
+  return `yarn tsx src/server/runtimes/web/web.ts /workspace/${fpath}`;
 }
 
-export const webBddCommand = () => {
-  return `yarn tsx  src/server/runtimes/web/hoist.ts testeranto/bundles/allTests/web/example/Calculator.test.mjs`
+export const webBddCommand = (fpath: string) => {
+  // return `node ${fpath} /workspace/web.js `;x
+  return `node dist/prebuild/server/runtimes/web/hoist.mjs `;
 }
 
-////
-// import { IBuiltConfig } from "../../../Types";
 
-
-// const base = (config: IBuiltConfig, projectName: string) => {
-//   const service: any = {
-//     build: {
-//       context: process.cwd(),
-//       dockerfile: config.web.dockerfile,
-//     },
-//     container_name: `web-builder-${projectName}`,
-//     environment: {
-//       NODE_ENV: "production",
-//       DOCKER_ENV: "true",
-//       ...config.env,
-//     },
-//     working_dir: "/workspace",
-//     volumes: [
-//       `${process.cwd()}/src:/workspace/src`,
-//       `${process.cwd()}/example:/workspace/example`,
-//       `${process.cwd()}/dist:/workspace/dist`,
-//       `${process.cwd()}/testeranto:/workspace/testeranto`,
-//     ],
-//     // Expose port 9222 for Chrome remote debugging
-//     ports: [
-//       "9222:9222"
-//     ],
-//     // Ensure the container stays alive and is accessible
-//     // command: webBuildCommand(config.httpPort || 3456),
-//   };
-
-//   return service;
-// };
-
-
-// export const webBuildCommand = (config: IBuiltConfig, projectName: string) => {
-
-//   return {
-//     ...base(config, projectName),
-//     command: `yarn tsx src/server/runtimes/web/web.ts testeranto/runtimes/web/web.js`,
-
-//   }
+// export const webBuildCommand = () => {
+//   return `yarn tsx src/server/runtimes/web/web.ts testeranto/runtimes/web/web.js`
 // }
 
-// export const webBddCommand = (config: IBuiltConfig, projectName: string) => {
-
-//   return {
-//     ...base(config, projectName),
-//     command: `yarn tsx  src/server/runtimes/web/hoist.ts testeranto/bundles/allTests/web/example/Calculator.test.mjs`,
-
-//   }
+// export const webBddCommand = () => {
+//   return `yarn tsx  src/server/runtimes/web/hoist.ts testeranto/bundles/allTests/web/example/Calculator.test.mjs`
 // }

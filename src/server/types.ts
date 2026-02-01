@@ -1,4 +1,9 @@
-import { IRunTime } from "../Types";
+import { IBaseTestConfig, IRunTime } from "../Types";
+
+export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
+
+export type ITestconfigV2Ruby = IBaseTestConfig & { plugins: any[] }
+export type ITestconfigV2Node = IBaseTestConfig & { plugins: any[] }
 
 export type IMode = "once" | "dev";
 

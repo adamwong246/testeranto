@@ -1,0 +1,976 @@
+=== Log started at 2026-01-31T00:57:41.787Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 00:57:46 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T00:57:46.195Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:09:06.839Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 01:09:11 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T01:09:11.593Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:14:15.673Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 01:14:19 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T01:14:19.778Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:20:24.592Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 01:20:28 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T01:20:28.998Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:55:56.784Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 01:56:00 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T01:56:00.767Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:58:09.523Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 01:58:13 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T01:58:13.524Z, process exited with code 0 ===
+=== Log started at 2026-01-31T01:59:48.257Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+=== Log started at 2026-01-31T02:00:16.380Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:00:20 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:00:20.314Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:01:42.567Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:01:46 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:01:46.277Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:03:22.109Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:03:25 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:03:25.886Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:06:32.495Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:06:36 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:06:36.483Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:08:03.688Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:08:07 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:08:08.166Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:16:27.068Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:16:31 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:16:31.414Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:17:01.253Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:17:05 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:17:05.388Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:18:49.282Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:18:52 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:18:53.021Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:24:29.734Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:24:33 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:24:33.820Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:26:19.937Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:26:24 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:26:24.360Z, process exited with code 0 ===
+=== Log started at 2026-01-31T02:27:40.703Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting (stderr)...
+golang_tests-example_calculator-test-go-bdd  | 🚀 Go builder starting...
+golang_tests-example_calculator-test-go-bdd  | Environment:
+golang_tests-example_calculator-test-go-bdd  |   TEST_NAME: 
+golang_tests-example_calculator-test-go-bdd  |   PWD: 
+golang_tests-example_calculator-test-go-bdd  |   Current dir: /workspace
+golang_tests-example_calculator-test-go-bdd  | TEST_NAME=
+golang_tests-example_calculator-test-go-bdd  | Config path: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loading config from: /workspace/testeranto/runtimes/golang/golang.go
+golang_tests-example_calculator-test-go-bdd  | [INFO] Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | [INFO]   - example/Calculator.golingvu.test.go (path: example)
+golang_tests-example_calculator-test-go-bdd  | ✅ Loaded config with 1 Go test(s)
+golang_tests-example_calculator-test-go-bdd  | 
+golang_tests-example_calculator-test-go-bdd  | 📦 Processing test: example/Calculator.golingvu.test.go
+golang_tests-example_calculator-test-go-bdd  |   Running go mod tidy...
+golang_tests-example_calculator-test-go-bdd  | go: finding module for package github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: downloading github.com/golangci/golangci-lint v1.64.8
+golang_tests-example_calculator-test-go-bdd  | go: toolchain upgrade needed to resolve github.com/golangci/golangci-lint/cmd/golangci-lint
+golang_tests-example_calculator-test-go-bdd  | go: github.com/golangci/golangci-lint@v1.64.8 requires go >= 1.23.0 (running go 1.22.12; GOTOOLCHAIN=local)
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go mod tidy failed: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   Running: go list -tags testeranto -json -deps .
+golang_tests-example_calculator-test-go-bdd  | 2026/01/31 02:27:44 ⚠️  Failed to list dependencies for example/Calculator.golingvu.test.go: exit status 1
+golang_tests-example_calculator-test-go-bdd  |   ⚠️  go list stderr: package example: build constraints exclude all Go files in /workspace/example
+golang_tests-example_calculator-test-go-bdd  | 
+[Kgolang_tests-example_calculator-test-go-bdd exited with code 0
+
+=== Log ended at 2026-01-31T02:27:44.559Z, process exited with code 0 ===
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:33:38.163Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:35:00.537Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:35:47.409Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:40:13.592Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:41:30.651Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:45:58.710Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:48:17.964Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:52:59.144Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:54:45.791Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:57:26.666Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T02:59:35.191Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:03:26.805Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:04:45.756Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:08:16.158Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:16:48.854Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:20:08.017Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:22:15.226Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:23:09.164Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:24:07.875Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:24:59.673Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:25:32.476Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:27:12.242Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:29:09.209Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:32:36.672Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:34:25.038Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:36:18.560Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:37:59.049Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:58:32.748Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T03:59:22.996Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:05:50.679Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:08:19.813Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:11:32.373Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:14:52.755Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:16:51.538Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:18:13.555Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:19:36.213Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:20:41.440Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:23:12.425Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:28:05.562Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T04:28:41.021Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T11:48:19.319Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T11:48:50.738Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T11:54:07.634Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T11:54:56.791Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T11:56:47.972Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T11:57:51.517Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:02:04.381Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:03:51.005Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:05:35.850Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:18:09.867Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:20:44.968Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:24:50.819Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:40:41.055Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:48:05.556Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T12:54:33.158Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:02:38.234Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:03:21.028Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:04:45.158Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:07:28.139Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:08:56.177Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:09:31.988Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:14:48.755Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:17:53.020Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:21:33.207Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:24:20.428Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:24:54.237Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:37:13.107Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:43:16.940Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:49:38.066Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:50:36.156Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:52:28.076Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:53:23.836Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T13:55:45.714Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:01:25.025Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:39:31.592Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:45:31.026Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:47:21.650Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:47:58.197Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:49:29.011Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:50:07.664Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:52:11.939Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T14:55:19.397Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:02:29.537Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:29:59.849Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:31:31.683Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:51:15.887Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:52:40.306Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:57:30.966Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:58:43.357Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T15:59:34.335Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:00:34.664Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:01:20.736Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:02:30.787Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:03:15.230Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:04:49.157Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:05:50.262Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:07:53.897Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:09:07.234Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:12:00.485Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:14:44.245Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:22:23.145Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:23:18.138Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:25:04.289Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:26:25.856Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:29:30.709Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:31:13.027Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:32:49.765Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:34:09.269Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:35:07.062Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:37:27.151Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:41:23.159Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:42:48.223Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:43:05.499Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:43:28.192Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T16:44:03.346Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)
+=== Log started at 2026-01-31T19:09:48.033Z for service golang_tests-example_calculator-test-go-bdd ===
+
+golang_tests-example_calculator-test-go-bdd  | package example/cmd/calculator-test is not in std (/usr/local/go/src/example/cmd/calculator-test)

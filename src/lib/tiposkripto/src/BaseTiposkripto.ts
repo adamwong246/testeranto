@@ -1,0 +1,340 @@
+import { DefaultAdapter } from "./index.js";
+import { IGivens, BaseGiven } from "./BaseGiven";
+import { BaseSuite } from "./BaseSuite";
+import { BaseThen } from "./BaseThen";
+import { BaseWhen } from "./BaseWhen";
+import { Ibdd_in_any, Ibdd_out_any, ITestSpecification, ITestImplementation, ITestAdapter } from "./CoreTypes.js";
+import { ITestJob, ITTestResourceRequest, defaultTestResourceRequirement, ITestResourceConfiguration, IFinalResults } from "./types.js";
+
+type IExtenstions = Record<string, unknown>;
+
+export default abstract class BaseTiposkripto<
+  I extends Ibdd_in_any = Ibdd_in_any,
+  O extends Ibdd_out_any = Ibdd_out_any,
+  M = unknown
+> {
+  totalTests: number = 0;
+  artifacts: Promise<unknown>[] = [];
+  assertThis: (t: I["then"]) => any;
+  givenOverrides: Record<string, any>;
+  specs: any;
+  suitesOverrides: Record<string, any>;
+  testJobs: ITestJob[];
+  testResourceRequirement: ITTestResourceRequest;
+  testSpecification: ITestSpecification<I, O>;
+  thenOverrides: Record<string, any>;
+  whenOverrides: Record<string, any>;
+
+  abstract writeFileSync(
+    filename: string,
+    payload: string,
+  ): void;
+
+  constructor(
+    webOrNode: "web" | "node",
+    input: I["iinput"],
+    testSpecification: ITestSpecification<I, O>,
+    testImplementation: ITestImplementation<I, O, M> & {
+      // suites: Record<string, NonEmptyObject<object>>;
+      suites: Record<string, object>;
+      givens: Record<string, any>;
+      whens: Record<string, any>;
+      thens: Record<string, any>;
+    },
+    testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+    testAdapter: Partial<ITestAdapter<I>> = {},
+    testResourceConfiguration?: ITestResourceConfiguration,
+    wsPort: string = "3456",
+    wsHost: string = "localhost"
+  ) {
+    this.testResourceConfiguration = testResourceConfiguration;
+
+    const fullAdapter = DefaultAdapter<I>(testAdapter);
+
+    if (
+      !testImplementation.suites ||
+      typeof testImplementation.suites !== "object"
+    ) {
+      throw new Error(
+        `testImplementation.suites must be an object, got ${typeof testImplementation.suites}: ${JSON.stringify(
+          testImplementation.suites
+        )}`
+      );
+    }
+    const classySuites = Object.entries(testImplementation.suites).reduce(
+      (a, [key], index) => {
+        a[key] = (somestring: string, givens: IGivens<I>) => {
+          return new (class extends BaseSuite<I, O> {
+            afterAll(store: I["istore"]) {
+              return fullAdapter.afterAll(store);
+            }
+
+            assertThat(t: Awaited<I["then"]>): boolean {
+              return fullAdapter.assertThis(t);
+            }
+
+            async setup(
+              s: I["iinput"],
+              tr: ITestResourceConfiguration
+            ): Promise<I["isubject"]> {
+              return (
+                fullAdapter.beforeAll?.(s, tr) ??
+                (s as unknown as Promise<I["isubject"]>)
+              );
+            }
+          })(somestring, index, givens);
+        };
+        return a;
+      },
+      {}
+    );
+
+    const classyGivens = Object.entries(testImplementation.givens).reduce(
+      (a, [key, g]) => {
+        a[key] = (
+          features: string[],
+          whens: BaseWhen<I>[],
+          thens: BaseThen<I>[],
+          gcb: I["given"],
+          initialValues: any
+        ) => {
+          // WTF
+          // Ensure parameters are arrays and create copies to avoid reference issues
+          const safeFeatures = Array.isArray(features) ? [...features] : [];
+          const safeWhens = Array.isArray(whens) ? [...whens] : [];
+          const safeThens = Array.isArray(thens) ? [...thens] : [];
+
+          return new (class extends BaseGiven<I> {
+            async givenThat(subject, testResource, initializer, initialValues) {
+              return fullAdapter.beforeEach(
+                subject,
+                initializer,
+                testResource,
+                initialValues
+              );
+            }
+
+            afterEach(store: I["istore"], key: string): Promise<unknown> {
+              return Promise.resolve(fullAdapter.afterEach(store, key));
+            }
+          })(
+            safeFeatures,
+            safeWhens,
+            safeThens,
+            testImplementation.givens[key],
+            initialValues
+          );
+        };
+        return a;
+      },
+      {}
+    );
+
+    const classyWhens = Object.entries(testImplementation.whens).reduce(
+      (a, [key, whEn]: [string, (...x: any[]) => any]) => {
+        a[key] = (...payload: any[]) => {
+          const whenInstance = new (class extends BaseWhen<I> {
+            async andWhen(store, whenCB, testResource) {
+              return await fullAdapter.andWhen(store, whenCB, testResource);
+            }
+          })(`${key}: ${payload && payload.toString()}`, whEn(...payload));
+          return whenInstance;
+        };
+        return a;
+      },
+      {}
+    );
+
+    const classyThens = Object.entries(testImplementation.thens).reduce(
+      (a, [key, thEn]: [string, (...x: any[]) => any]) => {
+        a[key] = (...args: any[]) => {
+          const thenInstance = new (class extends BaseThen<I> {
+            async butThen(
+              store: any,
+              thenCB,
+              testResource: any
+            ): Promise<I["iselection"]> {
+              return await fullAdapter.butThen(store, thenCB, testResource);
+            }
+          })(`${key}: ${args && args.toString()}`, thEn(...args));
+
+          return thenInstance;
+        };
+        return a;
+      },
+      {}
+    );
+
+    this.suitesOverrides = classySuites;
+    this.givenOverrides = classyGivens;
+    this.whenOverrides = classyWhens;
+    this.thenOverrides = classyThens;
+    this.testResourceRequirement = testResourceRequirement;
+    this.testSpecification = testSpecification;
+
+    this.specs = testSpecification(
+      this.Suites(),
+      this.Given(),
+      this.When(),
+      this.Then()
+    );
+
+    this.totalTests = this.calculateTotalTests();
+
+    this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
+      const suiteRunner =
+        (suite: BaseSuite<I, O>) =>
+          async (
+            testResourceConfiguration?: ITestResourceConfiguration
+          ): Promise<BaseSuite<I, O>> => {
+            try {
+              const x = await suite.run(
+                input,
+                testResourceConfiguration || {
+                  name: suite.name,
+                  fs: process.cwd(),
+                  ports: [],
+                  timeout: 30000,
+                  retries: 3,
+                  environment: {},
+                }
+              );
+
+              return x;
+            } catch (e) {
+              console.error(e.stack);
+              throw e;
+            }
+          };
+
+      const runner = suiteRunner(suite);
+
+      const totalTests = this.totalTests;
+      const testJob = {
+        test: suite,
+
+        toObj: () => {
+          return suite.toObj();
+        },
+
+        runner,
+
+        receiveTestResourceConfig: async (
+          testResourceConfiguration: ITestResourceConfiguration
+        ): Promise<IFinalResults> => {
+          try {
+            const suiteDone: BaseSuite<I, O> = await runner(
+              testResourceConfiguration
+            );
+            const fails = suiteDone.fails;
+            return {
+              failed: fails > 0,
+              fails,
+              artifacts: [], // this.artifacts is not accessible here
+              features: suiteDone.features(),
+              tests: 0,
+              runTimeTests: totalTests,
+              testJob: testJob.toObj(),
+            };
+          } catch (e) {
+            console.error(e.stack);
+            return {
+              failed: true,
+              fails: -1,
+              artifacts: [],
+              features: [],
+              tests: 0,
+              runTimeTests: -1,
+              testJob: testJob.toObj(),
+            };
+          }
+        },
+      };
+      return testJob;
+    });
+
+    (this.testJobs[0].receiveTestResourceConfig(
+      testResourceConfiguration
+    ) as unknown as Promise<IFinalResults>).then((results) => {
+      // The actual path is determined by the concrete implementation (Node.ts or Web.ts)
+      // They will write to the correct pattern: testeranto/reports/allTests/example/${runtime}.Calculator.test.ts.json
+      // We just pass a placeholder filename webOrNode
+      this.writeFileSync(`testeranto/reports/allTests/example/${webOrNode}/Calculator.test.ts.json`, JSON.stringify(results));
+    })
+
+
+  }
+
+  async receiveTestResourceConfig(
+    testResourceConfig: ITestResourceConfiguration
+  ): Promise<any> {
+    if (this.testJobs && this.testJobs.length > 0) {
+      return this.testJobs[0].receiveTestResourceConfig(testResourceConfig);
+    } else {
+      throw new Error("No test jobs available");
+    }
+  }
+
+  Specs() {
+    return this.specs;
+  }
+  Suites() {
+    if (!this.suitesOverrides) {
+      throw new Error(
+        `suitesOverrides is undefined. classySuites: ${JSON.stringify(
+          Object.keys(this.suitesOverrides || {})
+        )}`
+      );
+    }
+    return this.suitesOverrides;
+  }
+
+  Given(): Record<
+    keyof IExtenstions,
+    (
+      name: string,
+      features: string[],
+      whens: BaseWhen<I>[],
+      thens: BaseThen<I>[],
+      gcb: I["given"]
+    ) => BaseGiven<I>
+  > {
+    return this.givenOverrides;
+  }
+
+  When(): Record<
+    keyof IExtenstions,
+    (arg0: I["istore"], ...arg1: any) => BaseWhen<I>
+  > {
+    return this.whenOverrides;
+  }
+
+  Then(): Record<
+    keyof IExtenstions,
+    (selection: I["iselection"], expectation: any) => BaseThen<I>
+  > {
+    return this.thenOverrides;
+  }
+
+  // Add a method to access test jobs which can be used by receiveTestResourceConfig
+  getTestJobs(): ITestJob[] {
+    return this.testJobs;
+  }
+
+  private calculateTotalTests(): number {
+    let total = 0;
+    for (const suite of this.specs) {
+      if (suite && typeof suite === "object") {
+        // Access the givens property which should be a record of test names to BaseGiven instances
+        // The givens property is typically on the suite instance
+        if ("givens" in suite) {
+          const givens = (suite as any).givens;
+          if (givens && typeof givens === "object") {
+            total += Object.keys(givens).length;
+          }
+        }
+      }
+    }
+    return total;
+  }
+}

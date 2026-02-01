@@ -1,7 +1,8 @@
 import { BuildOptions } from "esbuild";
-import { ITestconfig } from "../Types";
+import { ITestconfigV2Node } from "../Types";
+// import { ITestconfig } from "../Types";
 
-export default (config: ITestconfig): BuildOptions => {
+export default (config: object): BuildOptions => {
   return {
     // packages: "external",
     target: "esnext",
@@ -11,7 +12,7 @@ export default (config: ITestconfig): BuildOptions => {
     outbase: ".",
     jsx: "transform",
     bundle: true,
-    minify: config.minify === true,
+    // minify: config.minify === true,
     write: true,
     loader: {
       ".js": "jsx",

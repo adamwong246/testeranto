@@ -1,16 +1,16 @@
-import { IBuiltConfig } from "../../../Types";
+import { ITestconfigV2 } from "../../../Types";
 
-export const golangDockerComposeFile = (config: IBuiltConfig, projectName: string): object => {
+export const golangDockerComposeFile = (config: ITestconfigV2, container_name: string): object => {
 
   return {
     build: {
       context: process.cwd(),
-      dockerfile: config.golang.dockerfile,
+      dockerfile: config[container_name].dockerfile,
     },
-    container_name: `golang-builder-${projectName}`,
+    container_name,
     environment: {
-      NODE_ENV: "production",
-      ...config.env,
+      // NODE_ENV: "production",
+      // ...config.env,
     },
     working_dir: "/workspace",
     volumes: [

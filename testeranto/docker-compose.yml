@@ -1,0 +1,47 @@
+services:
+  node-builder:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/node/node.Dockerfile
+    container_name: node-builder
+    environment: {}
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/testeranto/runtimes/node/node.ts nodetests
+    networks:
+      - allTests_network
+  nodetests-example_calculator-test-ts-bdd:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/runtimes/node/node.Dockerfile
+    container_name: nodetests-example_calculator-test-ts-bdd
+    environment: {}
+    working_dir: /workspace
+    volumes:
+      - /Users/adam/Code/testeranto/src:/workspace/src
+      - /Users/adam/Code/testeranto/example:/workspace/example
+      - /Users/adam/Code/testeranto/dist:/workspace/dist
+      - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
+    command: node testeranto/bundles/allTests/node/example/Calculator.test.mjs /workspace/node.js
+    networks:
+      - allTests_network
+  nodetests-example_calculator-test-ts-aider:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: aider.Dockerfile
+    container_name: nodetests-example_calculator-test-ts-aider
+    environment: {}
+    working_dir: /workspace
+    command: aider
+    networks:
+      - allTests_network
+volumes:
+  node_modules:
+    driver: local
+networks:
+  allTests_network:
+    driver: bridge

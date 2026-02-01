@@ -1,0 +1,44 @@
+node_tests:
+  - node
+  - testeranto/runtimes/node/node.Dockerfile
+  - testeranto/runtimes/node/node.ts
+  - tests:
+      - example/Calculator.test.ts
+  - outputs:
+      - example/Calculator.ts
+web_tests:
+  - web
+  - testeranto/runtimes/web/web.Dockerfile
+  - testeranto/runtimes/web/web.ts
+  - tests:
+      - example/Calculator.test.ts
+python_tests:
+  - python
+  - testeranto/runtimes/python/python.Dockerfile
+  - testeranto/runtimes/python/python.py
+  - tests:
+      - example/Calculator.pitono.test.py
+golang_tests:
+  - golang
+  - testeranto/runtimes/golang/golang.Dockerfile
+  - testeranto/runtimes/golang/golang.go
+  - tests:
+      - example/Calculator.test.go
+java_tests:
+  - java
+  - testeranto/runtimes/java/java.Dockerfile
+  - testeranto/runtimes/java/java.java
+  - tests:
+      - example/Calculator.test.java
+ruby_tests:
+  - ruby
+  - testeranto/runtimes/ruby/ruby.Dockerfile
+  - testeranto/runtimes/ruby/ruby.rb
+  - tests:
+      - example/Calculator.test.rb
+rust_tests:
+  - rust
+  - testeranto/runtimes/rust/rust.Dockerfile
+  - testeranto/runtimes/rust/rust.rs
+  - tests:
+      - example/Calculator.test.rs

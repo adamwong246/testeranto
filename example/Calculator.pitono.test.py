@@ -93,7 +93,7 @@ if __name__ == "__main__":
         # Create a simple test resource configuration
         test_resource_config = {
             "name": "local-test",
-            "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.bundle.py",
+            "fs": "testeranto/bundles/allTests/python/Calculator.pitono.test.py",
             "ports": [8080],
             "browser_ws_endpoint": None,
             "timeout": 30000,
