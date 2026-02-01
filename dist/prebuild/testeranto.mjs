@@ -94,18 +94,18 @@ var nodeDockerComposeFile = (config, container_name, projectConfigPath, nodeConf
     command: nodeBuildCommand(projectConfigPath, nodeConfigPath, testName)
   };
 };
-var externalTests = false;
+var externalTests = true;
 var nodeBuildCommand = (projectConfigPath, nodeConfigPath, testName) => {
   if (externalTests) {
     console.log("external tests", testName);
-    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts ${nodeConfigPath} ${testName}`;
+    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
   } else {
     console.log("not external tests");
     return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/${nodeConfigPath} ${testName}`;
   }
 };
-var nodeBddCommand = (fpath) => {
-  return `node ${fpath.split(".").slice(0, -1).concat("mjs").join(".")} /workspace/node.js`;
+var nodeBddCommand = (fpath, nodeConfigPath) => {
+  return `node ${fpath.split(".").slice(0, -1).concat("mjs").join(".")} /workspace/${nodeConfigPath}`;
 };
 
 // src/server/runtimes/python/docker.ts
@@ -1046,8 +1046,8 @@ var Server_Docker = class extends Server_WS {
               const uid = `${runtimeTestsName.toLowerCase()}-${cleanTestName}`;
               const bddCommandFunc = runTimeToCompose[runtime][2];
               const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`;
-              const command = bddCommandFunc(filePath);
-              console.log("wtf command", command);
+              const command = bddCommandFunc(filePath, this.configs.runtimes[runtimeTestsName].buildOptions);
+              console.log("[Server_Docker] BDD command", command);
               services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
               services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
             }
@@ -1685,8 +1685,7 @@ if (mode !== "once" && mode !== "dev") {
   process.exit(-1);
 }
 var main = async () => {
-  const config = (await import("./testeranto-NB75EKYN.mjs")).default;
-  console.log("mark123", config);
+  const config = (await import(process.cwd() + "/testeranto/testeranto.ts")).default;
   await new Server(config, mode).start();
 };
 main();

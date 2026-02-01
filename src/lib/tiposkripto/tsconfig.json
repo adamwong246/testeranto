@@ -1,0 +1,61 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "esnext",
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "target": "es2020",
+      "esModuleInterop": true,
+    }
+  },
+  "declaration": true,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    },
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "target": "ES2022",
+    "allowJs": true,
+    "jsx": "react",
+    "strictNullChecks": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "outDir": "dist",
+    "alwaysStrict": true,
+    // Add these to support the process management features
+    "downlevelIteration": true,
+    "exactOptionalPropertyTypes": false
+  },
+  "include": [
+    "./node_modules/testeranto/src/**/*.*ts",
+    "index.d.ts",
+    "./src/**/*.*ts",
+    "./src/**/*.*tsx",
+    "./src/types/**/*.d.ts",
+    "tester.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "trash"
+  ]
+}

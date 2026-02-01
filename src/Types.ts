@@ -1,9 +1,9 @@
-import { ITestResourceConfiguration } from "./lib/tiposkripto";
+import { ITestResourceConfiguration } from "./lib/tiposkripto/src/index.mjs";
 import { BaseGiven, IGivens } from "./lib/tiposkripto/BaseGiven";
 import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
 import { BaseThen } from "./lib/tiposkripto/BaseThen";
 import { BaseWhen } from "./lib/tiposkripto/BaseWhen";
-import { Ibdd_in_any, Ibdd_out_any } from "./lib/tiposkripto/CoreTypes";
+import { Ibdd_in_any, Ibdd_out_any } from "./lib/tiposkripto/src/CoreTypes";
 
 export type IChecks = ((x: any) => string)[];
 

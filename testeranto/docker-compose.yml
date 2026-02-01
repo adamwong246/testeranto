@@ -11,7 +11,7 @@ services:
       - /Users/adam/Code/testeranto/example:/workspace/example
       - /Users/adam/Code/testeranto/dist:/workspace/dist
       - /Users/adam/Code/testeranto/testeranto:/workspace/testeranto
-    command: yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/testeranto/runtimes/node/node.ts nodetests
+    command: yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/testeranto/runtimes/node/node.ts nodetests
     networks:
       - allTests_network
   nodetests-example_calculator-test-ts-bdd:

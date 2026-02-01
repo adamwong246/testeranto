@@ -8,8 +8,6 @@ vendor/
 
 !testeranto/bundles/golang/Calculator.golingvu.test.go
 
-dist
-
 example/bin
 example/calculator_example
 example/include

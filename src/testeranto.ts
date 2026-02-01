@@ -42,9 +42,7 @@ const main = async () => {
 
   // console.log('Parsed config:', Array.from(config.entries()));
 
-  const config: ITestconfigV2 = (await import('../testeranto/testeranto.ts')).default;
-
-  console.log("mark123", config)
+  const config = (await import(process.cwd() + '/testeranto/testeranto.ts')).default;
   await new Server(config, mode).start();
 }
 

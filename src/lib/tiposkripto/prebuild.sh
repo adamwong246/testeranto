@@ -1,0 +1,1 @@
+rm -fr dist; mkdir dist; mkdir dist/common; mkdir dist/module; mkdir dist/types; 

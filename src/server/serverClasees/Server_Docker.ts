@@ -180,7 +180,7 @@ export class Server_Docker extends Server_WS {
       ) => object,
 
       (projectConfig: string, nodeConfigPath: string, testname: string) => string,
-      (fpath: string) => string,
+      (fpath: string, nodeConfigPath: string) => string,
     ]> = {
       'node': [nodeDockerComposeFile, nodeBuildCommand, nodeBddCommand],
       'web': [webDockerComposeFile, webBuildCommand, webBddCommand],
@@ -257,8 +257,8 @@ export class Server_Docker extends Server_WS {
               // const filePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb"
 
               const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`
-              const command = bddCommandFunc(filePath)
-              console.log("wtf command", command)
+              const command = bddCommandFunc(filePath, this.configs.runtimes[runtimeTestsName].buildOptions)
+              console.log("[Server_Docker] BDD command", command)
 
               services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
               services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
