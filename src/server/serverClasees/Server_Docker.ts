@@ -191,24 +191,18 @@ export class Server_Docker extends Server_WS {
       "java": [javaDockerComposeFile, javaBuildCommand, javaBddCommand]
     };
 
-    console.log('345', Object.entries(this.configs.runtimes))
     // Iterate through each entry in the config Map
     for (const [runtimeTestsName, runtimeTests] of Object.entries(this.configs.runtimes)) {
-
-      console.log('654', [runtimeTestsName, runtimeTests])
 
       const runtime: IRunTime = runtimeTests.runtime as IRunTime;
       const dockerfile = runtimeTests.dockerfile;
       const buildOptions = runtimeTests.buildOptions;
       const testsObj = runtimeTests.tests
 
-      console.log('456', runTimeToCompose, runtimeTests)
-
       // loop over all suites which are of the right runtime
       for (const [t, c] of Object.entries(this.configs.runtimes)) {
         if (c.runtime === runtime) {
           if (RUN_TIMES.includes(runtime)) {
-            console.log('666', runtimeTestsName)
             const buildCommand = runTimeToCompose[runtime][1](
               buildOptions,
               c.buildOptions,
@@ -244,6 +238,35 @@ export class Server_Docker extends Server_WS {
               networks: ["allTests_network"],
             };
 
+
+            for (const tName of testsObj) {
+              // Clean the test name for use in container names
+              // Handle numeric test names (like '0') by converting to string
+              // const testNameStr = String(testName);
+              const cleanTestName = tName.toLowerCase()
+                .replaceAll("/", "_")
+                .replaceAll(".", "-")
+                .replace(/[^a-z0-9_-]/g, '');
+
+              // Generate UID using the runtimeTestsName (e.g., 'nodeTests') and clean test name
+              const uid = `${runtimeTestsName.toLowerCase()}-${cleanTestName}`;
+
+              // Add BDD service for this test
+              const bddCommandFunc = runTimeToCompose[runtime][2];
+              // TODO find filepath
+              // const filePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb"
+
+              const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`
+              const command = bddCommandFunc(filePath)
+              console.log("wtf command", command)
+
+              services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
+              services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
+            }
+
+
+
+
           } else {
             throw `unknown runtime ${runtime}`;
           }
@@ -251,64 +274,6 @@ export class Server_Docker extends Server_WS {
         }
       }
 
-
-
-
-
-
-
-      // const testEntries = testsObj.map(test => {
-      //   if (typeof test === 'string') {
-      //     return { name: test, config: {} };
-      //   } else if (test && typeof test === 'object') {
-      //     return {
-      //       name: test.name || test.testName || 'unknown',
-      //       config: test
-      //     };
-      //   } else {
-      //     return { name: String(test), config: {} };
-      //   }
-      // });
-
-      for (const tName of testsObj) {
-        // Clean the test name for use in container names
-        // Handle numeric test names (like '0') by converting to string
-        // const testNameStr = String(testName);
-        const cleanTestName = tName.toLowerCase()
-          .replaceAll("/", "_")
-          .replaceAll(".", "-")
-          .replace(/[^a-z0-9_-]/g, '');
-
-        // Generate UID using the runtimeTestsName (e.g., 'nodeTests') and clean test name
-        const uid = `${runtimeTestsName}-${cleanTestName}`;
-
-        // Add BDD service for this test
-        const bddCommandFunc = runTimeToCompose[runtime][2];
-        // TODO find filepath
-        // const filePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb"
-
-        const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`
-        const command = bddCommandFunc(filePath)
-
-        // // Determine the file path to pass to bddCommandFunc
-        // let filePath = "";
-        // if (typeof testConfig === 'string') {
-        //   filePath = testConfig;
-        // } else if (testConfig && typeof testConfig === 'object') {
-        //   // Try to get path or entryPoint from test config
-        //   filePath = testConfig.path || testConfig.entryPoint || "";
-        // }
-
-        // const command = bddCommandFunc ? bddCommandFunc(filePath) : "";
-
-        // Only add BDD service if we have a command
-        if (command) {
-          services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
-        }
-
-        // Always add aider service
-        services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
-      }
     }
 
     // Ensure all services use the same network configuration

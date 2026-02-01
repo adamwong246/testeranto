@@ -2,7 +2,6 @@
 
 FROM node:20.19.4-alpine as build
 WORKDIR /workspace
-COPY ./allTests.ts ./
 COPY ./tsconfig*.json ./
 COPY package.json /workspace
 COPY ./.yarnrc.yml ./

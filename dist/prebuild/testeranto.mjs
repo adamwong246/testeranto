@@ -1005,18 +1005,14 @@ var Server_Docker = class extends Server_WS {
       "rust": [rustDockerComposeFile, rustBuildCommand, rustBddCommand],
       "java": [javaDockerComposeFile, javaBuildCommand, javaBddCommand]
     };
-    console.log("345", Object.entries(this.configs.runtimes));
     for (const [runtimeTestsName, runtimeTests] of Object.entries(this.configs.runtimes)) {
-      console.log("654", [runtimeTestsName, runtimeTests]);
       const runtime = runtimeTests.runtime;
       const dockerfile = runtimeTests.dockerfile;
       const buildOptions = runtimeTests.buildOptions;
       const testsObj = runtimeTests.tests;
-      console.log("456", runTimeToCompose, runtimeTests);
       for (const [t, c] of Object.entries(this.configs.runtimes)) {
         if (c.runtime === runtime) {
           if (RUN_TIMES.includes(runtime)) {
-            console.log("666", runtimeTestsName);
             const buildCommand = runTimeToCompose[runtime][1](
               buildOptions,
               c.buildOptions,
@@ -1045,21 +1041,20 @@ var Server_Docker = class extends Server_WS {
               command: buildCommand,
               networks: ["allTests_network"]
             };
+            for (const tName of testsObj) {
+              const cleanTestName = tName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-").replace(/[^a-z0-9_-]/g, "");
+              const uid = `${runtimeTestsName.toLowerCase()}-${cleanTestName}`;
+              const bddCommandFunc = runTimeToCompose[runtime][2];
+              const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`;
+              const command = bddCommandFunc(filePath);
+              console.log("wtf command", command);
+              services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
+              services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
+            }
           } else {
             throw `unknown runtime ${runtime}`;
           }
         }
-      }
-      for (const tName of testsObj) {
-        const cleanTestName = tName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-").replace(/[^a-z0-9_-]/g, "");
-        const uid = `${runtimeTestsName}-${cleanTestName}`;
-        const bddCommandFunc = runTimeToCompose[runtime][2];
-        const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`;
-        const command = bddCommandFunc(filePath);
-        if (command) {
-          services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
-        }
-        services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
       }
     }
     for (const serviceName in services) {
@@ -1690,7 +1685,7 @@ if (mode !== "once" && mode !== "dev") {
   process.exit(-1);
 }
 var main = async () => {
-  const config = (await import("./testeranto-FJAFJOSX.mjs")).default;
+  const config = (await import("./testeranto-NB75EKYN.mjs")).default;
   console.log("mark123", config);
   await new Server(config, mode).start();
 };
