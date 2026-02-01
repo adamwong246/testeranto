@@ -1634,7 +1634,6 @@ ${x}
 };
 
 // src/server/serverClasees/Server.ts
-console.log("hello server");
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 var Server = class extends Server_Docker {

@@ -2,7 +2,7 @@
   "name": "testeranto",
   "displayName": "Testeranto",
   "description": "the Dockerized, AI powered, BDD test framework for polyglot projects",
-  "version": "0.220.0",
+  "version": "0.220.1",
   "engines": {
     "node": ">=20.19.0",
     "vscode": "^1.60.0"
@@ -145,7 +145,7 @@
     ]
   },
   "scripts": {
-    "buildV3": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; yarn bundle",
+    "bundle": "node bundle.js",
     "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
     "compile-docs": "node scripts/compile-docs.js",
     "prepublish": "self-import",
@@ -160,7 +160,6 @@
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
-    "bundle": "node bundle.js",
     "mothership": "node dist/prebuild/mothership/index.mjs",
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
     "build3": "yarn bundle; tsc -p tsconfig.types.json",
@@ -185,8 +184,7 @@
     "devV2:clean": "npm run clean:all && npm run devV2",
     "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
     "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
-    "devV4": "rm -rf testeranto/bundles/** testeranto/reports/** testeranto/metafiles/** ; yarn bundle && yarn run testeranto allTests.ts once",
-    "devV5": "yarn bundle && yarn run testeranto allTests.ts once"
+    "devV4": "rm -rf testeranto/bundles/** testeranto/reports/** testeranto/metafiles/** ; yarn bundle && yarn run testeranto allTests.ts once"
   },
   "exports": {
     "./src/cjs-shim.ts": {
