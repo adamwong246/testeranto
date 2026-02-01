@@ -1,6 +1,6 @@
 {
   "name": "tiposkripto",
-  "version": "0.0.10",
+  "version": "0.0.15",
   "description": "the typescript implementation of testeranto",
   "author": "adamwong246@gmail.com",
   "license": "MIT",
@@ -11,12 +11,6 @@
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json",
     "build": "sh prebuild.sh; cp ./cjs-shim.js ./cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; node bundle.js"
-  },
-  "exports": {
-    "./Tiposkripto": {
-      "import": "./Tiposkripto.ts",
-      "require": "./Tiposkripto.ts"
-    }
   },
   "dependencies": {
     "typescript": "^5.9.3"
