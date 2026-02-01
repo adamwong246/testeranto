@@ -4,7 +4,7 @@ import * as esbuild from 'esbuild'
 await esbuild.build({
   outExtension: { '.js': '.mjs' },
   entryPoints: [
-    'src/index.mts',
+    'src/index.ts',
   ],
   bundle: true,
   format: "esm",

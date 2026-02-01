@@ -1,9 +1,9 @@
 import {
   BaseTiposkripto
-} from "./chunk-IWCYUFDQ.mjs";
+} from "./chunk-57HFMKB2.mjs";
 import {
   defaultTestResourceRequirement
-} from "./chunk-MABQI2BP.mjs";
+} from "./chunk-OO6YKXBX.mjs";
 
 // src/Node.ts
 import fs from "fs";

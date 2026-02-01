@@ -1,4 +1,4 @@
-import { DefaultAdapter } from "./index.mjs";
+import { DefaultAdapter } from "./index.js";
 import { BaseGiven } from "./BaseGiven";
 import { BaseSuite } from "./BaseSuite";
 import { BaseThen } from "./BaseThen";

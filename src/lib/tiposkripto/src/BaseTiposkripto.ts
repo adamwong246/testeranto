@@ -1,11 +1,10 @@
-import { DefaultAdapter } from "./index.mjs";
+import { DefaultAdapter } from "./index.js";
 import { IGivens, BaseGiven } from "./BaseGiven";
 import { BaseSuite } from "./BaseSuite";
 import { BaseThen } from "./BaseThen";
 import { BaseWhen } from "./BaseWhen";
 import { Ibdd_in_any, Ibdd_out_any, ITestSpecification, ITestImplementation, ITestAdapter } from "./CoreTypes.js";
 import { ITestJob, ITTestResourceRequest, defaultTestResourceRequirement, ITestResourceConfiguration, IFinalResults } from "./types.js";
-
 
 type IExtenstions = Record<string, unknown>;
 

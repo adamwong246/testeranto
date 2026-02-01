@@ -1,4 +1,13 @@
-import { IRunTime } from "../Types";
+import { IBaseTestConfig, IRunTime } from "../Types";
+
+export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
+
+export type ITestconfigV2Node = IBaseTestConfig & { plugins: any[] }
+
+export type ITestconfigV2 = {
+  featureIngestor: (s: string) => Promise<string>;
+  runtimes: Record<string, IBaseTestConfig>
+};
 
 export type IMode = "once" | "dev";
 

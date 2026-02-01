@@ -1,10 +1,22 @@
 import {
-  SuiteSpecification, GivenSpecification, WhenSpecification, ThenSpecification,
+  GivenSpecification, WhenSpecification, ThenSpecification,
   TestWhenImplementation, Modify, TestSuiteImplementation, TestGivenImplementation,
   TestThenImplementation, TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape
 } from "../../../Types";
+import { IGivens } from "./BaseGiven";
 import { BaseSuite } from "./BaseSuite";
 import { ITestResourceConfiguration } from "./types";
+
+export type SuiteSpecification<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
+> = {
+    [K in keyof O["suites"]]: (
+      name: string,
+      givens: IGivens<I>
+    ) => BaseSuite<I, O>;
+  };
+
 
 export type ITestAdapter<I extends Ibdd_in_any> = {
   assertThis: (x: I["then"]) => any;

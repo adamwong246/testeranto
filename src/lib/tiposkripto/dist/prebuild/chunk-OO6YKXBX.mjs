@@ -3,10 +3,10 @@ var defaultTestResourceRequirement = {
   ports: 0
 };
 
-// src/index.mts
+// src/index.ts
 var tpskrt;
-var tpskrtNode = await import("./Node-KZP3KCHY.mjs");
-var tpskrtWeb = await import("./Web-N3U4GGVG.mjs");
+var tpskrtNode = await import("./Node-QKPFQUAO.mjs");
+var tpskrtWeb = await import("./Web-54TRFOX2.mjs");
 if (ENV === "node") {
   tpskrt = tpskrtNode;
 } else if (ENV === "web") {

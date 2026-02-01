@@ -1,7 +1,7 @@
 import {
   DefaultAdapter,
   defaultTestResourceRequirement
-} from "./chunk-MABQI2BP.mjs";
+} from "./chunk-OO6YKXBX.mjs";
 
 // src/BaseGiven.ts
 var BaseGiven = class {

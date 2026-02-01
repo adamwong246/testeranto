@@ -3,7 +3,8 @@ import featuresPlugin from "../../../esbuildConfigs/featuresPlugin.js";
 import baseEsBuildConfig from "../../../esbuildConfigs/index.js";
 import inputFilesPlugin from "../../../esbuildConfigs/inputFilesPlugin.js";
 import rebuildPlugin from "../../../esbuildConfigs/rebuildPlugin.js";
-import { ITestconfigV2, } from "../../../Types.js";
+import { ITestconfigV2 } from "../../types.js";
+
 
 const absoluteBundlesDir = (): string => {
   return "./testeranto/bundles/allTests/node/";

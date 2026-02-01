@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_mjs_1 = require("./index.mjs");
+const index_js_1 = require("./index.js");
 const BaseGiven_1 = require("./BaseGiven");
 const BaseSuite_1 = require("./BaseSuite");
 const BaseThen_1 = require("./BaseThen");
@@ -11,7 +11,7 @@ class BaseTiposkripto {
         this.totalTests = 0;
         this.artifacts = [];
         this.testResourceConfiguration = testResourceConfiguration;
-        const fullAdapter = (0, index_mjs_1.DefaultAdapter)(testAdapter);
+        const fullAdapter = (0, index_js_1.DefaultAdapter)(testAdapter);
         if (!testImplementation.suites ||
             typeof testImplementation.suites !== "object") {
             throw new Error(`testImplementation.suites must be an object, got ${typeof testImplementation.suites}: ${JSON.stringify(testImplementation.suites)}`);

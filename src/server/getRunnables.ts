@@ -1,5 +1,5 @@
 import path from "path";
-import { IRunnables } from "../lib/tiposkripto/src/index.mjs";
+import { IRunnables } from "../lib/tiposkripto/src/index.js";
 import { ITestconfig } from "../Types";
 
 export const getRunnables = (

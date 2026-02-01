@@ -1,24 +1,15 @@
-import { ITestResourceConfiguration } from "./lib/tiposkripto/src/index.mjs";
-import { BaseGiven, IGivens } from "./lib/tiposkripto/BaseGiven";
-import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
-import { BaseThen } from "./lib/tiposkripto/BaseThen";
-import { BaseWhen } from "./lib/tiposkripto/BaseWhen";
+import { BaseGiven } from "./lib/tiposkripto/src/BaseGiven";
+import { BaseThen } from "./lib/tiposkripto/src/BaseThen";
+import { BaseWhen } from "./lib/tiposkripto/src/BaseWhen";
 import { Ibdd_in_any, Ibdd_out_any } from "./lib/tiposkripto/src/CoreTypes";
+import { ITestResourceConfiguration } from "./lib/tiposkripto/src/types";
 export type IChecks = ((x: any) => string)[];
-export type ISummary = Record<string, {
-    runTimeTests: number | "?" | undefined;
-    runTimeErrors: number | "?" | undefined;
-    typeErrors: number | "?" | undefined;
-    staticErrors: number | "?" | undefined;
-    prompt: string | "?" | undefined;
-    failingFeatures: object | undefined;
-}> & {
-    nodeLogs?: string;
-    webLogs?: string;
-    pureLogs?: string;
-};
-export type SuiteSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
-    [K in keyof O["suites"]]: (name: string, givens: IGivens<I>) => BaseSuite<I, O>;
+export type IBaseTestConfig = {
+    runtime: string;
+    tests: string[];
+    dockerfile: string;
+    buildOptions: string;
+    checks: IChecks;
 };
 export type TestSummary = {
     testName: string;
@@ -70,18 +61,3 @@ export type IRunTime = `node` | `web` | `golang` | `python` | `ruby` | `java` | 
 export type ITestTypes = [string, IRunTime, {
     ports: number;
 }, ITestTypes[]];
-export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
-export type IBaseTestConfig = {
-    runtime: string;
-    tests: string[];
-    dockerfile: string;
-    buildOptions: string;
-    checks: IChecks;
-};
-export type ITestconfigV2Node = IBaseTestConfig & {
-    plugins: any[];
-};
-export type ITestconfigV2 = {
-    featureIngestor: (s: string) => Promise<string>;
-    runtimes: Record<string, IBaseTestConfig>;
-};
