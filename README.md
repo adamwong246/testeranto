@@ -9,6 +9,15 @@ In more conrete terms, testeranto is
 - a VS code extension
 - integrates static tests, unit tests, integration tests and source code into focused Aider sessions.
 - turns github issues, BDD specs and markdown documentation into packaged artifacts and human readable test reports.
+- a library of code split across 7 packages
+
+1) testeranto (the server) npm - https://www.npmjs.com/package/testeranto
+2) tiposkripto (ts) npm
+3) rusto  (rust) cargo
+4) pitono (python) pypi
+5) golingvu (go) TBD
+6) kafe (java) TBD
+7) rubeno (ruby ) rubygems - https://rubygems.org/gems/rubeno
 
 ## Philosophy
 
