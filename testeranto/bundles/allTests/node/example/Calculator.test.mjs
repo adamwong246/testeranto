@@ -5,7 +5,7 @@ import {
 // src/lib/tiposkripto/Tiposkripto.ts
 var tpskrt;
 if (true) {
-  tpskrt = await import("../Node-JOOBJDHW.mjs");
+  tpskrt = await import("../Node-MSIIDKGC.mjs");
 } else if (false) {
   tpskrt = await null;
 } else {
@@ -24,11 +24,9 @@ var Tiposkripto_default = async (input, testSpecification, testImplementation, t
 
 // example/Calculator.ts
 var Calculator = class {
-  constructor() {
-    this.display = "";
-    this.values = {};
-    this.id = Math.random();
-  }
+  display = "";
+  values = {};
+  id = Math.random();
   // Add a unique ID to track instances
   // press(button: string): Calculator {
   //   this.display = this.display + button;

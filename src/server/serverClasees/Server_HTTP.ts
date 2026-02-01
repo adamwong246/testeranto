@@ -13,7 +13,7 @@ import { IMode } from "../types";
 import { CONTENT_TYPES, getContentType } from "../serverManagers/tcp";
 import { HttpManager } from "../serverManagers/HttpManager";
 import { Server_Base } from "./Server_Base";
-import { IConfig } from "../../Types";
+import { ITestconfigV2 } from "../../Types";
 
 export abstract class Server_HTTP extends Server_Base {
 
@@ -21,7 +21,7 @@ export abstract class Server_HTTP extends Server_Base {
   protected httpServer: http.Server;
   routes: any;
 
-  constructor(configs: IConfig, mode: IMode) {
+  constructor(configs: ITestconfigV2, mode: IMode) {
     super(configs, mode);
     // this.http = new HttpManager();
     this.httpServer = http.createServer();

@@ -3,25 +3,32 @@ import featuresPlugin from "../../../esbuildConfigs/featuresPlugin.js";
 import baseEsBuildConfig from "../../../esbuildConfigs/index.js";
 import inputFilesPlugin from "../../../esbuildConfigs/inputFilesPlugin.js";
 import rebuildPlugin from "../../../esbuildConfigs/rebuildPlugin.js";
-import { ITestconfig } from "../../../Types.js";
+import { ITestconfigV2, } from "../../../Types.js";
 
-const absoluteBundlesDir = (c: ITestconfig): string => {
+const absoluteBundlesDir = (): string => {
   return "./testeranto/bundles/allTests/node/";
 };
 
 export default (
-  config: ITestconfig,
-  testName: string
+  nodeConfig: object,
+  testName: string,
+  projectConfig: ITestconfigV2
 ): BuildOptions => {
+
+  console.log("esbuild", testName, projectConfig)
+
+  const entryPoints = projectConfig.runtimes[testName].tests;
   // Get entry points from config, or use a default
-  let entrypoints: string[] = [];
-  if (config.node?.tests) {
-    entrypoints = Object.keys(config.node.tests);
-  } else {
-    // Fallback to a reasonable default
-    entrypoints = ["./example/Calculator.test.ts"];
-    console.warn(`No node.tests found in config, using default entry point: ${entrypoints[0]}`);
-  }
+  // let entrypoints: string[] = [];
+  // if (nodeConfig) {
+  //   entrypoints = (projectConfig.tests);
+  // } else {
+  //   // console.log(projectConfig)
+  //   throw "projectConfig.node.tests should exist"
+  //   // Fallback to a reasonable default
+  //   // entrypoints = ["./example/Calculator.test.ts"];
+  //   // console.warn(`No node.tests found in config, using default entry point: ${entrypoints[0]}`);
+  // }
 
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "node",
@@ -29,9 +36,9 @@ export default (
   );
 
   return {
-    ...baseEsBuildConfig(config),
+    ...baseEsBuildConfig(nodeConfig),
 
-    outdir: absoluteBundlesDir(config),
+    outdir: absoluteBundlesDir(),
     outbase: ".", // Preserve directory structure relative to outdir
     metafile: true,
     supported: {
@@ -51,12 +58,12 @@ export default (
 
     packages: "external",
 
-    entryPoints: entrypoints,
+    entryPoints,
     plugins: [
       featuresPlugin,
       inputFilesPluginFactory,
       rebuildPlugin("node"),
-      ...(config.node?.plugins?.map((p) => p(register, entrypoints)) || []),
+      ...(nodeConfig.plugins?.map((p) => p(register, entryPoints)) || []),
     ],
   };
 };

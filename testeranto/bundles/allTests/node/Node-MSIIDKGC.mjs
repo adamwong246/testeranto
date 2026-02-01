@@ -8,15 +8,19 @@ import fs from "fs";
 
 // src/lib/tiposkripto/BaseGiven.ts
 var BaseGiven = class {
-  constructor(features, whens, thens, givenCB, initialValues) {
-    this.artifacts = [];
-    this.features = features;
-    this.whens = whens;
-    this.thens = thens;
-    this.givenCB = givenCB;
-    this.initialValues = initialValues;
-    this.fails = 0;
-  }
+  features;
+  whens;
+  thens;
+  error;
+  fail;
+  store;
+  recommendedFsPath;
+  givenCB;
+  initialValues;
+  key;
+  failed;
+  artifacts = [];
+  status;
   addArtifact(path) {
     if (typeof path !== "string") {
       throw new Error(
@@ -27,6 +31,14 @@ var BaseGiven = class {
     }
     const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
+  }
+  constructor(features, whens, thens, givenCB, initialValues) {
+    this.features = features;
+    this.whens = whens;
+    this.thens = thens;
+    this.givenCB = givenCB;
+    this.initialValues = initialValues;
+    this.fails = 0;
   }
   beforeAll(store) {
     return store;
@@ -105,17 +117,14 @@ var BaseGiven = class {
 
 // src/lib/tiposkripto/BaseSuite.ts
 var BaseSuite = class {
-  constructor(name, index, givens = {}) {
-    this.artifacts = [];
-    const suiteName = name || "testSuite";
-    if (!suiteName) {
-      throw new Error("BaseSuite requires a non-empty name");
-    }
-    this.name = suiteName;
-    this.index = index;
-    this.givens = givens;
-    this.fails = 0;
-  }
+  name;
+  givens;
+  store;
+  testResourceConfiguration;
+  index;
+  failed;
+  fails;
+  artifacts = [];
   addArtifact(path) {
     if (typeof path !== "string") {
       throw new Error(
@@ -126,6 +135,16 @@ var BaseSuite = class {
     }
     const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
+  }
+  constructor(name, index, givens = {}) {
+    const suiteName = name || "testSuite";
+    if (!suiteName) {
+      throw new Error("BaseSuite requires a non-empty name");
+    }
+    this.name = suiteName;
+    this.index = index;
+    this.givens = givens;
+    this.fails = 0;
   }
   features() {
     try {
@@ -214,8 +233,12 @@ var BaseSuite = class {
 
 // src/lib/tiposkripto/BaseThen.ts
 var BaseThen = class {
+  name;
+  thenCB;
+  error;
+  artifacts = [];
+  status;
   constructor(name, thenCB) {
-    this.artifacts = [];
     this.name = name;
     this.thenCB = thenCB;
     this.error = false;
@@ -274,11 +297,11 @@ var BaseThen = class {
 
 // src/lib/tiposkripto/BaseWhen.ts
 var BaseWhen = class {
-  constructor(name, whenCB) {
-    this.artifacts = [];
-    this.name = name;
-    this.whenCB = whenCB;
-  }
+  name;
+  whenCB;
+  error;
+  artifacts = [];
+  status;
   addArtifact(path) {
     if (typeof path !== "string") {
       throw new Error(
@@ -289,6 +312,10 @@ var BaseWhen = class {
     }
     const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
+  }
+  constructor(name, whenCB) {
+    this.name = name;
+    this.whenCB = whenCB;
   }
   toObj() {
     const obj = {
@@ -320,9 +347,18 @@ ${this.error.stack}` : null,
 
 // src/lib/tiposkripto/BaseTiposkripto.ts
 var BaseTiposkripto = class {
+  totalTests = 0;
+  artifacts = [];
+  assertThis;
+  givenOverrides;
+  specs;
+  suitesOverrides;
+  testJobs;
+  testResourceRequirement;
+  testSpecification;
+  thenOverrides;
+  whenOverrides;
   constructor(webOrNode, input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter = {}, testResourceConfiguration, wsPort = "3456", wsHost = "localhost") {
-    this.totalTests = 0;
-    this.artifacts = [];
     this.testResourceConfiguration = testResourceConfiguration;
     const fullAdapter = DefaultAdapter(testAdapter);
     if (!testImplementation.suites || typeof testImplementation.suites !== "object") {

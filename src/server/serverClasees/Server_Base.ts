@@ -1,26 +1,27 @@
-import { IBuiltConfig, IConfig } from "../../Types";
+
+import { ITestconfigV2 } from "../../Types";
 import { IMode } from "../types";
 
 export abstract class Server_Base {
   mode: IMode;
-  configs: IConfig;
+  configs: ITestconfigV2;
 
 
-  constructor(configs: IConfig, mode: IMode) {
+  constructor(configs: ITestconfigV2, mode: IMode) {
     this.configs = configs;
     this.mode = mode;
+
+    console.log(`[Base] ${this.configs}`)
 
   }
 
   async start() {
-    console.log(`[Server_Base] start()`)
-
+    // console.log(`[Server_Base] start()`)
   }
 
   async stop() {
     console.log(`[Server_Base] stop()`)
     process.exit()
-
   }
 
 

@@ -5,7 +5,7 @@ import yaml from "js-yaml";
 import path from "path";
 import { promisify } from "util";
 import { RUN_TIMES } from "../../runtimes";
-import { IConfig, IRunTime } from "../../Types";
+import { ITestconfigV2, IRunTime } from "../../Types";
 import { golangBddCommand, golangBuildCommand, golangDockerComposeFile } from "../runtimes/golang/docker";
 import { javaBddCommand, javaBuildCommand, javaDockerComposeFile } from "../runtimes/java/docker";
 import { nodeBddCommand, nodeBuildCommand, nodeDockerComposeFile } from "../runtimes/node/docker";
@@ -28,7 +28,7 @@ export interface IDockerComposeResult {
 export class Server_Docker extends Server_WS {
   private logProcesses: Map<string, { process: any; serviceName: string }> = new Map();
 
-  constructor(configs: IConfig, mode: IMode) {
+  constructor(configs: ITestconfigV2, mode: IMode) {
     super(configs, mode);
   }
 
@@ -49,19 +49,18 @@ export class Server_Docker extends Server_WS {
   }
 
   staticTestDockerComposeFile(runtime: IRunTime, container_name: string, command: string) {
-
     // Find the dockerfile path from configs
     let dockerfilePath = '';
-    for (const [key, value] of this.configs.entries()) {
-      if (value[0] === runtime) {
-        dockerfilePath = value[1];
+    for (const [key, value] of Object.entries(this.configs.runtimes)) {
+      if (value.runtime === runtime) {
+        dockerfilePath = value.dockerfile;
         break;
       }
     }
 
     // If no dockerfile found, use a default based on runtime
     if (!dockerfilePath) {
-      throw (`no dockerfile found for ${dockerfilePath}`)
+      throw (`[Docker] [staticTestDockerComposeFile] no dockerfile found for ${dockerfilePath}, ${Object.entries(this.configs)}`)
     }
 
     return {
@@ -83,16 +82,16 @@ export class Server_Docker extends Server_WS {
   bddTestDockerComposeFile(runtime: IRunTime, container_name: string, command: string) {
     // Find the dockerfile path from configs
     let dockerfilePath = '';
-    for (const [key, value] of this.configs.entries()) {
-      if (value[0] === runtime) {
-        dockerfilePath = value[1];
+    for (const [key, value] of Object.entries(this.configs.runtimes)) {
+      if (value.runtime === runtime) {
+        dockerfilePath = value.dockerfile;
         break;
       }
     }
 
     // If no dockerfile found, use a default based on runtime
     if (!dockerfilePath) {
-      throw (`no dockerfile found for ${dockerfilePath}`)
+      throw (`[Docker] [bddTestDockerComposeFile] no dockerfile found for ${dockerfilePath}, ${Object.entries(this.configs)}`)
     }
 
     const service: any = {
@@ -141,6 +140,7 @@ export class Server_Docker extends Server_WS {
   ): Record<string, any> {
     const services: IService = {};
 
+    console.log("mark1")
     // // Add browser service
     // services['browser'] = {
 
@@ -172,12 +172,14 @@ export class Server_Docker extends Server_WS {
 
     const runTimeToCompose: Record<IRunTime, [
       (
-        config: IConfig,
+        config: ITestconfigV2,
         container_name: string,
-        fpath: string
+        projectConfigPath: string,
+        nodeConfigPath: string,
+        testName: string
       ) => object,
 
-      (fpath: string) => string,
+      (projectConfig: string, nodeConfigPath: string, testname: string) => string,
       (fpath: string) => string,
     ]> = {
       'node': [nodeDockerComposeFile, nodeBuildCommand, nodeBddCommand],
@@ -189,67 +191,90 @@ export class Server_Docker extends Server_WS {
       "java": [javaDockerComposeFile, javaBuildCommand, javaBddCommand]
     };
 
+    console.log('345', Object.entries(this.configs.runtimes))
     // Iterate through each entry in the config Map
-    for (const [runtimeTestsName, runtimeTests] of this.configs.entries()) {
-      const runtime: IRunTime = runtimeTests[0];
-      const dockerfile = runtimeTests[1];
-      const runtimeConfig = runtimeTests[2];
-      const testsObj = runtimeTests[3];
+    for (const [runtimeTestsName, runtimeTests] of Object.entries(this.configs.runtimes)) {
 
-      const buildCommand = runTimeToCompose[runtime][1](runtimeConfig)
+      console.log('654', [runtimeTestsName, runtimeTests])
 
-      if (RUN_TIMES.includes(runtime)) {
-        // Add builder service for this runtime
-        const builderServiceName = `${runtime}-builder`;
+      const runtime: IRunTime = runtimeTests.runtime as IRunTime;
+      const dockerfile = runtimeTests.dockerfile;
+      const buildOptions = runtimeTests.buildOptions;
+      const testsObj = runtimeTests.tests
 
-        // Ensure dockerfile path is valid and exists
-        let dockerfilePath = dockerfile;
-        const fullDockerfilePath = path.join(process.cwd(), dockerfilePath);
-        if (!fs.existsSync(fullDockerfilePath)) {
-          throw (`[Server_Docker] Dockerfile not found at ${fullDockerfilePath}`);
+      console.log('456', runTimeToCompose, runtimeTests)
+
+      // loop over all suites which are of the right runtime
+      for (const [t, c] of Object.entries(this.configs.runtimes)) {
+        if (c.runtime === runtime) {
+          if (RUN_TIMES.includes(runtime)) {
+            console.log('666', runtimeTestsName)
+            const buildCommand = runTimeToCompose[runtime][1](
+              buildOptions,
+              c.buildOptions,
+              runtimeTestsName
+            )
+
+            // Add builder service for this runtime
+            const builderServiceName = `${runtime}-builder`;
+
+            // Ensure dockerfile path is valid and exists
+            let dockerfilePath = dockerfile;
+            const fullDockerfilePath = path.join(process.cwd(), dockerfilePath);
+            if (!fs.existsSync(fullDockerfilePath)) {
+              throw (`[Server_Docker] Dockerfile not found at ${fullDockerfilePath}`);
+
+            }
+
+            services[builderServiceName] = {
+              build: {
+                context: process.cwd(),
+                dockerfile: dockerfilePath,
+              },
+              container_name: builderServiceName,
+              environment: {},
+              working_dir: "/workspace",
+              volumes: [
+                `${process.cwd()}/src:/workspace/src`,
+                `${process.cwd()}/example:/workspace/example`,
+                `${process.cwd()}/dist:/workspace/dist`,
+                `${process.cwd()}/testeranto:/workspace/testeranto`,
+              ],
+              command: buildCommand,
+              networks: ["allTests_network"],
+            };
+
+          } else {
+            throw `unknown runtime ${runtime}`;
+          }
 
         }
-
-        services[builderServiceName] = {
-          build: {
-            context: process.cwd(),
-            dockerfile: dockerfilePath,
-          },
-          container_name: builderServiceName,
-          environment: {},
-          working_dir: "/workspace",
-          volumes: [
-            `${process.cwd()}/src:/workspace/src`,
-            `${process.cwd()}/example:/workspace/example`,
-            `${process.cwd()}/dist:/workspace/dist`,
-            `${process.cwd()}/testeranto:/workspace/testeranto`,
-          ],
-          command: buildCommand,
-          networks: ["allTests_network"],
-        };
-
-      } else {
-        throw `unknown runtime ${runtime}`;
       }
 
-      const testEntries = testsObj.tests.map(test => {
-        if (typeof test === 'string') {
-          return { name: test, config: {} };
-        } else if (test && typeof test === 'object') {
-          return {
-            name: test.name || test.testName || 'unknown',
-            config: test
-          };
-        } else {
-          return { name: String(test), config: {} };
-        }
-      });
 
-      for (const { name: testName, config: testConfig } of testEntries) {
+
+
+
+
+
+      // const testEntries = testsObj.map(test => {
+      //   if (typeof test === 'string') {
+      //     return { name: test, config: {} };
+      //   } else if (test && typeof test === 'object') {
+      //     return {
+      //       name: test.name || test.testName || 'unknown',
+      //       config: test
+      //     };
+      //   } else {
+      //     return { name: String(test), config: {} };
+      //   }
+      // });
+
+      for (const tName of testsObj) {
         // Clean the test name for use in container names
         // Handle numeric test names (like '0') by converting to string
-        const testNameStr = String(testName);
-        const cleanTestName = testNameStr.toLowerCase()
+        // const testNameStr = String(testName);
+        const cleanTestName = tName.toLowerCase()
           .replaceAll("/", "_")
           .replaceAll(".", "-")
           .replace(/[^a-z0-9_-]/g, '');
@@ -262,10 +287,7 @@ export class Server_Docker extends Server_WS {
         // TODO find filepath
         // const filePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb"
 
-        console.log("mark8", testName)
-        const filePath = `testeranto/bundles/allTests/${runtime}/${testName}`
-        console.log("mark4", filePath)
-
+        const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`
         const command = bddCommandFunc(filePath)
 
         // // Determine the file path to pass to bddCommandFunc
@@ -359,7 +381,7 @@ ${x}
   //   return false;
   // }
 
-  private async startServiceLogging(serviceName: string, containerName: string, runtime: string, testName: string): Promise<void> {
+  private async startServiceLogging(serviceName: string, runtime: string): Promise<void> {
     // Create report directory
     const reportDir = path.join(
       process.cwd(),
@@ -530,6 +552,11 @@ ${x}
       console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
       try {
         await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${serviceName}`);
+        this.startServiceLogging(serviceName, runtime)
+          .catch(error => console.error(`[Server_Docker] Failed to start logging for ${serviceName}:`, error));
+        this.captureExistingLogs(serviceName, runtime)
+
+
       } catch (error: any) {
         console.error(`[Server_Docker] Failed to start ${serviceName}: ${error.message}`);
       }
@@ -548,10 +575,10 @@ ${x}
     await this.waitForContainerHealthy('browser-allTests', 60000); // 60 seconds max
 
     // Start aider services
-    for (const [configKey, configValue] of this.configs.entries()) {
-      const runtime = configValue[0];
-      const testsObj = configValue[3];
-      const tests = testsObj?.tests || {};
+    for (const [configKey, configValue] of Object.entries(this.configs.runtimes)) {
+      const runtime = configValue.runtime
+      // const testsObj = configValue[3];
+      const tests = configValue.tests
 
       console.log(`[Server_Docker] Found tests for ${runtime}:`, (JSON.stringify(tests)));
 
@@ -564,8 +591,11 @@ ${x}
         try {
           await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${aiderServiceName}`);
           // Start logging for aider services
-          this.startServiceLogging(aiderServiceName, aiderServiceName, runtime, testName)
+          this.startServiceLogging(aiderServiceName, runtime)
             .catch(error => console.error(`[Server_Docker] Failed to start logging for ${aiderServiceName}:`, error));
+
+          this.captureExistingLogs(aiderServiceName, runtime)
+            .catch(error => console.error(`[Server_Docker] Failed to capture existing logs for ${aiderServiceName}:`, error));
         } catch (error: any) {
           console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
         }
@@ -574,10 +604,17 @@ ${x}
 
     // Start BDD test services
     // TODO these logs  from these services should be saved into reports
-    for (const [configKey, configValue] of this.configs.entries()) {
-      const runtime = configValue[0];
-      const testsObj = configValue[3];
-      const tests = testsObj?.tests || {};
+    for (const [configKey, configValue] of Object.entries(this.configs.runtimes)) {
+
+      const runtime = configValue.runtime
+      // const testsObj = configValue[3];
+      const tests = configValue.tests
+
+      console.log(`[Server_Docker] Found tests for ${runtime}:`, (JSON.stringify(tests)));
+
+      // const runtime = configValue[0];
+      // const testsObj = configValue[3];
+      // const tests = testsObj?.tests || {};
 
       for (const testName of tests) {
         const uid = `${configKey}-${testName.toLowerCase().replaceAll("/", "_").replaceAll(".", "-")}`;
@@ -590,16 +627,16 @@ ${x}
 
           // Immediately start logging in the background
           // Don't wait for it to complete
-          this.startServiceLogging(bddServiceName, bddServiceName, runtime, testName)
+          this.startServiceLogging(bddServiceName, runtime)
             .catch(error => console.error(`[Server_Docker] Failed to start logging for ${bddServiceName}:`, error));
 
           // Also capture any existing logs from the container (in case it already produced output)
-          this.captureExistingLogs(bddServiceName, runtime, testName)
+          this.captureExistingLogs(bddServiceName, runtime)
             .catch(error => console.error(`[Server_Docker] Failed to capture existing logs for ${bddServiceName}:`, error));
         } catch (error: any) {
           console.error(`[Server_Docker] Failed to start ${bddServiceName}: ${error.message}`);
           // Even if starting failed, try to capture any logs that might exist
-          this.captureExistingLogs(bddServiceName, runtime, testName)
+          this.captureExistingLogs(bddServiceName, runtime)
             .catch(err => console.error(`[Server_Docker] Also failed to capture logs:`, err));
         }
       }
@@ -607,7 +644,7 @@ ${x}
 
     // Start static test services
     // TODO these logs  from these services should be saved into reports
-    for (const [configKey, configValue] of this.configs.entries()) {
+    for (const [configKey, configValue] of Object.entries(this.configs)) {
       const runtime = configValue[0];
       const testsObj = configValue[3];
       const tests = testsObj?.tests || {};
@@ -621,16 +658,16 @@ ${x}
           try {
             await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${staticServiceName}`);
             // Start logging for this service
-            this.startServiceLogging(staticServiceName, staticServiceName, runtime, testName)
+            this.startServiceLogging(staticServiceName, runtime)
               .catch(error => console.error(`[Server_Docker] Failed to start logging for ${staticServiceName}:`, error));
 
             // Also capture any existing logs
-            this.captureExistingLogs(staticServiceName, runtime, testName)
+            this.captureExistingLogs(staticServiceName, runtime)
               .catch(error => console.error(`[Server_Docker] Failed to capture existing logs for ${staticServiceName}:`, error));
           } catch (error: any) {
             console.error(`[Server_Docker] Failed to start ${staticServiceName}: ${error.message}`);
             // Try to capture logs even if starting failed
-            this.captureExistingLogs(staticServiceName, runtime, testName)
+            this.captureExistingLogs(staticServiceName, runtime)
               .catch(err => console.error(`[Server_Docker] Also failed to capture logs:`, err));
           }
         }
@@ -638,7 +675,7 @@ ${x}
     }
   }
 
-  private async captureExistingLogs(serviceName: string, runtime: string, testName: string): Promise<void> {
+  private async captureExistingLogs(serviceName: string, runtime: string): Promise<void> {
     // Create report directory
     const reportDir = path.join(
       process.cwd(),

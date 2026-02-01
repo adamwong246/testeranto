@@ -24,3 +24,4 @@ testeranto/reports/allTests/docker-logs/**/*
 .vscode-test/
 out/
 !dist/vscode/extension.js
+testeranto/reports

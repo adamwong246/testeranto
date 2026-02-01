@@ -1,6 +1,8 @@
-import { IConfig } from "../../../Types";
+import { ITestconfigV2 } from "../../../Types";
 
-export const nodeDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
+export const nodeDockerComposeFile = (
+  config: ITestconfigV2, container_name: string, projectConfigPath: string, nodeConfigPath: string, testName: string
+) => {
   return {
     build: {
       context: process.cwd(),
@@ -18,21 +20,25 @@ export const nodeDockerComposeFile = (config: IConfig, container_name: string, f
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: nodeBuildCommand(fpath),
+    command: nodeBuildCommand(projectConfigPath, nodeConfigPath, testName),
   }
 
 };
 
-const externalTests = true;
+const externalTests = false;
 
-export const nodeBuildCommand = (fpath: string) => {
+export const nodeBuildCommand = (projectConfigPath: string, nodeConfigPath: string, testName: string) => {
 
-  if (false) {
-    console.log("external tests")
-    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  if (externalTests) {
+    console.log("external tests", testName)
+    // return `cat node_modules/testeranto/src/server/runtimes/node/esbuild.ts`
+    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts ${nodeConfigPath} ${testName}`;
+    // return `cat node_modules/testeranto/src/server/runtimes/node/node.ts`
+    // return ["sh", "-c", "cd /workspace && javac -cp \".:lib/*\" src/server/runtimes/java/main.java && java -cp \"src/server/runtimes/java:.\" main"]
   } else {
     console.log("not external tests")
-    return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+    // return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+    return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/${nodeConfigPath} ${testName}`;
   }
 
 }

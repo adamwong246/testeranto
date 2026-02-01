@@ -1,8 +1,9 @@
 import fs from "fs";
 import readline from "readline";
-import { IBuiltConfig, IConfig } from "../../Types";
+
 import { IMode } from "../types";
 import { Server_Docker } from "./Server_Docker";
+import { ITestconfigV2 } from "../../Types";
 
 console.log("hello server")
 
@@ -10,7 +11,7 @@ readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 export class Server extends Server_Docker {
-  constructor(configs: IConfig, mode: IMode) {
+  constructor(configs: ITestconfigV2, mode: IMode) {
     super(configs, mode);
     console.log(("[Server] Press 'q' to initiate a graceful shutdown."));
     console.log(("[Server] Press 'CTRL + c' to quit forcefully."));

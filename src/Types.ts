@@ -1,9 +1,9 @@
-import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes";
 import { ITestResourceConfiguration } from "./lib/tiposkripto";
-import { IGivens, BaseGiven } from "./lib/tiposkripto/BaseGiven";
+import { BaseGiven, IGivens } from "./lib/tiposkripto/BaseGiven";
 import { BaseSuite } from "./lib/tiposkripto/BaseSuite";
 import { BaseThen } from "./lib/tiposkripto/BaseThen";
 import { BaseWhen } from "./lib/tiposkripto/BaseWhen";
+import { Ibdd_in_any, Ibdd_out_any } from "./lib/tiposkripto/CoreTypes";
 
 export type IChecks = ((x: any) => string)[];
 
@@ -175,76 +175,139 @@ export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
 export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
 
-export type ITestconfig = {
-  httpPort: number;
+export type IBaseTestConfig = {
+  runtime: string;
+  tests: string[];
+  dockerfile: string;
+  buildOptions: string,
+  checks: IChecks;
+}
 
+export type ITestconfigV2Node = IBaseTestConfig & { plugins: any[] }
+
+export type ITestconfigV2 = {
   featureIngestor: (s: string) => Promise<string>;
-  importPlugins: IPluginFactory[];
-  ports: string[];
-  src: string;
-  check: string;
+
+  runtimes: Record<string, IBaseTestConfig>
+
+  // java?: IBaseTestConfig;
 
 
-  java: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
+  // rust?: IBaseTestConfig;
 
+  // ruby: {
+  //   plugins: any[];
+  //   tests: Record<string, { ports: number }>;
+  //   loaders: Record<string, string>;
+  //   checks: IChecks;
+  //   dockerfile: string;
+  // };
 
-  rust: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
+  // golang: {
+  //   plugins: any[];
+  //   tests: Record<string, { ports: number }>;
+  //   loaders: Record<string, string>;
+  //   checks: IChecks;
+  //   dockerfile: string;
+  // };
 
-  ruby: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
+  // python: {
+  //   plugins: any[];
+  //   tests: Record<string, { ports: number }>;
+  //   loaders: Record<string, string>;
+  //   checks: IChecks;
+  //   dockerfile: string;
+  // };
 
-  golang: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
+  // node: {
+  //   plugins: any[];
+  //   tests: Record<string, { ports: number }>;
+  //   loaders: Record<string, string>;
+  //   externals: string[];
+  //   checks: IChecks;
+  //   dockerfile: string;
+  // };
 
-  python: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    checks: IChecks;
-    dockerfile: string;
-  };
-
-  node: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    externals: string[];
-    checks: IChecks;
-    dockerfile: string;
-  };
-
-  web: {
-    plugins: any[];
-    tests: Record<string, { ports: number }>;
-    loaders: Record<string, string>;
-    externals: string[];
-    checks: IChecks;
-    dockerfile: string;
-  };
+  // web: {
+  //   plugins: any[];
+  //   tests: Record<string, { ports: number }>;
+  //   loaders: Record<string, string>;
+  //   externals: string[];
+  //   checks: IChecks;
+  //   dockerfile: string;
+  // };
 };
 
-export type IBuiltConfig = { buildDir: string } & ITestconfig;
+// export type ITestconfig = {
+//   httpPort: number;
 
-export type IConfig = Map<string, [IRunTime, string, string, { tests: string[] }]>
+//   featureIngestor: (s: string) => Promise<string>;
+//   importPlugins: IPluginFactory[];
+//   ports: string[];
+//   src: string;
+//   check: string;
+
+
+//   java: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+
+
+//   rust: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+
+//   ruby: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+
+//   golang: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+
+//   python: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+
+//   node: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     externals: string[];
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+
+//   web: {
+//     plugins: any[];
+//     tests: Record<string, { ports: number }>;
+//     loaders: Record<string, string>;
+//     externals: string[];
+//     checks: IChecks;
+//     dockerfile: string;
+//   };
+// };
+
+// export type IBuiltConfig = { buildDir: string } & ITestconfig;
+
+// export type IConfig = Map<string, [IRunTime, string, string, { tests: string[] }]>

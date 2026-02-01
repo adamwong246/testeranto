@@ -1,6 +1,6 @@
-import { IBuiltConfig, IConfig } from "../../../Types";
+import { ITestconfigV2 } from "../../../Types";
 
-export const golangDockerComposeFile = (config: IConfig, container_name: string): object => {
+export const golangDockerComposeFile = (config: ITestconfigV2, container_name: string): object => {
 
   return {
     build: {

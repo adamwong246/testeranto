@@ -4,14 +4,14 @@ import { WebSocket, WebSocketServer } from "ws";
 import { WsManager } from "../serverManagers/WsManager";
 import { IMode } from "../types";
 import { Server_HTTP } from "./Server_HTTP";
-import { IConfig } from "../../Types";
+import { ITestconfigV2 } from "../../Types";
 
 export class Server_WS extends Server_HTTP {
   protected ws: WebSocketServer;
   protected wsClients: Set<WebSocket> = new Set();
   wsManager: WsManager
 
-  constructor(configs: IConfig, mode: IMode) {
+  constructor(configs: ITestconfigV2, mode: IMode) {
     super(configs, mode);
 
     this.ws = new WebSocketServer({
