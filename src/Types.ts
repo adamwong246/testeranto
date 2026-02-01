@@ -4,6 +4,11 @@ import { BaseWhen } from "./lib/tiposkripto/src/BaseWhen";
 import { Ibdd_in_any, Ibdd_out_any } from "./lib/tiposkripto/src/CoreTypes";
 import { ITestResourceConfiguration } from "./lib/tiposkripto/src/types";
 
+export type ITestconfigV2 = {
+  featureIngestor: (s: string) => Promise<string>;
+  runtimes: Record<string, IBaseTestConfig>
+};
+
 export type IChecks = ((x: any) => string)[];
 
 export type IBaseTestConfig = {
@@ -14,7 +19,6 @@ export type IBaseTestConfig = {
   checks: IChecks;
 }
 
-// Simplified test result summary
 export type TestSummary = {
   testName: string;
   errors?: {

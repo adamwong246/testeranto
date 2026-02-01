@@ -1,7 +1,11 @@
 import { ITestconfigV2 } from "../../types";
 
 export const nodeDockerComposeFile = (
-  config: ITestconfigV2, container_name: string, projectConfigPath: string, nodeConfigPath: string, testName: string
+  config: ITestconfigV2,
+  container_name: string,
+  projectConfigPath: string,
+  nodeConfigPath: string,
+  testName: string
 ) => {
   return {
     build: {
@@ -22,24 +26,25 @@ export const nodeDockerComposeFile = (
     ],
     command: nodeBuildCommand(projectConfigPath, nodeConfigPath, testName),
   }
-
 };
 
-const externalTests = true;
+
 
 export const nodeBuildCommand = (projectConfigPath: string, nodeConfigPath: string, testName: string) => {
 
-  if (externalTests) {
-    console.log("external tests", testName)
-    // return `cat node_modules/testeranto/src/server/runtimes/node/esbuild.ts`
-    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
-    // return `cat node_modules/testeranto/src/server/runtimes/node/node.ts`
-    // return ["sh", "-c", "cd /workspace && javac -cp \".:lib/*\" src/server/runtimes/java/main.java && java -cp \"src/server/runtimes/java:.\" main"]
-  } else {
-    console.log("not external tests")
-    // return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
-    return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/${nodeConfigPath} ${testName}`;
-  }
+  return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
+  // const externalTests = true;
+  // if (externalTests) {
+  //   console.log("external tests", testName)
+  //   // return `cat node_modules/testeranto/src/server/runtimes/node/esbuild.ts`
+  // return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;  
+  //   // return `cat node_modules/testeranto/src/server/runtimes/node/node.ts`
+  //   // return ["sh", "-c", "cd /workspace && javac -cp \".:lib/*\" src/server/runtimes/java/main.java && java -cp \"src/server/runtimes/java:.\" main"]
+  // } else {
+  //   console.log("not external tests")
+  //   // return `yarn tsx src/server/runtimes/node/node.ts /workspace/${fpath}`;
+  //   return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/${nodeConfigPath} ${testName}`;
+  // }
 
 }
 

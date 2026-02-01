@@ -1,6 +1,12 @@
-import { IConfig } from "../../../Types";
+import { ITestconfigV2 } from "../../../Types";
 
-export const rubyDockerComposeFile = (config: IConfig, container_name: string, fpath: string) => {
+export const rubyDockerComposeFile = (
+  config: ITestconfigV2,
+  container_name: string,
+  projectConfigPath: string,
+  rubyConfigPath: string,
+  testName: string
+) => {
   return {
     build: {
       context: process.cwd(),
@@ -18,13 +24,12 @@ export const rubyDockerComposeFile = (config: IConfig, container_name: string, f
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`,
     ],
-    command: rubyBuildCommand(fpath),
+    command: rubyBuildCommand(projectConfigPath, rubyConfigPath, testName),
   }
 };
 
-export const rubyBuildCommand = (fpath: string) => {
-  console.log("mark 1", fpath)
-  return `ruby src/server/runtimes/ruby/ruby.rb /workspace/${fpath}`;
+export const rubyBuildCommand = (projectConfigPath: string, rubyConfigPath: string, testName: string) => {
+  return `bundle exec rubeno /workspace/testeranto/testeranto.ts /workspace/${rubyConfigPath} ${testName}`;
 }
 
 export const rubyBddCommand = (fpath: string) => {

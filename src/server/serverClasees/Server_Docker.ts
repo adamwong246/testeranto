@@ -209,6 +209,8 @@ export class Server_Docker extends Server_WS {
               runtimeTestsName
             )
 
+            console.log(`[Server_Docker] [generateServices] ${runtimeTestsName} build command: "${buildCommand}"`)
+
             // Add builder service for this runtime
             const builderServiceName = `${runtime}-builder`;
 
@@ -257,15 +259,13 @@ export class Server_Docker extends Server_WS {
               // const filePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb"
 
               const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`
-              const command = bddCommandFunc(filePath, this.configs.runtimes[runtimeTestsName].buildOptions)
-              console.log("[Server_Docker] BDD command", command)
+              const bddCommand = bddCommandFunc(filePath, this.configs.runtimes[runtimeTestsName].buildOptions)
 
-              services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
+              console.log(`[Server_Docker] [generateServices] ${runtimeTestsName} BDD command: "${bddCommand}"`)
+
+              services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, bddCommand);
               services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
             }
-
-
-
 
           } else {
             throw `unknown runtime ${runtime}`;

@@ -94,15 +94,8 @@ var nodeDockerComposeFile = (config, container_name, projectConfigPath, nodeConf
     command: nodeBuildCommand(projectConfigPath, nodeConfigPath, testName)
   };
 };
-var externalTests = true;
 var nodeBuildCommand = (projectConfigPath, nodeConfigPath, testName) => {
-  if (externalTests) {
-    console.log("external tests", testName);
-    return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
-  } else {
-    console.log("not external tests");
-    return `yarn tsx src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts  /workspace/${nodeConfigPath} ${testName}`;
-  }
+  return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
 };
 var nodeBddCommand = (fpath, nodeConfigPath) => {
   return `node ${fpath.split(".").slice(0, -1).concat("mjs").join(".")} /workspace/${nodeConfigPath}`;
@@ -139,7 +132,7 @@ var pythonBddCommand = (fpath) => {
 };
 
 // src/server/runtimes/ruby/docker.ts
-var rubyDockerComposeFile = (config, container_name, fpath) => {
+var rubyDockerComposeFile = (config, container_name, projectConfigPath, rubyConfigPath, testName) => {
   return {
     build: {
       context: process.cwd(),
@@ -157,12 +150,11 @@ var rubyDockerComposeFile = (config, container_name, fpath) => {
       `${process.cwd()}/dist:/workspace/dist`,
       `${process.cwd()}/testeranto:/workspace/testeranto`
     ],
-    command: rubyBuildCommand(fpath)
+    command: rubyBuildCommand(projectConfigPath, rubyConfigPath, testName)
   };
 };
-var rubyBuildCommand = (fpath) => {
-  console.log("mark 1", fpath);
-  return `ruby src/server/runtimes/ruby/ruby.rb /workspace/${fpath}`;
+var rubyBuildCommand = (projectConfigPath, rubyConfigPath, testName) => {
+  return `bundle exec rubeno /workspace/testeranto/testeranto.ts /workspace/${rubyConfigPath} ${testName}`;
 };
 var rubyBddCommand = (fpath) => {
   const jsonStr = JSON.stringify({ ports: [1111] });
@@ -1018,6 +1010,7 @@ var Server_Docker = class extends Server_WS {
               c.buildOptions,
               runtimeTestsName
             );
+            console.log(`[Server_Docker] [generateServices] ${runtimeTestsName} build command: "${buildCommand}"`);
             const builderServiceName = `${runtime}-builder`;
             let dockerfilePath = dockerfile;
             const fullDockerfilePath = path2.join(process.cwd(), dockerfilePath);
@@ -1046,9 +1039,9 @@ var Server_Docker = class extends Server_WS {
               const uid = `${runtimeTestsName.toLowerCase()}-${cleanTestName}`;
               const bddCommandFunc = runTimeToCompose[runtime][2];
               const filePath = `testeranto/bundles/allTests/${runtime}/${tName}`;
-              const command = bddCommandFunc(filePath, this.configs.runtimes[runtimeTestsName].buildOptions);
-              console.log("[Server_Docker] BDD command", command);
-              services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, command);
+              const bddCommand = bddCommandFunc(filePath, this.configs.runtimes[runtimeTestsName].buildOptions);
+              console.log(`[Server_Docker] [generateServices] ${runtimeTestsName} BDD command: "${bddCommand}"`);
+              services[`${uid}-bdd`] = this.bddTestDockerComposeFile(runtime, `${uid}-bdd`, bddCommand);
               services[`${uid}-aider`] = this.aiderDockerComposeFile(`${uid}-aider`);
             }
           } else {

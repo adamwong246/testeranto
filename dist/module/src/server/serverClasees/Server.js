@@ -1,0 +1,40 @@
+import fs from "fs";
+import readline from "readline";
+import { Server_Docker } from "./Server_Docker";
+console.log("hello server");
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY)
+    process.stdin.setRawMode(true);
+export class Server extends Server_Docker {
+    constructor(configs, mode) {
+        super(configs, mode);
+        console.log(("[Server] Press 'q' to initiate a graceful shutdown."));
+        console.log(("[Server] Press 'CTRL + c' to quit forcefully."));
+        process.stdin.on("keypress", async (str, key) => {
+            if (key.name === "q") {
+                console.log("Testeranto is shutting down gracefully...");
+                await this.stop();
+                process.exit(0);
+            }
+            // Handle Ctrl+C through keypress when in raw mode
+            if (key.ctrl && key.name === "c") {
+                console.log("\nForce quitting...");
+                process.exit(1);
+            }
+        });
+        process.on("SIGINT", async () => {
+            console.log("\nForce quitting...");
+            process.exit(1);
+        });
+    }
+    async start() {
+        console.log(`[Server] start()`);
+        const runtimesDir = `testeranto/runtimes/`;
+        fs.mkdirSync(runtimesDir, { recursive: true });
+        await super.start();
+    }
+    async stop() {
+        console.log(`[Server] stop()`);
+        await super.stop();
+    }
+}

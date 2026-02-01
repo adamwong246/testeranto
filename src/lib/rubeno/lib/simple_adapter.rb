@@ -1,3 +1,5 @@
+require_relative 'types'
+
 module Rubeno
   class SimpleTestAdapter
     include ITestAdapter
