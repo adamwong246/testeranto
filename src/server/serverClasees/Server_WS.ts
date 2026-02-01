@@ -1,10 +1,8 @@
-// Gives the server websocket capabilities
-
 import { WebSocket, WebSocketServer } from "ws";
+import { ITestconfigV2 } from "../../Types";
 import { WsManager } from "../serverManagers/WsManager";
 import { IMode } from "../types";
 import { Server_HTTP } from "./Server_HTTP";
-import { ITestconfigV2 } from "../../Types";
 
 export class Server_WS extends Server_HTTP {
   protected ws: WebSocketServer;

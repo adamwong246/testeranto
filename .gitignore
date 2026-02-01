@@ -24,3 +24,4 @@ testeranto/reports/allTests/docker-logs/**/*
 out/
 !dist/vscode/extension.js
 testeranto/reports
+src/lib/rusto/target

@@ -1,11 +1,8 @@
 import fs from "fs";
 import readline from "readline";
-
+import { ITestconfigV2 } from "../../Types";
 import { IMode } from "../types";
 import { Server_Docker } from "./Server_Docker";
-import { ITestconfigV2 } from "../../Types";
-
-console.log("hello server")
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);

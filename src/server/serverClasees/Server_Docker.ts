@@ -5,7 +5,7 @@ import yaml from "js-yaml";
 import path from "path";
 import { promisify } from "util";
 import { RUN_TIMES } from "../../runtimes";
-import { ITestconfigV2, IRunTime } from "../../Types";
+import { IRunTime, ITestconfigV2 } from "../../Types";
 import { golangBddCommand, golangBuildCommand, golangDockerComposeFile } from "../runtimes/golang/docker";
 import { javaBddCommand, javaBuildCommand, javaDockerComposeFile } from "../runtimes/java/docker";
 import { nodeBddCommand, nodeBuildCommand, nodeDockerComposeFile } from "../runtimes/node/docker";
