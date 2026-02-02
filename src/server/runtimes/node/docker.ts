@@ -31,8 +31,10 @@ export const nodeDockerComposeFile = (
 
 
 export const nodeBuildCommand = (projectConfigPath: string, nodeConfigPath: string, testName: string) => {
-
   return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
+
+  // node testeranto/bundles/allTests/node/src/ts/Calculator.test.mjs /workspace/testeranto/runtimes/node/node.mjs
+
   // const externalTests = true;
   // if (externalTests) {
   //   console.log("external tests", testName)
@@ -50,7 +52,7 @@ export const nodeBuildCommand = (projectConfigPath: string, nodeConfigPath: stri
 
 export const nodeBddCommand = (fpath: string, nodeConfigPath: string) => {
   // return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/node.js`;
-  // return `yarn tsx ${fpath} /workspace/node.js`;
-  return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/${nodeConfigPath}`;
+  return `yarn tsx ${fpath} /workspace/${nodeConfigPath}`;
+  // return `node ${fpath.split('.').slice(0, -1).concat('mjs').join('.')} /workspace/${nodeConfigPath}`;
   // return `yarn tsx ${fpath} /workspace/${nodeConfigPath}`;
 }

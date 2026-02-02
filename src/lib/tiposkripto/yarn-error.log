@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  SyntaxError: /Users/adam/Code/testeranto/src/lib/tiposkripto/package.json: Expected double-quoted property name in JSON at position 540
+  SyntaxError: /Users/adam/Code/testeranto/package.json: Expected double-quoted property name in JSON at position 4677
       at JSON.parse (<anonymous>)
       at /opt/local/libexec/yarn/lib/cli.js:1629:59
       at Generator.next (<anonymous>)
@@ -24,7 +24,7 @@ Trace:
 npm manifest: 
   {
     "name": "tiposkripto",
-    "version": "0.0.8",
+    "version": "0.0.22",
     "description": "the typescript implementation of testeranto",
     "author": "adamwong246@gmail.com",
     "license": "MIT",
@@ -33,12 +33,14 @@ npm manifest:
       "build-module": "tsc -p tsconfig.module.json",
       "build-common": "tsc -p tsconfig.common.json",
       "build-types": "tsc -p tsconfig.types.json",
-      "build": "sh prebuild.sh; cp ./cjs-shim.js ./cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; node bundle.js",
+      "build": "sh prebuild.sh; cp ./cjs-shim.js ./cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; node bundle.js"
     },
     "exports": {
-      "./Tiposkripto": {
-        "import": "./Tiposkripto.ts",
-        "require": "./Tiposkripto.ts"
+      ".": {
+        "import": "./src/index.ts"
+      },
+      "./types": {
+        "import": "./src/CoreTypes.ts"
       }
     },
     "dependencies": {
