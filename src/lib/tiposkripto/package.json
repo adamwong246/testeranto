@@ -1,6 +1,6 @@
 {
   "name": "tiposkripto",
-  "version": "0.0.24",
+  "version": "0.0.26",
   "description": "the typescript implementation of testeranto",
   "author": "adamwong246@gmail.com",
   "license": "MIT",
@@ -9,8 +9,15 @@
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json",
-    "build": "sh prebuild.sh; cp ./cjs-shim.js ./cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; node bundle.js"
+    "build": "sh prebuild.sh; cp ./cjs-shim.js ./cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; node bundle.js",
+    "prepack": "yarn run build"
   },
+  "files": [
+    "dist/**",
+    "package.json",
+    "README*",
+    "LICENSE*"
+  ],
   "main": "./dist/common/index.js",
   "module": "./dist/module/index.js",
   "types": "./dist/types/index.d.ts",
