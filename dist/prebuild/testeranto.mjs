@@ -98,7 +98,7 @@ var nodeBuildCommand = (projectConfigPath, nodeConfigPath, testName) => {
   return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
 };
 var nodeBddCommand = (fpath, nodeConfigPath) => {
-  return `node ${fpath.split(".").slice(0, -1).concat("mjs").join(".")} /workspace/${nodeConfigPath}`;
+  return `yarn tsx testeranto/bundles/allTests/node/src/ts/Calculator.test.mjs /workspace/${nodeConfigPath}`;
 };
 
 // src/server/runtimes/python/docker.ts
