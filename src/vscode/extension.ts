@@ -15,12 +15,63 @@ export function activate(context: vscode.ExtensionContext): void {
     terminalManager.createAllTerminals();
     console.log("[Testeranto] Created terminals for all tests");
 
-    // Create a status bar item
-    const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.text = "$(beaker) Testeranto";
-    statusBarItem.tooltip = "Testeranto: Dockerized, AI powered BDD test framework";
-    statusBarItem.command = "testeranto.showTests";
-    statusBarItem.show();
+    // Create status bar items
+    const mainStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+    mainStatusBarItem.text = "$(beaker) Testeranto";
+    mainStatusBarItem.tooltip = "Testeranto: Dockerized, AI powered BDD test framework";
+    mainStatusBarItem.command = "testeranto.showTests";
+    mainStatusBarItem.show();
+    
+    const serverStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
+    serverStatusBarItem.text = "$(circle-slash) Server";
+    serverStatusBarItem.tooltip = "Testeranto server not running. Click to start.";
+    serverStatusBarItem.command = "testeranto.startServer";
+    serverStatusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+    serverStatusBarItem.show();
+    
+    // Function to update server status
+    const updateServerStatus = async () => {
+        try {
+            // Check if extension-config.json exists
+            const workspaceFolders = vscode.workspace.workspaceFolders;
+            if (workspaceFolders && workspaceFolders.length > 0) {
+                const workspaceRoot = workspaceFolders[0].uri;
+                const configUri = vscode.Uri.joinPath(workspaceRoot, 'testeranto', 'extension-config.json');
+                
+                try {
+                    await vscode.workspace.fs.stat(configUri);
+                    // File exists - server is likely running
+                    serverStatusBarItem.text = "$(check) Server";
+                    serverStatusBarItem.tooltip = "Testeranto server is running. Click to restart.";
+                    serverStatusBarItem.backgroundColor = undefined;
+                } catch {
+                    // File doesn't exist - server not running
+                    serverStatusBarItem.text = "$(circle-slash) Server";
+                    serverStatusBarItem.tooltip = "Testeranto server not running. Click to start.";
+                    serverStatusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+                }
+            }
+        } catch (error) {
+            console.error('[Testeranto] Error checking server status:', error);
+        }
+    };
+    
+    // Initial status check
+    updateServerStatus();
+    
+    // Watch for changes to the config file
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (workspaceFolders && workspaceFolders.length > 0) {
+        const workspaceRoot = workspaceFolders[0].uri;
+        const configPattern = new vscode.RelativePattern(workspaceRoot, 'testeranto/extension-config.json');
+        const configWatcher = vscode.workspace.createFileSystemWatcher(configPattern);
+        
+        configWatcher.onDidChange(updateServerStatus);
+        configWatcher.onDidCreate(updateServerStatus);
+        configWatcher.onDidDelete(updateServerStatus);
+        
+        context.subscriptions.push(configWatcher);
+    }
 
     // Create tree data providers
     const testTreeDataProvider = new TestTreeDataProvider();
@@ -134,6 +185,33 @@ export function activate(context: vscode.ExtensionContext): void {
         provider.refresh();
     });
 
+    const startServerCommand = vscode.commands.registerCommand("testeranto.startServer", async () => {
+        vscode.window.showInformationMessage("Starting Testeranto server...");
+        
+        // Import and start the server
+        try {
+            // Dynamically import the server module
+            const serverModule = await import('../../server/serverClasees/Server_Docker');
+            const configModule = await import('../../../testeranto/testeranto');
+            
+            // Create server instance
+            const server = new serverModule.Server_Docker(configModule.default, 'development');
+            
+            // Start the server
+            await server.start();
+            
+            vscode.window.showInformationMessage("Testeranto server started successfully!");
+            
+            // Refresh the tree views
+            testTreeDataProvider.refresh();
+            processesTreeDataProvider.refresh();
+            
+        } catch (error: any) {
+            vscode.window.showErrorMessage(`Failed to start server: ${error.message}`);
+            console.error('[Testeranto] Server start error:', error);
+        }
+    });
+
     // Register tree views
     const testTreeView = vscode.window.createTreeView("testerantoTestsView", {
         treeDataProvider: testTreeDataProvider,
@@ -160,6 +238,9 @@ export function activate(context: vscode.ExtensionContext): void {
         dispose: () => {
             terminalManager.disposeAll();
             processesTreeDataProvider.dispose();
+            testTreeDataProvider.dispose();
+            fileTreeDataProvider.dispose();
+            featuresTreeDataProvider.dispose();
         }
     });
 
@@ -172,11 +253,13 @@ export function activate(context: vscode.ExtensionContext): void {
         openConfigCommand,
         refreshCommand,
         retryConnectionCommand,
+        startServerCommand,
         testTreeView,
         fileTreeView,
         processesTreeView,
         featuresTreeView,
-        statusBarItem
+        mainStatusBarItem,
+        serverStatusBarItem
     );
 
     console.log("[Testeranto] Commands registered");

@@ -14,7 +14,8 @@ module Rubeno
     end
     
     def and_when(store, when_cb, test_resource_configuration, pm)
-      raise NotImplementedError, "and_when must be implemented by subclasses"
+      # Call the when_cb directly
+      when_cb.call(store)
     end
     
     def to_obj

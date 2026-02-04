@@ -491,8 +491,21 @@ ${x}
 
   async start() {
     console.log(`[Server_Docker] start()`)
-    super.start();
-    await this.setupDockerCompose();
+    try {
+      await super.start();
+    } catch (error) {
+      console.error(`[Server_Docker] Error in super.start():`, error);
+    }
+    
+    // Write configuration to a JSON file for the VS Code extension to read
+    this.writeConfigForExtension();
+    
+    try {
+      await this.setupDockerCompose();
+    } catch (error) {
+      console.error(`[Server_Docker] Error in setupDockerCompose():`, error);
+      // Continue anyway to at least write the config file
+    }
 
     // Ensure base reports directory exists
     const baseReportsDir = path.join(process.cwd(), "testeranto", "reports");
@@ -791,6 +804,109 @@ ${x}
       console.error(`Error in setupDockerCompose:`, err);
       throw err;
     }
+  }
+
+  private writeConfigForExtension(): void {
+    try {
+      const configDir = path.join(process.cwd(), 'testeranto');
+      const configPath = path.join(configDir, 'extension-config.json');
+      
+      // Ensure the directory exists
+      if (!fs.existsSync(configDir)) {
+        fs.mkdirSync(configDir, { recursive: true });
+        console.log(`[Server_Docker] Created directory: ${configDir}`);
+      }
+      
+      console.log(`[Server_Docker] Writing extension config to: ${configPath}`);
+      console.log(`[Server_Docker] Current working directory: ${process.cwd()}`);
+      console.log(`[Server_Docker] Configs runtimes exists: ${!!this.configs.runtimes}`);
+      console.log(`[Server_Docker] Configs runtimes type: ${typeof this.configs.runtimes}`);
+      
+      if (this.configs.runtimes) {
+        console.log(`[Server_Docker] Configs runtimes keys:`, Object.keys(this.configs.runtimes));
+      }
+      
+      // Extract runtime information from configs
+      const runtimesArray: Array<{
+        key: string;
+        runtime: string;
+        label: string;
+        tests: string[];
+      }> = [];
+      
+      // Check if runtimes exists and is an object
+      if (this.configs.runtimes && typeof this.configs.runtimes === 'object') {
+        for (const [key, value] of Object.entries(this.configs.runtimes)) {
+          console.log(`[Server_Docker] Processing runtime key: ${key}`);
+          console.log(`[Server_Docker] Runtime value type: ${typeof value}`, value);
+          
+          // The value might be a function call result or an object
+          // In the provided config, it's wrapped in parentheses, but when parsed it should be an object
+          const runtimeObj = value as any;
+          if (runtimeObj && typeof runtimeObj === 'object') {
+            // Check for runtime property in various possible locations
+            const runtime = runtimeObj.runtime;
+            const tests = runtimeObj.tests || [];
+            
+            console.log(`[Server_Docker] Found runtime: ${runtime}, tests:`, tests);
+            
+            if (runtime) {
+              runtimesArray.push({
+                key,
+                runtime: runtime,
+                label: this.getRuntimeLabel(runtime),
+                tests: Array.isArray(tests) ? tests : []
+              });
+            } else {
+              console.warn(`[Server_Docker] No runtime property found for key: ${key}`, runtimeObj);
+            }
+          } else {
+            console.warn(`[Server_Docker] Invalid runtime configuration for key: ${key}, value type: ${typeof value}`);
+          }
+        }
+      } else {
+        console.warn(`[Server_Docker] No runtimes found in config`);
+      }
+      
+      const configData = {
+        runtimes: runtimesArray,
+        timestamp: new Date().toISOString(),
+        source: 'testeranto.ts',
+        serverStarted: true
+      };
+      
+      const configJson = JSON.stringify(configData, null, 2);
+      fs.writeFileSync(configPath, configJson);
+      console.log(`[Server_Docker] Successfully wrote extension config to ${configPath} with ${runtimesArray.length} runtimes`);
+      
+      // Verify the file was written
+      if (fs.existsSync(configPath)) {
+        const fileStats = fs.statSync(configPath);
+        console.log(`[Server_Docker] Config file exists, size: ${fileStats.size} bytes`);
+        
+        // Read back and log the file contents
+        const fileContent = fs.readFileSync(configPath, 'utf-8');
+        console.log(`[Server_Docker] Config file contents:`, fileContent);
+      } else {
+        console.error(`[Server_Docker] Config file was not created at ${configPath}`);
+      }
+    } catch (error: any) {
+      console.error(`[Server_Docker] Failed to write extension config:`, error);
+      console.error(`[Server_Docker] Error stack:`, error.stack);
+    }
+  }
+
+  private getRuntimeLabel(runtime: string): string {
+    const labels: Record<string, string> = {
+      'node': 'Node',
+      'web': 'Web',
+      'python': 'Python',
+      'golang': 'Golang',
+      'ruby': 'Ruby',
+      'rust': 'Rust',
+      'java': 'Java'
+    };
+    return labels[runtime] || runtime.charAt(0).toUpperCase() + runtime.slice(1);
   }
 
   writeComposeFile(

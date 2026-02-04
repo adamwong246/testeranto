@@ -83,6 +83,7 @@ var nodeDockerComposeFile = (config, container_name, projectConfigPath, nodeConf
     environment: {
       NODE_ENV: "production",
       ENV: "node",
+      // <- important
       ...config.env
     },
     working_dir: "/workspace",
@@ -155,7 +156,7 @@ var rubyDockerComposeFile = (config, container_name, projectConfigPath, rubyConf
   };
 };
 var rubyBuildCommand = (projectConfigPath, rubyConfigPath, testName) => {
-  return `bundle exec rubeno /workspace/testeranto/testeranto.ts /workspace/${rubyConfigPath} ${testName}`;
+  return `ruby projects/testeranto/testeranto/src/server/runtimes/ruby/ruby.rb /workspace/${rubyConfigPath} ${testName}`;
 };
 var rubyBddCommand = (fpath) => {
   const jsonStr = JSON.stringify({ ports: [1111] });
@@ -515,8 +516,9 @@ var Server_HTTP = class extends Server_Base {
   async start() {
     console.log(`[Server_HTTP] start()`);
     super.start();
+    const port = 3e3;
     return new Promise((resolve) => {
-      this.httpServer.on("listening", () => {
+      this.httpServer.listen(port, () => {
         const addr = this.httpServer.address();
         console.log(`[HTTP] HTTP server is now listening on ${addr}`);
         resolve();
@@ -1222,6 +1224,7 @@ ${x}
   async start() {
     console.log(`[Server_Docker] start()`);
     super.start();
+    this.writeConfigForExtension();
     await this.setupDockerCompose();
     const baseReportsDir = path2.join(process.cwd(), "testeranto", "reports");
     try {
@@ -1403,6 +1406,57 @@ ${x}
       console.error(`Error in setupDockerCompose:`, err);
       throw err;
     }
+  }
+  writeConfigForExtension() {
+    try {
+      const configPath = path2.join(process.cwd(), "testeranto", "extension-config.json");
+      const runtimesArray = [];
+      if (this.configs.runtimes && typeof this.configs.runtimes === "object") {
+        for (const [key, value] of Object.entries(this.configs.runtimes)) {
+          const runtimeObj = value;
+          if (runtimeObj && typeof runtimeObj === "object") {
+            const runtime = runtimeObj.runtime;
+            const tests = runtimeObj.tests || [];
+            if (runtime) {
+              runtimesArray.push({
+                key,
+                runtime,
+                label: this.getRuntimeLabel(runtime),
+                tests: Array.isArray(tests) ? tests : []
+              });
+            } else {
+              console.warn(`[Server_Docker] No runtime property found for key: ${key}`, runtimeObj);
+            }
+          } else {
+            console.warn(`[Server_Docker] Invalid runtime configuration for key: ${key}, value type: ${typeof value}`);
+          }
+        }
+      } else {
+        console.warn(`[Server_Docker] No runtimes found in config`);
+      }
+      const configData = {
+        runtimes: runtimesArray,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        source: "testeranto.ts"
+      };
+      fs2.writeFileSync(configPath, JSON.stringify(configData, null, 2));
+      console.log(`[Server_Docker] Wrote extension config to ${configPath} with ${runtimesArray.length} runtimes`);
+      console.log(`[Server_Docker] Config contents:`, JSON.stringify(configData, null, 2));
+    } catch (error) {
+      console.error(`[Server_Docker] Failed to write extension config:`, error);
+    }
+  }
+  getRuntimeLabel(runtime) {
+    const labels = {
+      "node": "Node",
+      "web": "Web",
+      "python": "Python",
+      "golang": "Golang",
+      "ruby": "Ruby",
+      "rust": "Rust",
+      "java": "Java"
+    };
+    return labels[runtime] || runtime.charAt(0).toUpperCase() + runtime.slice(1);
   }
   writeComposeFile(services) {
     const dockerComposeFileContents = this.BaseCompose(services);

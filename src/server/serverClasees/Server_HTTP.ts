@@ -38,11 +38,14 @@ export abstract class Server_HTTP extends Server_Base {
   async start(): Promise<void> {
     console.log(`[Server_HTTP] start()`)
     super.start()
+    
+    // Start listening on a port (default to 3000)
+    const port = 3000;
     return new Promise((resolve) => {
-      this.httpServer.on("listening", () => {
+      this.httpServer.listen(port, () => {
         const addr = this.httpServer.address();
         console.log(`[HTTP] HTTP server is now listening on ${addr}`);
-        resolve()
+        resolve();
       });
     });
   }

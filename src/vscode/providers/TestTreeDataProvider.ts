@@ -14,9 +14,49 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
   private _onDidChangeTreeData: vscode.EventEmitter<TestTreeItem | undefined | null | void> = new
     vscode.EventEmitter<TestTreeItem | undefined | null | void>();
   readonly onDidChangeTreeData: vscode.Event<TestTreeItem | undefined | null | void> = this._onDidChangeTreeData.event;
+  
+  private configWatcher: vscode.FileSystemWatcher | undefined;
+
+  constructor() {
+    this.setupConfigWatcher();
+  }
 
   refresh(): void {
     this._onDidChangeTreeData.fire();
+  }
+
+  private setupConfigWatcher(): void {
+    // Watch for changes to the extension config file
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      return;
+    }
+    
+    const workspaceRoot = workspaceFolders[0].uri;
+    const configPattern = new vscode.RelativePattern(workspaceRoot, 'testeranto/extension-config.json');
+    
+    this.configWatcher = vscode.workspace.createFileSystemWatcher(configPattern);
+    
+    this.configWatcher.onDidChange(() => {
+      console.log('[TestTreeDataProvider] Config file changed, refreshing tree');
+      this.refresh();
+    });
+    
+    this.configWatcher.onDidCreate(() => {
+      console.log('[TestTreeDataProvider] Config file created, refreshing tree');
+      this.refresh();
+    });
+    
+    this.configWatcher.onDidDelete(() => {
+      console.log('[TestTreeDataProvider] Config file deleted, refreshing tree');
+      this.refresh();
+    });
+  }
+
+  dispose(): void {
+    if (this.configWatcher) {
+      this.configWatcher.dispose();
+    }
   }
 
   getTreeItem(element: TestTreeItem): vscode.TreeItem {
@@ -43,21 +83,82 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
   }
 
   private getRuntimeItems(): TestTreeItem[] {
-    const runtimes = [
-      { label: "Node", runtime: "node" },
-      { label: "Web", runtime: "web" },
-      { label: "Python", runtime: "python" },
-      { label: "Golang", runtime: "golang" }
-    ];
-
-    return runtimes.map(({ label, runtime }) =>
-      new TestTreeItem(
-        label,
-        TreeItemType.Runtime,
-        vscode.TreeItemCollapsibleState.Collapsed,
-        { runtime }
-      )
-    );
+    // Only show runtimes if the configuration file exists and contains valid data
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      console.log('[TestTreeDataProvider] No workspace folder open');
+      // Show a helpful message item
+      return [
+        new TestTreeItem(
+          "No workspace folder open",
+          TreeItemType.Info,
+          vscode.TreeItemCollapsibleState.None,
+          { info: "Open a workspace folder to see tests" }
+        )
+      ];
+    }
+    
+    const workspaceRoot = workspaceFolders[0].uri;
+    const configUri = vscode.Uri.joinPath(workspaceRoot, 'testeranto', 'extension-config.json');
+    
+    console.log(`[TestTreeDataProvider] Looking for config at: ${configUri.fsPath}`);
+    
+    // Check if the file exists
+    try {
+      const fileContent = vscode.workspace.fs.readFileSync(configUri);
+      const configText = Buffer.from(fileContent).toString('utf-8');
+      console.log(`[TestTreeDataProvider] Config file content length: ${configText.length}`);
+      
+      const config = JSON.parse(configText);
+      console.log(`[TestTreeDataProvider] Parsed config:`, JSON.stringify(config, null, 2));
+      
+      if (config.runtimes && Array.isArray(config.runtimes) && config.runtimes.length > 0) {
+        console.log(`[TestTreeDataProvider] Found ${config.runtimes.length} runtimes in config`);
+        return config.runtimes.map((runtimeConfig: any) => {
+          console.log(`[TestTreeDataProvider] Processing runtime:`, runtimeConfig);
+          return new TestTreeItem(
+            runtimeConfig.label || runtimeConfig.runtime,
+            TreeItemType.Runtime,
+            vscode.TreeItemCollapsibleState.Collapsed,
+            { 
+              runtime: runtimeConfig.runtime,
+              runtimeKey: runtimeConfig.key 
+            }
+          );
+        });
+      } else {
+        console.log('[TestTreeDataProvider] No runtimes found in config file');
+        return [
+          new TestTreeItem(
+            "No runtimes configured",
+            TreeItemType.Info,
+            vscode.TreeItemCollapsibleState.None,
+            { info: "Check your testeranto.ts configuration file" }
+          )
+        ];
+      }
+    } catch (error: any) {
+      // File doesn't exist or can't be read
+      console.log(`[TestTreeDataProvider] Config file not available: ${error.message}`);
+      
+      // Show a helpful message to start the server
+      return [
+        new TestTreeItem(
+          "Server not running",
+          TreeItemType.Info,
+          vscode.TreeItemCollapsibleState.None,
+          { 
+            info: "Start the Testeranto server to see tests",
+            action: "startServer"
+          },
+          {
+            command: "testeranto.startServer",
+            title: "Start Server",
+            arguments: []
+          }
+        )
+      ];
+    }
   }
 
   private getTestItems(runtime?: string): TestTreeItem[] {
@@ -65,30 +166,40 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
       return [];
     }
 
-    let testNames: string[] = [];
-    switch (runtime) {
-      case "node":
-      case "web":
-        testNames = ["Calculator.test.ts"];
-        break;
-      case "python":
-        testNames = ["Calculator.pitono.test.py"];
-        break;
-      case "golang":
-        testNames = ["Calculator.golingvu.test.go"];
-        break;
-      default:
-        testNames = [];
+    // Only show tests if the configuration file exists and contains valid data
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      console.log('[TestTreeDataProvider] No workspace folder open');
+      return [];
     }
-
-    return testNames.map(testName =>
-      new TestTreeItem(
-        testName,
-        TreeItemType.Test,
-        vscode.TreeItemCollapsibleState.Collapsed,
-        { runtime, testName }
-      )
-    );
+    
+    const workspaceRoot = workspaceFolders[0].uri;
+    const configUri = vscode.Uri.joinPath(workspaceRoot, 'testeranto', 'extension-config.json');
+    
+    try {
+      const fileContent = vscode.workspace.fs.readFileSync(configUri);
+      const config = JSON.parse(Buffer.from(fileContent).toString('utf-8'));
+      
+      if (config.runtimes && Array.isArray(config.runtimes)) {
+        const runtimeConfig = config.runtimes.find((r: any) => r.runtime === runtime);
+        if (runtimeConfig && runtimeConfig.tests && Array.isArray(runtimeConfig.tests)) {
+          return runtimeConfig.tests.map((testName: string) =>
+            new TestTreeItem(
+              testName,
+              TreeItemType.Test,
+              vscode.TreeItemCollapsibleState.Collapsed,
+              { runtime, testName }
+            )
+          );
+        }
+      }
+      console.log(`[TestTreeDataProvider] No tests found for runtime: ${runtime}`);
+      return [];
+    } catch (error: any) {
+      // File doesn't exist or can't be read
+      console.log(`[TestTreeDataProvider] Config file not available for tests: ${error.message}`);
+      return [];
+    }
   }
 
   private async getFileItems(runtime: IRunTime, testName: string): Promise<TestTreeItem[]> {
@@ -114,6 +225,12 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
         break;
       case "ruby":
         jsonFilePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb-inputFiles.json";
+        break;
+      case "rust":
+        jsonFilePath = "testeranto/bundles/allTests/rust/example/Calculator.test.rs-inputFiles.json";
+        break;
+      case "java":
+        jsonFilePath = "testeranto/bundles/allTests/java/example/Calculator.test.java-inputFiles.json";
         break;
       default:
         return [];
@@ -195,6 +312,15 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
       case "web":
         jsonFilePath = "testeranto/bundles/allTests/web/example/Calculator.test.mjs-inputFiles.json";
         break;
+      case "ruby":
+        jsonFilePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb-inputFiles.json";
+        break;
+      case "rust":
+        jsonFilePath = "testeranto/bundles/allTests/rust/example/Calculator.test.rs-inputFiles.json";
+        break;
+      case "java":
+        jsonFilePath = "testeranto/bundles/allTests/java/example/Calculator.test.java-inputFiles.json";
+        break;
       default:
         return null;
     }
@@ -272,7 +398,8 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
   private buildTreeItems(
     node: TreeNode,
     runtime: IRunTime,
-    testName: string
+    testName: string,
+    workspaceRoot?: vscode.Uri
   ): TestTreeItem[] {
     const items: TestTreeItem[] = [];
 
@@ -287,6 +414,11 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
         ? vscode.TreeItemCollapsibleState.None
         : vscode.TreeItemCollapsibleState.Collapsed;
 
+      // Create the full file path
+      const fullPath = workspaceRoot ? 
+        vscode.Uri.joinPath(workspaceRoot, child.fullPath).fsPath : 
+        child.fullPath;
+
       const treeItem = new TestTreeItem(
         child.name,
         TreeItemType.File,
@@ -300,7 +432,7 @@ export class TestTreeDataProvider implements vscode.TreeDataProvider<TestTreeIte
         child.isFile ? {
           command: "vscode.open",
           title: "Open File",
-          arguments: [vscode.Uri.file(child.fullPath)]
+          arguments: [vscode.Uri.file(fullPath)]
         } : undefined,
         child.isFile ? new vscode.ThemeIcon("file") : new vscode.ThemeIcon("folder")
       );

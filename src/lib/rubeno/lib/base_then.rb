@@ -15,7 +15,8 @@ module Rubeno
     end
     
     def but_then(store, then_cb, test_resource_configuration, pm)
-      raise NotImplementedError, "but_then must be implemented by subclasses"
+      # Call the then_cb directly
+      then_cb.call(store)
     end
     
     def to_obj

@@ -3,12 +3,13 @@ module Rubeno
     attr_accessor :features, :whens, :thens, :error, :fail, :store, :recommended_fs_path,
                   :given_cb, :initial_values, :key, :failed, :artifacts, :status, :fails
     
-    def initialize(features, whens, thens, given_cb, initial_values)
+    def initialize(features, whens, thens, given_cb, initial_values, adapter = nil)
       @features = features
       @whens = whens
       @thens = thens
       @given_cb = given_cb
       @initial_values = initial_values
+      @adapter = adapter
       @artifacts = []
       @fails = 0
     end
@@ -36,7 +37,13 @@ module Rubeno
     end
     
     def given_that(subject, test_resource_configuration, artifactory, given_cb, initial_values, pm)
-      raise NotImplementedError, "given_that must be implemented by subclasses"
+      # Use the adapter's before_each method if available
+      if @adapter
+        @adapter.before_each(subject, given_cb, test_resource_configuration, initial_values, pm)
+      else
+        # Fallback to just returning the subject
+        subject
+      end
     end
     
     def after_each(store, key, artifactory, pm)

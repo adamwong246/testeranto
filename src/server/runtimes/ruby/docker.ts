@@ -22,17 +22,21 @@ export const rubyDockerComposeFile = (
       `${process.cwd()}/src:/workspace/src`,
       `${process.cwd()}/example:/workspace/example`,
       `${process.cwd()}/dist:/workspace/dist`,
-      `${process.cwd()}/testeranto:/workspace/testeranto`,
+      `${process.cwd()}/../../testeranto:/workspace/testeranto`,
     ],
     command: rubyBuildCommand(projectConfigPath, rubyConfigPath, testName),
   }
 };
 
 export const rubyBuildCommand = (projectConfigPath: string, rubyConfigPath: string, testName: string) => {
-  return `bundle exec rubeno /workspace/testeranto/testeranto.ts /workspace/${rubyConfigPath} ${testName}`;
+  // The testeranto source is mounted at /workspace/testeranto
+  return `ruby /workspace/testeranto/src/server/runtimes/ruby/ruby.rb /workspace/${rubyConfigPath} ${testName}`;
 }
 
 export const rubyBddCommand = (fpath: string) => {
+
+  // return `bundle exec rubeno /workspace/testeranto/testeranto.ts /workspace/${rubyConfigPath} ${testName}`;
+
   // const jsonStr = JSON.stringify({ ports: [1111] });
   // return `ruby example/Calculator-test.rb '${jsonStr}'`;
   const jsonStr = JSON.stringify({ ports: [1111] });

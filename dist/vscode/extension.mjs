@@ -3777,9 +3777,36 @@ var TestTreeDataProvider = class {
   constructor() {
     this._onDidChangeTreeData = new vscode3.EventEmitter();
     this.onDidChangeTreeData = this._onDidChangeTreeData.event;
+    this.setupConfigWatcher();
   }
   refresh() {
     this._onDidChangeTreeData.fire();
+  }
+  setupConfigWatcher() {
+    const workspaceFolders = vscode3.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      return;
+    }
+    const workspaceRoot = workspaceFolders[0].uri;
+    const configPattern = new vscode3.RelativePattern(workspaceRoot, "testeranto/extension-config.json");
+    this.configWatcher = vscode3.workspace.createFileSystemWatcher(configPattern);
+    this.configWatcher.onDidChange(() => {
+      console.log("[TestTreeDataProvider] Config file changed, refreshing tree");
+      this.refresh();
+    });
+    this.configWatcher.onDidCreate(() => {
+      console.log("[TestTreeDataProvider] Config file created, refreshing tree");
+      this.refresh();
+    });
+    this.configWatcher.onDidDelete(() => {
+      console.log("[TestTreeDataProvider] Config file deleted, refreshing tree");
+      this.refresh();
+    });
+  }
+  dispose() {
+    if (this.configWatcher) {
+      this.configWatcher.dispose();
+    }
   }
   getTreeItem(element) {
     return element;
@@ -3802,48 +3829,77 @@ var TestTreeDataProvider = class {
     return Promise.resolve([]);
   }
   getRuntimeItems() {
-    const runtimes = [
-      { label: "Node", runtime: "node" },
-      { label: "Web", runtime: "web" },
-      { label: "Python", runtime: "python" },
-      { label: "Golang", runtime: "golang" }
-    ];
-    return runtimes.map(
-      ({ label, runtime }) => new TestTreeItem(
-        label,
-        0 /* Runtime */,
-        vscode3.TreeItemCollapsibleState.Collapsed,
-        { runtime }
-      )
-    );
+    const workspaceFolders = vscode3.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      console.log("[TestTreeDataProvider] No workspace folder open");
+      return [];
+    }
+    const workspaceRoot = workspaceFolders[0].uri;
+    const configUri = vscode3.Uri.joinPath(workspaceRoot, "testeranto", "extension-config.json");
+    console.log(`[TestTreeDataProvider] Looking for config at: ${configUri.fsPath}`);
+    try {
+      const fileContent = vscode3.workspace.fs.readFileSync(configUri);
+      const configText = Buffer.from(fileContent).toString("utf-8");
+      console.log(`[TestTreeDataProvider] Config file content length: ${configText.length}`);
+      const config = JSON.parse(configText);
+      console.log(`[TestTreeDataProvider] Parsed config:`, JSON.stringify(config, null, 2));
+      if (config.runtimes && Array.isArray(config.runtimes) && config.runtimes.length > 0) {
+        console.log(`[TestTreeDataProvider] Found ${config.runtimes.length} runtimes in config`);
+        return config.runtimes.map((runtimeConfig) => {
+          console.log(`[TestTreeDataProvider] Processing runtime:`, runtimeConfig);
+          return new TestTreeItem(
+            runtimeConfig.label || runtimeConfig.runtime,
+            0 /* Runtime */,
+            vscode3.TreeItemCollapsibleState.Collapsed,
+            {
+              runtime: runtimeConfig.runtime,
+              runtimeKey: runtimeConfig.key
+            }
+          );
+        });
+      } else {
+        console.log("[TestTreeDataProvider] No runtimes found in config file");
+        return [];
+      }
+    } catch (error) {
+      console.log(`[TestTreeDataProvider] Config file not available: ${error.message}`);
+      console.log(`[TestTreeDataProvider] Error stack:`, error.stack);
+      return [];
+    }
   }
   getTestItems(runtime) {
     if (!runtime) {
       return [];
     }
-    let testNames = [];
-    switch (runtime) {
-      case "node":
-      case "web":
-        testNames = ["Calculator.test.ts"];
-        break;
-      case "python":
-        testNames = ["Calculator.pitono.test.py"];
-        break;
-      case "golang":
-        testNames = ["Calculator.golingvu.test.go"];
-        break;
-      default:
-        testNames = [];
+    const workspaceFolders = vscode3.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      console.log("[TestTreeDataProvider] No workspace folder open");
+      return [];
     }
-    return testNames.map(
-      (testName) => new TestTreeItem(
-        testName,
-        1 /* Test */,
-        vscode3.TreeItemCollapsibleState.Collapsed,
-        { runtime, testName }
-      )
-    );
+    const workspaceRoot = workspaceFolders[0].uri;
+    const configUri = vscode3.Uri.joinPath(workspaceRoot, "testeranto", "extension-config.json");
+    try {
+      const fileContent = vscode3.workspace.fs.readFileSync(configUri);
+      const config = JSON.parse(Buffer.from(fileContent).toString("utf-8"));
+      if (config.runtimes && Array.isArray(config.runtimes)) {
+        const runtimeConfig = config.runtimes.find((r) => r.runtime === runtime);
+        if (runtimeConfig && runtimeConfig.tests && Array.isArray(runtimeConfig.tests)) {
+          return runtimeConfig.tests.map(
+            (testName) => new TestTreeItem(
+              testName,
+              1 /* Test */,
+              vscode3.TreeItemCollapsibleState.Collapsed,
+              { runtime, testName }
+            )
+          );
+        }
+      }
+      console.log(`[TestTreeDataProvider] No tests found for runtime: ${runtime}`);
+      return [];
+    } catch (error) {
+      console.log(`[TestTreeDataProvider] Config file not available for tests: ${error.message}`);
+      return [];
+    }
   }
   async getFileItems(runtime, testName) {
     console.log("getFileItems");
@@ -3866,6 +3922,12 @@ var TestTreeDataProvider = class {
         break;
       case "ruby":
         jsonFilePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb-inputFiles.json";
+        break;
+      case "rust":
+        jsonFilePath = "testeranto/bundles/allTests/rust/example/Calculator.test.rs-inputFiles.json";
+        break;
+      case "java":
+        jsonFilePath = "testeranto/bundles/allTests/java/example/Calculator.test.java-inputFiles.json";
         break;
       default:
         return [];
@@ -3929,6 +3991,15 @@ var TestTreeDataProvider = class {
       case "web":
         jsonFilePath = "testeranto/bundles/allTests/web/example/Calculator.test.mjs-inputFiles.json";
         break;
+      case "ruby":
+        jsonFilePath = "testeranto/bundles/allTests/ruby/example/Calculator.test.rb-inputFiles.json";
+        break;
+      case "rust":
+        jsonFilePath = "testeranto/bundles/allTests/rust/example/Calculator.test.rs-inputFiles.json";
+        break;
+      case "java":
+        jsonFilePath = "testeranto/bundles/allTests/java/example/Calculator.test.java-inputFiles.json";
+        break;
       default:
         return null;
     }
@@ -3986,7 +4057,7 @@ var TestTreeDataProvider = class {
       return null;
     }
   }
-  buildTreeItems(node, runtime, testName) {
+  buildTreeItems(node, runtime, testName, workspaceRoot) {
     const items = [];
     const sortedChildren = Array.from(node.children.values()).sort((a, b) => {
       if (a.isFile && !b.isFile) return 1;
@@ -3995,6 +4066,7 @@ var TestTreeDataProvider = class {
     });
     for (const child of sortedChildren) {
       const collapsibleState = child.isFile ? vscode3.TreeItemCollapsibleState.None : vscode3.TreeItemCollapsibleState.Collapsed;
+      const fullPath = workspaceRoot ? vscode3.Uri.joinPath(workspaceRoot, child.fullPath).fsPath : child.fullPath;
       const treeItem = new TestTreeItem(
         child.name,
         2 /* File */,
@@ -4008,7 +4080,7 @@ var TestTreeDataProvider = class {
         child.isFile ? {
           command: "vscode.open",
           title: "Open File",
-          arguments: [vscode3.Uri.file(child.fullPath)]
+          arguments: [vscode3.Uri.file(fullPath)]
         } : void 0,
         child.isFile ? new vscode3.ThemeIcon("file") : new vscode3.ThemeIcon("folder")
       );
@@ -5083,6 +5155,9 @@ function activate(context) {
     dispose: () => {
       terminalManager.disposeAll();
       processesTreeDataProvider.dispose();
+      testTreeDataProvider.dispose();
+      fileTreeDataProvider.dispose();
+      featuresTreeDataProvider.dispose();
     }
   });
   context.subscriptions.push(

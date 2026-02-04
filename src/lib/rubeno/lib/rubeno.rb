@@ -86,10 +86,20 @@ module Rubeno
     end
     
     def initialize_classy_implementations(test_implementation)
+      # Create classy suites
+      test_implementation.suites.each do |key, suite_data|
+        @suites_overrides[key] = ->(description, givens_dict) do
+          {
+            'name' => description,
+            'givens' => givens_dict
+          }
+        end
+      end
+      
       # Create classy givens
       test_implementation.givens.each do |key, given_cb|
         @given_overrides[key] = ->(features, whens, thens, initial_values = nil) do
-          BaseGiven.new(features, whens, thens, given_cb, initial_values)
+          BaseGiven.new(features, whens, thens, given_cb, initial_values, @test_adapter)
         end
       end
       
@@ -317,18 +327,17 @@ module Rubeno
       
       # Create a minimal test specification
       minimal_specification = ->(suites, givens, whens, thens) do
+        # The wrappers are objects with methods, not hashes
+        # So we need to use them correctly
         [
-          {
-            'name' => 'Minimal Test Suite',
-            'givens' => {
-              'test1' => givens['Default'].call(
-                ['minimal test'],
-                [],
-                [thens['alwaysTrue'].call()],
-                nil
-              )
-            }
-          }
+          suites.Default('Minimal Test Suite', {
+            'test1' => givens.Default(
+              ['minimal test'],
+              [],
+              [thens.alwaysTrue()],
+              nil
+            )
+          })
         ]
       end
       
