@@ -1,4 +1,4 @@
-require_relative 'types'
+require 'types'
 
 module Rubeno
   class SimpleTestAdapter

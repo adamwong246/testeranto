@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'rubneo'
+require 'rubeno'
 
 class RubenoTest < Test::Unit::TestCase
   # def test_english_hello

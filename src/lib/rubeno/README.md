@@ -2,6 +2,10 @@
 
 The Ruby implementation of Testeranto.
 
+## Deployment to rubygems
+1) update the version in rubeno.gemspec
+2) `gem build rubeno.gemspec`
+
 ## Overview
 
 Rubeno is a Ruby implementation of the Testeranto BDD testing framework. It follows the same patterns as the other language implementations (TypeScript, Python, Go) to provide a consistent testing experience across multiple programming languages.

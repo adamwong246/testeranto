@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   
-  s.version                   = "0.0.5"
+  s.version                   = "0.0.12"
 
   s.authors                   = ["Adam Wong"]
   s.bindir                    = "bin"
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description               = %q{The Ruby implementation of Testeranto}
   s.email                     =  %q{adamwong246@gmail.com}
   s.executables               = ["rubeno"] 
-  s.files                     = ["Rakefile", "lib/", "bin/rubeno"]
+  s.files                     = Dir["Rakefile", "bin/rubeno", "lib/**/*.rb", "README.md", "rubeno.rb"]
   s.homepage                  = %q{http://rubygems.org/gems/rubeno}
   s.name                      = "rubeno"
   s.require_paths             = ["lib"]

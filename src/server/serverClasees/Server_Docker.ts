@@ -293,32 +293,32 @@ ${x}
   }
 
   public getUpCommand(): string {
-    return `docker compose up -d`;
+    return `docker compose -f "testeranto/docker-compose.yml" up -d`;
   }
 
   public getDownCommand(): string {
-    return `docker compose down -v --remove-orphans`;
+    return `docker compose -f "testeranto/docker-compose.yml" down -v --remove-orphans`;
   }
 
   public getPsCommand(): string {
-    return `docker compose ps`;
+    return `docker compose -f "testeranto/docker-compose.yml" ps`;
   }
 
   public getLogsCommand(serviceName?: string, tail: number = 100): string {
-    const base = `docker compose logs --no-color --tail=${tail}`;
+    const base = `docker compose -f "testeranto/docker-compose.yml" logs --no-color --tail=${tail}`;
     return serviceName ? `${base} ${serviceName}` : base;
   }
 
   public getConfigServicesCommand(): string {
-    return `docker compose config --services`;
+    return `docker compose -f "testeranto/docker-compose.yml" config --services`;
   }
 
   public getBuildCommand(): string {
-    return `docker compose build`;
+    return `docker compose -f "testeranto/docker-compose.yml" build`;
   }
 
   public getStartCommand(): string {
-    return `docker compose start`;
+    return `docker compose -f "testeranto/docker-compose.yml" start`;
   }
 
   // private async waitForContainerExists(serviceName: string, maxAttempts: number = 30, delayMs: number = 1000): Promise<boolean> {
@@ -383,9 +383,11 @@ ${x}
 
     console.log(`[Server_Docker] Starting log capture for ${serviceName} to ${logFilePath}`);
 
+    // Open in append mode since captureExistingLogs may have already written to the file
     const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
     const timestamp = new Date().toISOString();
-    logStream.write(`=== Log started at ${timestamp} for service ${serviceName} ===\n\n`);
+    // Write a separator and header
+    logStream.write(`\n=== Log started at ${timestamp} for service ${serviceName} ===\n\n`);
 
     const child = spawn('bash', ['-c', logScript], {
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -501,15 +503,27 @@ ${x}
       console.error(`[Server_Docker] Failed to create base reports directory ${baseReportsDir}: ${error.message}`);
     }
 
-
     console.log(`[Server_Docker] Dropping everything...`);
     try {
-      const downCmd = `docker compose -f "testeranto/docker-compose.yml" down -v --remove-orphans`;
+      const downCmd = this.getDownCommand();
       console.log(`[Server_Docker] Running: ${downCmd}`);
       await this.spawnPromise(downCmd);
       console.log(`[Server_Docker] Docker compose down completed`);
     } catch (error: any) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
+    }
+
+    // Rebuild all services to ensure latest changes are included
+    console.log(`[Server_Docker] Rebuilding all services...`);
+    try {
+      const buildResult = await this.DC_build();
+      if (buildResult.exitCode !== 0) {
+        console.error(`[Server_Docker] Build failed: ${buildResult.err}`);
+      } else {
+        console.log(`[Server_Docker] Build completed successfully`);
+      }
+    } catch (error: any) {
+      console.error(`[Server_Docker] Build error: ${error.message}`);
     }
     // Start builder services
     for (const runtime of RUN_TIMES) {
@@ -517,9 +531,11 @@ ${x}
       console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
       try {
         await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${serviceName}`);
+        // Capture any existing logs first (overwrites the file)
+        await this.captureExistingLogs(serviceName, runtime);
+        // Then start logging new output (appends to the file)
         this.startServiceLogging(serviceName, runtime)
           .catch(error => console.error(`[Server_Docker] Failed to start logging for ${serviceName}:`, error));
-        this.captureExistingLogs(serviceName, runtime)
 
 
       } catch (error: any) {
@@ -555,12 +571,11 @@ ${x}
         console.log(`[Server_Docker] Starting aider service: ${aiderServiceName} for test ${testName}`);
         try {
           await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${aiderServiceName}`);
-          // Start logging for aider services
+          // Capture any existing logs first (overwrites the file)
+          await this.captureExistingLogs(aiderServiceName, runtime);
+          // Then start logging new output (appends to the file)
           this.startServiceLogging(aiderServiceName, runtime)
             .catch(error => console.error(`[Server_Docker] Failed to start logging for ${aiderServiceName}:`, error));
-
-          this.captureExistingLogs(aiderServiceName, runtime)
-            .catch(error => console.error(`[Server_Docker] Failed to capture existing logs for ${aiderServiceName}:`, error));
         } catch (error: any) {
           console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
         }
@@ -590,14 +605,11 @@ ${x}
           // Start the service
           await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${bddServiceName}`);
 
-          // Immediately start logging in the background
-          // Don't wait for it to complete
+          // Capture any existing logs first (overwrites the file)
+          await this.captureExistingLogs(bddServiceName, runtime);
+          // Then start logging new output (appends to the file)
           this.startServiceLogging(bddServiceName, runtime)
             .catch(error => console.error(`[Server_Docker] Failed to start logging for ${bddServiceName}:`, error));
-
-          // Also capture any existing logs from the container (in case it already produced output)
-          this.captureExistingLogs(bddServiceName, runtime)
-            .catch(error => console.error(`[Server_Docker] Failed to capture existing logs for ${bddServiceName}:`, error));
         } catch (error: any) {
           console.error(`[Server_Docker] Failed to start ${bddServiceName}: ${error.message}`);
           // Even if starting failed, try to capture any logs that might exist
@@ -682,9 +694,12 @@ ${x}
       });
 
       if (existingLogs && existingLogs.trim().length > 0) {
-        // Append to the log file
-        fs.appendFileSync(logFilePath, existingLogs);
+        // Overwrite the log file
+        fs.writeFileSync(logFilePath, existingLogs);
         console.log(`[Server_Docker] Captured ${existingLogs.length} bytes of existing logs for ${serviceName}`);
+      } else {
+        // If no logs exist, create an empty file
+        fs.writeFileSync(logFilePath, '');
       }
 
       // Also try to capture the container exit code if it has exited

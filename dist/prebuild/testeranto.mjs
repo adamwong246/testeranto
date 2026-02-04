@@ -1064,26 +1064,26 @@ ${x}
     `;
   }
   getUpCommand() {
-    return `docker compose up -d`;
+    return `docker compose -f "testeranto/docker-compose.yml" up -d`;
   }
   getDownCommand() {
-    return `docker compose down -v --remove-orphans`;
+    return `docker compose -f "testeranto/docker-compose.yml" down -v --remove-orphans`;
   }
   getPsCommand() {
-    return `docker compose ps`;
+    return `docker compose -f "testeranto/docker-compose.yml" ps`;
   }
   getLogsCommand(serviceName, tail = 100) {
-    const base = `docker compose logs --no-color --tail=${tail}`;
+    const base = `docker compose -f "testeranto/docker-compose.yml" logs --no-color --tail=${tail}`;
     return serviceName ? `${base} ${serviceName}` : base;
   }
   getConfigServicesCommand() {
-    return `docker compose config --services`;
+    return `docker compose -f "testeranto/docker-compose.yml" config --services`;
   }
   getBuildCommand() {
-    return `docker compose build`;
+    return `docker compose -f "testeranto/docker-compose.yml" build`;
   }
   getStartCommand() {
-    return `docker compose start`;
+    return `docker compose -f "testeranto/docker-compose.yml" start`;
   }
   // private async waitForContainerExists(serviceName: string, maxAttempts: number = 30, delayMs: number = 1000): Promise<boolean> {
   //   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -1138,7 +1138,8 @@ ${x}
     console.log(`[Server_Docker] Starting log capture for ${serviceName} to ${logFilePath}`);
     const logStream = fs2.createWriteStream(logFilePath, { flags: "a" });
     const timestamp = (/* @__PURE__ */ new Date()).toISOString();
-    logStream.write(`=== Log started at ${timestamp} for service ${serviceName} ===
+    logStream.write(`
+=== Log started at ${timestamp} for service ${serviceName} ===
 
 `);
     const child = spawn("bash", ["-c", logScript], {
@@ -1231,20 +1232,31 @@ ${x}
     }
     console.log(`[Server_Docker] Dropping everything...`);
     try {
-      const downCmd = `docker compose -f "testeranto/docker-compose.yml" down -v --remove-orphans`;
+      const downCmd = this.getDownCommand();
       console.log(`[Server_Docker] Running: ${downCmd}`);
       await this.spawnPromise(downCmd);
       console.log(`[Server_Docker] Docker compose down completed`);
     } catch (error) {
       console.log(`[Server_Docker] Docker compose down noted: ${error.message}`);
     }
+    console.log(`[Server_Docker] Rebuilding all services...`);
+    try {
+      const buildResult = await this.DC_build();
+      if (buildResult.exitCode !== 0) {
+        console.error(`[Server_Docker] Build failed: ${buildResult.err}`);
+      } else {
+        console.log(`[Server_Docker] Build completed successfully`);
+      }
+    } catch (error) {
+      console.error(`[Server_Docker] Build error: ${error.message}`);
+    }
     for (const runtime of RUN_TIMES) {
       const serviceName = `${runtime}-builder`;
       console.log(`[Server_Docker] Starting builder service: ${serviceName}`);
       try {
         await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${serviceName}`);
+        await this.captureExistingLogs(serviceName, runtime);
         this.startServiceLogging(serviceName, runtime).catch((error) => console.error(`[Server_Docker] Failed to start logging for ${serviceName}:`, error));
-        this.captureExistingLogs(serviceName, runtime);
       } catch (error) {
         console.error(`[Server_Docker] Failed to start ${serviceName}: ${error.message}`);
       }
@@ -1267,8 +1279,8 @@ ${x}
         console.log(`[Server_Docker] Starting aider service: ${aiderServiceName} for test ${testName}`);
         try {
           await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${aiderServiceName}`);
+          await this.captureExistingLogs(aiderServiceName, runtime);
           this.startServiceLogging(aiderServiceName, runtime).catch((error) => console.error(`[Server_Docker] Failed to start logging for ${aiderServiceName}:`, error));
-          this.captureExistingLogs(aiderServiceName, runtime).catch((error) => console.error(`[Server_Docker] Failed to capture existing logs for ${aiderServiceName}:`, error));
         } catch (error) {
           console.error(`[Server_Docker] Failed to start ${aiderServiceName}: ${error.message}`);
         }
@@ -1284,8 +1296,8 @@ ${x}
         console.log(`[Server_Docker] Starting BDD service: ${bddServiceName}, ${configKey}, ${configValue}`);
         try {
           await this.spawnPromise(`docker compose -f "testeranto/docker-compose.yml" up -d ${bddServiceName}`);
+          await this.captureExistingLogs(bddServiceName, runtime);
           this.startServiceLogging(bddServiceName, runtime).catch((error) => console.error(`[Server_Docker] Failed to start logging for ${bddServiceName}:`, error));
-          this.captureExistingLogs(bddServiceName, runtime).catch((error) => console.error(`[Server_Docker] Failed to capture existing logs for ${bddServiceName}:`, error));
         } catch (error) {
           console.error(`[Server_Docker] Failed to start ${bddServiceName}: ${error.message}`);
           this.captureExistingLogs(bddServiceName, runtime).catch((err) => console.error(`[Server_Docker] Also failed to capture logs:`, err));
@@ -1348,8 +1360,10 @@ ${x}
         // 10MB
       });
       if (existingLogs && existingLogs.trim().length > 0) {
-        fs2.appendFileSync(logFilePath, existingLogs);
+        fs2.writeFileSync(logFilePath, existingLogs);
         console.log(`[Server_Docker] Captured ${existingLogs.length} bytes of existing logs for ${serviceName}`);
+      } else {
+        fs2.writeFileSync(logFilePath, "");
       }
       this.captureContainerExitCode(serviceName, reportDir);
     } catch (error) {

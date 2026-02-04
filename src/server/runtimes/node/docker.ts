@@ -15,7 +15,7 @@ export const nodeDockerComposeFile = (
     container_name,
     environment: {
       NODE_ENV: "production",
-      ENV: "node",
+      ENV: "node",  // <- important
       ...config.env,
     },
     working_dir: "/workspace",
@@ -28,8 +28,6 @@ export const nodeDockerComposeFile = (
     command: nodeBuildCommand(projectConfigPath, nodeConfigPath, testName),
   }
 };
-
-
 
 export const nodeBuildCommand = (projectConfigPath: string, nodeConfigPath: string, testName: string) => {
   return `yarn tsx node_modules/testeranto/src/server/runtimes/node/node.ts /workspace/testeranto/testeranto.ts /workspace/${nodeConfigPath} ${testName}`;
