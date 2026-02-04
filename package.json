@@ -2,7 +2,7 @@
   "name": "testeranto",
   "displayName": "Testeranto",
   "description": "the Dockerized, AI powered, BDD test framework for polyglot projects",
-  "version": "0.221.6",
+  "version": "0.221.7",
   "engines": {
     "node": ">=20.19.0",
     "vscode": "^1.60.0"
@@ -154,7 +154,7 @@
     "vscode:prepublish": "yarn run bundle",
     "compile": "yarn run bundle",
     "watch": "yarn run bundle --watch",
-    "package": "npx vsce package",
+    "package:vsce": "npx vsce package",
     "package:full": "node scripts/package-extension.js"
   },
   "exports": {
