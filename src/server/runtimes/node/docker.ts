@@ -1,4 +1,4 @@
-import { ITestconfigV2 } from "../../types";
+import { ITestconfigV2 } from "../../../Types";
 
 export const nodeDockerComposeFile = (
   config: ITestconfigV2,
@@ -15,6 +15,7 @@ export const nodeDockerComposeFile = (
     container_name,
     environment: {
       NODE_ENV: "production",
+      ENV: "node",
       ...config.env,
     },
     working_dir: "/workspace",

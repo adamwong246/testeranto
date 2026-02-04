@@ -82,6 +82,7 @@ var nodeDockerComposeFile = (config, container_name, projectConfigPath, nodeConf
     container_name,
     environment: {
       NODE_ENV: "production",
+      ENV: "node",
       ...config.env
     },
     working_dir: "/workspace",

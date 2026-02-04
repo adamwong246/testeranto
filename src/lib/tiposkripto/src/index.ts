@@ -17,18 +17,19 @@ import { ITTestResourceRequest, defaultTestResourceRequirement } from "./types";
 
 let tpskrt;
 const tpskrtNode = await import("./Node");
-const tpskrtWeb = await import("./Web");
+// const tpskrtWeb = await import("./Web");
 
+tpskrt = tpskrtNode
 // Use esbuild define to distinguish environments
-declare const ENV: "node" | "web";
+// declare const ENV: "node" | "web";
 
-if (ENV === "node") {
-  tpskrt = tpskrtNode
-} else if (ENV === "web") {
-  tpskrt = tpskrtWeb
-} else {
-  throw `Unknown ENV ${ENV}`;
-}
+// if (ENV === "node") {
+//   tpskrt = tpskrtNode
+// } else if (ENV === "web") {
+//   tpskrt = tpskrtWeb
+// } else {
+//   throw `Unknown ENV ${ENV}`;
+// }
 
 export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
